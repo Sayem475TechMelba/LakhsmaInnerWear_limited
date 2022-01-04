@@ -39,6 +39,7 @@ class LibraryCompany(models.Model):
     city = models.CharField(max_length=120, null=True)
     zip_code = models.CharField(max_length=120, null=True)
     trade_license_no = models.CharField(max_length=20, null=True)
+    color = models.CharField(max_length=100, null=True)
     insert_date = models.DateTimeField(default=now)
 
     def __str__(self):

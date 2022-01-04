@@ -1138,7 +1138,7 @@
   }
 
   String.prototype.replaceAt = function(index, replacement) {
-    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+    return this.substr(0, index) + replacement + this.substr(index + 1, 24);
 }
 
 function ID(id){
@@ -1151,17 +1151,17 @@ function ID(id){
 }
 
 function totalSMV(id){
-    var arr = ID(id[13])
+    var arr = ID(rightID(id))
     var subTotal = 0
 
-    for(var i = 0;i<arr.length;i++){
+    for(var i = 1;i<arr.length;i++){
       if(parseFloat(document.getElementById(arr[i]).value) != NaN){
           subTotal += parseFloat(document.getElementById(arr[i]).value)
       }else{
         continue
       }
     }
-    document.getElementById(`id_order_smv-${id[13]}-tt_smv`).value = subTotal
+    document.getElementById(`id_order_smv-${rightID(id)}-tt_smv`).value = subTotal * parseInt(document.getElementById(arr[0]).value)
     smvAvg()
 }
 

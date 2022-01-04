@@ -19,8 +19,9 @@ def update(request, item):
         return 0
 
 class Company:
-    def __init__(self, name):
+    def __init__(self, name, color):
         self.name = name
+        self.color = color
         self.id = []
         self.order_value = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     
@@ -62,10 +63,11 @@ def graphAPI(order, po, year):
         'oct' : 0,
         'nov' : 0,
         'dec' : 0,
+        'col' : None
     }
     for i in order.all():
         if i.company_name.company_name not in name:
-            companys.append(Company(i.company_name.company_name))
+            companys.append(Company(i.company_name.company_name, i.company_name.color))
             name.append(i.company_name.company_name)
     
     for i in order.all():
@@ -85,6 +87,7 @@ def graphAPI(order, po, year):
         for j in i.order_value:
             temp_dict_month[decode[count]] = j
             count += 1
+        temp_dict_month['col'] = i.color
         temp_dict_final[i.name] = temp_dict_month
 
     return temp_dict_final

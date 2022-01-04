@@ -194,7 +194,7 @@
       var obj = Object.assign({}, tempObj);
       var tempArrData =  []
       obj.label = Object.keys(ov)[i]
-      obj.backgroundColor = `rgb(${Math.floor(Math.random()*100) + Math.floor(Math.random()*11)},${Math.floor(Math.random()*100) + Math.floor(Math.random()*11)},${Math.floor(Math.random()*100) + Math.floor(Math.random()*11)})`
+      obj.backgroundColor =  ov[Object.keys(ov)[i]]['col']
       for(var j=0; j<iter.length; j++){
         tempArrData.push(ov[Object.keys(ov)[i]][iter[j]])
       }

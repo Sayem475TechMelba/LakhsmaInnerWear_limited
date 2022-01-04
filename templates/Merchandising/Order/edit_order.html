@@ -869,17 +869,16 @@
 </script>
  <script>
      var count = 1
+     var gmtCount = 0
 
      var smvID = ['id_order_smv-V-set_ratio', 'id_order_smv-V-sew_smv_pcs', 'id_order_smv-V-cut_smv_pcs', 'id_order_smv-V-fin_smv_pcs', 'id_order_smv-V-print_days', 'id_order_smv-V-embro_days', 'id_order_smv-V-wash_days', 'id_order_smv-V-sp_work_days', 'id_order_smv-V-gmts_dyeing_days', 'id_order_smv-V-aop_days']
      var gmt = []
-     var ele = document.createElement('option')
 
      function update(){
         count++
      }
 
-     function negUpdate(){}
-
+    function negUpdate(){}
 
      function tdMaker(tr, data, des){
         var td = document.createElement('td')
@@ -889,13 +888,21 @@
         document.getElementById(des).append(tr)
      }
 
-     function pushTo(data){
-        ele.innerText = data
-        ele.value = data
-     }
-
-     function pushToSmv(){
-         document.getElementById('id_color_size-0-gmt_items').append(ele)
+     function test(param){
+         var j = 0
+         state = true
+         if(param === 'none'){
+            j = gmtCount
+            console.log(param)
+         } else {
+             j = 0
+         }
+         for(var i = 1; i<=document.getElementById(`id_color_size-${j}-gmt_items`).children.length; i++){
+             if(gmt.includes(document.getElementById(`id_color_size-${j}-gmt_items`).children[i].innerHTML) == false){
+                document.getElementById(`id_color_size-${j}-gmt_items`).removeChild(document.getElementById(`id_color_size-${j}-gmt_items`).children[i])
+                gmtCount++
+             }
+         }
      }
 
      function pipeLine(){
@@ -932,7 +939,7 @@
         tdMaker(tr, "null", "table-color")
         tdMaker(tr, document.getElementById("id_status_active").value, "table-color")
         tdMaker(tr, "Active", "table-color")
-    }
+     }
 
      function jobNo(){
         document.getElementById("id_po_job_no").value = '{{ job }}'
@@ -965,9 +972,22 @@
         for(var i = 0; i<count; i++){
             if(gmt.includes(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text) == false){
                 gmt.push(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text)
-                pushTo(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text)
             }
         }
+    }
+
+    function rightID(id){
+        var numPre = []
+        var number = 0
+        for(var i=0; i<id.length; i++){
+            if(parseInt(id[i]) || id[i] == '0'){
+                numPre.push(parseInt(id[i]))
+            }
+        }
+        for(var i = 0; i<numPre.length; i++){
+            number += numPre[i] * (10 ** (numPre.length - (i+1)))
+        }
+        return number
     }
 
     function autoRate(id){
@@ -996,7 +1016,7 @@
     var subTotal = 0;
     for(var i = 0; i<count; i++){
       try{
-        var sub = parseInt(document.getElementById(`id_color_size-${i}-order_qty`).value)
+        var sub = parseFloat(document.getElementById(`id_color_size-${i}-order_qty`).value)
         subTotal += sub  
       }
       catch(err){
@@ -1005,7 +1025,7 @@
     }
     document.getElementById('order_quan').value = subTotal
 
-    autoRate(id[14])
+    autoRate(rightID(id))
     pipeLine()
   }
 
@@ -1018,7 +1038,7 @@
         subTotal = subTotal + sub
         // AVERAGE BUG FIX - HAVE TO CHANGE VARIABLE NAME
         x = subTotal / row
-        // console.log(i , row ,sub, x)
+        // console.log(i , row , sub, x)
         row++;
       }
       catch(err){
@@ -1027,7 +1047,7 @@
     }
     //document.getElementById('tt_rate').value = x
 
-    autoRate(id[14])
+    autoRate(rightID(id))
     pipeLine()
   }
 
@@ -1035,7 +1055,7 @@
     var subTotal = 0;
     for(var i = 0; i<count; i++){
       try{
-        var sub = parseInt(document.getElementById(`id_color_size-${i}-amount`).value)
+        var sub = parseFloat(document.getElementById(`id_color_size-${i}-amount`).value)
         subTotal += sub  
       }
       catch(err){
@@ -1063,7 +1083,7 @@
     }
     document.getElementById('exc').value = exc
 
-    autoPCQT(id[14])
+    autoPCQT(rightID(id))
     pipeLine()
   }
 
@@ -1088,7 +1108,7 @@
     var subTotal = 0;
     for(var i = 0; i<count; i++){
       try{
-        var sub = parseInt(document.getElementById(`id_order_smv-${i}-set_ratio`).value)
+        var sub = parseFloat(document.getElementById(`id_order_smv-${i}-set_ratio`).value)
         subTotal += sub  
         console.log(subTotal)
       }
@@ -1105,7 +1125,7 @@
     var subTotal = 0;
     for(var i = 0; i<count; i++){
       try{
-        var sub = parseInt(document.getElementById(`id_order_smv-${i}-sew_smv_pcs`).value)
+        var sub = parseFloat(document.getElementById(`id_order_smv-${i}-sew_smv_pcs`).value)
         subTotal += sub  
       }
       catch(err){
@@ -1121,7 +1141,7 @@
         var subTotal = 0;
         for(var i = 0; i<count; i++){
         try{
-            var sub = parseInt(document.getElementById(`id_order_smv-${i}-cut_smv_pcs`).value)
+            var sub = parseFloat(document.getElementById(`id_order_smv-${i}-cut_smv_pcs`).value)
             subTotal += sub  
         }
         catch(err){
@@ -1136,7 +1156,7 @@
         var subTotal = 0;
         for(var i = 0; i<count; i++){
         try{
-            var sub = parseInt(document.getElementById(`id_order_smv-${i}-fin_smv_pcs`).value)
+            var sub = parseFloat(document.getElementById(`id_order_smv-${i}-fin_smv_pcs`).value)
             subTotal += sub  
         }
         catch(err){
@@ -1148,32 +1168,32 @@
   }
 
   String.prototype.replaceAt = function(index, replacement) {
-    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+    return this.substr(0, index) + replacement + this.substr(index + 1, 24);
 }
 
-  function ID(id){
-      var calculation_list = []
-      for(var i = 0;i<smvID.length;i++){
-          var rep = smvID[i].replaceAt(13, String(id))
-          calculation_list.push(rep)
-      }
-      return calculation_list
-  }
+function ID(id){
+    var calculation_list = []
+    for(var i = 0;i<smvID.length;i++){
+        var rep = smvID[i].replaceAt(13, String(id))
+        calculation_list.push(rep)
+    }
+    return calculation_list
+}
 
-  function totalSMV(id){
-      var arr = ID(id[13])
-      var subTotal = 0
+function totalSMV(id){
+    var arr = ID(rightID(id))
+    var subTotal = 0
 
-      for(var i = 0;i<arr.length;i++){
-        if(parseInt(document.getElementById(arr[i]).value) != NaN){
-            subTotal += parseInt(document.getElementById(arr[i]).value)
-        }else{
-          continue
-        }
+    for(var i = 1;i<arr.length;i++){
+      if(parseFloat(document.getElementById(arr[i]).value) != NaN){
+          subTotal += parseFloat(document.getElementById(arr[i]).value)
+      }else{
+        continue
       }
-      document.getElementById(`id_order_smv-${id[13]}-tt_smv`).value = subTotal
-      smvAvg()
-  }
+    }
+    document.getElementById(`id_order_smv-${rightID(id)}-tt_smv`).value = subTotal * parseInt(document.getElementById(arr[0]).value)
+    smvAvg()
+}
 
   function smvAvg(){
     var subTotal = 0;
@@ -1192,14 +1212,8 @@
     document.getElementById('tt_smv').value = y
     document.getElementById("smv").value = y
   }
- </script>
-
-
-
- <script type="text/javascript">
-    $('#po_quantity').on('dblclick', function() {
-        $('#modal').modal('show');
-      });
+ 
+</script>
 </script>
 
 <script type="text/javascript"> 

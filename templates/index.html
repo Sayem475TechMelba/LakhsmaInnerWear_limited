@@ -1,0 +1,602 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>{% block title %}{% endblock %} </title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/jqvmap/jqvmap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'dashboard/dist/css/adminlte.min.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/daterangepicker/daterangepicker.css' %}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/summernote/summernote-bs4.css' %}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/datatables-buttons/css/buttons.bootstrap4.min.css' %}">
+
+  <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+  <link href="{% static 'dashboard/aos/aos.css' %}" rel="stylesheet">
+
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/select2/css/select2.min.css' %}">
+  <link rel="stylesheet" href="{% static 'dashboard/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  
+  {% block css %}
+  {% endblock css %}
+  <style>
+    .bg-yel{
+      background-color:yellow;
+    }
+    .btn{
+      border-radius: 0px;
+    }
+    .body{
+      font-size:14px;
+    }
+    .font{
+    font-size: 14px;
+    }
+    .label:after{
+      content:"*" ;
+      color:red    
+    }
+    
+  
+    /* SIDEBAR BACKGROUND COLOR  */
+    .side-nav{
+      background-color:#000000;
+    }
+    .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: #bc1010;
+    color: #fff;
+    }
+    /* SIDE BAR ICON SIZE  */
+    .nav-sidebar>.nav-item .nav-icon.fa, .nav-sidebar>.nav-item .nav-icon.fab, .nav-sidebar>.nav-item .nav-icon.fad, .nav-sidebar>.nav-item .nav-icon.fal, .nav-sidebar>.nav-item .nav-icon.far, .nav-sidebar>.nav-item .nav-icon.fas, .nav-sidebar>.nav-item .nav-icon.ion, .nav-sidebar>.nav-item .nav-icon.svg-inline--fa {
+    font-size: 14px;
+    }
+    /* BREADCRUMBS  */
+    
+    ul.breadcrumb {
+    list-style: none;
+    background-color:white;
+    }
+    ul.breadcrumb li {
+      display: inline;
+    }
+    ul.breadcrumb li+li:before {
+      padding: 5px;
+      color: black;
+      content: "/\00a0";
+    }
+    ul.breadcrumb li a {
+      color: gray;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    ul.breadcrumb li a:hover {
+      color: #0d0d61;
+      font-size: 14px;
+
+    }
+
+   /* TABLE PDF BUTTON COLOR  */
+   .btn-secondary {
+    color: #fff;
+    background-color: red;
+    border-color: white;
+    box-shadow: none;
+    font-size: 14px;
+    }
+   .btn-secondary:hover {
+    color: #fff;
+    background-color: #0d0d61;
+    border-color: #0d0d61;
+    }
+    .dropdown-item.active, .dropdown-item:active {
+    color: #fff;
+    text-decoration: none;
+    background-color: red;
+    }
+    .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: red;
+    border-color: red;
+    }
+    .page-link {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: red;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    }
+    .gr{
+    border-color:white;
+    }
+    /* TABLE DESIGN COMPLETE  */
+    /* FORM UPPER SECTION BACKGROUND  */
+    /* .bg-bl{
+      background-color: #f4f6f9;
+      color: black;
+    } */
+    /*Hiding number field arrow*/
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+    input[type="number"] {
+    -moz-appearance: textfield;
+    }
+    /* INVOICE QUTATION */
+  .inqt {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
+  
+  .bg-bl{
+    background-color:#000000;
+    color:white;
+  }
+  /* MULTI SELECT BOX */
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  background-color: #c51515;
+  border: 1px solid #da3d3d;
+  border-radius: 4px;
+  cursor: default;
+  float: left;
+  margin-right: 5px;
+  margin-top: 5px;
+  padding: 0 5px;
+  }
+
+  /* Our OWn Class for FOrm design */
+  .form-control{
+    border-radius: 15px;
+    box-shadow: none;
+    border: 1px solid #e4e5e7;
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #ffffffb5;
+    background-image: none;
+  }
+  .btn-form{
+    border-radius: 20px;
+  }
+  .bg-form{
+      background-image: linear-gradient(#caeff2 , #c6eef19c );
+      color:black;
+  }
+  .bg-table-header{
+      background-color: #4f7c9582!important;
+  }
+  .bg-light{
+      border:white;
+  }
+  .bg-form-header{
+    background-color:#010c30;
+    color:#fff;
+  }
+  .form-group {
+    margin-bottom: 0.2rem;
+  }
+
+
+  </style>
+  
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed ">
+<div class="wrapper">
+    {% include 'Index/navigation.html' %}
+    {% include 'Index/sidebar.html' %}
+    <div class="content-wrapper p-3 font">
+            {% block body %}
+            {% endblock body %}
+    </div>
+    {% include 'Index/footer.html' %}
+</div>
+
+
+
+<!-- jQuery -->
+<script src="{% static 'dashboard/plugins/jquery/jquery.min.js' %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'dashboard/plugins/jquery-ui/jquery-ui.min.js' %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button);
+</script>
+<script src="{% static 'dashboard/plugins/jquery/jquery.formset.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'dashboard/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- ChartJS -->
+<script src="{% static 'dashboard/plugins/chart.js/Chart.min.js' %}"></script>
+<!-- Sparkline -->
+<script src="{% static 'dashboard/plugins/sparklines/sparkline.js' %}"></script>
+<!-- JQVMap -->
+<script src="{% static 'dashboard/plugins/jqvmap/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/jqvmap/maps/jquery.vmap.usa.js' %}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{% static 'dashboard/plugins/jquery-knob/jquery.knob.min.js' %}"></script>
+<!-- daterangepicker -->
+<script src="{% static 'dashboard/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/daterangepicker/daterangepicker.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'dashboard/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- Summernote -->
+<script src="{% static 'dashboard/plugins/summernote/summernote-bs4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'dashboard/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'dashboard/dist/js/adminlte.js' %}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'dashboard/dist/js/pages/dashboard.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'dashboard/dist/js/demo.js' %}"></script>
+
+ 
+<!-- DataTables  & Plugins -->
+<script src="{% static 'dashboard/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/dataTables.buttons.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.bootstrap4.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/jszip/jszip.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/pdfmake/pdfmake.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/pdfmake/vfs_fonts.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.html5.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.print.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/datatables-buttons/js/buttons.colVis.min.js' %}"></script>
+<link href="{% static 'dashboard/aos/aos.js' %}" rel="stylesheet">
+
+<!-- Select2 -->
+<script src="{% static 'dashboard/plugins/select2/js/select2.full.min.js' %}"></script>
+
+<script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+<script src="{% static 'js/pdf.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/autosearch.js' %}" type="text/javascript"></script>
+<script src="{% static 'dashboard/plugins/dataTableGroup/dataTables.rowGroup.min.js' %}"></script>
+<script src="{% static 'dashboard/plugins/dataTableGroup/sum().js' %}"></script>
+<!-- Formset.js  -->
+<script>
+
+ ;(function($) {
+  $.fn.formset = function(opts)
+  {
+      var options = $.extend({}, $.fn.formset.defaults, opts),
+          flatExtraClasses = options.extraClasses.join(' '),
+          totalForms = $('#id_' + options.prefix + '-TOTAL_FORMS'),
+          maxForms = $('#id_' + options.prefix + '-MAX_NUM_FORMS'),
+          minForms = $('#id_' + options.prefix + '-MIN_NUM_FORMS'),
+          childElementSelector = 'input,select,textarea,label,div',
+          $$ = $(this),
+
+          applyExtraClasses = function(row, ndx) {
+              if (options.extraClasses) {
+                  row.removeClass(flatExtraClasses);
+                  row.addClass(options.extraClasses[ndx % options.extraClasses.length]);
+              }
+          },
+
+          updateElementIndex = function(elem, prefix, ndx) {
+              var idRegex = new RegExp(prefix + '-(\\d+|__prefix__)-'),
+                  replacement = prefix + '-' + ndx + '-';
+              if (elem.attr("for")) elem.attr("for", elem.attr("for").replace(idRegex, replacement));
+              if (elem.attr('id')) elem.attr('id', elem.attr('id').replace(idRegex, replacement));
+              if (elem.attr('name')) elem.attr('name', elem.attr('name').replace(idRegex, replacement));
+          },
+
+          hasChildElements = function(row) {
+              return row.find(childElementSelector).length > 0;
+          },
+
+          showAddButton = function() {
+              return maxForms.length == 0 ||   // For Django versions pre 1.2
+                  (maxForms.val() == '' || (maxForms.val() - totalForms.val() > 0));
+          },
+
+       
+          showDeleteLinks = function() {
+              return minForms.length == 0 ||   // For Django versions pre 1.7
+                  (minForms.val() == '' || (totalForms.val() - minForms.val() > 0));
+          },
+
+          insertDeleteLink = function(row) {
+              var delCssSelector = $.trim(options.deleteCssClass).replace(/\s+/g, '.'),
+                  addCssSelector = $.trim(options.addCssClass).replace(/\s+/g, '.');
+
+              var delButtonHTML = '<a class="' + options.deleteCssClass + '" href="javascript:void(0)" >' + options.deleteText +'</a>';
+              if (options.deleteContainerClass) {
+                
+                  row.find('[class*="' + options.deleteContainerClass + '"]').append(delButtonHTML);
+              } else if (row.is('TR')) {
+                
+                  row.children(':last').append(deleteButtonHTML);
+              } else if (row.is('UL') || row.is('OL')) {
+                 
+                  row.append('<li>' + deleteButtonHTML + '</li>');
+              } else {
+            
+                  row.append(delButtonHTML);
+              }
+
+              if (!showDeleteLinks()){
+                  row.find('a.' + delCssSelector).hide();
+              }
+
+              row.find('a.' + delCssSelector).click(function() {
+                  var row = $(this).parents('.' + options.formCssClass),
+                      del = row.find('input:hidden[id $= "-DELETE"]'),
+                      buttonRow = row.siblings("a." + addCssSelector + ', .' + options.formCssClass + '-add'),
+                      forms;
+                  if (del.length) {
+                 
+                      del.val('on');
+                      row.hide();
+                      forms = $('.' + options.formCssClass).not(':hidden');
+                  } else {
+                      row.remove();
+                      forms = $('.' + options.formCssClass).not('.formset-custom-template');
+                      totalForms.val(forms.length);
+                  }
+                  for (var i=0, formCount=forms.length; i<formCount; i++) {
+                      applyExtraClasses(forms.eq(i), i);
+                      if (!del.length) {
+                  
+                          forms.eq(i).find(childElementSelector).each(function() {
+                              updateElementIndex($(this), options.prefix, i);
+                          });
+                      }
+                  }
+                  if (!showDeleteLinks()){
+                      $('a.' + delCssSelector).each(function(){$(this).hide();});
+                  }
+                  if (buttonRow.is(':hidden') && showAddButton()) buttonRow.show();
+                  if (options.removed) options.removed(row);
+                  return false;
+              });
+          };
+
+      $$.each(function(i) {
+          var row = $(this),
+              del = row.find('input:checkbox[id $= "-DELETE"]');
+          if (del.length) {
+           
+              if (del.is(':checked')) {
+           
+                  del.before('<input type="hidden" name="' + del.attr('name') +'" id="' + del.attr('id') +'" value="on" />');
+                  row.hide();
+              } else {
+                  del.before('<input type="hidden" name="' + del.attr('name') +'" id="' + del.attr('id') +'" />');
+              }
+              $('label[for="' + del.attr('id') + '"]').hide();
+              del.remove();
+          }
+          if (hasChildElements(row)) {
+              row.addClass(options.formCssClass);
+              insertDeleteLink(row);
+              if (row.is(':visible')) {
+                  applyExtraClasses(row, i);
+              }
+          }
+      });
+
+      if ($$.length) {
+          var hideAddButton = !showAddButton(),
+              addButton, template;
+          if (options.formTemplate) {
+              // If a form template was specified, we'll clone it to generate new form instances:
+              template = (options.formTemplate instanceof $) ? options.formTemplate : $(options.formTemplate);
+              template.removeAttr('id').addClass(options.formCssClass + ' formset-custom-template');
+              template.find(childElementSelector).each(function() {
+                  updateElementIndex($(this), options.prefix, '__prefix__');
+              });
+              insertDeleteLink(template);
+          } else {
+              // Otherwise, use the last form in the formset; this works much better if you've got
+              // extra (>= 1) forms (thnaks to justhamade for pointing this out):
+              if (options.hideLastAddForm) $('.' + options.formCssClass + ':last').hide();
+              template = $('.' + options.formCssClass + ':last').clone(true).removeAttr('id');
+              template.find('input:hidden[id $= "-DELETE"]').remove();
+              // Clear all cloned fields, except those the user wants to keep (thanks to brunogola for the suggestion):
+              template.find(childElementSelector).not(options.keepFieldValues).each(function() {
+                  var elem = $(this);
+                  // If this is a checkbox or radiobutton, uncheck it.
+                  // This fixes Issue 1, reported by Wilson.Andrew.J:
+                  if (elem.is('input:checkbox') || elem.is('input:radio')) {
+                      elem.attr('checked', false);
+                  } else {
+                      elem.val('');
+                  }
+              });
+          }
+          options.formTemplate = template;
+
+          var addButtonHTML = '<a class="' + options.addCssClass + '" href="javascript:void(0)" onclick=update()  >' + options.addText + '</a>';
+          if (options.addContainerClass) {
+            
+              var addContainer = $('[class*="' + options.addContainerClass + '"');
+              addContainer.append(addButtonHTML);
+              addButton = addContainer.find('[class="' + options.addCssClass + '"]');
+          }
+
+
+          
+           else if ($$.is('TR')) {
+         
+              var numCols = $$.eq(0).children().length,   // This is a bit of an assumption :|
+                  buttonRow = $('<tr><td colspan="' + numCols + '">' + addButtonHTML + '</tr>').addClass(options.formCssClass + '-add');
+              $$.parent().append(buttonRow);
+              addButton = buttonRow.find('a');
+          } 
+          
+          
+          
+          else {
+              // Otherwise, insert it immediately after the last form:
+              $$.filter(':last').after(addButtonHTML);
+              addButton = $$.filter(':last').next();
+          }
+
+          if (hideAddButton) addButton.hide();
+
+          addButton.click(function() {
+              var formCount = parseInt(totalForms.val()),
+                  row = options.formTemplate.clone(true).removeClass('formset-custom-template'),
+                  buttonRow = $($(this).parents('tr.' + options.formCssClass + '-add').get(0) || this),
+                  delCssSelector = $.trim(options.deleteCssClass).replace(/\s+/g, '.');
+              applyExtraClasses(row, formCount);
+              row.insertBefore(buttonRow).show();
+              row.find(childElementSelector).each(function() {
+                  updateElementIndex($(this), options.prefix, formCount);
+              });
+              totalForms.val(formCount + 1);
+              // Check if we're above the minimum allowed number of forms -> show all delete link(s)
+              if (showDeleteLinks()){
+                  $('a.' + delCssSelector).each(function(){$(this).show();});
+              }
+              if (!showAddButton()) buttonRow.hide();
+              if (options.added) options.added(row);
+              return false;
+          });
+      }
+
+      return $$;
+  };
+
+  /* Setup plugin defaults */
+  $.fn.formset.defaults = {
+      prefix: 'form',                  // The form prefix for your django formset
+      formTemplate: null,              // The jQuery selection cloned to generate new form instances
+      addText: 'add another',          // Text for the add link
+      deleteText: 'remove',            // Text for the delete link
+      addContainerClass: null,         // Container CSS class for the add link
+      deleteContainerClass: null,      // Container CSS class for the delete link
+      addCssClass: 'add-row',          // CSS class applied to the add link
+      deleteCssClass: 'delete-row',    // CSS class applied to the delete link
+      formCssClass: 'dynamic-form',    // CSS class applied to each form in a formset
+      extraClasses: [],                // Additional CSS classes, which will be applied to each form in turn
+      keepFieldValues: '',             // jQuery selector for fields whose values should be kept when the form is cloned
+      added: null,                     // Function called each time a new form is added
+      removed: null,                   // Function called each time a form is deleted
+      hideLastAddForm: false           // When set to true, hide last empty add form (becomes visible when clicking on add button)
+  };
+})(jQuery);
+
+</script>
+<!-- Formset.js  -->
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#bill_value').keyup(function(){
+      $('#export_bill').val(this.value);
+      $('#export_bill_amt').val(this.value);
+  });
+});
+</script>
+
+<script>
+  $(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#selection tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text"  class="form-control" placeholder="Search" />' );
+        
+    } );
+ 
+    // DataTable
+    var table = $('#selection').DataTable({
+      "lengthMenu": [[50,100, 150, -1], [50,100,150, "All"]],
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        }
+    });
+    
+ 
+} );
+
+</script>
+
+
+
+<script>
+    $('#myModal').on('shown.bs.modal', function () {
+      $('#myInput').trigger('focus')
+    });
+</script>
+<script>
+  $("#add").click(function() {
+    $(this).toggleClass('foo');
+  });
+</script>
+<script>
+
+  var sel = document.getElementsByName ('tags')[0];
+  sel.onclick = function () {
+      document.getElementsByName('taginput')[0].value += this.value + ', ';
+  }
+</script>
+<script>
+  /** add active class and stay opened when selected */
+var url = window.location;
+
+// for sidebar menu entirely but not cover treeview
+$('ul.nav-sidebar a').filter(function() {
+    return this.href == url;
+}).addClass('active');
+
+// for treeview
+$('ul.nav-treeview a').filter(function() {
+    return this.href == url;
+}).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
+
+</script>
+
+{% block script %} {% endblock %}
+</body>
+</html>
+
+  
+ 
+

@@ -1,0 +1,96 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %} Hermoso | User Profile {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    .shop img{
+         filter:brightness(0.8);
+    }
+  
+
+    /* .zoom {
+    transition: transform .2s; 
+    margin: 0 auto;
+    }
+
+    .zoom:hover {
+    transform: scale(1.1); 
+    } */
+      
+</style>
+{% endblock css %}
+
+
+{% block body %}
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content "  >
+
+    <!-- ============================ COMPONENT REGISTER   ================================= -->
+    <div class="container-fluid">
+
+    
+        <div class="card mx-auto mt-5" style="max-width:520px; margin-top:50px;">
+          <article class="card-body ">
+              
+            <header class="mb-5 text-center"><h4 class="card-title">Personal Information</h4></header>
+            <form>
+                {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col form-group">
+                            <label>First name: </label>
+                              {{userprofile.first_name}}
+                        </div> <!-- form-group end.// -->
+                        <div class="col form-group">
+                            <label>Last name: </label>
+                            {{userprofile.last_name}}
+                        </div> <!-- form-group end.// -->
+                    </div> <!-- form-row end.// -->
+                    
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label>City: </label>
+                        {{userprofile.city}}
+                      </div> <!-- form-group end.// -->
+                        <div class="form-group col-md-6">
+                          <label>Phone number: </label>
+                          {{userprofile.phone_number}}
+                        </div> <!-- form-group end.// -->
+                    </div> <!-- form-row.// -->
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label>Email address: </label>
+                        {{userprofile.email}}
+                      </div> <!-- form-group end.// -->
+                        
+                        
+                    </div> <!-- form-row.// -->
+                    <div class="form-row">
+                      <div class="form-group col-md-12">
+                        <label>Username: </label>
+                        {{userprofile.username}}
+                      </div> <!-- form-group end.// -->
+                        
+                        
+                    </div> <!-- form-row.// -->
+                    
+                </form>
+            </article><!-- card-body.// -->
+        </div> <!-- card .// -->
+        
+    </div>
+    <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
+    
+    
+    </section>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+
+{% endblock body %}
+
+
+
+{% block script %}
+{% endblock script %}

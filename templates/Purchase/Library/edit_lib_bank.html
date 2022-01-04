@@ -1,0 +1,61 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %} Lakhsma | Update Bank Library {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+{% block css %}
+<style>
+</style>
+{% endblock css %}
+
+{% block body %}
+<div class="container">
+    <div class="">{% include 'Index/alerts.html' %}</div>
+    <div class="d-flex">
+        <div class="p-1">
+          <a type="button" href="{% url 'lib_bank'%}" class="btn btn-sm btn-success gr"><i class="fa fa-plus mr-2" aria-hidden="true"></i>View/Create Bank</a>
+        </div>
+    </div>
+      <div class=" card border border-dark mb-2 mt-2">
+        <div class=" p-2 bg-black">
+            <h5 class="text-uppercase text-center ">Update Bank Library</h4>
+        </div>
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-md-12 P-4">
+                
+                    <form  method="post" class="needs-validation" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                          <div class="form-group row ">
+                            <label for="bank_name" class="col-sm-2 col-form-label ">Bank Name</label>
+                            <div class="col-sm-4 ">
+                              {{ form.bank_name|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Bank Name"}}
+                            </div>
+                          </div>
+                          <div class="form-group row ">
+                            <label for="insert_date" class="col-sm-2 col-form-label ">Inserted Date </label>
+                            <div class="col-sm-4 ">
+                              {{ form.insert_date|attr:"class:form-control"|attr:"type:datetime"|attr:"id:insert_date"}}
+                            </div>
+                          </div>
+
+                          <div>
+                              <button type="submit" class="btn btn-success btn-sm">Update </button>
+                          </div>
+                    </form>
+                  </div>
+            </div>
+             
+        </div>
+    
+      </div>
+</div>
+
+
+{% endblock body %}
+
+{% block script %}
+ 
+{% endblock script %}
+

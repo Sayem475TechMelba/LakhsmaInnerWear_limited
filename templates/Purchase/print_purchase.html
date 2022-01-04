@@ -1,0 +1,270 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %} Lakshma | Report-Purchase Form To Bank {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    .bg-white{
+        background-color: white;
+    }
+    .p-30{
+        padding:40px;
+    }
+    @media print {
+        .noprint {
+           visibility: hidden;
+        }
+     }
+     .print-font{
+         font-size:16px;
+     }
+     .mb-8{
+        padding-bottom:45px;
+    }
+</style>
+{% endblock css %}
+
+{% block body %}
+<div class="container bg-white p-30 inqt print-font" >
+     <!-- SECTION 1 - REFFERENCE NO AND DATE -->
+     <div class="justify-content-between">
+        <div class="">
+            <div class="invoice-logo">
+                <!-- <h3>Lakshma<span class="text-danger">Innerwear</span></h3> -->
+                <img src="{% static 'icon/laklogo.png' %}" alt="Invoice logo" style="max-height: 100px;">
+            </div>
+            <div class="mt-2 print-font">
+                <P class="mt-3" >
+                    <span class="font-weight-bold">Ref &nbsp; &nbsp;:</span> <span class="text-uppercase">{{item.l_ref_no}}</span><br>
+                    <span class="font-weight-bold">Date :</span> <span> {{item.p_date}} </span><br>
+                </P>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2 - TO AND INVOICE NO -->
+    <div class="d-flex  justify-content-between ">
+        <div class="">
+            <ul class="list-unstyled ">
+                <li>To</li>
+                <li>The VP & Chief Manager,</li>
+                <li>{{item.bank_name}}</li>
+                <li>{{item.bank_branch}}</li>
+                <li>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{item.bank_address}}
+                        </div>
+                    </div>
+                    
+                </li>
+                <!-- <li>{{item.bank_address}}</li> -->
+                
+            </ul>
+        </div>
+        <div class="">
+            <ul class="list-unstyled text-right">
+                <li>INV NO. &nbsp; <span> {{item.inv_no}}</span> </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- SECTION 3 - SUBJECT  -->
+    <div class="">
+        <p><span class="font-weight-bold">Subject:</span> <span> Prayer for Purchase Export Bill for US $ {{item.bill_value}} of Ref. No. {{item.bill_no}}... date {{item.bill_date}} against {{item.choose_sc_or_lc}}. {{item.sc_or_lc_no}} date {{item.sc_or_lc_date}} for US $ {{item.sc_or_lc_amount|floatformat:2}}.</span></p>
+    </div>
+    <!-- SECTION 4 - DEAR SIR  -->
+    <div class="">
+        <ul class="list-unstyled ">
+            <li>Dear Sir,</li>
+            <li>In terms of above reference, we request you to purchase our noted export bill to meet up various factory over head expenses.</li>
+            <li>The calculation for purchasable portion is given below from your reference.</li>
+        </ul>
+    </div>
+
+    <!-- SECTION 5 - Total BTB  -->
+    <div class="">
+        <ul class="list-unstyled ">
+            <li>Total BTB Amount &nbsp;&nbsp;: $ {{item.total_btb_amount|floatformat:2}}</li>
+            <li>Tenor &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: {{item.tenor}}</li>
+            <li>Export Bill Amount &nbsp: $ {{item.export_bill}}</li>
+        </ul>
+    </div>
+
+    <!-- SECTION 6 - Calculation  -->
+    <div class="invoice-items">
+        <h5 class="font-weight-bold">Calculation:</h5>
+        <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+            <table class="table table-bordered table-sm">
+                <thead>
+                    <tr>
+                        <th class="per70 text-center">Particulars</th>
+                        <th class="per70 text-center">Percentage %</th>
+                        <th class="per70 text-center">Amount</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    <tr>
+                        <td>{{item.export_bill_amount}}:</td>
+                        <td class="text-center">{{item.export_bill_pct}}%</td>
+                        <td class="text-center">$ {{item.export_bill_amt}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{item.btb_lc}}</td>
+                        <td class="text-center">{{item.btb_lc_pct}}%</td>
+                        <td class="text-center">$ {{item.btb_lc_amt|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{item.pc_amount}}</td>
+                        <td class="text-center">{{item.pc_amount_pct}}%</td>
+                        <td class="text-center">$ {{item.pc_amount_amt|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{item.snd_amount}}:</td>
+                        <td class="text-center">{{item.snd_amount_pct}}%</td>
+                        <td class="text-center">$ {{item.snd_amount_amt|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{item.term_loan}}</td>
+                        <td class="text-center">{{item.term_loan_pct}}%</td>
+                        <td class="text-center">$ {{item.term_loan_amt|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{item.time_loan}}</td>
+                        <td class="text-center">{{item.time_loan_pct}}%</td>
+                        <td class="text-center">$ {{item.time_loan_amt|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{item.od_loan}}</td>
+                        <td class="text-center">{{item.od_loan_pct}}%</td>
+                        <td class="text-center">$ {{item.od_loan_amt|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{item.edf_interest}}</td>
+                        <td class="text-center">{{item.edf_interest_pct}}%</td>
+                        <td class="text-center">$ {{item.edf_interest_amt|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{item.buying_com}}</td>
+                        <td class="text-center">{{item.buying_com_pct}}%</td>
+                        <td class="text-center">$ {{item.buying_com_amt|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{item.tax_other}}</td>
+                        <td class="text-center">{{item.tax_other_pct}}%</td>
+                        <td class="text-center">$ {{item.tax_other_amt|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        {% if item.additional_one %}
+                        <td>
+                            {{ item.additional_one }}
+                        </td>
+                        {% endif %}
+
+                        {% if item.additional_one_pct %}
+                        <td class="text-center">
+                            {{ item.additional_one_pct }}
+                        </td>
+                        {% endif %}
+
+                        {% if item.additional_one_amt %}
+                        <td class="text-center">
+                            {{ item.additional_one_amt|floatformat:2 }}
+                        </td>
+                        {% endif %}
+                    </tr>
+                    
+                    <tr>
+                        <td></td>
+                        <td class="text-center"></td>
+                        <td class="text-center"></td>
+                    </tr>
+                    <tr>
+                        <td>TOTAL COST</td>
+                        <td class="text-center">{{item.total_percentage}}%</td>
+                        <td class="text-center">$ {{item.total_amount|floatformat:2}}</td>
+                    </tr>
+                    <tr class="text-center font-weight-bold">
+                        <td>Net Amount :</td>
+                        <td> Balance <strong>({{item.total_percentage}}%)</strong></td>
+                        <td>$ {{item.net_amount|floatformat:2}}</td>
+                    </tr>
+                    
+                </tbody>
+
+                <tbody class=" font-weight-bold">
+                    <tr>
+                        <td colspan="2" >Adjustment of {{item.liability_adj}}</td>
+                        <td class="text-center">$ {{item.liability_adj_value|floatformat:2}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">Total Purchase</td>
+                        <td class="text-center">$ {{item.total_purchase|floatformat:2}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- SECTION 7 - THEREFORE  -->
+    <div class="mb-8">
+        <p>Therefore, you are requested to release <span class="font-weight-bold"> US $ {{item.net_amount|floatformat:2}} </span>to our current A/C and adjust {{item.liability_adj}} for <span class="font-weight-bold"> US $ {{item.liability_adj_value|floatformat:2}} </span>by purchasing the bill. Please allow preferential rate @ 1.00/USD over prescribed rate.</p>
+        <p>Best Regards,</p>
+    </div>
+  
+
+    <!-- SECTION 8 - FOOTER  -->
+    <div class="mt-3" >
+        <h6 class="font-weight-bold">Dhaka Office :</h6>
+        <p>Corporate Office: House #417(1st Floor), Lane-07, Baridhara DOHS, Dhaka-1206. Bangladesh. Tel: +88 02 8411142, +88 02 8411143<br>
+        <span class="font-weight-bold"> Factory: </span> South Vanganahati, Sreepur, Gazipur-1740, Bangladesh. E-mail: info@lakhsmaiw.com, Website: www.lakhsmaiw.com,</p>
+    </div>
+
+
+   <!-- SECTION 9 - INSERTED BY WHOM  -->
+   <div class="d-flex flex-row bd-highlight">
+    <div class="p-2 mr-2 bd-highlight">
+        <small class="text-muted ">Please note that this is a computer generated email and doesn't require any signature</small>
+    </div>
+    <div class="p-2 ml-2 mr-2 bd-highlight">
+        <small> <strong>Date & User </strong> </small>
+    </div>
+
+    <div class="p-2 ml-2 mr-2 bd-highlight">
+        <small> {{item.insert_date}}</small>
+    </div>
+
+    <div class="p-2 ml-2 mr-2 bd-highlight">
+        <small class="text-muted "> <strong>{{item.inserted_by}}</strong></small>
+    </div>
+  </div>
+
+
+</div>
+
+<div class="container text-center mt-4 no-print">
+    <button class="btn btn-sm btn-danger" onclick="window.print()">Print Chalan</button>
+</div>
+{% endblock body %}
+
+{% block script %}
+<script>
+    // FOR SHOWING THE TODAY DATE 
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10) {
+        dd = '0'+dd
+      } 
+    if(mm<10) {
+        mm = '0'+mm
+      } 
+    // today = yyyy + '/' + mm + '/' + dd;
+    today = yyyy + '-' + mm + '-' + dd;
+    console.log(today);
+    document.getElementById('invoice_date').innerHTML = today;
+  </script>
+  
+{% endblock script %}

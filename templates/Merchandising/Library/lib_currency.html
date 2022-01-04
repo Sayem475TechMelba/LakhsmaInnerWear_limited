@@ -1,0 +1,135 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %} Lakhsma | Currency Library {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+{% block css %}
+<style>
+</style>
+{% endblock css %}
+
+{% block body %}
+<div class="container">
+  <div class="">{% include 'Index/alerts.html' %}</div>
+   {% include 'Merchandising/Library/library_header.html' %}
+    <div class=" card border border-dark mb-2 mt-2">
+      <div class=" p-2 bg-black">
+          <h5 class="text-uppercase text-center ">Currency Library</h4>
+      </div>
+      <div class="container p-4">
+          <div class="row">
+              <div class="col-md-12 P-4">
+              
+                  <form  method="post" class="needs-validation" action="" enctype="multipart/form-data">
+                      {% csrf_token %}
+                        
+
+                        <div class="form-group row ">
+                          <label for="currency_code" class="col-sm-2 col-form-label ">Currency Code</label>
+                          <div class="col-sm-4 ">
+                            {{ form.currency_code|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Currency Code"}}
+                          </div>
+                          <label for="insert_date" class="col-sm-2 col-form-label ">Inserted Date </label>
+                          <div class="col-sm-4 ">
+                            {{ form.insert_date|attr:"class:form-control"|attr:"type:datetime"|attr:"id:insert_date"}}
+                          </div>
+                        </div>
+                        <div class="form-group row ">
+                          <label for="description" class="col-sm-2 col-form-label ">Description</label>
+                          <div class="col-sm-10 ">
+                            {{ form.description|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Description"|attr:"rows:2"}}
+                          </div>
+                        </div>
+                        
+
+                        <div>
+                            <button type="submit" class="btn btn-success btn-sm">Save </button>
+                        </div>
+                  </form>
+                </div>
+          </div>
+            <div class="invoice-items mt-5">
+                          <div class="table-responsive" tabindex="0">
+                              <table class="table table-bordered table-hover table-striped table-sm  " id="table_field">
+                                  <thead class="bg-dark">
+                                    <tr>
+                                      <th colspan="4" class="text-center text-uppercase"><h5>Currency</h5></th>
+                                    </tr>
+                                      <tr>
+                                          <th class=" text-center" width="">Currency Code</th>
+                                          <th class=" text-center" width="">Description</th>
+                                          <th class=" text-center" widht="60px">Date</th>
+                                          <th class=" text-center">Action</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody class='inlineform' >
+                                    {% for i in currency %}
+
+                                      <tr>
+                                          <td class="text-center">
+                                            {{i.currency_code}}
+
+                                          </td>
+                                          <td class="text-center">
+                                            {{i.description}}
+
+                                          </td>
+                                          <td class="text-center">
+                                            {{i.insert_date}}
+
+                                          </td>
+                                          <td class="text-center">
+                                            <div class="btn-group">
+                                              <button type="button" class="btn btn-danger btn-sm">Action</button>
+                                              <button type="button" class="btn btn-danger btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="sr-only">Action</span>
+                                              </button>
+                                              <div class="dropdown-menu">
+                        
+                                                <a class="dropdown-item" href="{% url 'edit_currency' i.id %}"><i class="fas fa-pencil-alt text-warning mr-2" data-toggle="tooltip" data-placement="bottom" title="Update"></i> Edit</a>
+                        
+                                                <a class="dropdown-item" href="{% url 'delete_currency' i.id %}" onclick="return confirm('Are you sure you want to delete this item?')"><i class="fas fa-trash text-danger  mr-2 " data-toggle="tooltip" data-placement="bottom" title="Delete"></i> Delete</a>
+                        
+                                              </div>
+                                            </div>
+                                            
+                                          </td>
+                                      </tr>
+                                      {% endfor %}
+
+                                      
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                    
+      </div>
+  
+    </div>
+</div>
+
+
+{% endblock body %}
+
+{% block script %}
+  <script type="text/javascript">
+  var time = new Date();
+  var tt = time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+  document.getElementById("currentTime").value = tt;
+  // FOR SHOWING THE TODAY DATE 
+  var today = new Date();
+     var dd = today.getDate();
+     var mm = today.getMonth()+1; //January is 0!
+     var yyyy = today.getFullYear();
+     if(dd<10) {
+         dd = '0'+dd
+       } 
+     if(mm<10) {
+         mm = '0'+mm
+       } 
+     today = yyyy + '-' + mm + '-' + dd;
+     console.log(today);
+     document.getElementById('challan_date').value = today;
+  </script>
+{% endblock script %}
+

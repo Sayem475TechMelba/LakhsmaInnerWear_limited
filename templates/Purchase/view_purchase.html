@@ -1,0 +1,454 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %} Lakshma | Purchase Form To Bank {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    .bg-white{
+        background-color: white;
+    }
+    .p-30{
+        padding:40px;
+    }
+    @media print {
+        .noprint {
+           visibility: hidden;
+        }
+     }
+</style>
+{% endblock css %}
+
+{% block body %}
+<div class="">{% include 'Index/alerts.html' %}</div>
+
+<div class="container">
+
+    <div class="d-flex">
+      <div class="mr-auto p-2">
+        <a type="button" href="{% url 'purchase_report' %}" class="btn btn-sm btn-info gr"><i class="fa fa-bars" aria-hidden="true"></i> Purchase Report</a>
+      </div>
+      <div class="p-2">
+        <a  type="btn" class="btn btn-sm btn-light " onClick="javascript:history.go(-1);"><i class="fa fa-undo" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  
+  
+    
+    <div class=" card border border-dark mb-2 mt-2">
+      <div class=" p-2 bg-black">
+          <h5 class="text-uppercase text-center ">View Export Bill Purchase</h4>
+      </div>
+      <div class="container p-4">
+          <div class="row">
+              <div class="col-md-12 P-4">
+              
+                  <form  enctype="multipart/form-data">
+                      
+                      <div class="form-group row ">
+                          <label for="job_no" class="col-sm-2 col-form-label ">Job No.</label>
+                          <div class="col-sm-4 ">
+                            {{ item.job_no}}
+                            
+                          </div>
+                          <label for="job_no" class="col-sm-2 col-form-label ">Order No.</label>
+                          <div class="col-sm-4 ">
+                            {{ item.order_no}}
+                            
+                          </div>
+                        </div>
+                        <div class="form-group row ">
+                          <label for="l_ref_no" class="col-sm-2 col-form-label label">Laksma Reff. No.</label>
+                          <div class="col-sm-4 ">
+                            {{ item.l_ref_no }}
+                            
+                          </div>
+                          <label for="inv_no" class="col-sm-2 col-form-label label">INV NO.</label>
+                          <div class="col-sm-4 ">
+                            {{ item.inv_no}}
+                            
+                          </div>
+                        </div>
+  
+                        
+                        <div class="form-group row ">
+                         
+                            <label for="inv_no" class="col-sm-2 col-form-label label">Buyer Name</label>
+                            <div class="col-sm-4 ">
+                              {{ item.buyer_name }}
+                            </div>
+                            <label for="factory_name" class="col-sm-2 col-form-label label">Factory Name</label>
+                            <div class="col-sm-4 ">
+                              {{ item.factory_name }}
+                            </div>
+                          </div>
+                          <div class="form-group row ">
+                            <label for="p_date" class="col-sm-2 col-form-label ">Date</label>
+                            <div class="col-sm-4 ">
+                              {{ item.p_date }}
+                              <!-- <input type="date" name="p_date" class="form-control" id="p_date"  > -->
+                            </div>
+                            <label for="job_no" class="col-sm-2 col-form-label ">Purchase No.</label>
+                            <div class="col-sm-4 ">
+                                {{ item.purchase_no}}
+                                
+                            </div>
+                          </div>
+
+                        <div class="table-responsive mt-5">
+                            <h5 class="font-weight-bold"> <u>Bank Information</u> :</h5>
+
+                            <table class="table table-bordered table-hover table-sm" >
+                                <thead>
+                                    <tr>
+                                        <th class="text-center label">Bank Name </th>
+                                        <th class="text-center label">Branch </th>
+                                        <th class="text-center"> Address </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr >
+                                        <td >
+                                            {{ item.bank_name}}
+                                        </td>
+
+                                        <td >
+                                            {{ item.bank_branch }}
+                                        </td>
+                                        <td >
+                                            {{ item.bank_address}}
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive mt-4">
+                            <h5 class="font-weight-bold"> <u>Subject Information</u> :</h5>
+
+                            <table class="table table-bordered table-hover table-sm" >
+                                <thead>
+                                    <tr>
+                                        <th class="text-center label"> Bill Value </th>
+                                        <th class="text-center label">Bill Refference No. </th>
+                                        <th class="text-center"> Bill Date </th>
+                                        <th class="text-center"> Choose SC/LC  </th>
+                                        <th class="text-center"> SC/LC No. </th>
+                                        <th class="text-center"> SC/LC Date  </th>
+                                        <th class="text-center"> SC/LC Value ($) </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                    <tr >
+                                        <td >
+                                            {{ item.bill_value}}
+                                        </td>
+                                        <td >
+                                            {{ item.bill_no}}
+                                        </td>
+                                        <td >
+                                            {{ item.bill_date}}
+                                           
+                                        </td>
+                                       
+                                        <td >
+                                            {{ item.choose_sc_or_lc }}
+                                             
+                                        </td>
+                                        
+                                        <td >
+                                            {{ item.sc_or_lc_no}}
+                                        </td>
+                                        <td >
+                                            {{ item.sc_or_lc_date}}
+                                        </td>
+
+                                        <td >
+                                            {{ item.sc_or_lc_amount}}
+                                        </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="form-group row ">
+                            <label for="total_btb_amount" class="col-sm-2 col-form-label label">Total BTB Amount ($)</label>
+                            <div class="col-sm-4 ">
+                                {{ item.total_btb_amount}}
+                            </div>
+                        </div>
+                        <div class="form-group row ">
+                            <label for="tenor" class="col-sm-2 col-form-label label">Tenor</label>
+                            <div class="col-sm-4 ">
+                                {{ item.tenor}}
+                             
+                            </div>
+                        </div>
+                        <div class="form-group row ">
+                            <label for="export_bill_amount" class="col-sm-2 col-form-label label">Export Bill Amount ($)</label>
+                            <div class="col-sm-4 ">
+                                {{ item.export_bill}}
+                            </div>
+                        </div>
+  
+                        <!-- SECTION 6 - Calculation  -->
+                        <div class="invoice-items mt-5">
+                            <h5 class="font-weight-bold"> <u>Calculation</u>:</h5>
+                            <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                                <table class="table table-bordered table-sm">
+                                    <thead>
+                                        <tr>
+                                           
+                                            <th class="per70 text-center">Particulars</th>
+                                            <th class="per70 text-center">Percentage (%)</th>
+                                            <th class="per70 text-center">Amount ($)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody >
+                                  
+                                        <tr>
+                                            
+                                        
+                                            <td>
+                                                {{ item.export_bill_amount}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.export_bill_pct}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.export_bill_amt}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td>
+                                                {{ item.btb_lc }}
+                                               
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.btb_lc_pct}}
+                                               
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.btb_lc_amt|floatformat:2}}
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td>
+                                                {{ item.pc_amount }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.pc_amount_pct }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.pc_amount_amt|floatformat:2 }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                        
+                                            <td>
+                                                {{ item.snd_amount}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.snd_amount_pct }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.snd_amount_amt|floatformat:2 }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td>
+                                                {{ item.term_loan }}
+                                            </td>
+                                            
+                                            <td class="text-center">
+                                                {{ item.term_loan_pct}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.term_loan_amt|floatformat:2}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td>
+                                                {{ item.time_loan }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.time_loan_pct }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.time_loan_amt|floatformat:2 }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td>
+                                                {{ item.od_loan}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.od_loan_pct }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.od_loan_amt|floatformat:2 }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td>
+                                                {{ item.edf_interest }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.edf_interest_pct}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.edf_interest_amt|floatformat:2 }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td>
+                                                {{ item.buying_com }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.buying_com_pct}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.buying_com_amt|floatformat:2 }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td>
+                                                {{ item.tax_other }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.tax_other_pct }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.tax_other_amt|floatformat:2 }}
+                                            </td>
+                                        </tr>
+                                 
+                                        <tr>
+                                            {% if item.additional_one %}
+                                            <td>
+                                                {{ item.additional_one }}
+                                            </td>
+                                            {% endif %}
+
+                                            {% if item.additional_one_pct %}
+                                            <td class="text-center">
+                                                {{ item.additional_one_pct }}
+                                            </td>
+                                            {% endif %}
+
+                                            {% if item.additional_one_amt %}
+                                            <td class="text-center">
+                                                {{ item.additional_one_amt|floatformat:2 }}
+                                            </td>
+                                            {% endif %}
+                                        </tr>
+                                     
+                                       
+                                        <tr>
+
+                                            <td colspan="1">TOTAL COST ($)</td>
+                                            <td class="text-center">  
+                                                {{ item.total_percentage }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.total_amount|floatformat:2 }}
+
+                                            </td>
+                                        </tr>
+
+                                        <tr class="text-center font-weight-bold">
+                                            <td colspan="1">Net Amount($) :</td>
+                                            <td> Balance <strong>({{item.total_percentage}}%)</strong></td>
+                                            <td>
+                                                {{ item.net_amount|floatformat:2}}
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+
+                                    <tbody class=" font-weight-bold">
+                                        <tr>
+                                            <td colspan="2" >
+                                                <div class="form-group row">
+                                                    <label for="staticEmail" class="col-sm-10 col-form-label"> Adjustment of {{ item.liability_adj }}</label>
+                                                    
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.liability_adj_value|floatformat:2 }}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Total Purchase</td>
+                                            <td class="text-center">
+                                                {{ item.total_purchase|floatformat:2}}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Approve Net Amount</td>
+                                            <td class="text-center">
+                                                {{ item.approve_net_amt|floatformat:2}}
+                                                
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <td colspan="2" class="text-danger">Due Amount</td>
+                                            <td class="text-center">
+                                                {{ item.due_amt|floatformat:2 }}
+                                               
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">Payment Status</td>
+                                            <td class="text-center">
+                                                {{ item.payment_status}}
+                                                
+                                            </td>
+
+                                        </tr>
+                                       
+                                        <tr>
+                                            <td colspan="2">Approve Date</td>
+                                            <td class="text-center">
+                                                {{ item.approval_date}}
+                                                
+                                            </td>
+                                            
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                       
+
+                        
+                    
+                  </form>
+                </div>
+  
+              </div>
+          </div>
+  
+    </div>
+  </div>
+  
+
+{% endblock body %}
+
+{% block script %}
+
+
+  
+{% endblock script %}

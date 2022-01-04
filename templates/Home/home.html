@@ -1,0 +1,241 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %} Lakhma | Dashboard {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    .bg-gray{
+        background-color:rgb(226, 218, 218);
+    }
+    .bg-nevi{
+        background-color:#10f21a;
+        color:white;
+    }
+    .bg-comord{
+        background-color:#a4dc24;
+        color:white;
+    }
+    .bg-pur{
+      background-color: #594c6f;
+      color: white;
+    }
+    .bg-pink{
+      background-color: #92466f;
+      color: white;
+    }
+    .bg-acc{
+      background-color: #085d63;
+      color: white;
+    }
+    .bg-olive{
+      background-color: #7f821d;
+      color: white;
+    }
+    .card{
+      background-color:#f4f6f9;
+    }
+    .card-dark:not(.card-outline)>.card-header {
+      background-color: #000000;
+  }
+  .chart-searchbar {
+    border-radius: 0px;
+    box-shadow: none;
+    border: 1px solid #e4e5e7;
+    display: block;
+    width: 20%;
+    height: 30px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #ffffffb5;
+    background-image: none;
+}
+</style>
+{% endblock css %}
+
+{% block body %}
+ <!-- Main content -->
+ <section class="content ">
+    <div class="container-fluid mt-3">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h4>0</h4>
+                <p>Total Orders</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+          
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-comord">
+              <div class="inner">
+                <h4>0</h4>
+                <p> Completed order</p>
+              </div>
+              <div class="icon">
+                  <i class="fas fa-clipboard-check"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+
+           <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h4>0 Tk. </h4>
+                <p>Total Sale</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-balance-scale-left"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+        <!-- ./col -->
+
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-pur">
+            <div class="inner">
+              <h4>0 TK.</h4>
+              <p>Purchase Price</p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-money-check-alt"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+      </div>
+    </div>
+
+    <!-- GRAPHS AND CHARTS  -->
+    <div class="container-fluid mt-4">
+      <div class="row">
+        <!-- ORDER VALUE / ORDER QUANTITY / COMPANY NAME /  -->
+       
+        <div class="col-md-6">
+          <div class="card card-dark">
+            <div class="card-header">
+              <h3 class="card-title">Total Order Value Chart (Monthly)</h3>
+
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart text-right">
+                <form action="" method="get">
+                  <select class="dropdown chart-searchbar" id="dd" name="year" onchange="this.form.submit()">
+                    <option value="Select year" selected='selected'>Select year</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option> 
+                  </select>
+                </form>
+                <canvas id="orderValueChart" width="400" height="200"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- GRAPHS AND CHARTS  -->
+</section>
+  <!-- /.content -->
+
+
+{% endblock body %}
+
+{% block script %}
+
+<script>
+  var iter = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec']
+  var ov = JSON.parse('{{ api_ov | escapejs }}');
+  function graphData(){
+    var ov = JSON.parse('{{ api_ov | escapejs }}');
+    var iter = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec']
+    var arrFinal = []
+    var tempObj = {
+             label               : '',
+             backgroundColor     : '',
+             borderColor         : 'rgba(60,141,188,0.8)',
+             pointRadius          : false,
+             pointColor          : '#3b8bba',
+             pointStrokeColor    : 'rgba(60,141,188,1)',
+             pointHighlightFill  : '#fff',
+             pointHighlightStroke: 'rgba(60,141,188,1)',
+             data                : []
+           }
+      
+    for(var i = 0; i<Object.keys(ov).length; i++){
+      var obj = Object.assign({}, tempObj);
+      var tempArrData =  []
+      obj.label = Object.keys(ov)[i]
+      obj.backgroundColor = `rgb(${Math.floor(Math.random()*100) + Math.floor(Math.random()*11)},${Math.floor(Math.random()*100) + Math.floor(Math.random()*11)},${Math.floor(Math.random()*100) + Math.floor(Math.random()*11)})`
+      for(var j=0; j<iter.length; j++){
+        tempArrData.push(ov[Object.keys(ov)[i]][iter[j]])
+      }
+      obj.data = tempArrData
+      arrFinal.push(obj)
+    }
+    return arrFinal
+    }
+
+  const ctx = document.getElementById('orderValueChart').getContext('2d');
+  const myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+          datasets: graphData(),
+         
+      },
+      options: {
+          scales: {
+              y: {
+                  beginAtZero: true
+              },
+              xAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'MONTH'
+                }
+              }],
+              yAxes: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'TOTAL ORDER VALUE'
+                }
+              }],
+          }
+      }
+  });
+  </script>
+
+
+
+
+{% endblock script %}
+

@@ -1,0 +1,1541 @@
+{% extends "index.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% load mathfilters %}
+{% block title %} Lakshma | Capacity and Booking Schedule {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+{% block css %}
+<style>
+    
+.form-controls {
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid #e4e5e7;
+    display: block;
+    width: 130px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+}
+
+tfoot {
+     display: table-header-group;
+}
+.report-control {
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid #e4e5e7;
+    display: block;
+    width: 150px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    font-weight: 400;
+    background-clip: padding-box;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.schedule-form {
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid #e4e5e7;
+    display: block;
+    width: 130px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    font-weight: 400;
+    background-clip: padding-box;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+</style>
+{% endblock css %}
+
+{% block body %}
+
+
+<div class="container-fluid">
+      <div class="text-center mt-3 font-weight-bold"><h3>Capacity and Order Booking</h3></div>
+      <div class="card mt-2">
+          <div class="card-header text-uppercase bg-secondary">
+            <h3 class="card-title">Search Panel</h3>
+          </div>
+          <div class=" search mt-3 text-center">
+            <form method="GET" class="ml-2"  action="{% url 'capacity_booked' %}">
+              <table  class="table table-bordered table-responsive tabel-hover  ">
+                <thead>
+                  <tr>
+                    <th width="150px;">Company</th>
+                    <th >Location</th>
+                    <th >Buyer</th>
+                    <th >Agent </th>
+                    <th >Style</th>
+                    <th >Job No.</th>
+                    <th >Team</th>
+                    <th >Dealing Merchant</th>
+                    <th >Factory Merchant</th>
+                    <th >Product Category</th>
+                    <th >Start Date</th>
+                    <th >End Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      {{ myFilter.form.company_name|attr:"class:form-controls"}}
+                    </td>
+                    <td>
+                      {{ myFilter.form.company_location|attr:"class:form-controls"}}
+                    </td>
+                
+                    <td>
+                      {{ myFilter.form.buyer_name|attr:"class:form-controls"}}
+                    </td>
+                    <td>{{ myFilter.form.agent|attr:"class:form-controls"}}</td>
+                    <td>{{ myFilter.form.style_description|attr:"class:form-controls"}}</td>
+                    <td>{{ myFilter.form.job_no|attr:"class:form-controls"}}</td>
+                  
+                    <td>
+                      {{ myFilter.form.team_leader|attr:"class:form-controls"}}
+                    </td>
+                    <td>
+                      {{ myFilter.form.dealing_merchant|attr:"class:form-controls"}}
+                    </td>
+                    <td>
+                      {{ myFilter.form.factory_merchant|attr:"class:form-controls"}}
+                    </td>
+                    <td>
+                      {{ myFilter.form.product_cate|attr:"class:form-controls"}}
+                    </td>
+            
+                    <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control"|attr:"id:start_date"  }}</td>
+                      <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control"|attr:"id:end_date"  }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="container justify-content-center align-content-center text-center mb-3">
+                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Show</button>
+                <a href="{% url 'capacity_booked' %}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i> Reset</a>
+              </div>
+            </form>
+            <div class="container  text-center table-responsive  table-responsive-sm">
+              <table class="mb-2 ">
+                <thead >
+                    <td width="20%">
+                      <select class="form-control">
+                        <option>2021</option>
+                        <option>2020</option>
+                      </select>
+                    </td>
+                    <td><button type="" class="btn btn-sm btn-info ml-4 ">Jan</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-4">Feb</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-4">Mar</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-4">Apr</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-4">May</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-4">Jun</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-4">Jul</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-4">Aug</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-4">Sep</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-4">Oct</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-4">Nov</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-4">Dec</button></td>
+                </thead>
+              </table>
+            </div>
+          </div>
+  
+         
+        </div>
+</div>
+
+ <!-- BUYERWISE REPORT ==== BOTH Projected and Confirmed order -->
+ {% if  '/merchandise/capacity_booked/?' in request.get_full_path %}
+ <div class="container-fluid mt-5 table-responsive" >
+  <table id="pc_report" name="schedule" class="table table-bordered table-striped table-sm table-responsive tabel-hover display table-info">
+    <thead>
+      <tr>
+        <th class="text-left text-uppercase bg-success" colspan="21">
+            <h6 >Buyers Projected and Confirmed Order- (<span id="show_sd"></span>  to <span id="show_ed"></span>)</h6>
+        </th>
+    </tr>
+      <tr>
+        <th>SL.</th>
+        <th>Company Name</th>
+        <th>Buyer Name</th>
+        <th>Avg. SMV</th>
+        <th>Total SMV</th>
+        <th>Ord Qty(Pcs)</th>
+        <th>Allocated Capacity(Pcs)</th>
+        <th>%</th>
+        <th>Booked Basic Qty(Pcs)</th>
+        <th>%</th>
+        <th>Balance Basic(Pcs)</th>
+        <th>% </th>
+        <th>Ex-factory Qty(Pcs)</th>
+        <th>Ex-factory Value(USD) </th>
+        <th>Yet to Ex-factory(Pcs) </th>
+        <th> Ex-fac Balance(%) </th>
+        <th> Order Value(USD) </th>
+        <th> Avg. Rate(USD) </th>
+        <th> Buyer Share(%) </th>
+        <th> Avg. Basic Rate(USD) </th>
+        <th> Stnd Devn(USD) </th>
+      </tr>
+    </thead>
+    <tfoot id="tfooter">
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </tfoot>
+    <tbody>
+      {% for i in orders %}
+        {% for p in i.order_entry.all %}
+      <tr>
+
+        <td>{{forloop.counter}}</td>
+        <td>{{i.company_name}}</td>
+        <td>{{i.buyer_name}}</td>
+        <td class="smv">{{i.smv|floatformat:2}}</td>
+        <td >{{i.smv|mul:p.po_quantity|floatformat:2}}</td>
+        <td class="qt">{{p.po_quantity}}</td>
+        <td >0</td>
+        <td >0</td>
+        <td >{{i.smv|div:4|mul:p.po_quantity|floatformat:2}}</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td >{{p.avg_price|mul:p.po_quantity|floatformat:2}}</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+        <td >0</td>
+
+      </tr>
+      {% endfor %}
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <th colspan="3" class="text-right font-weight-bold">Total: </th>
+      <th class="bg-yel" id="tt_smv"></th>
+      <th class="bg-yel" id="tt_avg_smv"></th>
+      <th class="bg-yel tt_ord_qty"></th>
+      <th class="bg-yel" id="tt_all_cap"></th>
+      <th class="bg-yel" id="tt_all_pct"></th>
+      <th class="bg-yel tt_bk_qtt" ></th>
+      <th class="bg-yel" id="tt_bk_pct"></th>
+      <th class="bg-yel" id="tt_bln_basic"></th>
+      <th class="bg-yel" id="tt_bln_pct"></th>
+      <th class="bg-yel" id="tt_exfac_qty"></th>
+      <th class="bg-yel" id="tt_exfac_value"></th>
+      <th class="bg-yel" id="tt_yt_exfac"></th>
+      <th class="bg-yel" id="tt_exfac_bln"></th>
+      <th class="tt_od_value bg-yel" id="pc_tt_oval"></th>
+      <th class="bg-yel" id="tt_avg_rate"></th>
+      <th class="bg-yel" ><span id="tt_buy_share"></span>%</th>
+      <th class="bg-yel" id="tt_bas_rate">  </th>
+      <th class="bg-yel" id="tt_std_div">  </th>
+    </tfoot>
+    
+    <tfoot>
+      <th colspan="13" class="text-right font-weight-bold">Short Shipment: </th>
+      <th id="b_amt"></th>
+      <th  id="btb">0</th>
+    </tfoot>
+    <tfoot>
+      <th colspan="13" class="text-right font-weight-bold">Over Shipment: </th>
+      <th id="b_amt"></th>
+      <th  id="btb">0</th>
+    </tfoot>
+    
+    <tfoot>
+      <th colspan="2"></th>
+      <th class=" bg-success">Order Qty. (Pcs) </th>
+      <th class=" bg-success">Eqv. Basic Qty.</th>
+      <th class=" bg-success">Ord. Value(USD)</th>
+      <th class=" bg-success">Ord. Avg Rate(USD)</th>
+      <th class=" bg-success">Basic Avg Rate(USD)</th>
+      <th colspan="13" class="text-right">Company Avg. Rate(USD)</th>
+      <th></th>
+    </tfoot>
+    <tfoot>
+      <th colspan="2" class="text-right">Confirmed Order</th>
+      <th class="con_tt_qty"></th>
+      <th class="con_tt_eqv" ></th>
+      <th class="con_tt_ordval"  ></th>
+      <th id="con_ttAvgRate" ></th>
+      <th id="con_ttBavgRate" ></th>
+      <th colspan="13" class="text-right">Company Asking Avg. Rate(USD)</th>
+      <th></th>
+    </tfoot>
+    <tfoot>
+      <th colspan="2" class="text-right">Projected Order</th>
+      <th class="pro_tt_qty" id="pro_qt_sum"></th>
+      <th class="pro_tt_eqv" id="pro_eqv_sum"></th>
+      <th class="pro_tt_ordval" id="pro_ordval_sum"></th>
+      <th  id="pro_ttAvgRate"></th>
+      <th  id="pro_ttBAvgRate"></th>
+      <th colspan="13" class="text-right">Company Stnd. Devn.(USD)</th>
+      <th></th>
+    </tfoot>
+    <tfoot>
+      <th colspan="2" class="text-right">Total:</th>
+      <th class="tt_ord_qty bg-yel"></th>
+      <th class="tt_bk_qtt bg-yel"></th>
+      <th class="tt_od_value bg-yel"></th>
+      <th class="total_avgRate_sum"></th>
+      <th class="total_basicRate_sum"></th>
+      <th colspan="13" class="text-right"></th>
+      <th></th>
+    </tfoot>
+    
+  </table>
+</div>
+{% endif %}
+
+<!-- BUYERWISE REPORT ====  Confirmed order -->
+{% if  '/merchandise/capacity_booked/?' in request.get_full_path %}
+<div class="container-fluid mt-5 ">
+  <div class="row">
+    <div class="col-md-6">
+      <!-- /.Comfirmed order -->
+      <div class="table-responsive" >
+        <table id="confirmed" name="schedule" class="table table-bordered table-striped table-sm table-responsive tabel-hover table-info display">
+          <thead>
+            <tr>
+              <th class="text-left text-uppercase bg-success" colspan="20">
+                  <h6 >Confirmed Order-(01-11-2021 to 31-11-2021)</h6>
+              </th>
+          </tr>
+            <tr>
+              <th>SL.</th>
+              <th>Company Name</th>
+              <th>Buyer Name</th>
+              <th>Avg. SMV</th>
+              <th>Total SMV</th>
+              <th >Ord Qty(Pcs)</th>
+              <th >Eqv. Basic Qty.(Pcs)</th>
+              <th >Ord. Value(USD)</th>
+              <th> Buyer Share(%) </th>
+              <th> Ord. Avg Rate(USD) </th>
+              <th> Basic Avg Rate(USD) </th>
+            </tr>
+          </thead>
+          <tfoot id="tfooter">
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for i in orders %}
+              {% for p in i.order_entry.all %}
+                {% if p.order_status == "Confirmed"%}
+                  <tr>
+                    <td></td>
+                    <td>{{i.company_name}}</td>
+                    <td>{{i.buyer_name}}</td>
+                    <td>{{i.smv|floatformat:2}}</td>
+                    <td>{{i.smv|mul:p.po_quantity|floatformat:2}}</td>
+                    <td>{{p.po_quantity}}</td>
+                    <td >{{i.smv|div:4|mul:p.po_quantity|floatformat:2}}</td>
+                    <td >{{p.avg_price|mul:p.po_quantity|floatformat:2}}</td>
+                    <td >0</td>
+                    <td >0</td>
+                    <td >0</td>
+                  </tr>
+                {% endif %}
+              {% endfor %}
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <th colspan="3" class="text-right font-weight-bold">Total: </th>
+            <th class="bg-yel" id="con_tt_smv" ></th>
+            <th class="bg-yel c_tavg" id="con_tt_Avg_smv" ></th>
+            <th  class="con_tt_qty bg-yel" id="con_total_qty"></th>
+            <th class="con_tt_eqv bg-yel" id="con_total_eqv"></th>
+            <th class="con_tt_ordval bg-yel" id="c_tt_oval"></th>
+            <th  class="bg-yel"><span id="con_pct"></span>%</th>
+            <th id="con_tt_avgRate" class="bg-yel"></th>
+            <th id="con_tt_bavgRate" class="bg-yel"></th>
+          </tfoot>
+        </table>
+      </div>
+      
+    </div>
+    <!-- PROJECTED BUYERWISE  -->
+    <div class="col-md-6">
+       <div class="table-responsive" >
+        <table id="projected" name="schedule" class="table table-bordered table-striped table-info table-sm table-responsive table-hover display">
+          <thead>
+            <tr>
+              <th class="text-left text-uppercase bg-success" colspan="20">
+                  <h6 >Projected Order-(01-11-2021 to 31-11-2021)</h6>
+
+              </th>
+          </tr>
+            <tr>
+              <th>SL.</th>
+              <th>Company Name</th>
+              <th>Buyer Name</th>
+              <th>Avg. SMV</th>
+              <th>Total SMV</th>
+              <th >Ord Qty(Pcs)</th>
+              <th >Eqv. Basic Qty.(Pcs)</th>
+              <th >Ord. Value(USD)</th>
+              <th> Buyer Share(%) </th>
+              <th> Ord. Avg Rate(USD) </th>
+              <th> Basic Avg Rate(USD) </th>
+            </tr>
+          </thead>
+          <tfoot id="tfooter">
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th ></th>
+              <th ></th>
+              <th ></th>
+              <th> </th>
+              <th> </th>
+              <th> </th>
+            </tr>
+          </tfoot>
+          <tbody>
+            {% for i in orders %}
+            {% for p in i.order_entry.all %}
+              {% if p.order_status == "Projected"%}
+            <tr>
+              <td></td>
+              <td>{{i.company_name}}</td>
+              <td>{{i.buyer_name}}</td>
+              <td>{{i.smv|floatformat:2}}</td>
+              <td>{{i.smv|mul:p.po_quantity|floatformat:2}}</td>
+              <td>{{p.po_quantity}}</td>
+              <td>{{i.smv|div:4|mul:p.po_quantity|floatformat:2}}</td>
+              <td>{{p.avg_price|mul:p.po_quantity|floatformat:2}}</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            
+            </tr>
+              {% endif %}
+            {% endfor %}
+            {% endfor %}
+          </tbody>
+          <tfoot>
+            <th colspan="3" class="text-right font-weight-bold">Total: </th>
+            <th id="pro_tt_smv" class="bg-yel"></th>
+            <th class="bg-yel p_tavg" id="pro_tt_Avg_smv" ></th>
+            <th class="pro_tt_qty bg-yel" id="pro_total_qty"></th>
+            <th class="pro_tt_eqv bg-yel" id="pro_total_eqv"></th>
+            <th class="pro_tt_ordval bg-yel" id="p_tt_oval"></th>
+            <th  class="bg-yel"><span id="pro_pct"></span>%</th>
+            <th id="pro_tt_avgRate"  class=" bg-yel"></th>
+            <th  id="pro_tt_bavgRate" class="pro_tt_bavgRate bg-yel"></th>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<!-- SHIPMENT REPORT  -->
+{% if  '/merchandise/capacity_booked/?' in request.get_full_path %}
+<div class="container-fluid mt-4 table-responsive" >
+  <table id="shipment_report" name="schedule" class="table table-bordered table-striped table-sm table-responsive table-hover table-primary display">
+    <thead class="fixed-header">
+        <tr>
+            <th class="text-left text-uppercase bg-primary" colspan="53">
+                <h6 >Report Panel</h6>
+            </th>
+        </tr>
+      <tr>
+        <th >SL.</th>
+        <th>Company Name</th>
+        <th>Job No</th>
+        <th>Buyer</th>
+        <th >Agent</th>
+        <th >Order No</th>
+        <th >Season</th>
+        <th >Prod. Dept</th>
+        <th>Sub. Dept</th>
+        <th>Sub. Dept Code</th>
+        <th>Image </th>
+        <th>File</th>
+        <th>Item</th>
+        <th>Style Ref. </th>
+        <th>Style Des </th>
+        <th> Country </th>
+        <th> Po Insert Date </th>
+        <th> Pub Ship Date </th>
+        <th> Fac Receive Date </th>
+        <th> Lead Time </th>
+        <th> SMV </th>
+        <th> Total SMV </th>
+        <th> Order Qnty </th>
+        <th> Uom </th>
+        <th> Order Qnty(Pcs) </th>
+        <th> Eqv. Basic Qty(Pcs) </th>
+        <th> Per Unit Price </th>
+        <th> Order Value </th>
+        <th> Commission </th>
+        <th> Net Order Value </th>
+        <th> Ex.Fac Qnty(Pcs) </th>
+        <th> Ex.Fac Value </th>
+        <th> Ex.Fac Bal(Pcs) </th>
+        <th> Ex.Fac Bal. Value </th>
+        <th> Ex.Fac Over(Pcs) </th>
+        <th> Ex.Fac Over Value </th>
+        <th> Short/Over/At Per </th>
+        <th> Order Status </th>
+        <th> Prod Catg </th>
+        <th> PO Rec Date </th>
+        <th> Days In Hand</th>
+        <th> Shipping Status</th>
+        <th> Dealing Merchant</th>
+        <th> Factory Merchant</th>
+        <th> Team Name</th>
+        <th> Ship Mode</th>
+        <th> Internal Ref Grouping</th>
+        <th> File No</th>
+        <th> Id</th>
+        <th> Pre-Cost Id</th>
+        <th> Delay Reason</th>
+        <th> Reamrks</th>
+      </tr>
+       
+    </thead>
+    <tfoot id="tfooter">
+      <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+      </tr>
+    </tfoot>
+    <tbody >
+      {% for i in orders %}
+        {% for p in i.order_entry.all %}
+         
+      <tr>
+
+        <!-- <td>{{forloop.counter}}</td> -->
+        <td></td>
+        <td>{{i.company_name}}</td>
+        <td>{{i.job_no}}</td>
+        <td>{{i.buyer_name}}</td>
+        <td>{{i.agent}}</td>
+        <td ><a href="{% url 'work_progress' p.id %}"> {{p.po_no}}</a></td>
+        <td >{{i.season}}</td>
+        <td >{{i.product_dept}}</td>
+        <td >{{i.sub_dept}}</td>
+        <td >{{i.sub_dept_code}}</td>
+        <td >
+          {% if i.image %}
+           <a href="{{i.image.url}}"  data-gall="portfolioGallery" class="venobox" title="">
+            <img height="30px" width="30px" src="{{i.image.url}}">
+          </a>
+          {% endif %}
+        </td>
+        
+        <td>
+          {% if i.file %}
+          <a href="{{i.file.url}}">File</a>
+          {% endif %}
+         </td>
+        <td>
+          {% for item in p.color_size.all|slice:":1" %}
+          {{item.gmt_items}}
+          {% endfor %}
+        </td>
+        <td>{{i.style_ref}}</td>
+        <td>{{i.style_description}}</td>
+        <td >{{p.country}}</td>
+        <td>{{p.insert_date}}</td>
+        <td class="pub_date">{{p.pub_shipment_date}}</td>
+        <td>{{p.fac_recieve_date}}</td>
+        <td>{{p.lead_time}}</td>
+        <td class="tsmv sv">{{i.smv}}</td>
+        <td id="totalSmv"></td>
+        <td class="oq tsmv oqb eqhidesmv">{{p.po_quantity|floatformat:2}}</td>
+        <td>{{i.order_uom}}</td>
+        <td >{{p.po_quantity}}</td>
+        <td >{{i.smv|div:4|mul:p.po_quantity|floatformat:2}}</td>
+        <td class="oq">{{p.avg_price|floatformat:2}}</td>
+        <td id="order_value"></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{p.order_status}}</td>
+        <td>{{i.product_cate}}</td>
+        <td >{{p.po_recieve_date}}</td>
+        <td id="lead_date"></td>
+        <td></td>
+        <td>{{i.dealing_merchant}}</td>
+        <td>{{i.factory_merchant}}</td>
+        <td>{{i.team_leader}}</td>
+        <td>{{i.ship_mode}}</td>
+        <td>{{p.internal_ref}}</td>
+        <td>{{p.file_no}}</td>
+        <td></td>
+        <td></td>
+        <td>{{p.delay_for}}</td>
+        <td>{{p.remarks}}</td>
+        
+      </tr>
+            
+         {% endfor %}
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <th colspan="20" class="text-right font-weight-bold">Total: </th>
+      <th id="rp_tAvg_smv" class="bg-yel"></th>
+      <th id="rp_tt_smv" class="bg-yel"></th>
+      <th id="rp_tt_ord" class="bg-yel"></th>
+      <th ></th>
+      <th id="rp_tt_ordq" class="bg-yel"></th>
+      <th id="rp_tt_eqv" class="bg-yel"></th>
+      <th id="rp_tt_up" class="bg-yel">0</th>
+      <th id="rp_tt_ov" class="bg-yel">0</th>
+      <th class="bg-yel">0</th>
+      <th colspan="23"></th>
+    </tfoot>
+    
+    
+  </table>
+</div>
+{% endif %}
+
+
+
+{% endblock body %}
+
+{% block script %}
+<!-- FOR SHOWING THE TODAY DATE  -->
+<script>
+    // FOR SHOWING THE TODAY DATE 
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10) {
+        dd = '0'+dd
+      } 
+    if(mm<10) {
+        mm = '0'+mm
+      } 
+    // today = yyyy + '/' + mm + '/' + dd;
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById('invoice_date').innerHTML = today;
+</script>
+
+<!-- SHIPMENT REPORT CALCULATION  -->
+<script>
+    $(document).ready(function() {
+      // Setup - add a text input to each footer cell
+      $('#shipment_report #tfooter th').each( function () {
+          var title = $(this).text();
+          $(this).html( '<input type="text" class="report-control" placeholder="Search" />' );
+      });
+
+      // CALCULATION FOR REPORT PANEL (ORDER VALUE) ===--->
+      // FOR MULTIPLICATION ORDERVALUE STARTS FROM 1
+      $('tr').each(function(){
+        var orderValue = 1;
+        $(this).find('.oq').each(function(){
+          var order_Value = $(this).text();
+          if(order_Value.length!==0)
+          {
+            orderValue *=  parseFloat(order_Value)
+            orderValue = orderValue.toFixed(2);
+          }
+        });
+        $(this).find('#order_value').html(orderValue);
+      });
+      
+      // CALCULATION FOR REPORT PANEL (TOTAL SMV VALUE) ===--->
+      $('tr').each(function(){
+        var totSmv = 1;
+        $(this).find('.tsmv').each(function(){
+          var allquan_per = $(this).text();
+          if(allquan_per.length!==0)
+          {
+            totSmv *=  parseFloat(allquan_per);
+	    totSmv = totSmv.toFixed(2)
+          }
+        });
+        $(this).find('#totalSmv').html(totSmv);
+      });
+      // CALCULATION FOR REPORT PANEL (DAYS IN HAND VALUE) ===--->
+      $('tr').each(function(){
+        var dayesInHand = 0;
+        $(this).find('.pub_date').each(function(){
+          var pubDate = $(this).text();
+          pubDate = new Date(pubDate);
+          var present_date = new Date();
+          var pred = present_date.getTime();
+          var pubd = pubDate.getTime();
+          if(pubDate.length!==0)
+          {
+            dit =  pred - pubd;
+            dayesInHand = (dit / (1000 * 3600 *24)).toFixed(0);
+          }
+        });
+        $(this).find('#lead_date').html(dayesInHand);
+      });
+
+      // CALCULATION FOR REPORT PANEL (HIDDEN SMV VALUE) ===--->
+      // HIDDEN FIELD FOR EQUIVALENT BASIC
+      $('tr').each(function(){
+        var finalsmv = 1;
+        $(this).find('.sv').each(function(){
+          var smv = $(this).text();
+          if(smv.length!==0)
+          {
+            // EQUIVALENT BASIC CONFIRMED DIVISION NUMBER IS 4
+            finalsmv = parseFloat(smv / 4) ;
+          }
+        });
+        $(this).find('#hiddensmv').html(finalsmv);
+      });
+
+      $('tr').each(function(){
+        var eqvb = 1;
+        $(this).find('.eqhidesmv').each(function(){
+          var hidesmv = $(this).text();
+          if(hidesmv.length!==0)
+          {
+            eqvb *= parseFloat(hidesmv);
+	    eqvb = eqvb.toFixed(2)
+          }
+        });
+        $(this).find('#eqvbasic').html(eqvb);
+      });
+
+      // DataTable
+      var table = $('#shipment_report').DataTable({
+        drawCallback: function(){
+          const rp_tAvg_smv = this.api().column(20,{search:'applied'}).data().toArray().reduce((total,rp_tAvg_smv) => total+=Number(rp_tAvg_smv.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tAvg_smv').text(` ${(rp_tAvg_smv)}`);
+
+          const rp_tt_smv = this.api().column(21,{search:'applied'}).data().toArray().reduce((total,rp_tt_smv) => total+=Number(rp_tt_smv.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tt_smv').text(` ${(rp_tt_smv)}`);
+  
+          const rp_tt_ord = this.api().column(22,{search:'applied'}).data().toArray().reduce((total,rp_tt_ord) => total+=Number(rp_tt_ord.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tt_ord').text(` ${(rp_tt_ord)}`);
+  
+          const rp_tt_ordq = this.api().column(24,{search:'applied'}).data().toArray().reduce((total,rp_tt_ordq) => total+=Number(rp_tt_ordq.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tt_ordq').text(` ${(rp_tt_ordq)}`);
+  
+          const rp_tt_eqv = this.api().column(25,{search:'applied'}).data().toArray().reduce((total,rp_tt_eqv) => total+=Number(rp_tt_eqv.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tt_eqv').text(` ${(rp_tt_eqv)}`);
+  
+          const rp_tt_up = this.api().column(26,{search:'applied'}).data().toArray().reduce((total,rp_tt_up) => total+=Number(rp_tt_up.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tt_up').text(` ${(rp_tt_up)}`);
+  
+          const rp_tt_ov = this.api().column(27,{search:'applied'}).data().toArray().reduce((total,rp_tt_ov) => total+=Number(rp_tt_ov.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tt_ov').text(` ${(rp_tt_ov)}`);
+  
+        },
+    
+        "lengthMenu": [[10,50,100, 150, -1], [10,50,100,150, "All"]],
+        //"scrollY":        "500px",
+        //"scrollCollapse": true,
+          initComplete: function () {
+              // Apply the search
+              this.api().columns().every( function () {
+                  var that = this;
+   
+                  $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                      if ( that.search() !== this.value ) {
+                          that
+                              .search( this.value )
+                              .draw();
+                      }
+                  } );
+              } );
+          }
+      });
+      // FOR GENERATING SERIAL NUMBER
+      table.on( 'order.dt search.dt', function () {
+        table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+  } );
+</script>
+
+<!-- CONFIRMED REPORT CALCULATION  -->
+<script>
+  $(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#confirmed #tfooter th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" class="schedule-form" placeholder="Search" />' );
+    } );
+    var collapsedGroups = {};
+ 
+    // DataTable
+    var table = $('#confirmed').DataTable({
+      orderFixed: [[ 2, 'asc' ]],
+            rowGroup: {
+            endRender: null,
+            startRender: function ( rows, group ) {
+            var collapsed = !!collapsedGroups[group];
+            rows.nodes().each(function (r) {
+                  r.style.display = collapsed ? 'none' : '';
+                });
+                var smv = rows
+                .data()
+                .pluck(3)
+                .sum();
+                //qty = $.fn.dataTable.render.number( '.', ',', 0, '', '' ).display( qty );
+                var con_tt_avg_smvs = rows
+                .data()
+                .pluck(4)
+                .sum();
+                //qty = $.fn.dataTable.render.number( '.', ',', 0, '', '' ).display( qty );
+                var ord_Qty = rows
+                .data()
+                .pluck(5)
+                .sum();
+                
+                var eqvs = rows
+                .data()
+                .pluck(6)
+                .sum();
+                var ttValue = rows
+                .data()
+                .pluck(7)
+                .sum();
+                //salesGroupSum = $.fn.dataTable.render.number( '.', ',', 2, '', '' ).display( salesGroupSum );
+
+                var con_tt_avg_smv = con_tt_avg_smvs.toFixed(2);
+                var eqv = eqvs.toFixed(2);
+                var ag_smv = (con_tt_avg_smv / ord_Qty);
+                var avg_smv = ag_smv.toFixed(2);
+
+                var ag_Rate = (ttValue / ord_Qty);
+                var avg_Rate = ag_Rate.toFixed(2);
+                var b_ag_rate = (ttValue / eqv);
+                var basic_avg_rate = b_ag_rate.toFixed(2);
+                var total_order_value = document.getElementById("c_tt_oval").innerHTML;
+                var percentage_tv = (ttValue/total_order_value)*100;
+                var ttpercentage = Math.round(percentage_tv);
+
+                return $('<tr/>')
+                   
+                    .append( '<td colspan="2"> </td>' )
+                    .append( '<td> '+group+'</td>' )
+                    // AVG_SMV = TOTAL_average_SMV / TOTAL_QUANTITY
+                    .append( '<td class="c_avg_smv">'+avg_smv+'</td>' )
+                    .append( '<td class="c_tt_avg_smv">'+con_tt_avg_smv+'</td>' )
+                    .append( '<td>'+ord_Qty+'</td>' )
+                    .append( '<td>'+eqv+'</td>' )
+                    .append( '<td>'+ttValue+'</td>' )
+                    .append( '<td class="c_pct">'+ttpercentage+ '%'+ '</td>' )
+                    // AVG_RATE = TOTAL_ORDER_VALUE / TOTAL_ORDER_QUANTITY
+                    .append( '<td class="c_avgRate">'+avg_Rate+'</td>' )
+                    // AVG_BASIC_RATE = TOTAL_ORDER_VALUE / TOTAL_BOOKED_BASIC_QTY
+                    .append( '<td class="c_bavgRate">'+basic_avg_rate+'</td>' )
+            .attr('data-name', group)
+            .toggleClass('collapsed', collapsed);
+
+          },
+          
+          dataSrc: 2
+        },
+        
+      // NOTE : MAKE SURE TO FIXED THE COLUMN NUMBER WHERE YOU WANT TO CALCULATE
+      drawCallback: function(){
+        const con_tt_qty = this.api().column(5,{search:'applied'}).data().toArray().reduce((total,con_tt_qty) => total+=Number(con_tt_qty.replace(/[^0-9\.]/g,'')),0);
+        $('.con_tt_qty').text(` ${(con_tt_qty)}`);
+
+        const con_tt_eqv = this.api().column(6,{search:'applied'}).data().toArray().reduce((total,con_tt_eqv) => total+=Number(con_tt_eqv.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+        $('.con_tt_eqv').text(` ${(con_tt_eqv)}`);
+
+        const con_tt_ordval = this.api().column(7,{search:'applied'}).data().toArray().reduce((total,con_tt_ordval) => total+=Number(con_tt_ordval.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+        $('.con_tt_ordval').text(` ${(con_tt_ordval)}`);
+
+      },
+    
+
+      "lengthMenu": [[50, 100, -1], [50, 100, "All"]],
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+          }
+        });
+        
+    // Change the fixed ordering when the data source is updated
+    table.on( 'rowgroup-datasrc', function ( e, dt, val ) {
+      table.order.fixed( {pre: [[ val, 'asc' ]]} ).draw();
+      } );
+
+      $('a.group-by').on( 'click', function (e) {
+          e.preventDefault();
+
+          table.rowGroup().dataSrc( $(this).data('column') );
+      } );
+
+    // Collapse Groups
+    $('#confirmed tbody tr.group-start').each(function() {
+        var name = $(this).data('name');
+        collapsedGroups[name] = !collapsedGroups[name];
+    });
+    table.draw(false);
+
+      $('#confirmed tbody').on('click', 'tr.group-start', function () {
+          var name = $(this).data('name');
+          collapsedGroups[name] = !collapsedGroups[name];
+          table.draw(false);
+      });
+
+      $(document).ready(function(){
+        var c_tt_qty = document.getElementById("con_total_qty").innerHTML;
+        var sum = 0;
+        $('.c_tt_avg_smv').each(function(index){
+          var value = $(this).text();
+          var parsedValue = parseFloat(value);
+          sum =sum + parsedValue;
+          return sum;
+        });
+        var result = sum / c_tt_qty;
+        document.getElementById("con_tt_smv").innerHTML = result.toFixed(2);
+      });
+
+      $(document).ready(function(){
+        var sum = 0;
+        $('.c_tt_avg_smv').each(function(index){
+          var value = $(this).text();
+          var parsedValue = parseFloat(value);
+          sum =sum + parsedValue;
+         
+        });
+        document.getElementById("con_tt_Avg_smv").innerHTML = sum.toFixed(2);
+      });
+
+      $(document).ready(function(){
+        var sum = 0;
+        $('.c_pct').each(function(index){
+          var value = $(this).text();
+          var parsedValue = parseFloat(value);
+          sum += parsedValue;
+        });
+        document.getElementById("con_pct").innerHTML = Math.round(sum);
+      });
+      
+      $(document).ready(function(){
+        var c_total_ord_Value = document.getElementById('c_tt_oval').innerHTML;
+        var c_total_ord_qty = document.getElementById('con_total_qty').innerHTML;
+        var result = c_total_ord_Value / c_total_ord_qty;
+        document.getElementById("con_ttAvgRate").innerHTML = result.toFixed(2);
+        document.getElementById("con_tt_avgRate").innerHTML = result.toFixed(2);
+      });
+
+      $(document).ready(function(){
+        var c_total_ord_Value = document.getElementById('c_tt_oval').innerHTML;
+        var c_total_eqv_qty = document.getElementById('con_total_eqv').innerHTML;
+        var result = c_total_ord_Value / c_total_eqv_qty;
+        document.getElementById("con_ttBavgRate").innerHTML = result.toFixed(2);
+        document.getElementById("con_tt_bavgRate").innerHTML = result.toFixed(2);
+      });
+      // FOR GENERATING SERIAL NUMBER
+      table.on( 'order.dt search.dt', function () {
+        table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+
+    });
+</script>
+
+<!-- PROJECTED REPORT CALCULATION  -->
+<script>
+  $(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#projected #tfooter th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" class="schedule-form" placeholder="Search" />' );
+    });
+    
+
+    var collapsedGroups = {};
+ 
+    // DataTable
+    var x = $('#projected').DataTable({
+            orderFixed: [[ 2, 'asc' ]],
+            rowGroup: {
+            endRender: null,
+            startRender: function ( rows, group ) {
+            var collapsed = !!collapsedGroups[group];
+            rows.nodes().each(function (r) {
+                  r.style.display = collapsed ? 'none' : '';
+                });
+                var smv = rows
+                .data()
+                .pluck(3)
+                .sum();
+                //qty = $.fn.dataTable.render.number( '.', ',', 0, '', '' ).display( qty );
+                var pro_tt_avg_smvs = rows
+                .data()
+                .pluck(4)
+                .sum();
+                //qty = $.fn.dataTable.render.number( '.', ',', 0, '', '' ).display( qty );
+                var ord_Qty = rows
+                    .data()
+                    .pluck(5)
+                    .sum();
+                    //salesGroupSum = $.fn.dataTable.render.number( '.', ',', 2, '', '' ).display( salesGroupSum );
+                var peqvs = rows
+                    .data()
+                    .pluck(6)
+                    .sum();
+                var pttValue = rows
+                    .data()
+                    .pluck(7)
+                    .sum();
+
+		var pro_tt_avg_smv = pro_tt_avg_smvs.toFixed(2);
+                var peqv = peqvs.toFixed(2);
+                var p_ag_smv = (pro_tt_avg_smv / ord_Qty);
+                var p_avg_smv = p_ag_smv.toFixed(2);
+
+                var p_ag_Rate = (pttValue / ord_Qty);
+                var p_avg_Rate = p_ag_Rate.toFixed(2);
+                var p_b_ag_rate = (pttValue / peqv);
+                var p_basic_avg_rate = p_b_ag_rate.toFixed(2);
+
+                var p_total_order_value = document.getElementById("p_tt_oval").innerHTML;
+                var p_percentage_tv = ((pttValue/p_total_order_value)*100).toFixed(2);
+                var p_ttpercentage = Math.round(p_percentage_tv);
+
+                return $('<tr/>')
+                    .append( '<td colspan="2"> </td>' )
+                    .append( '<td> '+group+'</td>' )
+                    .append( '<td class="p_avg_smv">'+p_avg_smv+'</td>' )
+                    .append( '<td class="p_tt_avg_smv">'+pro_tt_avg_smv+'</td>' )
+                    .append( '<td>'+ord_Qty+'</td>' )
+                    .append( '<td>'+peqv+'</td>' )
+                    .append( '<td>'+pttValue+'</td>' )
+                    .append( '<td class="p_pct">'+p_ttpercentage+ '%'+ '</td>' )
+                    .append( '<td class="p_avgRate">'+p_avg_Rate+'</td>' )
+                    .append( '<td class="p_bavgRate">'+p_basic_avg_rate+'</td>' )
+            .attr('data-name', group)
+            .toggleClass('collapsed', collapsed);
+                },
+            dataSrc: 2
+            },
+            
+            //=================================
+            // NOTE : MAKE SURE TO FIXED THE COLUMN NUMBER WHERE YOU WANT TO CALCULATE
+            drawCallback: function(){
+              const pro_tt_qty = this.api().column(5,{search:'applied'}).data().toArray().reduce((total,pro_tt_qty) => total+=Number(pro_tt_qty.replace(/[^0-9\.]/g,'')),0);
+              $('.pro_tt_qty').text(` ${(pro_tt_qty)}`);
+      
+              const pro_tt_eqv = this.api().column(6,{search:'applied'}).data().toArray().reduce((total,pro_tt_eqv) => total+=Number(pro_tt_eqv.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+              $('.pro_tt_eqv').text(` ${(pro_tt_eqv)}`);
+      
+              const pro_tt_ordval = this.api().column(7,{search:'applied'}).data().toArray().reduce((total,pro_tt_ordval) => total+=Number(pro_tt_ordval.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+              $('.pro_tt_ordval').text(` ${(pro_tt_ordval)}`);
+      
+            },
+
+      "lengthMenu": [[50, 100, -1], [ 50, 100, "All"]],
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        }
+    });
+    // Change the fixed ordering when the data source is updated
+     x.on( 'rowgroup-datasrc', function ( e, dt, val ) {
+      x.order.fixed( {pre: [[ val, 'asc' ]]} ).draw();
+      } );
+
+      $('a.group-by').on( 'click', function (e) {
+          e.preventDefault();
+
+          x.rowGroup().dataSrc( $(this).data('column') );
+      } );
+
+    // Collapse Groups
+    $('#projected tbody tr.group-start').each(function() {
+        var name = $(this).data('name');
+        collapsedGroups[name] = !collapsedGroups[name];
+    });
+    x.draw(false);
+      $('#projected tbody').on('click', 'tr.group-start', function () {
+          var name = $(this).data('name');
+          collapsedGroups[name] = !collapsedGroups[name];
+          x.draw(false);
+      });
+
+      $(document).ready(function(){
+        var sum = 0;
+        $('.p_tt_avg_smv').each(function(index){
+          var value = $(this).text();
+          var parsedValue = parseFloat(value);
+          sum =sum + parsedValue;
+        });
+        document.getElementById("pro_tt_Avg_smv").innerHTML = sum.toFixed(2);
+      });
+
+      $(document).ready(function(){
+        var p_tt_qty = document.getElementById("pro_total_qty").innerHTML;
+        var sum = 0;
+        $('.p_tt_avg_smv').each(function(index){
+          var value = $(this).text();
+          var parsedValue = parseFloat(value);
+          sum =sum + parsedValue;
+          return sum;
+        });
+        var result = sum / p_tt_qty;
+
+        document.getElementById("pro_tt_smv").innerHTML = result.toFixed(2);
+
+      });
+
+
+      $(document).ready(function(){
+        var sum = 0;
+        $('.p_pct').each(function(index){
+          var value = $(this).text();
+          var parsedValue = parseFloat(value);
+          sum += parsedValue;
+        });
+        document.getElementById("pro_pct").innerHTML = Math.round(sum);
+      });
+
+      $(document).ready(function(){
+        var p_total_ord_Value = document.getElementById('p_tt_oval').innerHTML;
+        var p_total_ord_qty = document.getElementById('pro_total_qty').innerHTML;
+        var result = p_total_ord_Value / p_total_ord_qty;
+        document.getElementById("pro_tt_avgRate").innerHTML = result.toFixed(2);
+        document.getElementById("pro_ttAvgRate").innerHTML = result.toFixed(2);
+      });
+
+      $(document).ready(function(){
+        var p_total_ord_Value = document.getElementById('p_tt_oval').innerHTML;
+        var p_total_eqv_qty = document.getElementById('pro_total_eqv').innerHTML;
+        var result = p_total_ord_Value / p_total_eqv_qty;
+        document.getElementById("pro_tt_bavgRate").innerHTML = result.toFixed(2);
+        document.getElementById("pro_ttBAvgRate").innerHTML = result.toFixed(2);
+      });
+     
+      // FOR GENERATING SERIAL NUMBER
+      table.on( 'order.dt search.dt', function () {
+        table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+      }).draw();
+});
+
+</script>
+
+<!-- PROJECTED AND CONFIRMED REPORT CALCULATION TABLE  -->
+<script>
+  $(document).ready(function() {
+    var collapsedGroups = {};
+    // Setup - add a text input to each footer cell
+    $('#pc_report #tfooter th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" class="schedule-form" placeholder="Search" />' );
+    } );
+   
+    // DataTable
+    var table = $('#pc_report').DataTable({
+      //"processing": true,
+      //here comes my ajax injection, left out for live.datatables example
+      orderFixed: [[ 2, 'asc' ]],
+      rowGroup: {
+          endRender: null,
+          startRender: function ( rows, group ) {
+          var collapsed = !!collapsedGroups[group];
+          rows.nodes().each(function (r) {
+                r.style.display = collapsed ? 'none' : '';
+              });
+              var smv = rows
+              .data()
+              .pluck(3)
+              .sum();
+              //qty = $.fn.dataTable.render.number( '.', ',', 0, '', '' ).display( qty );
+              var tt_smvs = rows
+              .data()
+              .pluck(4)
+              .sum();
+              //qty = $.fn.dataTable.render.number( '.', ',', 0, '', '' ).display( qty );
+              var ord_Qty = rows
+                  .data()
+                  .pluck(5)
+                  .sum();
+                  //salesGroupSum = $.fn.dataTable.render.number( '.', ',', 2, '', '' ).display( salesGroupSum );
+              var booked_basics = rows
+                  .data()
+                  .pluck(8)
+                  .sum();
+                  //salesGroupSum = $.fn.dataTable.render.number( '.', ',', 2, '', '' ).display( salesGroupSum );
+              var tt_ordValue = rows
+                  .data()
+                  .pluck(16)
+                  .sum();
+                  //salesGroupSum = $.fn.dataTable.render.number( '.', ',', 2, '', '' ).display( salesGroupSum );
+              var tt_smv = tt_smvs.toFixed(2)
+	      var booked_basic = booked_basics.toFixed(2)
+              var pc_ag_smv = (tt_smv / ord_Qty);
+              var pc_avg_smv = pc_ag_smv.toFixed(2);
+
+              var pc_ag_Rate = (tt_ordValue / ord_Qty);
+              var pc_avg_Rate = pc_ag_Rate.toFixed(2);
+
+              var pc_basic_ag_rate = (tt_ordValue / booked_basic);
+              var pc_basic_avg_rate = pc_basic_ag_rate.toFixed(2);
+
+              var std = (pc_avg_Rate - pc_basic_avg_rate);
+              var stdv = std.toFixed(2);
+	      
+
+              var pc_total_order_value = document.getElementById("pc_tt_oval").innerHTML;
+              var pc_percentage_tv = (tt_ordValue/pc_total_order_value)*100;
+              var pc_ttpercentage = pc_percentage_tv.toFixed(2);
+
+              return $('<tr/>')
+              .append( '<td colspan="2"> </td>' )
+              .append( '<td > '+group+'</td>' )
+                  .append( '<td class="sm">'+pc_avg_smv+'</td>' )
+                  .append( '<td class="total_avg_smv">'+tt_smv+'</td>' )
+                  .append( '<td class="total_oqty">'+ord_Qty+'</td>' )
+                  .append( '<td>'+0+'</td>' )
+                  .append( '<td>'+0+'</td>' )
+                  .append( '<td class="total_bbc">'+booked_basic+'</td>' )
+                  .append( '<td>'+0+'</td>' )
+                  .append( '<td>'+0+'</td>' )
+                  .append( '<td>'+0+'</td>' )
+                  .append( '<td>'+0+'</td>' )
+                  .append( '<td>'+0+'</td>' )
+                  .append( '<td>'+0+'</td>' )
+                  .append( '<td>'+0+'</td>' )
+                  .append( '<td class="total_oValue">'+tt_ordValue+'</td>' )
+                  .append( '<td class="pc_avgRate" >'+pc_avg_Rate+'</td>' )
+                  .append( '<td class="pc_ttPct">'+pc_ttpercentage+ '%'+ '</td>' )
+                  .append( '<td class="pc_baRate">'+pc_basic_avg_rate+'</td>' )
+                  .append( '<td >'+stdv+'</td>' )          
+          .attr('data-name', group)
+          .toggleClass('collapsed', collapsed);
+          //$(".sm").val();
+              },
+        dataSrc: 2,
+      },
+     // dom: 'lfrtBip',
+     // buttons: [ 'print', 'excel', 'pdf' ],
+     
+     
+      //calculate total salary and put that into span#totalsalary 
+      // NOTE : MAKE SURE TO FIXED THE COLUMN NUMBER WHERE YOU WANT TO CALCULATE
+      drawCallback: function(){
+
+        const tt_ord_qty = this.api().column(5,{search:'applied'}).data().toArray().reduce((total,ord_qty) => total+=Number(ord_qty.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+        $('.tt_ord_qty').text(` ${(tt_ord_qty)}`);
+
+        const tt_all_cap = this.api().column(6,{search:'applied'}).data().toArray().reduce((total,all_cap) => total+=Number(all_cap.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+        $('#tt_all_cap').text(` ${(tt_all_cap)}`);
+
+        const tt_all_pct = this.api().column(7,{search:'applied'}).data().toArray().reduce((total,all_pct) => total+=Number(all_pct.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+        $('#tt_all_pct').text(` ${(tt_all_pct)}`);
+
+        const tt_bk_qtt = this.api().column(8,{search:'applied'}).data().toArray().reduce((total,bk_qtt) => total+=Number(bk_qtt.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+        $('.tt_bk_qtt').text(` ${(tt_bk_qtt)}`);
+
+        const tt_od_value = this.api().column(16,{search:'applied'}).data().toArray().reduce((total,od_value) => total+=Number(od_value.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+        $('.tt_od_value').text(` ${(tt_od_value)}`);
+      },
+      
+      "lengthMenu": [[ 50, 100, -1], [ 50, 100, "All"]],
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        },
+        
+    });
+    
+    //HELLO DATATABLE FINISH
+     // Change the fixed ordering when the data source is updated
+     table.on( 'rowgroup-datasrc', function ( e, dt, val ) {
+      table.order.fixed( {pre: [[ val, 'asc' ]]} ).draw();
+      } );
+
+      $('a.group-by').on( 'click', function (e) {
+          e.preventDefault();
+
+          table.rowGroup().dataSrc( $(this).data('column') );
+      } );
+
+    // Collapse Groups
+    $('#pc_report tbody tr.group-start').each(function() {
+        var name = $(this).data('name');
+        collapsedGroups[name] = !collapsedGroups[name];
+    });
+    table.draw(false);
+
+    // $(document).ready(function() {
+    //   $(".sm").css("background-color", "yellow");
+    // });
+
+    // $(".sm ").each(function() {
+    //   var sum = 0;
+    //   var value = $(this).text();
+    // })
+    $(document).ready(function(){
+      var sum=0;
+      var qt_sum = 0;
+      $('.total_oqty').each(function(index){
+        var value = $(this).text();
+        var parsedValue = parseFloat(value);
+        qt_sum =qt_sum + parsedValue;
+        return qt_sum;
+      });
+      $('.total_avg_smv').each(function(index){
+        var value = $(this).text();
+        var parsedValue = parseFloat(value);
+        sum =sum + parsedValue;
+        return sum;
+      });
+      var result = sum /qt_sum ;
+      document.getElementById("tt_smv").innerHTML = result.toFixed(2);
+    });
+
+    $(document).ready(function(){
+      var sum = 0;
+      var qt_sum = 0;
+      $('.total_oqty').each(function(index){
+        var value = $(this).text();
+        var parsedValue = parseFloat(value);
+        qt_sum =qt_sum + parsedValue;
+        return qt_sum;
+      });
+
+      $('.total_oValue').each(function(index){
+        var value = $(this).text();
+        var parsedValue = parseFloat(value);
+        sum += parsedValue;
+        return sum;
+      });
+      var results = sum / qt_sum ;
+      document.getElementById("tt_avg_rate").innerHTML = results.toFixed(2);
+      document.getElementsByClassName("total_avgRate_sum").innerHTML = results;
+    });
+
+    $(document).ready(function(){
+      var sum = 0;
+      $('.pc_ttPct').each(function(index){
+        var value = $(this).text();
+        var parsedValue = parseFloat(value);
+        sum += parsedValue;
+      });
+      document.getElementById("tt_buy_share").innerHTML = Math.round(sum);
+    });
+
+    $(document).ready(function(){
+      var sum = 0;
+      var tt_ord_value_sum = 0;
+      $('.total_oValue').each(function(index){
+        var value = $(this).text();
+        var parsedValue = parseFloat(value);
+        tt_ord_value_sum += parsedValue;
+        return tt_ord_value_sum;
+      });
+      $('.total_bbc').each(function(index){
+        var value = $(this).text();
+        var parsedValue = parseFloat(value);
+        sum += parsedValue;
+        return sum;
+      });
+      var result = tt_ord_value_sum / sum ;
+      document.getElementById("tt_bas_rate").innerHTML = result.toFixed(2);
+    });
+
+  
+    $(document).ready(function(){
+      var total_average_rate = document.getElementById("tt_avg_rate").innerHTML;
+      var tt_basic_avgRate = document.getElementById("tt_bas_rate").innerHTML;
+      var result = total_average_rate - tt_basic_avgRate;
+      document.getElementById("tt_std_div").innerHTML = result.toFixed(2);
+    });
+
+    $(document).ready(function(){
+      var sum = 0;
+      $('.total_avg_smv').each(function(index){
+        var value = $(this).text();
+        var parsedValue = parseFloat(value);
+        sum += parsedValue;
+      });
+    document.getElementById("tt_avg_smv").innerHTML = sum.toFixed(2);
+    });
+
+      $('#pc_report tbody').on('click', 'tr.group-start', function () {
+          var name = $(this).data('name');
+          collapsedGroups[name] = !collapsedGroups[name];
+          table.draw(false);
+      });
+      // FOR GENERATING SERIAL NUMBER
+      table.on( 'order.dt search.dt', function () {
+        table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+   
+});
+
+</script>
+
+<!-- FOR PROJECTED CONFIRMED DATE RANGE  -->
+<script type = "text/javascript" >
+  // FOR PROJECTED CONFIRMED DATE RANGE
+  document.getElementById("start_date").addEventListener("change", function() {
+  var date1 = this.value;
+  var event = new Date(date1);
+  let start_date = JSON.stringify(event)
+  start_date = start_date.slice(1,11)
+  document.getElementById('show_sd').innerHTML = start_date;
+});
+  document.getElementById("end_date").addEventListener("change", function() {
+  var date2 = this.value;
+  var event2 = new Date(date2);
+  let end_date = JSON.stringify(event2)
+  end_date = end_date.slice(1,11)
+  document.getElementById('show_ed').innerHTML = end_date;
+});
+</script> 
+{% endblock script %}
+
+

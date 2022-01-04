@@ -1,0 +1,226 @@
+{% extends "index.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %} Lakshma | Order Report {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    
+    .table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    width: 140px;
+}
+tfoot {
+     display: table-header-group;
+}
+</style>
+{% endblock css %}
+
+{% block body %}
+
+
+  <div class="container-fluid">
+    
+      <div class="text-center mt-5 font-weight-bold"><h3>Job Order Selection Form</h3></div>
+      <div class="card mt-2">
+          <div class="card-header text-uppercase bg-secondary">
+            <h3 class="card-title">Search Here</h3>
+          </div>
+          <div class=" search mt-3 text-center">
+            <form method="GET" class="ml-2" action="{% url 'order_report' %}">
+              <table  class="table table-bordered table-responsive  table-sm">
+                <thead>
+                  <tr>
+                    <th width="150px;">Company Name</th>
+                    <th >Buyer Name</th>
+                    <th >Job No </th>
+                    <th >Style Ref</th>
+                    <th >Internal Ref</th>
+                    <th >File No.</th>
+                    <th >Order No.</th>
+                    <th >Start Date</th>
+                    <th >End Date</th>
+                  </tr>
+                  
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <select class="form-control">
+                        <option>Lakhsma</option>
+                        <option>Suxtex</option>
+                        
+                      </select>
+                    </td>
+                    <td>
+                      <select class="form-control">
+                        <option>Asia</option>
+                        <option>Europe</option>
+                        
+                      </select>
+                    </td>
+                    <td>
+                        <input type="text" name="" class="form-control">
+                    </td>
+
+                    <td>
+                        <input type="text" name="" class="form-control">
+                    </td>
+                    <td>
+                        <input type="text" name="" class="form-control">
+                    </td>
+                    <td>
+                        <input type="text" name="" class="form-control">
+                    </td>
+                    <td><input type="text" name="" class="form-control"></td>
+                    
+                    
+                    <td><input type="date" name="" class="form-control"></td>
+                    <td><input type="date" name="" class="form-control"></td>
+
+
+                    <!-- <td><button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search" aria-hidden="true"></i></button>
+                      <a href="{% url 'order_report' %}" type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
+                    </td> -->
+                  </tr>
+                  
+                </tbody>
+               
+              </table>
+              <div class="container justify-content-center align-content-center text-center mb-3">
+                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Show</button>
+                <a href="{% url 'order_selection' %}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i> Reset</a>
+              </div>
+              
+            </form>
+            <div class="container text-center">
+                <table>
+                  <thead >
+                      <td ><select class="form-control">
+                        <option>2021</option>
+                        <option>2020</option>
+                        
+                      </select>
+                      </td>
+                      <td><button type="" class="btn btn-sm btn-success ml-4 ">Jan</button></td>
+                      <td><button type="" class="btn btn-sm btn-success ml-4">Feb</button></td>
+                      <td><button type="" class="btn btn-sm btn-success ml-4">Mar</button></td>
+                      <td><button type="" class="btn btn-sm btn-success ml-4">Apr</button></td>
+                      <td><button type="" class="btn btn-sm btn-success ml-4">May</button></td>
+                      <td><button type="" class="btn btn-sm btn-success ml-4">Jun</button></td>
+                      <td><button type="" class="btn btn-sm btn-success ml-4">Jul</button></td>
+                      <td><button type="" class="btn btn-sm btn-success ml-4">Aug</button></td>
+                      <td><button type="" class="btn btn-sm btn-success ml-4">Sep</button></td>
+                      <td><button type="" class="btn btn-sm btn-success ml-4">Nov</button></td>
+                      <td><button type="" class="btn btn-sm btn-success ml-4">Dec</button></td>
+  
+                  </thead>
+                </table>
+              </div>
+          </div>
+  
+          <!-- /.card-header -->
+          <div class="container-fluid mt-5">
+            <!-- <div class="card-header">
+              <h3 class="text-center">Projected and Comfirmed</h3>
+            </div> -->
+            <table id="selection" name="selection" class="table table-bordered table-striped  table-responsive display">
+              <thead class="bg-secondary">
+                
+                <tr>
+                  <th>SL.</th>
+                  <th>Year
+                   
+                  </th>
+                  <th>Job No</th>
+                  <th>Company</th>
+                  <th >Buyer Name</th>
+                  <th >Style Ref. No</th>
+                  <th >Internal Ref</th>
+                  <th >File No.</th>
+                  <th>Job Qty.</th>
+                   <th >PO Number</th>
+                  <th>PO Quantity</th>
+                  <th>Shipment Date</th>
+                  <th>Precost Id </th>
+                  
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                    <th>SL.</th>
+                  <th>Year
+                   
+                  </th>
+                  <th>Job No</th>
+                  <th>Company</th>
+                  <th >Buyer Name</th>
+                  <th >Style Ref. No</th>
+                  <th >Internal Ref</th>
+                  <th >File No.</th>
+                  <th>Job Qty.</th>
+                   <th >PO Number</th>
+                  <th>PO Quantity</th>
+                  <th>Shipment Date</th>
+                  <th>Precost Id </th>
+                </tr>
+            </tfoot>
+              
+              <tbody>
+                
+                <tr>
+
+                  <td>1.</td>
+                  <td>AST</td>
+                  <td>AFL</td>
+                  <td>7.17</td>
+                  <td>240000</td>
+                  <td >0</td>
+                  <td >0</td>
+                  <td >206800</td>
+                  <td >0</td>
+                  <td >-286,800</td>
+                  
+                  <td>0 </td>
+                  <td>240000</td>
+                  <td>458880.00</td>
+                  
+                </tr>
+                <tr>
+
+                  <td>2.</td>
+                  <td>HST</td>
+                  <td>FFL</td>
+                  <td>9.17</td>
+                  <td>260000</td>
+                  <td >0</td>
+                  <td >0</td>
+                  <td >206800</td>
+                  <td >0</td>
+                  <td >-286,800</td>
+                  
+                  <td>0 </td>
+                  <td>240000</td>
+                  <td>458880.00</td>
+                  
+                </tr>
+                
+              </tbody>
+             
+              
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+  </div>
+
+
+{% endblock body %}
+
+{% block script %}
+
+  
+{% endblock script %}
+

@@ -1,0 +1,426 @@
+{% extends "index.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %} Lakshma | Report-Purchase Form To Bank {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    .bg-gray{
+        background-color:rgb(226, 218, 218);
+    }
+    .bg-nevi{
+        background-color:#085d63;
+        color:white;
+    }
+
+    .bg-pur{
+      background-color: #594c6f;
+      color: white;
+    }
+    .bg-pink{
+      background-color: #92466f;
+      color: white;
+    }
+    
+    .bg-olive{
+      background-color: #7f821d;
+      color: white;
+    }
+    tfoot {
+      display:table-header-group;
+    }
+</style>
+{% endblock css %}
+
+{% block body %}
+
+<section class="content ">
+    <div class="container-fluid">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h4>Tk.</h4>
+                <p>Total Purchase Items</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h4>{{total_purchase_amount|floatformat:2}} Tk. </h4>
+                <p>Total purchase amount</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-balance-scale-left"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+        <!-- ./col -->
+  
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-pur">
+            <div class="inner">
+              <h4>{{total_advance|floatformat:2}} TK.</h4>
+              <p>Total advance payment </p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-money-check-alt"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+  
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-nevi">
+            <div class="inner">
+              <h4>{{total_due_amount|floatformat:2}} Tk.</h4>
+              <p>Total due amount</p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-money-bill"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+  
+         
+  
+      </div>
+    </div>
+  </section>
+  <div class="container-fluid">
+    <div class="d-flex">
+      <div class="mr-auto p-2">
+        <a type="button" href="{% url 'purchase' %}" class="btn btn-sm btn-info gr"><i class="fa fa-plus" aria-hidden="true"></i> Add Purchase</a>
+        <a type="button" href="{% url 'purchase_report' %}" class="btn btn-sm btn-success gr">Purchase Report</a>
+      </div>
+      <div class="p-2">
+        <a  type="btn" class="btn btn-sm btn-light " onClick="javascript:history.go(-1);"><i class="fa fa-undo" aria-hidden="true"></i></a>
+      </div>
+    </div>
+   
+      <div class="card mt-2">
+          <div class="card-header">
+            <h3 class="card-title">Purchase Items</h3>
+          </div>
+          <div class="  search mt-3 text-center">
+            <h5><strong>Advance Search: </strong> </h5>
+            <form method="GET" class="p-3" action="{% url 'purchase_report' %}">
+              <div class=" table-responsive">
+                <table  class="table table-bordered  table-sm">
+                  <thead class="bg-secondary">
+                    <tr>
+                      <th>Factory Name</th>
+                      <th>Job No.</th>
+                      <th>Order No.</th>
+                      <th>Buyer Name</th>
+                      <th>Bill No</th>
+                      <th>Payment Status</th>
+                      <th>Purchase Date </th>
+                      <th>Start Date</th>
+                      <th>End Date </th>
+                      <!-- <th>Action</th> -->
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ myFilter.form.factory_name|attr:"class:form-control"}}</td>
+                      <td>{{ myFilter.form.job_no|attr:"class:form-control"}}</td>
+                      <td>{{ myFilter.form.order_no|attr:"class:form-control"}}</td>
+                      <td>{{ myFilter.form.buyer_name|attr:"class:form-control"}}</td>
+                      <td>{{ myFilter.form.bill_no|attr:"class:form-control"}}</td>
+                      <td>{{ myFilter.form.payment_status|attr:"class:form-control"}}</td>
+  
+                      <td>{{ myFilter.form.bill_date|attr:"type:date"|attr:"class:form-control" }}</td>
+                      <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control" }}</td>
+                      <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control" }}</td>
+  
+                      <!-- <td><button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search" aria-hidden="true"></i></button>
+                        <a href="{% url 'purchase_report' %}" type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a></td> -->
+                    </tr>
+                  </tbody>
+                </table>
+                
+
+              </div>
+              
+              <div class="container justify-content-center align-content-center text-center">
+                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i> Search</button>
+                <a href="{% url 'purchase_report' %}" type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times mr-2" aria-hidden="true"></i> Reset</a>
+              </div>
+            </form>
+          </div>
+  
+          <div class="container text-center justify-content-center table-responsive table-responsive-sm">
+            <table class="mb-2 ">
+              <thead >
+                  <td class=""><select class="form-control">
+                    <option>2021</option>
+                    <option>2020</option>
+                    
+                  </select>
+                  </td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4 ">Jan</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Feb</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Mar</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Apr</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">May</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Jun</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Jul</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Aug</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Sep</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Oct</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Nov</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Dec</button></td>
+                  <!-- <td><input type="submit" value="Jan" class="btn btn-sm btn-success form-control"></td> -->
+
+              </thead>
+            </table>
+          </div>
+        </div>
+  </div>
+
+  {% if  '/purchase_report/?' in request.get_full_path %}
+  <div class="container-fluid">
+     <div class=" table-responsive  table-responsive-sm">
+      <table id="purchase_report" class="table table-bordered table-hover  table-striped table-sm display">
+        <thead>
+          <tr>
+            <th colspan="9"></th>
+            <th colspan="9" class="bg-secondary"> <h5  class="text-center font-weight-bold">Liability Adustment </h5></th>
+            <th colspan="5" ></th>
+          </tr>
+
+          <tr>
+            <th class="text-center">SL.</th>
+            <th class="text-center">Factory Name</th>
+            <th class="text-center">Job No.</th>
+            <th class="text-center" >Order No.</th>
+            <th class="text-center">Buyer Name</th>
+            <th class="text-center">Purchase No.</th>
+            <th class="text-center" >Purchase Date</th>
+            <th class="text-center">Bill No</th>
+            <th class="text-center" >Bill Amount</th>
+
+            <th class="bg-danger text-center">BTB</th>
+            <th class="bg-danger text-center"> PC </th>
+            <th  class="bg-danger text-center" >SND</th>
+            <th  class="bg-danger text-center">Term </th>
+            <th class="bg-danger text-center">Time </th>
+            <th class="bg-danger text-center">OD </th>
+            <th class="bg-danger text-center">EDF </th>
+            <th class="bg-danger text-center"> Com.</th>
+            <th class="bg-danger text-center">Tax </th>
+            <th class="text-center bg-success" >CM Requested</th>
+            <th class="text-center bg-success" >Approve CM</th>
+            <th class=" bg-danger">Due</th>
+             <th class="text-center" >Payment Status</th>
+            <th class="text-center">Action </th>
+          </tr>
+        </thead>
+
+        <tfoot id="purchaseReport" >
+          <tr>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th ></th>
+            <th class=" text-danger"></th>
+             <th > </th>
+            <th> </th>
+          </tr>
+        </tfoot>
+        <tbody>
+          {% for i in purchase_list %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.factory_name}}</td>
+            <td>{{i.job_no}}</td>
+            <td>{{i.order_no}}</td>
+            <td>{{i.buyer_name}}</td>
+            <td>{{i.purchase_no}}</td>
+            <td>{{i.bill_date}}</td>
+            <td>{{i.bill_no}}</td>
+            <td class="billamount">{{i.net_amount|floatformat:2}}</td>
+
+            <td class="btb_lc_amt">{{i.btb_lc_amt|floatformat:2}}</td>
+            <td class="pc_amount_amt">{{i.pc_amount_amt|floatformat:2}}</td>
+            <td class="snd_amount_amt" >{{i.snd_amount_amt|floatformat:2}}</td>
+            <td class="term_loan_amt">{{i.term_loan_amt|floatformat:2}}</td>
+            <td class="time_loan_amt">{{i.time_loan_amt|floatformat:2}}</td>
+            <td class="od_loan_amt">{{i.od_loan_amt|floatformat:2}}</td>
+            <td class="edf_interest_amt">{{i.edf_interest_amt|floatformat:2}}</td>
+            <td class="buying_com_amt">{{i.buying_com_amt|floatformat:2}}</td>
+            <td class="tax_other_amt">{{i.tax_other_amt|floatformat:2}}</td>
+            <td class="req_cm">{{i.net_amount|floatformat:2}}</td>
+            <td class="app_cm" >{{i.approve_net_amt|floatformat:2}}</td>
+            <td class="due_amt">{{i.due_amt|floatformat:2}}</td>
+            <td >{{i.payment_status}}</td>
+            <td>
+              <div class="btn-group">
+                <button type="button" class="btn btn-danger btn-sm" data-toggle="dropdown">Action</button>
+                <button type="button" class="btn btn-danger btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="{% url 'view_purchase' i.id %}"><i class="fas fa-eye text-info  mr-2" data-toggle="tooltip" data-placement="bottom" title="View"></i> View</a>
+                  <a class="dropdown-item" href="{% url 'update_purchase' i.id %}"><i class="fas fa-pencil-alt text-warning mr-2" data-toggle="tooltip" data-placement="bottom" title="Update"></i> Edit</a>
+                  <a class="dropdown-item" href="{% url 'print_purchase' i.id %}"><i class="fas fa-print text-warning mr-2" data-toggle="tooltip" data-placement="bottom" title="Print"></i> Print Purchase Form</a>
+                  <a class="dropdown-item" href="{% url 'delete_purchase' i.id %}" onclick="return confirm('Are you sure you want to delete this item?')"><i class="fas fa-trash text-danger  mr-2 " data-toggle="tooltip" data-placement="bottom" title="Delete"></i> Delete</a>
+                </div>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <th colspan="8" class="text-right font-weight-bold">Total: </th>
+          <th id="b_amt"></th>
+          <th class="bg-danger" id="btb">0</th>
+          <th class="bg-danger" id="pc">0</th>
+          <th class="bg-danger" id="snd">0</th>
+          <th class="bg-danger" id="term">0</th>
+          <th class="bg-danger" id="time">0</th>
+          <th class="bg-danger" id="od">0</th>
+          <th class="bg-danger" id="edf">0</th>
+          <th class="bg-danger" id="buy">0</th>
+          <th class="bg-danger" id="tax">0</th>
+          <th id="total_cm_requested" class="bg-success"></th>
+          <th id="total_app_cm" class="bg-success"></th>
+          <th id="dueTotal" class="bg-danger"></th>
+          <th ></th>
+          <th ></th>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+
+
+
+{% endblock body %}
+
+{% block script %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#purchase_report #purchaseReport th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" class="form-control" placeholder="Search" />' );
+    } );
+    
+ 
+    // DataTable
+    var table = $('#purchase_report').DataTable({
+        drawCallback: function(){
+          const b_amt = this.api().column(8,{search:'applied'}).data().toArray().reduce((total,b_amt) => total+=Number(b_amt.replace(/[^0-9\.]/g,'')),0);
+          $('#b_amt').text(` ${(b_amt)}`);
+
+          const btb = this.api().column(9,{search:'applied'}).data().toArray().reduce((total,btb) => total+=Number(btb.replace(/[^0-9\.]/g,'')),0);
+          $('#btb').text(` ${(btb)}`);
+  
+          const pc = this.api().column(10,{search:'applied'}).data().toArray().reduce((total,pc) => total+=Number(pc.replace(/[^0-9\.]/g,'')),0);
+          $('#pc').text(` ${(pc)}`);
+  
+          const snd = this.api().column(11,{search:'applied'}).data().toArray().reduce((total,snd) => total+=Number(snd.replace(/[^0-9\.]/g,'')),0);
+          $('#snd').text(` ${(snd)}`);
+  
+          const term = this.api().column(12,{search:'applied'}).data().toArray().reduce((total,term) => total+=Number(term.replace(/[^0-9\.]/g,'')),0);
+          $('#term').text(` ${(term)}`);
+  
+          const time = this.api().column(13,{search:'applied'}).data().toArray().reduce((total,time) => total+=Number(time.replace(/[^0-9\.]/g,'')),0);
+          $('#time').text(` ${(time)}`);
+  
+          const od = this.api().column(14,{search:'applied'}).data().toArray().reduce((total,od) => total+=Number(od.replace(/[^0-9\.]/g,'')),0);
+          $('#od').text(` ${(od)}`);
+  
+          const edf = this.api().column(15,{search:'applied'}).data().toArray().reduce((total,edf) => total+=Number(edf.replace(/[^0-9\.]/g,'')),0);
+          $('#edf').text(` ${(edf)}`);
+  
+          const buy = this.api().column(16,{search:'applied'}).data().toArray().reduce((total,buy) => total+=Number(buy.replace(/[^0-9\.]/g,'')),0);
+          $('#buy').text(` ${(buy)}`);
+  
+          const tax = this.api().column(17,{search:'applied'}).data().toArray().reduce((total,tax) => total+=Number(tax.replace(/[^0-9\.]/g,'')),0);
+          $('#tax').text(` ${(tax)}`);
+  
+          const total_cm_requested = this.api().column(18,{search:'applied'}).data().toArray().reduce((total,total_cm_requested) => total+=Number(total_cm_requested.replace(/[^0-9\.]/g,'')),0);
+          $('#total_cm_requested').text(` ${(total_cm_requested)}`);
+  
+          const total_app_cm = this.api().column(19,{search:'applied'}).data().toArray().reduce((total,total_app_cm) => total+=Number(total_app_cm.replace(/[^0-9\.]/g,'')),0);
+          $('#total_app_cm').text(` ${(total_app_cm)}`);
+  
+          const dueTotal = this.api().column(20,{search:'applied'}).data().toArray().reduce((total,dueTotal) => total+=Number(dueTotal.replace(/[^0-9\.]/g,'')),0);
+          $('#dueTotal').text(` ${(dueTotal)}`);
+        },
+      "lengthMenu": [[50,100, 150, -1], [50,100,150, "All"]],
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        }
+    });
+ 
+} );
+</script>
+
+<script>
+    // FOR SHOWING THE TODAY DATE 
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10) {
+        dd = '0'+dd
+      } 
+    if(mm<10) {
+        mm = '0'+mm
+      } 
+    // today = yyyy + '/' + mm + '/' + dd;
+    today = yyyy + '-' + mm + '-' + dd;
+    console.log(today);
+    document.getElementById('invoice_date').innerHTML = today;
+  </script>
+{% endblock script %}
+

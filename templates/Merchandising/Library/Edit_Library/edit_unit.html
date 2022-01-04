@@ -1,0 +1,79 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %} Lakhsma | Edit Order Unit Library {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+{% block css %}
+<style>
+</style>
+{% endblock css %}
+
+{% block body %}
+<div class="container">
+    <div class="">{% include 'Index/alerts.html' %}</div>
+    <div class="d-flex">
+        <div class="p-1">
+          <a type="button" href="{% url 'lib_unit'%}" class="btn btn-sm btn-info gr"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Add/View Order Unit  </a>
+        </div>
+      </div>
+      <div class=" card border border-dark mb-2 mt-2">
+        <div class=" p-2 bg-black">
+            <h5 class="text-uppercase text-center ">Edit Order Unit Library</h4>
+        </div>
+        <div class="container p-4">
+            <div class="row">
+                <div class="col-md-12 P-4">
+                
+                    <form  method="post" class="needs-validation" action="" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                          <div class="form-group row ">
+                            <label for="agent_name" class="col-sm-2 col-form-label ">Unit Name</label>
+                            <div class="col-sm-4 ">
+                              {{ form.unit_name|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Unit Name"}}
+                            </div>
+                          </div>
+                          <div class="form-group row ">
+                            <label for="insert_date" class="col-sm-2 col-form-label ">Inserted Date </label>
+                            <div class="col-sm-4 ">
+                              {{ form.insert_date|attr:"class:form-control"|attr:"type:datetime"|attr:"id:insert_date"}}
+                            </div>
+                          </div>
+
+                          <div>
+                              <button type="submit" class="btn btn-success btn-sm">Update </button>
+                          </div>
+                    </form>
+                  </div>
+            </div>
+             
+        </div>
+    
+      </div>
+</div>
+
+
+{% endblock body %}
+
+{% block script %}
+  <script type="text/javascript">
+  var time = new Date();
+  var tt = time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+  document.getElementById("currentTime").value = tt;
+  // FOR SHOWING THE TODAY DATE 
+  var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+     var yyyy = today.getFullYear();
+     if(dd<10) {
+         dd = '0'+dd
+       } 
+     if(mm<10) {
+         mm = '0'+mm
+       } 
+     today = yyyy + '-' + mm + '-' + dd;
+     console.log(today);
+     document.getElementById('insert_date').value = today;
+  </script>
+{% endblock script %}
+

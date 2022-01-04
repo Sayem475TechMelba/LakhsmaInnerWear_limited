@@ -1,0 +1,297 @@
+
+{% extends "index.html" %}
+{% load static %}
+{% block title %} Lakhsma | Print Delivery Challan {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    .remarks-border{
+        border: 2px solid black;
+    }
+    .bg-white{
+        background-color: white;
+    }
+    .p-30{
+        padding:40px;
+    }
+    .print-font{
+        font-size:16px;
+    }
+    @media print {
+        .noprint {
+           visibility: hidden;
+        }
+     }
+     div.signature {
+    -webkit-text-decoration-line: overline; /* Safari */
+    text-decoration-line: overline; 
+    }
+     
+</style>
+{% endblock css %}
+
+{% block body %}
+<div class="container bg-white p-30 inqt print-font" >
+    <!-- SECTION 1 - GENERAL INFO -->
+    <div class="d-flex  justify-content-between ">
+        <div class="">
+            <div class="invoice-logo">
+                <img src="{% static 'icon/laklogo.png' %}" class="img-fluid"  alt="Invoice logo" style="max-height: 120px;">
+            </div>
+            <div class="mt-3">
+                <p>
+                    <span class="font-weight-bold">To:</span> 
+                    <span> {{ item.chalan_to}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">M/S:</span> 
+                    <span> {{ item.m_or_s}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Address:</span> 
+                    <span> {{ item.address}}</span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Port Name:</span> 
+                    <span> {{ item.port_name}}</span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Through:</span> 
+                    <span> {{ item.through}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Buyer Name:</span> 
+                    <span> {{ item.buyer_name}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Ship Mode:</span> 
+                    <span> {{ item.shipmode}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Lock No.:</span>
+                    <span> {{ item.lock_no}} </span>
+                </p>
+                
+            </div>
+
+            
+        </div>
+
+        <div class="">
+            <h1 class="font-weight-bolder">Delivery Challan</h1>
+            <div class="mt-5">
+                <p>
+                    <span class="font-weight-bold">Challan No:</span> 
+                    <span> {{ item.chalan_no}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Date:</span> 
+                    <span> {{ item.chalan_date}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Gate Pass No:</span> 
+                    <span> {{ item.gate_pass_no}}  </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Vehicles No:</span> 
+                    <span> {{ item.truck_no}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Driver's Name:</span> 
+                    <span> {{ item.driver_name}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Driver's Contact No:</span>
+                    <span> {{item.mobile_no}} </span>
+                    </P>
+                <p>
+                    <span class="font-weight-bold">Driver's License No:</span> 
+                    <span> {{ item.driver_license_no}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Invoice No.:</span> 
+                    <span> {{ item.invoice_no}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Factory Name:</span> 
+                    <span> {{ item.factory_name}} </span>
+                </p>
+            </div>
+            
+        </div>
+    </div>
+    <!-- SECTION 2 - TABLE INFORMATION  -->
+    <div class=" m-3 text-center">
+        <h5 class="text-uppercase font-weight-bold">READY GARMENTS SHIPMENT FOR EXPORT</h5>
+    </div>
+    <div class="invoice-items mt-3">
+        <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+            <table class="table table-bordered table-sm " id="table_field">
+                <thead class="bg-light">
+                    <tr>
+                        <th class=" text-center"> No.</th>
+                        <th class=" text-center" width="180px">Item Details</th>
+                        <th class=" text-center">Order No</th>
+                        <th class=" text-center">Style No.</th>
+                        <th class=" text-center">Article No./ Kimball No.</th>
+
+                        <th class=" text-center">Destination</th>
+                        <th class=" text-center">Goods Qty</th>
+                        <th class=" text-center">Pc/Pack</th>
+                        <th class=" text-center">Cartoon Qty</th>
+                        <th class=" text-center" > CBM</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    {% for ft in item.sh_inline.all %}
+                    <tr class="text-center">
+                        <td>
+                            {{forloop.counter}}
+                        </td>
+                        <td class="text-center">
+                            {{ ft.item_desc}}
+                        </td>
+                        <td class="text-center">
+                            {{ ft.order_no}}
+                        </td>
+                        <td class="text-center">
+                            {{ ft.style_no}}
+                        </td>
+                        <td class="text-center">
+                            {{ ft.article_no}}
+                        </td> 
+                        <td class="text-center">
+                            {{ ft.destination}}
+                        </td> 
+                        <td class="text-center">
+                            {{ ft.goods_qty}}
+                        </td> 
+                        <td class="text-center">
+                            {{ ft.qty_status}}
+                        </td>
+                        <td class="text-center">
+                            {{ ft.cartoon_qty}}
+                        </td>
+                        <td class="text-center">
+                            {{ ft.cbm}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot class=" font-weight-bold">
+                  <tr>
+                    <td colspan="2" >
+                        Ex - Factory Time:
+                    </td>
+                    <td colspan="3" >
+                        {{ item.ex_factory_time}}
+                    </td>
+                    <td class="text-center">
+                        Total:
+                    </td>
+                    <td class="text-center">
+                        {{ item.total_good_qty}}
+                    </td>
+                    <td colspan="" >
+                    </td>
+                    <td class="text-center">
+                        {{ item.total_cartoon_qty}}
+                    </td>
+                    <td class="text-center">
+                        {{ item.total_cbm}}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="6" class="text-right">Delivery Status</td>
+                    <td colspan="4"class="text-center">
+                        {{ item.delivery_status}}
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <!-- SECTION 2 - FOOTER INFORMATION  -->
+    <div class="mt-3 remarks-border">
+        <p class="p-3">
+            <span class="font-weight-bold">Remarks:</span> 
+            <span> {{ item.remarks}}</span>
+        </p>
+    </div>
+
+    <div class="mt-3 mb-5">
+        <h6 class="text-center font-weight-bold">Received The Above Quantity of Goods In Good Condition.</h6>
+    </div>
+
+    <div class="d-flex justify-content-between  mb-3" style="margin-top: 150px;">
+        <div class="p-2 bd-highlight font-weight-bold signature">Receiver's Signature</div>
+        <div class="p-2 bd-highlight font-weight-bold signature">Security Rep. </div>
+        <div class="p-2 bd-highlight font-weight-bold signature">Store Officer</div>
+        <div class="p-2 bd-highlight font-weight-bold signature">Authorised Signature</div>
+    </div>
+   <!-- SECTION 8 - FOOTER  -->
+   <div class="mt-5" >
+    <h6 class="font-weight-bold">Dhaka Office :</h6>
+    <p>Corporate Office: House #417(1st Floor), Lane-07, Baridhara DOHS, Dhaka-1206. Bangladesh. Tel: +88 02 8411142, +88 02 8411143<br>
+    <span class="font-weight-bold"> Factory: </span> South Vanganahati, Sreepur, Gazipur-1740, Bangladesh. E-mail: info@lakhsmaiw.com, Website: www.lakhsmaiw.com,</p>
+   </div>
+
+<!-- SECTION 9 - INSERTED BY WHOM  -->
+<div class="d-flex flex-row bd-highlight">
+    <div class="p-2 mr-2 bd-highlight">
+        <small class="text-muted ">Please note that this is a computer generated email and doesn't require any signature</small>
+    </div>
+    <div class="p-2 ml-2 mr-2 bd-highlight">
+        <small> <strong>Date & User </strong> </small>
+    </div>
+
+    <div class="p-2 ml-2 mr-2 bd-highlight">
+        <small> {{item.insert_date}}</small>
+    </div>
+
+    <div class="p-2 ml-2 mr-2 bd-highlight">
+        <small class="text-muted "> <strong>{{item.inserted_by}}</strong></small>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="container text-center mt-4 no-print">
+    <button class="btn btn-sm btn-danger" onclick="window.print()">Print Chalan</button>
+</div>
+
+{% endblock body %}
+
+{% block script %}
+
+  <script type="text/javascript">
+  var time = new Date();
+  var tt = time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+  document.getElementById("currentTime").value = tt;
+  // FOR SHOWING THE TODAY DATE 
+  var today = new Date();
+     var dd = today.getDate();
+     var mm = today.getMonth()+1; //January is 0!
+     var yyyy = today.getFullYear();
+     if(dd<10) {
+         dd = '0'+dd
+       } 
+     if(mm<10) {
+         mm = '0'+mm
+       } 
+     today = yyyy + '-' + mm + '-' + dd;
+     console.log(today);
+     document.getElementById('challan_date').value = today;
+  </script>
+
+
+{% endblock script %}
+

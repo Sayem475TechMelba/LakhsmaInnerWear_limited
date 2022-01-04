@@ -1,0 +1,364 @@
+{% load static %}
+ <!-- Main Sidebar Container -->
+ <aside class="main-sidebar sidebar-dark-primary  side-nav">
+    <a href="{% url 'home' %}" class="brand-link text-center">
+    </a>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex text-center align-item-center justify-content-center">
+        <div class="image ">
+          <img src="{% static 'icon/user.jpg' %}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block">{{user.full_name}} <small class="text-success"><i class="fa fa-circle" aria-hidden="true"></i></small></a>
+        </div>
+      </div>
+      <!-- Sidebar Menu -->
+      <nav class="mt-1">
+        {% with url_name=request.resolver_match.url_name %}
+        <ul class="nav nav-pills nav-sidebar flex-column nav-flat nav-compact nav-child-indent nav-collapse-hide-child nav-legacy" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item has-treeview menu-open ">
+            <a href="/" class="nav-link {% if url_name == 'home' %}active{% endif %}">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Dashboard
+              </p>
+            </a>
+          </li>
+          <!-- LIBRARY  -->
+          <li class="nav-item has-treeview ">
+            <a href="#" class="nav-link {% if url_name == 'lib_agent' %}active{% endif %}">
+              <i class="nav-icon fas fa-book-reader"></i>
+              <p>
+                Library
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ">
+                <a href="#" class="nav-link ">
+                  <i class="fas fa-plus nav-icon "></i>
+                  <p>PO Library</p>
+                  <i class="fas fa-angle-left right "></i>
+                </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_country' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Country</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_country_type' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Country Type</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_cut_off' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Cut Off</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_fabrication' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Fabrication</p>
+                      </a>
+                    </li>
+                  </ul>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ">
+                <a href="#" class="nav-link ">
+                  <i class="fas fa-plus nav-icon"></i>
+                  <p>Purchase Library</p>
+                  <i class="fas fa-angle-left right "></i>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item ">
+                    <a href="{% url 'lib_bank' %}" class="nav-link ">
+                      <i class="fas fa-minus nav-icon"></i>
+                      <p> Bank</p>
+                    </a>
+                  </li>
+                  <li class="nav-item ">
+                    <a href="{% url 'lib_branch' %}" class="nav-link ">
+                      <i class="fas fa-minus nav-icon"></i>
+                      <p> Bank Branch</p>
+                    </a>
+                  </li>
+                  <li class="nav-item ">
+                    <a href="{% url 'lib_bank_address' %}" class="nav-link ">
+                      <i class="fas fa-minus nav-icon"></i>
+                      <p> Bank Address</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ">
+                <a href="#" class="nav-link ">
+                  <i class="fas fa-plus nav-icon "></i>
+                  <p>Order Library</p>
+                  <i class="fas fa-angle-left right "></i>
+                </a>
+                  <ul class="nav nav-treeview">
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_agent' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Agent</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_buyer' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Buyer</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_client' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p>Client</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_team_leader' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Team Leader</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_company' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Company</p>
+                      </a>
+                    </li>
+      
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_company_address' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Company Address</p>
+                      </a>
+                    </li>
+                    
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_currency' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Currency</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_dealing_merchant' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Dealing Merchant</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_factory_merchant' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Factory Merchant</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_prod_dept' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Product Deptartment</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_prod_subdept' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Product Sub-Dept.</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_product_cate' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Product Category</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_region' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Region</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_season' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Season</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_shipmode' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Shipping Mode</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_packing' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Packing</p>
+                      </a>
+                    </li>
+                    
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_qualitylabel' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Quality Label</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_unit' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Order Unit</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_shipment_term' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Shipment Term</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_payment_term' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Payment Term</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_design_source' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Design Source</p>
+                      </a>
+                    </li>
+                    <li class="nav-item ">
+                      <a href="{% url 'lib_gmt_prod' %}" class="nav-link ">
+                        <i class="fas fa-minus nav-icon"></i>
+                        <p> Inv Products</p>
+                      </a>
+                    </li>
+                  
+                  
+                  </ul>
+              </li>
+            </ul>
+          </li>
+          <!-- MERCHANDIZING  -->
+          <li class="nav-item has-treeview ">
+            <a href="#" class="nav-link {% if url_name == 'order_entry' %}active{% endif %}">
+              <i class="nav-icon fas fa-luggage-cart" aria-hidden="true"></i>
+              <p>
+                Merchandising
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ">
+                <a href="{% url 'order_entry' %}" class="nav-link ">
+                  <i class="fas fa-minus nav-icon"></i>
+                  <p>Order Entry</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a href="{% url 'pre_costing' %}" class="nav-link ">
+                  <i class="fas fa-minus nav-icon"></i>
+                  <p>Budget pre costing</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a href="{% url 'capacity_booked' %}" class="nav-link ">
+                  <i class="fas fa-minus nav-icon"></i>
+                  <p>Cap. & Book. Schedule</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a href="{% url 'shipment_schedule' %}" class="nav-link ">
+                  <i class="fas fa-minus nav-icon"></i>
+                  <p>Shipemnt Schedule</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a href="{% url 'work_progress_report' %}" class="nav-link ">
+                  <i class="fas fa-minus nav-icon"></i>
+                  <p>Work In Progress(WIP)</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- PURCHASE  -->
+          <li class="nav-item has-treeview ">
+            <a href="#" class="nav-link {% if url_name == 'purchase' %}active{% endif %}">
+              <i class="nav-icon fa fa-balance-scale" aria-hidden="true"></i>
+              <p>
+                Purchase
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ">
+                <a href="{% url 'purchase' %}" class="nav-link ">
+                  <i class="fas fa-minus nav-icon"></i>
+                  <p>Purchase Order</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a href="{% url 'purchase_report' %}" class="nav-link ">
+                  <i class="fas fa-minus nav-icon"></i>
+                  <p>Purchase Report</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- CHALLAN  -->
+          <li class="nav-item has-treeview ">
+            <a href="#" class="nav-link {% if url_name == 'delivery_chalan' %}active{% endif %}">
+              <i class="nav-icon fas fa-truck" aria-hidden="true"></i>
+              <p>
+                Challan
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ">
+                <a href="{% url 'deliveryChalan' %}" class="nav-link ">
+                  <i class="fas fa-minus nav-icon"></i>
+                  <p>Delivery Challan</p>
+                </a>
+              </li>
+              <li class="nav-item ">
+                <a href="{% url 'delivery_chalan_report' %}" class="nav-link ">
+                  <i class="fas fa-minus nav-icon"></i>
+                  <p>Delivery Challan Report</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- REPORTING  -->
+          <li class="nav-item has-treeview ">
+            <a href="#" class="nav-link {% if url_name == 'order_report' %}active{% endif %}">
+              <i class="nav-icon fas fa-file" aria-hidden="true"></i>
+              <p>
+                Reporting
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ">
+                <a href="{% url 'order_report' %}" class="nav-link ">
+                  <i class="fas fa-minus nav-icon"></i>
+                  <p>Order Report</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+        </ul>
+        {% endwith %}
+      </nav>
+    </div>
+  </aside>

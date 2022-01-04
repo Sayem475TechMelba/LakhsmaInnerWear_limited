@@ -1,0 +1,1373 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %} Lakshma | Order Entry Form {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    .modal-lg{
+        max-width:80%;
+    }
+    .form-controls{
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid #e4e5e7;
+    display: block;
+    width: 130px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+  }
+  .form-groups {
+     margin-bottom: 0rem; 
+}
+    
+</style>
+
+{% endblock css %}
+
+{% block body %}
+
+<div class="container">
+    <div class="">{% include 'Index/alerts.html' %}</div>
+    <div class="d-flex">
+      <div class="mr-auto p-2">
+        <a type="button" href="{% url 'order_report' %}" class="btn btn-sm btn-info gr"><i class="fa fa-bars" aria-hidden="true"></i> Order Report</a>
+      </div>
+      <div class="p-2">
+        <a  type="btn" class="btn btn-sm btn-light " onClick="javascript:history.go(-1);"><i class="fa fa-undo" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  
+  
+    <!-- ORDER ENTRY FORM  -->
+    <div class=" card border border-light mb-2 mt-2">
+        <div class=" p-1 bg-form-header">
+            <h5 class="text-uppercase text-center ">Order Entry Form</h4>
+        </div>
+        <div class="container p-4 bg-form">
+            <div class="row">
+                <div class="col-md-12 P-4">
+                    <form method="post" action="{% url 'order_entry' %}" enctype="multipart/form-data" id="form">
+                        {% csrf_token %}
+                        <input type="hidden" name="_task" value="form">
+                     
+                          <div class="form-group row ">
+                            <label for="company_name" class="col-sm-2 col-form-label label">Job No.</label>
+                            <div class="col-sm-2 ">
+                              <input type="text" name="job_no" id="hidden_job_no" class="form-control" placeholder="Dbl. Click" value="{{ job }}">
+                            </div>
+
+                            <label for="company_name" class="col-sm-2 col-form-label label">Company Name</label>
+                            <div class="col-sm-2 ">
+                              {{ form.company_name|attr:"class:form-control"|attr:"required" }}
+                            </div>
+                            <label for="company_location" class="col-sm-2 col-form-label label">Location Name</label>
+                            <div class="col-sm-2 ">
+                              {{ form.company_location|attr:"class:form-control"|attr:"required" }}
+                            </div>
+                          </div>
+                        
+                          <div class="form-group row ">
+                            <label for="buyer_name" class="col-sm-2 col-form-label label ">Buyer Name</label>
+                            <div class="col-sm-2 ">
+                              {{ form.buyer_name|attr:"class:form-control"|attr:"required" }}
+                            </div>
+                            <label for="style_ref" class="col-sm-2 col-form-label label">Style Ref</label>
+                            <div class="col-sm-2 ">
+                              {{ form.style_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style Ref"|attr:"required" }}
+                            </div>
+                            
+                            <label for="style_description" class="col-sm-2 col-form-label ">Style Description</label>
+                            <div class="col-sm-2 ">
+                              {{ form.style_description|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style Description"|attr:"rows:1"}}
+  
+                            </div>
+                          </div>
+  
+                          <div class="table-responsive">
+                              <table class="table table-bordered table-hover table-sm" >
+                                  <thead class="bg-table-header">
+                                      
+                                      <tr>
+                                          <th class="text-center label">Product Dept. </th>
+                                          <th class="text-center ">Sub. Dept </th>
+                                          <th class="text-center " width="120px;">Sub.Dept Code </th>
+                                          <th class="text-center label"> Currency </th>
+                                          <th class="text-center"  width="130px;"> Repeat No/Job </th>
+                                          <th class="text-center label"> Region </th>
+                                          <th class="text-center ">Product Category </th>
+                                          <th class="text-center label"> Team Leader </th>
+                                          <th class="text-center label">Dealing Merchant </th>
+  
+                                      </tr>
+                                  </thead>
+                                  <tbody >
+                                      <tr >
+                                          <td >
+                                              {{ form.product_dept|attr:"class:form-control"|attr:"required" }}
+                                          </td>
+  
+                                          <td >
+                                              {{ form.sub_dept|attr:"class:form-control" }}
+                                           
+                                          </td>
+                                          <td >
+                                              {{ form.sub_dept_code|attr:"class:form-control"|attr:"placeholder:Code" }}
+                                          </td>
+  
+                                          <td >
+                                              {{ form.currency|attr:"class:form-control"|attr:"required" }}
+                                          </td>
+                                          <td >
+                                              {{ form.repeat_job_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Repeat No/Job"}}
+                                          </td>
+                                         
+                                          <td >
+                                              {{ form.region|attr:"class:form-control"|attr:"required" }}
+                                          </td>
+                                         
+                                          <td >
+                                              {{ form.product_cate|attr:"class:form-control" }}
+  
+                                          </td>
+                                          <td >
+                                              {{ form.team_leader|attr:"class:form-control"|attr:"required" }}
+  
+                                          </td>
+                                          <td >
+                                              {{ form.dealing_merchant|attr:"class:form-control"|attr:"required" }}
+                                          </td>
+                                          
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <div class="table-responsive">
+                              <table class="table table-bordered table-hover table-sm" >
+                                  <thead class="bg-table-header">
+                                      <tr>
+                                          <th class="text-center label"> Factory Merchant </th>
+                                          <th class="text-center"> Buying House Merchant </th>
+                                          <th class="text-center"> Remarks </th>
+                                          <th class="text-center label"> Ship Mode  </th>
+                                          <th class="text-center label"> Order Unit </th>
+                                          <th class="text-center label" width="120px;">SMV </th>
+                                          <th class="text-center label"> Packing </th>
+                                          <th class="text-center"> Season</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody >
+                                      <tr >
+                                         
+                                         
+                                          <td >
+                                              {{ form.factory_merchant|attr:"class:form-control"|attr:"required" }}
+                                          </td>
+                                         
+                                          <td >
+                                              {{ form.bh_merchant|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Buying House Merchant"}}
+                                          </td>
+                                          
+                                          <td >
+                                               {{ form.remarks|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Remarks"|attr:"rows:1"}}
+                                          </td>
+                                          <td >
+                                              {{ form.ship_mode|attr:"class:form-control"|attr:"required" }}
+                                          </td>
+                                          <td>
+                                              {{ form.order_uom|attr:"class:form-control"|attr:"required" }}
+                                          </td>
+                                          <td >
+                                               {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"|attr:"id:smv"|attr:"data-target:#smv_modal"|attr:"required"|attr:"readonly"}}
+                                          </td>
+                                          <td >
+                                              {{ form.packing|attr:"class:form-control"|attr:"required" }}
+                                          </td>
+                                         
+                                          <td >
+                                              {{ form.season|attr:"class:form-control" }}
+                                          </td>
+  
+                                          
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="smv_modal">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                  <div class="container-fluid">
+                                    <div class="card-header" id="headingThree">
+                                        <h5 class="mb-0">
+                                          
+                                          <span class=" font-weight-bold">Item Deatils For Pcs</span><span style="margin-left: 78%;"><button type="button" class="btn btn-secondary btn-sm text-right" data-dismiss="modal">Close</button></span>
+                                        </h5>
+                                      </div>
+                                    <div class="card-body">
+                                      
+                                          <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                        
+                                            <table class="table table-bordered table-hover table-sm table-responsive adds" >
+                                                <thead class="bg-info">
+                                                    
+                                                    <tr>
+                                                        <th class="text-center " >Item</th>
+                                                        <th class="text-center " > Set Ratio</th>
+                                                        <th class="text-center " > Sew SMV/Pcs</th>
+                                                        <th class="text-center " > Cut SMV/Pcs </th>
+                                                        <th class="text-center " > Fin SMV/Pcs </th>
+                                                        <th class="text-center " > Complexity</th>
+                                                        <th class="text-center " > Print </th>
+                                                        <th class="text-center " > Embro</th>
+                                                        <th class="text-center " > Wash</th>
+                                                        <th class="text-center " > SP Works</th>
+                                                        <th class="text-center " > Gmts Dyeing</th>
+                                                        <th class="text-center " > AOP</th>
+                                                        <th class="text-center " > Total SMV</th>
+                                                        <th class="text-center "  width="80px;"> Action </th>
+                                                        
+                                                    </tr>
+                                                </thead>
+                        
+                                                {{ form_smv_items.management_form }}
+                                                <tbody class="inline_smv_form">
+                                                    {% for sv in form_smv_items %}
+                                                    <tr >
+                                                        <td >
+                                                           
+                                                            {{ sv.items|attr:"class:form-controls"|attr:"onchange:gmtItms()" }}
+                                                        </td>
+                                                        <td >
+                                                            {{ sv.set_ratio|attr:"class:form-controls"|attr:"type:number"|attr:"oninput:total_ratio(id)" }}
+                                                        </td>
+                                                        <td >
+                                                             {{ sv.sew_smv_pcs|attr:"class:form-controls"|attr:"type:number"|attr:"oninput:totalSew(id)"}}
+                        
+                                                        </td>
+                                                        <td >
+                                                             {{ sv.cut_smv_pcs|attr:"class:form-controls"|attr:"type:number"|attr:"oninput:totalCut(id)"}}
+                        
+                                                        </td>
+                                                        <td >
+                                                            {{ sv.fin_smv_pcs|attr:"class:form-controls"|attr:"type:number"|attr:"oninput:totalFin(id)" }}
+                                                        </td>
+                                                        <td >
+                                                            {{ sv.complexity|attr:"class:form-controls" }}
+                                                        </td>
+                                                        <td >
+                                                            <div class="form-groups row ">
+                                                                <div class="col-sm-6 ">
+                                                                    {{ sv.smv_print|attr:"class:form-controls"}}
+                                                                </div>
+                                                                <div class="col-sm-6 ">
+                                                                     {{ sv.print_days|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalSMV(id)" }}
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        
+                                                        <td >
+                                                            <div class="form-groups row ">
+                                                                <div class="col-sm-6 ">
+                                                                {{ sv.embro|attr:"class:form-controls" }}
+                                                                </div>
+                                                                <div class="col-sm-6 ">
+                                                                    {{ sv.embro_days|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalSMV(id)" }}
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </td>
+                                                        
+                                                        <td >
+                                                            <div class="form-groups row ">
+                                                                <div class="col-sm-6 ">
+                                                                {{ sv.wash|attr:"class:form-controls"}}
+                                                                </div>
+                                                                <div class="col-sm-6 ">
+                                                                {{ sv.wash_days|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalSMV(id)" }}
+                                                                </div>
+                                                           </div>
+                                                        </td>
+                                                        <td >
+                                                            <div class="form-groups row ">
+                                                                <div class="col-sm-6 ">
+                                                                {{ sv.sp_work|attr:"class:form-controls"}}
+                                                                </div>
+                                                                <div class="col-sm-6 ">
+                                                                {{ sv.sp_work_days|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalSMV(id)" }}
+                                                                </div>
+                                                           </div>
+                        
+                                                        </td>
+                                                        <td >
+                                                            <div class="form-groups row ">
+                                                                <div class="col-sm-6 ">
+                                                                {{ sv.gmts_dyeing|attr:"class:form-controls"}}
+                                                                </div>
+                                                                <div class="col-sm-6 ">
+                                                                {{ sv.gmts_dyeing_days|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalSMV(id)" }}
+                                                                </div>
+                                                           </div>
+                                                        </td>
+                                                        <td >
+                                                            <div class="form-groups row ">
+                                                                <div class="col-sm-6 ">
+                                                                {{ sv.aop|attr:"class:form-controls"}}
+                                                                </div>
+                                                                <div class="col-sm-6 ">
+                                                                {{ sv.aop_days|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalSMV(id)" }}
+                                                                </div>
+                                                            </div>   
+                                                        </td>
+                                                        <td >
+                                                             {{ sv.tt_smv|attr:"class:form-controls"}}
+                                                        </td>
+                                                        
+                                                        <td class="remov text-center">
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                                <tfoot class="font-weight-bold">
+                                                    <tr>
+                                                        <td colspan="1" class="text-right">
+                                                            TOTAL:
+                                                        </td>
+                                                        
+                                                        <td colspan=""  >  
+                                                            {{ form.tt_set_ratio|attr:"class:form-control"|attr:"type:number"|attr:"id:tt_set_ratio"|attr:"oninput:pipeLine()" }}
+                                                        </td>
+                                                        <td colspan=""  >  
+                                                            {{ form.tt_sew_smv|attr:"class:form-control"|attr:"type:number"|attr:"id:tt_sew_smv"|attr:"oninput:pipeLine()" }}
+                                                        </td>
+                                                       
+                                                        <td colspan=""  >  
+                                                            {{ form.tt_cut_smv|attr:"class:form-control"|attr:"type:number"|attr:"id:tt_cut_smv"|attr:"oninput:pipeLine()" }}
+                                                        </td>
+                                                        
+                                                        <td colspan=""  >  
+                                                            {{ form.tt_fin_smv|attr:"class:form-control"|attr:"type:number"|attr:"id:tt_fin_smv"|attr:"oninput:pipeLine()" }}
+                                                        </td>
+                                                        <td colspan="7"  >  
+                                                        </td>
+                                                       
+                                                        <td colspan=""  > 
+                                                            {{ form.g_tt_smv|attr:"class:form-control"|attr:"type:number"|attr:"id:tt_smv"|attr:"oninput:pipeLine()" }}
+                                                        </td>
+                                                       
+                                                    </tr>
+                                                    
+                                                  </tfoot>
+                                                
+                                            </table>
+                                          </div>
+                                          
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>  
+
+
+                          <div class="table-responsive">
+  
+                            <table class="table table-bordered table-hover table-sm" >
+                                <thead class="bg-table-header">
+                                    
+                                    <tr>
+                                       
+                                        <th class="text-center"> Agent </th>
+                                        <th class="text-center" width="110px;"> Client  </th>
+                                        <th class="text-center label" width="150px;"> Images </th>
+                                        <th class="text-center" width="150px;">File </th>
+                                        <th class="text-center" width="110px;"> Internal Ref </th>
+                                        <th class="text-center" width="110px;"> Copy Form </th>
+                                        <th class="text-center label"> Working Company</th>
+                                        <th class="text-center label"> Working Location </th>
+                                        <th class="text-center"> Design Source </th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr >
+                                       
+                                        
+                                        <td >
+                                            {{ form.agent|attr:"class:form-control" }}
+                                        </td>
+                                        <td >
+                                            {{ form.client|attr:"class:form-control" }}
+                                        </td>
+                                        <td >
+                                            {{ form.image|attr:"class:form-control"|attr:"type:file"|attr:"required"}}
+                                        </td>
+                                        <td >
+                                            {{ form.file|attr:"class:form-control"|attr:"type:file"}}
+                                        </td>
+                                        <td >
+                                            {{ form.internal_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Internal Ref."}}
+                                        </td>
+                                        <td >
+                                            {{ form.copy_form|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Copy Form"}}
+                                        </td>
+                                       
+                                        <td >
+                                            {{ form.working_company|attr:"class:form-control"|attr:"required" }}
+                                        </td>
+                                        
+                                        <td >
+                                            {{ form.working_location|attr:"class:form-control"|attr:"required" }}
+                                        </td>
+                                        <td>
+                                          {{ form.design_source|attr:"class:form-control" }}
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group row ">
+                           
+                          <label for="location_name" class="col-sm-2 col-form-label ">Quality Label</label>
+                          <div class="col-sm-2 ">
+                              {{ form.quality_level|attr:"class:form-control" }}
+                          </div>
+                          <label for="shipment_term" class="col-sm-2 col-form-label label">Shipment Term</label>
+                          <div class="col-sm-2 ">
+                              {{ form.shipment_term|attr:"class:form-control"|attr:"required" }}
+                          </div>
+                          <label for="payment_term" class="col-sm-2 col-form-label ">Payment Term</label>
+                          <div class="col-sm-2 ">
+                              {{ form.payment_term|attr:"class:form-control" }}
+                          </div>
+                        </div>
+                           
+                           
+                          <div class="text-center mt-3">
+                              <button type="submit"  name="button1" class="btn btn-success btn-sm submitBtn  ml-3 " style=" border-radius: 20px;" onclick="jobNo()">Save</button>
+                              <button type="button" class="btn btn-info btn-sm ml-3" style=" border-radius: 20px;">Update</button>
+                              <button type="button" class="btn btn-danger btn-sm ml-3" style=" border-radius: 20px;">Delete</button>
+                              <button type="button" class="btn btn-dark btn-sm ml-3" style=" border-radius: 20px;">Reset</button>
+                          </div>
+                    </form>
+                  </div>
+                </div>
+        </div>
+            
+    </div> 
+</div>
+
+<!-- PO DETAILS  -->
+<div class="container-fluid mb-2 mt-2" >
+     <!-- <div class=" card border border-light mb-2 mt-2" id="output"> -->
+     <div class=" card border border-light mb-2 mt-2">
+        <div class=" p-1 bg-form-header">
+            <h5 class="text-uppercase text-center ">PO Details Entry Form</h4>
+        </div>
+        <div class="p-2 bg-form">
+            <div class="row">
+                <div class="col-md-12 P-4">
+                
+                    <form method="POST" action="{% url 'order_entry' %}" enctype="multipart/form-data" id="po_form" name="poForm" >
+                        {% csrf_token %}
+                        <input type="hidden" name="_task" value="PO">
+                          <div class="form-group row justify-content-center">
+                            <label for="order_status" class="col-sm-1 col-form-label label">Job No.</label>
+                            <div class="col-sm-2 ">
+                              <input type="text" name="job_no" class="form-control" id="hidden_job_no" value="{{ job }}">
+                            </div>
+                            <label for="order_status" class="col-sm-1 col-form-label label">Order Status</label>
+                              <div class="col-sm-2 ">
+                                  {{ po_form.order_status|attr:"class:form-control"|attr:"required"|attr:"id:po_select"|attr:"onChange:checkOption(this)" }}
+                            </div>
+                            <label for="projected_po" class="col-sm-1 col-form-label ">Projected PO</label>
+                            <div class="col-sm-2 ">
+                              {{ po_form.projected_po|attr:"class:form-control" }}
+                            </div>
+                            <label for="gsm" class="col-sm-1 col-form-label ">GSM</label>
+                            <div class="col-sm-2 ">
+                              {{ po_form.gsm|attr:"class:form-control"|attr:"type:number" }}
+                            </div>
+                          </div>
+                          <div class="table-responsive">
+                              <table class="table table-bordered table-hover table-sm" >
+                                  <thead class="bg-table-header">
+                                      <tr>
+                                          <th class="text-center label">PO No. </th>
+                                          <th class="text-center label">PO Recieve Date </th>
+                                          <th class="text-center label">Pub. Shipment Date</th>
+                                          <th class="text-center">Lead Time</th>
+                                          <th class="text-center"> Org. Shipment Date </th>
+                                          <th class="text-center"> Fac. Recieve Date </th>
+                                          <th class="text-center label"> PO Quantity </th>
+                                          <th class="text-center ">Avg. Price </th>
+                                          <th class="text-center"> Amount </th>
+                                          <th class="text-center"> Excess Cut % </th>
+                                          <th class="text-center"> Plan Cut Qty </th>
+                                          <th class="text-center label"> Status </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody >
+                                      <tr >
+                                          <td >
+    
+                                              {{ po_form.po_no|attr:"class:form-control"|attr:"required"|attr:"placeholder:Po No" }}
+                                              
+                                          </td>
+                                          <td >
+                                              {{ po_form.po_recieve_date|attr:"type:date"|attr:"class:form-control"|attr:"required" }}
+                                          </td>
+                                          <td >
+                                              {{ po_form.pub_shipment_date|attr:"type:date"|attr:"class:form-control"|attr:"required"|attr:"id:bill_date" }}
+                                          </td>
+                                          <td >
+                                              {{ po_form.lead_time|attr:"type:text"|attr:"class:form-control"|attr:"readonly"|attr:"id:lead_time" }}
+                                          </td>
+                                          <td >
+                                              {{ po_form.org_shipment_date|attr:"type:date"|attr:"class:form-control"}}
+                                          </td>
+                                          <td >
+                                              {{ po_form.fac_recieve_date|attr:"type:date"|attr:"class:form-control" }}
+                                          </td>
+                                          <td >
+                                            {{ po_form.po_quantity|attr:"class:form-control"|attr:"required"|attr:"placeholder:Dbl. Click"|attr:"id:po_quantity"|attr:"data-target:#exampleModal"|attr:"data-toggle:modal"|attr:"ondblclick:test(0)" }}
+                                        </td>
+                                        <td >
+                                            {{ po_form.avg_price|attr:"class:form-control" }}
+                                        </td>
+                                        <td >
+                                            {{ po_form.amount|attr:"class:form-control" }}
+                                        </td>
+                                        <td >
+                                            {{ po_form.excess_cut_pct|attr:"class:form-control"|attr:"type:number"}}
+                                        </td>
+                                        <td >
+                                             {{ po_form.plan_cut_qty|attr:"class:form-control"|attr:"type:number"}}
+                                        </td>
+                                        <td >
+                                            {{ po_form.status_active|attr:"class:form-control"|attr:"required" }}
+                                        </td>
+                                          
+                                          
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                          <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal">
+                            <div class="modal-dialog modal-lg">
+                              <div class="modal-content">
+                                <div class="container-fluid p-2">
+                        
+                                    <div class=" card border border-dark mb-2 mt-2">
+                                        <div class=" p-1 bg-form-header">
+                                            <h5 class="text-uppercase text-center ">Color Size Entry Form</h4>
+                                        </div>
+                                        <div class=" p-2 bg-form">
+                                            <div class="row">
+                                                <div class="col-md-12 P-4">
+                                                   
+                                                            <div class="table-responsive mt-2">
+                                                                <table class="table table-bordered table-hover table-sm" >
+                                                                    <thead class="bg-table-header">
+                                                                        <tr>
+                                                                            <th class="text-center "> Country </th>
+                                                                            <th class="text-center">Country Type </th>
+                                                                            <th class="text-center "> Cut-off Date </th>
+                                                                            <th class="text-center "> Cutoff </th>
+                                                                            <th class="text-center"> Country Shipment Date </th>
+                                                                            <th class="text-center"> Reamrks </th>
+                                                                            <th class="text-center"> Packing </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody >
+                                                                        <tr >
+                                                                            <td >
+                                                                                {{ po_form.country|attr:"class:form-control" }}
+                                                                            </td>
+                                                                            <td >
+                                                                                {{ po_form.country_type|attr:"class:form-control" }}
+                                                                            </td>
+                                                                            <td >
+                                                                                {{ po_form.cutoff_date|attr:"class:form-control"|attr:"type:date" }}
+                                                                            </td>
+                                                                            <td >
+                                                                                {{ po_form.cutoff|attr:"class:form-control"}}
+                                                                            </td>
+                                                                            <td >
+                                                                                 {{ po_form.country_shipment_date|attr:"class:form-control"|attr:"type:date"}}
+                                                                            </td>
+                                                                            <td >
+                                                                                 {{ po_form.color_remarks|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Remarks"|attr:"rows:1"}}
+                                                                            </td>
+                                                                            <td >
+                                                                                {{ po_form.packing|attr:"class:form-control" }}
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                        
+                                                            <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                                        
+                                                                <table class="table table-bordered table-hover table-sm table-responsive increment" id="inline_table">
+                                                                    <thead class="bg-table-header">
+                                                                        <tr>
+                                                                            <th class="text-center"> Gmts Item </th>
+                                                                            <th class="text-center"> Article Number</th>
+                                                                            <th class="text-center"> Color </th>
+                                                                            <th class="text-center"> Fabrication </th>
+                                                                            <th class="text-center"> Size</th>
+                                                                            <th class="text-center"> Order Qty </th>
+                                                                            <th class="text-center"> Rate </th>
+                                                                            <th class="text-center"> Amount </th>
+                                                                            <th class="text-center"> Excess Cut </th>
+                                                                            <th class="text-center"> Plan Cut Qty. </th>
+                                                                            <th class="text-center"> Status </th>
+                                                                            <th class="text-center"  width="80px;"> Action </th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    {{ form_items.management_form }}
+                                                                        <tbody class='inline_form'>
+                                                                            {% for ft in form_items %}
+                                                                            <tr>
+                                                                                <td class="text-center">
+                                                                                    {{ ft.gmt_items|attr:"class:form-controls"|attr:"onclick:test('none')" }}
+                                                                                </td>
+                                                                                <td class="text-center">
+                                                                                    {{ ft.article_number|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Article Number"}}
+                                                                                </td>
+                                                                                <td class="text-center">
+                                                                                    {{ ft.color|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Color" }}
+                                                                                </td>
+                                                                                <td class="text-center">
+                                                                                    {{ ft.fabrication|attr:"class:form-control" }}
+                                                                                </td>
+                                                                                <td class="text-center">
+                                                                                    {{ ft.size|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Size" }}
+                                                                                </td>
+                                                                                <td class="text-center">
+                                                                                    {{ ft.order_qty|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalOty(id)" }}
+                                                                                </td>
+                                                                                <td class="text-center">
+                                                                                    {{ ft.rate|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalRate(id)" }}
+                                                                                </td>
+                                                                                <td class="text-center">
+                                                                                    {{ ft.amount|attr:"class:form-control"|attr:"type:number"|attr:"onchange:totalAmt()" }}
+                                                                                </td>
+                                                                                <td class="text-center">
+                                                                                    {{ ft.excess_cut|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalExc(id)" }}
+                                                                                </td>
+                                                                                <td class="text-center">
+                                                                                    {{ ft.plan_cut_qty|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalPCQt()" }}
+                                                                                </td>
+                                                                                <td class="text-center">
+                                                                                    {{ ft.status_active|attr:"class:form-control" }}
+                                                                                </td>
+                                                                                <td class="del text-center">
+                                                                                </td>
+                                                                            </tr>
+                                                                            {% endfor %}
+                                                                        
+                                                                        </tbody>
+                                                                        <tfoot class="font-weight-bold">
+                                                                            <tr>
+                                                                                <td colspan="5" class="text-right">
+                                                                                   Total:
+                                                                                </td>
+                                                                                
+                                                                                <td colspan=""  >
+                                                                                    {{ po_form.order_quan|attr:"class:form-control"|attr:"type:number"|attr:"id:order_quan"|attr:"step:any"|attr:"oninput:pipeLine()" }}
+                                                                                  </td>
+                                                                                  <td colspan=""  > 
+                                                                                    {{ po_form.tt_rate|attr:"class:form-control"|attr:"type:number"|attr:"id:tt_rate"|attr:"step:any"|attr:"oninput:pipeLine()" }}
+                                                                                  </td>
+                                                                                  <td colspan=""  >  
+                                                                                    {{ po_form.amt|attr:"class:form-control"|attr:"type:number"|attr:"id:amt"|attr:"step:any"|attr:"oninput:pipeLine()" }}
+                                                                                  </td>
+                                                                                  <td colspan=""  > 
+                                                                                    {{ po_form.exc|attr:"class:form-control"|attr:"type:number"|attr:"id:exc"|attr:"step:any"|attr:"oninput:pipeLine()" }} 
+                                                                                  </td>
+                                                                                  <td colspan=""  > 
+                                                                                    {{ po_form.plan_cut|attr:"class:form-control"|attr:"type:number"|attr:"id:quan"|attr:"step:any"|attr:"oninput:pipeLine()" }} 
+                                                                                  </td>
+                                                                               
+                                                                            </tr>
+                                                                        </tfoot>
+                                                                </table>
+                                                            </div>
+                                                    </div>
+                                        
+                                            </div>
+                                        </div>
+                                        
+                                
+                                        
+                                    </div>
+                                </div>
+                        
+                                  <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                                </div>
+                        
+                              </div>
+                            </div>
+                          </div>
+                         
+                          <div class="table-responsive ">
+                              <table class="table table-bordered table-hover table-sm" >
+                                  <thead class="bg-table-header">
+                                      <tr>
+                                          <th class="text-center label"> Packing </th>
+                                          <th class="text-center " width="200px">TNA From/Upto </th>
+                                          <th class="text-center"> Internal Ref/Grouping </th>
+                                          <th class="text-center"> Delay For</th>
+                                          <th class="text-center"> File No </th>
+                                          <th class="text-center"> SC/LC </th>
+                                          <th class="text-center"> File Add </th>
+                                          <th class="text-center"> Actual PO No. </th>
+                                          <th class="text-center"> Remarks </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody >
+                                      <tr >
+                                          <td >
+                                              {{ po_form.po_packing|attr:"class:form-control"|attr:"required" }}
+                                          </td>
+                                          <td >
+                                               {{ po_form.tna_from_upto|attr:"class:form-control" }}
+                                          </td>
+                                          <td >
+                                              {{ po_form.internal_ref|attr:"class:form-control"|attr:"placeholder:Internal Ref" }}
+                                          </td>
+                                          <td >
+                                              {{ po_form.delay_for|attr:"class:form-control" }}
+                                          </td>
+                                          <td >
+                                              {{ po_form.file_no|attr:"class:form-control"|attr:"placeholder:File No" }}
+                                          </td>
+                                          <td >
+                                              {{ po_form.sc_or_lc|attr:"class:form-control"|attr:"placeholder:SC/LC" }}
+                                          </td>
+
+                                          <td >
+                                              {{ po_form.file_add|attr:"class:form-control" }}
+                                          </td>
+                                          <td >
+                                            {{ po_form.actual_po_no|attr:"class:form-control" }}
+                                          </td>
+                                          <td >
+                                            {{ po_form.remarks|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Remarks"|attr:"rows:1" }}
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+
+                          
+
+                          <div class="text-center">
+                            <button type="submit"  class="btn btn-success btn-sm ml-3 submitPoBtn" style=" border-radius: 20px;" onclick="mainFetcher()">Save</button>
+                            <button type="update" class="btn btn-info btn-sm  ml-3" style=" border-radius: 20px;">Update</button>
+                            <button type="button" class="btn btn-danger btn-sm ml-3" style=" border-radius: 20px;">Delete</button>
+                            <button type="button" class="btn btn-dark btn-sm ml-3 res" onclick="reset()"  style=" border-radius: 20px;">Reset</button>
+                        </div>   
+                    </form>
+                  </div>
+    
+                </div>
+        </div>
+        <table  class="table table-bordered table-striped table-hover table-sm mt-3 p-3">
+            <thead>
+              <tr>
+                <!-- <th>SL.</th> -->
+                <th>Order Status</th>
+                <th>PO No</th>
+                <th>PO Recv. Date</th>
+                <th >Ship Date</th>
+                <th >Orgn. Ship Date</th>
+                <th >PO Qty</th>
+                <th >Avg. Rate</th>
+                <th>Amount</th>
+                <th >Excess Cut</th>
+                <th >Plan Cut Qty</th>
+                <th >Lead Time</th>
+                <th >Lead Time on Fac Recv Date</th>
+                <th >Status</th>
+                <th >Ship Status</th>
+              </tr>
+            </thead>
+            <tbody id="hi"></tbody>
+        </table>
+        
+    </div>
+
+</div>
+
+
+
+{% endblock body %}
+
+{% block script %}
+<!-- FOR SMV INLINE  -->
+<script type="text/javascript">
+    $(function() {
+        $('.inline_smv_form').formset({
+            prefix: '{{ form_smv_items.prefix }}',
+            addText: '+ Add More',
+            deleteText: 'X',
+            addContainerClass:"adds",
+            addCssClass:"btn btn-sm btn-warning mt-4 mb-3",
+            deleteCssClass:"btn btn-sm btn-danger",
+            deleteContainerClass:"remov",
+        });
+    });
+</script>
+
+ 
+<script >
+    // FOR SMV MODAL SHOW 
+    $('#smv_modal').modal({
+        show: false
+      });
+      
+      $('#smv').on('dblclick', function() {
+        $('#smv_modal').modal('show');
+      });
+</script>
+ <script>
+     var count = 1
+     var gmtCount = 0
+
+     var smvID = ['id_order_smv-V-set_ratio', 'id_order_smv-V-sew_smv_pcs', 'id_order_smv-V-cut_smv_pcs', 'id_order_smv-V-fin_smv_pcs', 'id_order_smv-V-print_days', 'id_order_smv-V-embro_days', 'id_order_smv-V-wash_days', 'id_order_smv-V-sp_work_days', 'id_order_smv-V-gmts_dyeing_days', 'id_order_smv-V-aop_days']
+     var gmt = []
+
+     function update(){
+        count++
+     }
+
+    function negUpdate(){}
+
+     function tdMaker(tr, data, des){
+        var td = document.createElement('td')
+        td.innerText = data
+
+        tr.append(td)
+        document.getElementById(des).append(tr)
+     }
+
+     function test(param){
+         var j = 0
+         state = true
+         if(param === 'none'){
+            j = gmtCount
+            console.log(param)
+         } else {
+             j = 0
+         }
+         for(var i = 1; i<=document.getElementById(`id_color_size-${j}-gmt_items`).children.length; i++){
+             if(gmt.includes(document.getElementById(`id_color_size-${j}-gmt_items`).children[i].innerHTML) == false){
+                document.getElementById(`id_color_size-${j}-gmt_items`).removeChild(document.getElementById(`id_color_size-${j}-gmt_items`).children[i])
+                gmtCount++
+             }
+         }
+     }
+
+     function pipeLine(){
+        var ord_quan = document.getElementById("order_quan").value
+        var amt = document.getElementById("amt").value
+        var exc = document.getElementById("exc").value
+        var ttrate = document.getElementById("tt_rate").value =  (amt / ord_quan);
+        // var ttrate = document.getElementById("tt_rate").value
+        var quan = document.getElementById("quan").value
+        
+    
+        console.log(amt ,ttrate, ord_quan)
+
+        document.getElementById("po_quantity").value = ord_quan
+        document.getElementById('id_avg_price').value = ttrate
+        document.getElementById('id_amount').value = amt
+        document.getElementById("id_excess_cut_pct").value = exc
+        document.getElementById("id_plan_cut_qty").value = quan
+     }
+
+     function fetcher(){
+        var tr = document.createElement('tr')
+        tdMaker(tr, document.getElementById('table-color').children.length + 1, "table-color")
+        tdMaker(tr, document.getElementById("po_select").value, "table-color")
+        tdMaker(tr, document.getElementById("id_po_no").value, "table-color")
+        tdMaker(tr, document.getElementById('id_po_recieve_date').value, "table-color")
+        tdMaker(tr, document.getElementById("id_org_shipment_date").value, "table-color")
+        tdMaker(tr, document.getElementById("id_pub_shipment_date").value, "table-color")
+        tdMaker(tr, document.getElementById("order_quan").value, "table-color")
+        tdMaker(tr, document.getElementById("tt_rate").value, "table-color")
+        tdMaker(tr, document.getElementById('amt').value, "table-color")
+        tdMaker(tr, document.getElementById("exc").value, "table-color")
+        tdMaker(tr, document.getElementById("quan").value, "table-color")
+        tdMaker(tr, "null", "table-color")
+        tdMaker(tr, document.getElementById("id_status_active").value, "table-color")
+        tdMaker(tr, "Active", "table-color")
+     }
+
+     function jobNo(){
+        document.getElementById("id_po_job_no").value = '{{ job }}'
+     }
+    
+    function mainFetcher(){
+        var tr = document.createElement('tr')
+       // tdMaker(tr, '1', 'hi')
+        tdMaker(tr, document.getElementById('po_select').options[document.getElementById('po_select').selectedIndex].text, 'hi')
+        tdMaker(tr, document.getElementById('id_po_no').value, 'hi')
+        tdMaker(tr, document.getElementById('id_po_recieve_date').value, 'hi')
+        tdMaker(tr, document.getElementById('bill_date').value, 'hi')
+        tdMaker(tr, document.getElementById('id_org_shipment_date').value, 'hi')
+        tdMaker(tr, document.getElementById('po_quantity').value, 'hi')
+        tdMaker(tr, document.getElementById('id_avg_price').value, 'hi')
+        tdMaker(tr, document.getElementById('id_amount').value, 'hi')
+        tdMaker(tr, document.getElementById('id_excess_cut_pct').value, 'hi')
+        tdMaker(tr, document.getElementById('id_plan_cut_qty').value, 'hi')
+        tdMaker(tr, document.getElementById('lead_time').value, 'hi')
+        tdMaker(tr, document.getElementById('id_fac_recieve_date').value, 'hi')
+        tdMaker(tr, document.getElementById('id_status_active').options[document.getElementById('id_status_active').selectedIndex].text, 'hi')
+        tdMaker(tr, document.getElementById('id_status_active').options[document.getElementById('id_status_active').selectedIndex].text, 'hi')
+    }
+    // FOR RESET FORM -- PO DETAILS
+    function myFunction() {
+        document.getElementsByClassName("poForm").reset();
+    }
+
+    function gmtItms(){
+        for(var i = 0; i<count; i++){
+            if(gmt.includes(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text) == false){
+                gmt.push(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text)
+            }
+        }
+    }
+
+    function rightID(id){
+        var numPre = []
+        var number = 0
+        for(var i=0; i<id.length; i++){
+            if(parseInt(id[i]) || id[i] == '0'){
+                numPre.push(parseInt(id[i]))
+            }
+        }
+        for(var i = 0; i<numPre.length; i++){
+            number += numPre[i] * (10 ** (numPre.length - (i+1)))
+        }
+        return number
+    }
+
+    function autoRate(id){
+        var oty = document.getElementById(`id_color_size-${id}-order_qty`).value
+        var rate = document.getElementById(`id_color_size-${id}-rate`).value
+
+        document.getElementById(`id_color_size-${id}-amount`).value = oty * rate
+
+        totalAmt()
+        pipeLine()
+    }
+
+    function autoPCQT(id){
+        var oty = parseFloat(document.getElementById(`id_color_size-${id}-order_qty`).value, 10)
+        var exc = parseFloat(document.getElementById(`id_color_size-${id}-excess_cut`).value, 10)
+
+        var mid = oty*exc/100
+
+        document.getElementById(`id_color_size-${id}-plan_cut_qty`).value = oty + mid
+
+        totalPCQt()
+        pipeLine()
+    }
+
+    function totalOty(id){
+    var subTotal = 0;
+    for(var i = 0; i<count; i++){
+      try{
+        var sub = parseFloat(document.getElementById(`id_color_size-${i}-order_qty`).value)
+        subTotal += sub  
+      }
+      catch(err){
+        continue
+      }
+    }
+    document.getElementById('order_quan').value = subTotal
+
+    autoRate(rightID(id))
+    pipeLine()
+  }
+
+    function totalRate(id){
+    var subTotal = 0;
+    var row = 1;
+    for(var i = 0; i<count; i++){
+      try{
+        var sub = parseFloat(document.getElementById(`id_color_size-${i}-rate`).value, 10)
+        subTotal = subTotal + sub
+        // AVERAGE BUG FIX - HAVE TO CHANGE VARIABLE NAME
+        x = subTotal / row
+        // console.log(i , row , sub, x)
+        row++;
+      }
+      catch(err){
+        continue
+      }
+    }
+    //document.getElementById('tt_rate').value = x
+
+    autoRate(rightID(id))
+    pipeLine()
+  }
+
+    function totalAmt(){
+    var subTotal = 0;
+    for(var i = 0; i<count; i++){
+      try{
+        var sub = parseFloat(document.getElementById(`id_color_size-${i}-amount`).value)
+        subTotal += sub  
+      }
+      catch(err){
+        continue
+      }
+    }
+    document.getElementById('amt').value = subTotal
+
+    pipeLine()
+  }
+
+    function totalExc(id){
+    var subTotal = 0;
+    var row = 1
+    for(var i = 0; i<count; i++){
+      try{
+        var sub = parseFloat(document.getElementById(`id_color_size-${i}-excess_cut`).value, 10)
+        subTotal += sub
+        exc = subTotal / row
+        row++
+      }
+      catch(err){
+        continue
+      }
+    }
+    document.getElementById('exc').value = exc
+
+    autoPCQT(rightID(id))
+    pipeLine()
+  }
+
+    function totalPCQt(){
+    var subTotal = 0;
+    for(var i = 0; i<count; i++){
+      try{
+        var sub = parseFloat(document.getElementById(`id_color_size-${i}-plan_cut_qty`).value, 10)
+        subTotal += sub  
+      }
+      catch(err){
+        continue
+      }
+    }
+    document.getElementById('quan').value = subTotal
+
+    pipeLine()
+  }
+
+//   For SMV calculation
+  function total_ratio(id){
+    var subTotal = 0;
+    for(var i = 0; i<count; i++){
+      try{
+        var sub = parseFloat(document.getElementById(`id_order_smv-${i}-set_ratio`).value)
+        subTotal += sub  
+        console.log(subTotal)
+      }
+      catch(err){
+        continue
+      }
+    }
+    document.getElementById('tt_set_ratio').value = subTotal
+    totalSMV(id)
+  }
+
+  
+  function totalSew(id){
+    var subTotal = 0;
+    for(var i = 0; i<count; i++){
+      try{
+        var sub = parseFloat(document.getElementById(`id_order_smv-${i}-sew_smv_pcs`).value)
+        subTotal += sub  
+      }
+      catch(err){
+        continue
+      }
+    }
+    document.getElementById('tt_sew_smv').value = subTotal
+
+    totalSMV(id)
+  }
+
+    function totalCut(id){
+        var subTotal = 0;
+        for(var i = 0; i<count; i++){
+        try{
+            var sub = parseFloat(document.getElementById(`id_order_smv-${i}-cut_smv_pcs`).value)
+            subTotal += sub  
+        }
+        catch(err){
+            continue
+        }
+        }
+    document.getElementById('tt_cut_smv').value = subTotal
+    totalSMV(id)
+  }
+
+    function totalFin(id){
+        var subTotal = 0;
+        for(var i = 0; i<count; i++){
+        try{
+            var sub = parseFloat(document.getElementById(`id_order_smv-${i}-fin_smv_pcs`).value)
+            subTotal += sub  
+        }
+        catch(err){
+            continue
+        }
+        }
+       document.getElementById('tt_fin_smv').value = subTotal
+       totalSMV(id)
+  }
+
+  String.prototype.replaceAt = function(index, replacement) {
+    return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+}
+
+function ID(id){
+    var calculation_list = []
+    for(var i = 0;i<smvID.length;i++){
+        var rep = smvID[i].replaceAt(13, String(id))
+        calculation_list.push(rep)
+    }
+    return calculation_list
+}
+
+function totalSMV(id){
+    var arr = ID(id[13])
+    var subTotal = 0
+
+    for(var i = 0;i<arr.length;i++){
+      if(parseFloat(document.getElementById(arr[i]).value) != NaN){
+          subTotal += parseFloat(document.getElementById(arr[i]).value)
+      }else{
+        continue
+      }
+    }
+    document.getElementById(`id_order_smv-${id[13]}-tt_smv`).value = subTotal
+    smvAvg()
+}
+
+  function smvAvg(){
+    var subTotal = 0;
+    var row = 1
+    for(var i = 0; i<count; i++){
+      try{
+        var sub = parseFloat(document.getElementById(`id_order_smv-${i}-tt_smv`).value, 10)
+        subTotal += sub
+        y = subTotal / row
+        row++
+      }
+      catch(err){
+        continue
+      }
+    }
+    document.getElementById('tt_smv').value = y
+    document.getElementById("smv").value = y
+  }
+ 
+</script>
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#po_select").change(function () {
+          if ($(this).val() == "Confirmed") {
+            
+            $('#modal').modal({
+                show: false
+            });
+
+            $('#po_quantity').on('dblclick', function() {
+              $('#modal').modal('show');
+            });
+           
+          } 
+      });
+    });
+</script>
+
+<script type="text/javascript"> 
+
+    // SUBMIT FORM WITHOUT PAGE RELOAD
+    $("#form").submit(function (event) {
+        event.preventDefault();
+        var form = $(this)
+        url = form.attr('action')
+        // var data = $("#net_amount").val()
+        $.ajax({
+        type: "POST",
+        url: url,
+        data: form.serialize(),
+        afterSend: function () {
+        },
+        success: function (data) {
+            alert("Your Order Successfully Added. Please Confirm Purcahse Order as well.");
+            $("#show").show();
+        },
+        error: function (data) {
+            alert("Something Went Wrong...");
+        }
+        })
+        });
+</script>
+
+<script type="text/javascript"> 
+
+    // SUBMIT FORM WITHOUT PAGE RELOAD
+
+    $("#po_form").submit(function (event) {
+        event.preventDefault();
+        var form = $(this)
+        url = form.attr('action')
+        // var data = $("#net_amount").val()
+        $.ajax({
+        type: "POST",
+        url: url,
+        data: form.serialize(),
+        afterSend: function () {
+        
+        },
+        success: function (data) {
+            alert("Your Order is Succssfully Confirmed");
+        $("#show").show();
+        
+        },
+        error: function (data) {
+            alert("Something Went Wrong...");
+        }
+        })
+        });
+    </script>
+
+<script type="text/javascript"> 
+
+    // SUBMIT FORM WITHOUT PAGE RELOAD
+
+    $("#color").submit(function (event) {
+        event.preventDefault();
+        var form = $(this)
+        url = form.attr('action')
+        // var data = $("#net_amount").val()
+        $.ajax({
+        type: "POST",
+        url: url,
+        data: form.serialize(),
+        afterSend: function () {
+        
+        },
+        success: function (data) {
+            fetcher()
+            alert("Color-Size Added....");
+            $("#show").show();
+        },
+        error: function (data) {
+            alert("Something Went Wrong...");
+        }
+
+        })
+        });
+    </script>
+
+
+<!-- FOR COLOR SIZE INLINE -->
+<script type="text/javascript">
+    $(function() {
+        $('.inline_form').formset({
+            prefix: '{{ form_items.prefix }}',
+            addText: '+ Add More',
+            deleteText: 'X',
+            addContainerClass:"increment",
+            addCssClass:"btn btn-sm btn-warning mt-4",
+            deleteCssClass:"btn btn-sm btn-danger",
+            deleteContainerClass:"del",
+        });
+    })
+  </script>
+
+  <script type = "text/javascript" >
+    document.getElementById("bill_date").addEventListener("change", function() {
+    var date1 = this.value;
+    var ship_date = new Date(date1);
+    console.log(ship_date); 
+  
+    var present_date = new Date();
+    var Difference_In_Time = ship_date.getTime() - present_date.getTime();
+    console.log(Difference_In_Time)
+        
+    var Difference_In_Days = (Difference_In_Time / (1000 * 3600 * 24)).toFixed(0);;
+    document.getElementById('lead_time').value = Difference_In_Days
+    console.log(Difference_In_Days)
+});
+</script>
+<script>
+    function checkOption(obj) {
+        var quantity = document.getElementById("po_quantity");
+        var avgPrice = document.getElementById("id_avg_price");
+        var amount = document.getElementById("id_amount");
+        var excesscut = document.getElementById("id_excess_cut_pct");
+        var planCut = document.getElementById("id_plan_cut_qty");
+        quantity.readOnly = obj.value == "Confirmed";
+        avgPrice.readOnly = obj.value == "Confirmed";
+        amount.readOnly = obj.value == "Confirmed";
+        excesscut.readOnly = obj.value == "Confirmed";
+        planCut.readOnly = obj.value == "Confirmed";
+    }
+</script>
+
+<script type="text/javascript">
+       // SHOW AND HIDE FORM AFTER SUBMIT
+       $(document).ready(function() {
+        $('#output').hide();
+        $('#form').submit(function(){
+        $('#output').show();   
+        });
+    });
+
+    $(document).ready(function () {
+        $("#form").submit(function () {
+            $(".submitBtn").attr("disabled", true);
+            return true;
+        });
+    });
+
+    $(document).ready(function () {
+        $("#po_form").submit(function () {
+            $(".submitPoBtn").attr("disabled", true);
+            return true;
+        });
+    });
+
+    $(document).ready(function(){
+        $(".res").click(function(){
+            $("#po_form").trigger("reset");
+            $(".submitPoBtn").attr("disabled", false);
+            return true;
+        });
+    });
+ 
+</script>
+
+
+
+
+  
+{% endblock script %}

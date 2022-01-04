@@ -1,0 +1,14 @@
+{% load static %}
+<div class="d-flex">
+    <div class="p-1">
+      <a type="button" href="{% url 'order_entry'%}" class="btn btn-sm btn-success gr"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Create Order</a>
+    </div>
+   
+    <div class="p-1">
+      <a type="button" href="#" class="btn btn-sm btn-info gr"><i class="fa fa-bars mr-2" aria-hidden="true"></i>Order Report</a>
+    </div>
+  
+    <div class="ml-auto p-1">
+      <a  type="btn" class="btn btn-sm btn-light " onClick="javascript:history.go(-1);"><i class="fa fa-undo" aria-hidden="true"></i></a>
+    </div>
+  </div>

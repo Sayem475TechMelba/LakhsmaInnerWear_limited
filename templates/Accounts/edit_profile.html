@@ -1,0 +1,92 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %} Hermoso | Update Profile {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    
+      
+</style>
+{% endblock css %}
+
+
+{% block body %}
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-conten ">
+   
+    <div class="container">
+        <div class="mt-5"> {% include 'Index/alerts.html' %}</div>
+        <div class="row mt-5">
+        <main class="col-md-9">
+            <article class="card">
+            <header class="card-header text-center">
+                <h4 class="d-inline-block ">Update your profile</h4>
+                
+            </header>
+            <div class="card-body">
+                <div class="text-center mb-5">
+                    <img src=" {% static 'images/pro4.png' %}" alt="Profile Picture" width="100" style="border-radius: 50%;">
+                </div>
+                <div class="row"> 
+                    <div class="col-md-12">
+                        <form action="{% url 'edit_profile' %}" method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>First Name</label>
+                                    {{user_form.first_name}}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Last Name</label>
+                                    {{user_form.last_name}}
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Phone Number</label>
+                                    {{user_form.phone_number}}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>City</label>
+                                    {{user_form.city}}
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Email</label>
+                                    {{user_form.email}}
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Username</label>
+                                    {{user_form.username}}
+                                </div>
+                            </div>
+                            <input type="submit" value="Save" class="btn btn-danger">
+                        </form>
+                        
+                    </div>
+                    
+                </div> 
+            </div> 
+            
+            </article> 
+        </main>
+    </div> 
+    </div>
+    
+    
+    </section>
+    <!-- ========================= SECTION CONTENT END// ========================= -->
+
+
+
+{% endblock body %}
+
+
+
+{% block script %}
+{% endblock script %}

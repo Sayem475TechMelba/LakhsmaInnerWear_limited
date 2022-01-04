@@ -1,0 +1,353 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% load mathfilters %}
+{% load static %}
+{% block title %} Lakshma | View Order Entry {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    
+    .bg-white{
+        background-color: white;
+    }
+    .p-30{
+        padding:40px;
+    }
+    .print-font{
+        font-size:16px;
+    }
+    @media print {
+        .noprint {
+           visibility: hidden;
+        }
+     }
+     div.signature {
+    -webkit-text-decoration-line: overline; /* Safari */
+    text-decoration-line: overline; 
+    }
+
+     
+</style>
+{% endblock css %}
+
+{% block body %}
+
+
+  <div class="container bg-white p-30 inqt print-font " >
+    <!-- SECTION 1 - GENERAL INFO -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="invoice-logo">
+            <img src="{% static 'icon/laklogo.png' %}" class="img-fluid"  alt="Invoice logo" style="max-height: 120px;">
+        </div>
+      </div>
+      <div class="col-md-6">
+          {% if view_po.po_job_no.image %}
+        <div class="item-image text-center">
+            <img src="{{ view_po.po_job_no.image.url}}" class="img-fluid"  alt="Invoice logo" style="max-height: 150px;">
+        </div>
+        {% endif %}
+      </div>
+    </div>
+   
+    <div class="row ">
+        <div class="col-md-4">
+            
+            <div class="mt-3 ">
+                <p>
+                    <span class="font-weight-bold">Job No:</span> 
+                    <span> {{view_po.po_job_no}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Buyer Name:</span> 
+                    <span> {{ view_po.po_job_no.buyer_name}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Product Dept.:</span> 
+                    <span> {{ view_po.po_job_no.product_dept}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Team Leader:</span> 
+                    <span> {{ view_po.po_job_no.team_leader}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Internal Ref.</span> 
+                    <span> {{ view_po.po_job_no.internal_ref}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Packing:</span> 
+                    <span> {{ view_po.po_job_no.packing}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">SMV:</span> 
+                    <span> {{ view_po.po_job_no.smv}} </span>
+                </p>
+               
+                
+            </div>
+
+            
+        </div>
+
+        <div class="col-md-4">
+            <!-- <h1 class="font-weight-bolder">Delivery Challan</h1> -->
+            <div class="mt-3">
+                <p>
+                    <span class="font-weight-bold">Order No:</span> 
+                    <span> {{ view_po.po_no}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Agent:</span> 
+                    <span> {{ view_po.po_job_no.agent}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Company Name:</span> 
+                    <span> {{ view_po.po_job_no.company_name}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Currency:</span> 
+                    <span> {{ view_po.po_job_no.currency}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Dealing Merchant:</span> 
+                    <span> {{ view_po.po_job_no.dealing_merchant}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">GSM:</span> 
+                    <span> {{ view_po.gsm}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Total SMV:</span> 
+                    <span> {{ view_po.po_job_no.smv|mul:view_po.po_quantity|floatformat:2}} </span>
+                </p>
+                
+                
+            </div>
+            
+        </div>
+        <div class="col-md-4">
+            <!-- <h1 class="font-weight-bolder">Delivery Challan</h1> -->
+            <div class="mt-3">
+                <p>
+                    <span class="font-weight-bold">Style Description:</span> 
+                    <span> {{ view_po.po_job_no.style_description}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Style Ref.:</span> 
+                    <span> {{ view_po.po_job_no.style_ref}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Region:</span> 
+                    <span> {{ view_po.po_job_no.region}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Factory Merchant:</span> 
+                    <span> {{ view_po.po_job_no.factory_merchant}} </span>
+                </p>
+                
+                <p>
+                    <span class="font-weight-bold">Country:</span> 
+                    <span> {{ view_po.country}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Pub Ship Date:</span> 
+                    <span> {{ view_po.pub_shipment_date}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Order Unit :</span> 
+                    <span> {{ view_po.po_job_no.order_uom}} </span>
+                </p>
+                
+                
+            </div>
+            
+        </div>
+    </div>
+    <!-- SECTION 2 - TABLE INFORMATION  -->
+    <div class=" m-3 text-center">
+        <h5 class="text-uppercase font-weight-bold">Item Description</h5>
+    </div>
+    <div class="invoice-items mt-3">
+        <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+            <table class="table table-bordered table-sm table-responsive-sm " id="table_field">
+                <thead class="bg-light">
+                    <tr>
+                        <th class=" text-center"> No.</th>
+                        <th class=" text-center" width="180px">Items</th>
+                        <th class=" text-center">Article Number</th>
+                        <th class=" text-center">Color</th>
+                        <th class=" text-center">Fabrication</th>
+                        <th class=" text-center">Size</th>
+                        <th class=" text-center">Order Qty</th>
+                        <th class=" text-center">Rate</th>
+                        <th class=" text-center">Amount</th>
+                        <th class=" text-center">Excess Cut</th>
+                        <th class=" text-center">Plan Cut Qty</th>
+                        
+                    </tr>
+                </thead>
+                <tbody >
+                    {% for item in view_po.color_size.all %}
+                    <tr class="text-center">
+                        <td>
+                            {{forloop.counter}}
+                        </td>
+                        <td class="text-center">
+                            {{ item.gmt_items}}
+                        </td>
+                        <td class="text-center">
+                            {{item.article_number}}
+                        </td>
+                        <td class="text-center">
+                            {{item.color}}
+                        </td>
+                        <td class="text-center">
+                            {{item.fabrication}}
+                        </td>
+                        <td class="text-center">
+                            {{item.size}}
+                        </td>
+                        <td class="text-center">
+                            {{item.order_qty}}
+                        </td>
+                        <td class="text-center">
+                            {{item.rate}}
+                        </td>
+                        <td class="text-center">
+                            {{item.amount}}
+                        </td>
+                        <td class="text-center">
+                            {{item.excess_cut}}
+                        </td>
+                        <td class="text-center">
+                            {{item.plan_cut_qty}}
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot class=" font-weight-bold">
+                  <tr>
+                    <td colspan="6" class="text-right" >
+                        Total:
+                    </td>
+                    <td class="text-center" >
+                        {{ view_po.po_quantity}}
+                    </td>
+                    <td  class="text-center">
+                        {{ view_po.avg_price|floatformat:2}}
+                    </td>
+                    <td  class="text-center">
+                        {{ view_po.amount|floatformat:2}}
+                    </td>
+                    <td  class="text-center">
+                        {{ view_po.excess_cut_pct|floatformat:2}}
+                    </td>
+                    <td  class="text-center">
+                        {{ view_po.plan_cut_qty|floatformat:2}}
+                    </td>
+                   
+                    
+                   
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <!-- SECTION 2 - FOOTER INFORMATION  -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="mt-3  ">
+                <p >
+                    <span class="font-weight-bold">Payment Term:</span> 
+                    <span>{{ view_po.po_job_no.payment_term}} </span>
+                </p>
+                <p >
+                    <span class="font-weight-bold">Shipment Term:</span> 
+                    <span>{{ view_po.po_job_no.shipment_term}} </span>
+                </p>
+                <p >
+                    <span class="font-weight-bold">Total Fob Value:</span> 
+                    <span> {{ view_po.amount|floatformat:2}}</span>
+                </p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="mt-3 ">
+                <p >
+                    <span class="font-weight-bold">Ship Mode:</span> 
+                    <span>{{ view_po.po_job_no.ship_mode}} </span>
+                </p>
+                <p >
+                    <span class="font-weight-bold">Quality Level:</span> 
+                    <span>{{ view_po.po_job_no.quality_level}} </span>
+                </p>
+                <p >
+                    <span class="font-weight-bold">Lead Time:</span> 
+                    <span>{{ view_po.lead_time}} </span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="mt-3 ">
+                <p >
+                    <span class="font-weight-bold">Design Source:</span> 
+                    <span>{{ view_po.po_job_no.design_source}} </span>
+                </p>
+                <p>
+                    <span class="font-weight-bold">Working Company:</span> 
+                    <span> {{ view_po.po_job_no.working_company}} </span>
+                </p>
+                <p >
+                    <span class="font-weight-bold">Working Location:</span> 
+                    <span>{{ view_po.po_job_no.working_location}} </span>
+                </p>
+            </div>
+        </div>
+        
+
+    </div>
+   
+
+    
+
+    <!-- <div class="d-flex justify-content-between  mb-3" style="margin-top: 150px;">
+        <div class="p-2 bd-highlight font-weight-bold signature">Receiver's Signature</div>
+        <div class="p-2 bd-highlight font-weight-bold signature">Security Rep. </div>
+        <div class="p-2 bd-highlight font-weight-bold signature">Store Officer</div>
+        <div class="p-2 bd-highlight font-weight-bold signature">Authorised Signature</div>
+    </div> -->
+   <!-- SECTION 8 - FOOTER  -->
+   <div class="mt-5 " >
+    <h6 class="font-weight-bold">Dhaka Office :</h6>
+    <p>Corporate Office: House #417(1st Floor), Lane-07, Baridhara DOHS, Dhaka-1206. Bangladesh. Tel: +88 02 8411142, +88 02 8411143<br>
+    <span class="font-weight-bold"> Factory: </span> South Vanganahati, Sreepur, Gazipur-1740, Bangladesh. E-mail: info@lakhsmaiw.com, Website: www.lakhsmaiw.com,</p>
+   </div>
+
+<!-- SECTION 9 - INSERTED BY WHOM  -->
+<div class="d-flex flex-row bd-highlight ">
+    <div class="p-2 mr-2 bd-highlight">
+        <small class="text-muted ">Please note that this is a computer generated email and doesn't require any signature</small>
+    </div>
+    <div class="p-2 ml-2 mr-2 bd-highlight">
+        <small> <strong>Date & User </strong> </small>
+    </div>
+
+    <div class="p-2 ml-2 mr-2 bd-highlight">
+        <small> {{view_po.insert_date}}</small>
+    </div>
+
+    <div class="p-2 ml-2 mr-2 bd-highlight">
+        <small class="text-muted "> <strong>{{view_po.inserted_by.full_name}}</strong></small>
+    </div>
+  </div>
+</div>
+
+<div class="container text-center mt-4 no-print">
+    <button class="btn btn-sm btn-danger" onclick="window.print()">Print Order</button>
+</div>
+{% endblock body %}
+
+{% block script %}
+{% endblock script %}

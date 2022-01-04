@@ -1,0 +1,406 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %} Lakshma | Edit Delivery Chalan {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    .bg-white{
+        background-color: white;
+    }
+    .p-30{
+        padding:40px;
+    }
+    @media print {
+        .noprint {
+           visibility: hidden;
+        }
+     }
+</style>
+{% endblock css %}
+
+{% block body %}
+<div class="container">
+  <div class="">{% include 'Index/alerts.html' %}</div>
+    <div class="d-flex">
+      <div class="mr-auto p-2">
+        <a href="{% url 'delivery_chalan_report' %}" class="btn btn-sm btn-info gr"><i class="fa fa-bars" aria-hidden="true"></i> Challan Report</a>
+      </div>
+      <div class="p-2">
+        <a  type="btn" class="btn btn-sm btn-light " onClick="javascript:history.go(-1);"><i class="fa fa-undo" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  
+  
+    
+    <div class=" card border border-dark mb-2 mt-2">
+      <div class=" p-2 bg-form-header">
+          <h5 class="text-uppercase text-center ">Update Shipment Delivery Challan</h4>
+      </div>
+      <div class="container p-4 bg-form">
+          <div class="row">
+              <div class="col-md-12 P-4">
+              
+                  <form  method="post" class="needs-validation " action="" enctype="multipart/form-data">
+                      {% csrf_token %}
+                        <div class="form-group row ">
+                          <label for="job_no" class="col-sm-2 col-form-label label">Job No.</label>
+                          <div class="col-sm-2 ">
+                            {{ form.job_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Job No."}}
+                          </div>
+                          <label for="lock_no" class="col-sm-2 col-form-label label">Lock No.</label>
+                          <div class="col-sm-2 ">
+                            {{ form.lock_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Lock No."}}
+                          </div>
+                          <label for="challan_no" class="col-sm-2 col-form-label label">Port Name</label>
+                          <div class="col-sm-2 ">
+                            {{ form.port_name|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Port Name"}}
+                          </div>
+                        </div>
+                       
+                        <div class="form-group row ">
+                          <label for="challan_to" class="col-sm-2 col-form-label label">To</label>
+                          <div class="col-sm-2 ">
+                            {{ form.chalan_to|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Chalan To"}}
+                          </div>
+                          <label for="challan_date" class="col-sm-2 col-form-label ">Date</label>
+                          <div class="col-sm-2 ">
+                            {{ form.chalan_date|attr:"class:form-control"|attr:"type:date"}}
+                          </div>
+                          <label for="challan_ms" class="col-sm-2 col-form-label ">M/S</label>
+                          <div class="col-sm-2 ">
+                            {{ form.m_or_s|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:M/S"}}
+                          </div>
+                        </div>
+  
+                        <div class="form-group row ">
+                          <label for="challan_gate_pass" class="col-sm-2 col-form-label ">Gate Pass No.</label>
+                          <div class="col-sm-2 ">
+                            {{ form.gate_pass_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Gate Pass No"}}
+                          </div>
+                          <label for="vehicle_in_time" class="col-sm-2 col-form-label ">Vehicle In Time</label>
+                          <div class="col-sm-2 ">
+                            {{ form.vehicle_in_time|attr:"class:form-control"|attr:"type:time"}}
+                          </div>
+                          <label for="vehicle_it_image" class="col-sm-2 col-form-label ">Vehicle In Time Image</label>
+                          <div class="col-sm-2 ">
+                            {{ form.vehicle_it_image|attr:"class:form-control"|attr:"type:file"}}
+                          </div>
+
+                        </div>
+                        
+
+                        <div class="form-group row ">
+                          <label for="challan_address" class="col-sm-2 col-form-label ">Address</label>
+                          <div class="col-sm-2 ">
+                            {{ form.address|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Address"|attr:"rows:1"}}
+                          </div>
+                          <label for="challan_truck_no" class="col-sm-2 col-form-label ">Vehicle No.</label>
+                          <div class="col-sm-2 ">
+                            {{ form.truck_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Vehicle No"}}
+                          </div>
+                          <label for="challan_through" class="col-sm-2 col-form-label ">Through</label>
+                          <div class="col-sm-2 ">
+                            {{ form.through|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Through"}}
+                          </div>
+                         
+                        </div>
+
+                        <div class="form-group row ">
+                          <label for="driver_name" class="col-sm-2 col-form-label ">Driver's Name</label>
+                          <div class="col-sm-2 ">
+                            {{ form.driver_name|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Driver Name"}}
+                          </div>
+                          <label for="buyer_name" class="col-sm-2 col-form-label ">Buyer Name</label>
+                          <div class="col-sm-2 ">
+                            {{ form.buyer_name|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Buyer Name"}}
+                          </div>
+                          <label for="driver_li_no" class="col-sm-2 col-form-label ">Driver's License No. </label>
+                          <div class="col-sm-2 ">
+                            {{ form.driver_license_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Driver license No."}}
+                          </div>
+                          
+                        </div>
+
+                        <div class="form-group row ">
+                          <label for="invoice_no" class="col-sm-2 col-form-label ">Invoice No.</label>
+                          <div class="col-sm-2 ">
+                            {{ form.invoice_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Invoice No."}}
+                          </div>
+                          <label for="mobile_no" class="col-sm-2 col-form-label ">Driver Mobile No. </label>
+                          <div class="col-sm-2 ">
+                            {{ form.mobile_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Mobile No."}}
+                          </div>
+                          <label for="factory_name" class="col-sm-2 col-form-label ">Factory Name</label>
+                          <div class="col-sm-2 ">
+                            {{ form.factory_name|attr:"class:form-control"|attr:"placeholder:Factory Name"}}
+                          </div>
+                         
+                         
+                        </div>
+                        <div class="form-group row ">
+                          <label for="shipmode" class="col-sm-2 col-form-label ">Ship Mode</label>
+                          <div class="col-sm-2 ">
+                            {{ form.shipmode|attr:"class:form-control"|attr:"placeholder:Ship Mode"}}
+                          </div>
+                          <label for="chalan_img" class="col-sm-2 col-form-label ">Vehicle Image </label>
+                          <div class="col-sm-2 ">
+                            {{ form.chalan_license|attr:"class:form-control"|attr:"type:file"}}
+                          </div>
+                          <label for="driver_lns" class="col-sm-2 col-form-label ">Driver License</label>
+                          <div class="col-sm-2 ">
+                            {{ form.driver_license|attr:"class:form-control"|attr:"type:file"}}
+                          </div>
+                        
+                        </div>
+
+                        <div class="mt-1 ">
+                          <h6  class="p-2 font-weight-bold text-uppercase"> <u>  Ready Garments Shipment For Export</u></h6>
+                        </div>
+
+                  
+
+                        <div class="invoice-items mt-1">
+                          <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                              <table class="table table-bordered table-sm add-more table-responsive" id="table_field">
+                                  <thead>
+                                      <tr>
+                                          <th class=" text-center" width="180px">Item Details</th>
+                                          <th class=" text-center">Order No</th>
+                                          <th class=" text-center">Style No.</th>
+                                          <th class=" text-center" width="200px">Article No./ Kimball No.</th>
+
+                                          <th class=" text-center">Destination</th>
+                                          <th class=" text-center">Goods Qty</th>
+                                          <th class=" text-center">Pc/Pack</th>
+                                          <th class=" text-center">Cartoon Qty</th>
+                                          <th class=" text-center">CBM</th>
+                                          <th class=" text-center">Action</th>
+                                          <th class=" text-center"></th>
+                                      </tr>
+                                  </thead>
+                                  {{ form_item.management_form }}
+                                  <tbody >
+                                    {% for ft in form_item %}
+                                    <tr class="{% cycle 'row1' 'row2' %} inlineform">
+                                        
+                                          <td class="text-center">
+                                            {{ ft.item_desc|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Details"|attr:"rows:1"}}
+
+                                          </td>
+                                          <td class="text-center">
+                                            {{ ft.order_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Order No."}}
+
+                                          </td>
+                                          <td class="text-center">
+                                            {{ ft.style_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style No."}}
+
+                                          </td>
+                                          <td class="text-center">
+                                            {{ ft.article_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Type Here.."}}
+
+                                          </td> 
+                                          <td class="text-center">
+                                            {{ ft.destination|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Destination"}}
+
+                                          </td> 
+                                          <td class="text-center">
+                                            {{ ft.goods_qty|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalGoods()"}}
+
+                                          </td> 
+                                          <td class="text-center">
+                                            {{ ft.qty_status|attr:"class:form-control"}}
+
+                                          </td>
+                                          <td class="text-center">
+                                            {{ ft.cartoon_qty|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalCartoon()"}}
+
+                                          </td>
+                                          <td class="text-center">
+                                            {{ ft.cbm|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalcbm()"}}
+
+                                          </td>
+                                         
+                                          <td class="test text-center">
+                                          </td>
+                                          <td class="hidden">{{ ft.id }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                      </tbody>
+                                  <tfoot class="font-weight-bold">
+                                    <tr>
+                                        <td colspan="2" class="text-right">
+                                            Ex - Factory Time:
+                                        </td>
+					                              <td colspan="3"  >  
+                                          {{ form.ex_factory_time|attr:"class:form-control"|attr:"type:text"|attr:"id:currentTime"}}
+                                          
+                                        </td>
+                                        <!-- <td class="text-center"><input type="text" name="ad_tpc" class="form-control" id="ad_tpc" value="0.00" required ></td> -->
+                                        <td class="text-center">
+                                          {{ form.total_good_qty|attr:"class:form-control"|attr:"type:number"|attr:"id:tt_goods"|attr:"oninput=calc();"}}
+                                        </td>
+                                        <td colspan="" >
+                                      	</td>
+                                        <td class="text-center">
+                                          {{ form.total_cartoon_qty|attr:"class:form-control"|attr:"type:number"|attr:"id:carton_qty"|attr:"oninput=calc();"}}
+                                        </td>
+                                        <td class="text-center">
+                                          {{ form.total_cbm|attr:"class:form-control"|attr:"type:number"|attr:"id:total_cbm"|attr:"oninput=calc();"}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                      <td colspan="5" class="text-right">Delivery Status</td>
+                                      <td colspan="3"class="text-center">
+                                        {{ form.delivery_status|attr:"class:form-control"}}
+                                      </td>
+                                  </tr>
+                                  </tfoot>
+                              </table>
+                          </div>
+                          
+                      </div>
+		                  <div class="form-group row ">
+                        <label for="remarks" class="col-sm-2 col-form-label ">Remarks</label>
+                        <div class="col-sm-10 ">
+                          {{ form.remarks|attr:"class:form-control"|attr:"type:text"|attr:"rows:2"}}
+                        </div>
+                      </div>
+
+                        <!-- <div class="mb-5">
+                            <p class="font-weight-bold">Received The Above Quantity of Goods In Good Condition.</p>
+                        </div> -->
+
+                        <!-- <div class="d-flex justify-content-between mt-1 mb-1">
+                            <div class="p-2 bd-highlight font-weight-bold">Receiver's Signature</div>
+                            <div class="p-2 bd-highlight font-weight-bold">Security Rep. </div>
+                            <div class="p-2 bd-highlight font-weight-bold">Store Officer</div>
+                            <div class="p-2 bd-highlight font-weight-bold">Authorised Signature</div>
+                        </div> -->
+                        
+                        <div class="row mt-2">
+                          <div class="col-md-6 col-lg-6">
+                              <button type="submit" class="btn btn-success btn-sm btn-form">Save</button>
+                          
+                          </div>
+                          <div class="col-md-6 col-lg-6 text-right ">
+                              <input  onclick="demoShow()" type="button" value="Show Data" class="btn btn-light btn-sm btn-form">
+                          </div>
+                     </div>
+                  </form>
+                </div>
+              </div>
+          </div>
+    </div>
+  </div>
+
+ 
+
+  
+
+{% endblock body %}
+
+{% block script %}
+<script>
+  var count = 1;
+
+  function update(){
+    count++;
+  }
+
+  function negUpdate() {}
+
+
+  function totalGoods(){
+    var subTotal = 0;
+    for(var i = 0; i<count; i++){
+      try{
+        var sub = parseInt(document.getElementById(`id_sh_inline-${i}-goods_qty`).value)
+        subTotal += sub  
+      }
+      catch(err){
+        continue
+      }
+    }
+    document.getElementById('tt_goods').value = subTotal
+  }
+
+  function totalCartoon(){
+    var subTotal = 0;
+    for(var i = 0; i<count; i++){
+      try{
+      var sub = parseInt(document.getElementById(`id_sh_inline-${i}-cartoon_qty`).value)
+      subTotal += sub
+      document.getElementById('carton_qty').value = subTotal
+      }
+      catch{
+        continue
+      }
+    }
+  }
+
+  function totalcbm(){
+    var subTotal = 0;
+    for(var i = 0; i<count; i++){
+      try{
+      var sub = parseInt(document.getElementById(`id_sh_inline-${i}-cbm`).value)
+      subTotal += sub
+      document.getElementById('total_cbm').value = subTotal
+      }
+      catch{
+        continue
+      }
+    }
+  }
+
+</script>
+  <script type="text/javascript">
+  var time = new Date();
+  var tt = time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+  document.getElementById("currentTime").value = tt;
+  // FOR SHOWING THE TODAY DATE 
+  var today = new Date();
+     var dd = today.getDate();
+     var mm = today.getMonth()+1; //January is 0!
+     var yyyy = today.getFullYear();
+     if(dd<10) {
+         dd = '0'+dd
+       } 
+     if(mm<10) {
+         mm = '0'+mm
+       } 
+     today = yyyy + '-' + mm + '-' + dd;
+     console.log(today);
+     document.getElementById('challan_date').value = today;
+
+
+  </script>
+  <script type="text/javascript">
+    $(function() {
+        $('.inlineform').formset({
+            prefix: '{{ form_item.prefix }}',
+            addText: '+ Add More',
+            deleteText: 'X',
+            addContainerClass:"add-more",
+            addCssClass:"btn btn-sm btn-warning mt-4",
+            deleteCssClass:"btn btn-sm btn-danger ",
+            deleteContainerClass:"test",
+        });
+    })
+    
+  </script>
+
+  
+<script type="text/javascript"> 
+  function demoShow(){ 
+      if( $(window).load){
+
+          document.getElementById("show").style.visibility="visible";
+      };
+     
+      };
+</script>
+
+{% endblock script %}
+

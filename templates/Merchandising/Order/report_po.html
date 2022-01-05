@@ -1,0 +1,288 @@
+{% extends "index.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %} Lakshma | Order Report {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    .bg-gray{
+        background-color:rgb(226, 218, 218);
+    }
+    .bg-nevi{
+        background-color:#085d63;
+        color:white;
+    }
+
+    .bg-pur{
+      background-color: #594c6f;
+      color: white;
+    }
+    .bg-pink{
+      background-color: #92466f;
+      color: white;
+    }
+    
+    .bg-olive{
+      background-color: #7f821d;
+      color: white;
+    }
+    tfoot {
+     display: table-header-group;
+}
+</style>
+{% endblock css %}
+
+{% block body %}
+
+<section class="content ">
+    <div class="container-fluid">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h4>{{order_count}}</h4>
+                <p>Total Orders</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h4>{{total_purchase_amount|floatformat:2}} Tk. </h4>
+                <p>Total Order amount</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-balance-scale-left"></i>
+              </div>
+              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+        <!-- ./col -->
+  
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-pur">
+            <div class="inner">
+              <h4>{{total_advance|floatformat:2}} TK.</h4>
+              <p>Total advance payment </p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-money-check-alt"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <!-- ./col -->
+  
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+          <!-- small box -->
+          <div class="small-box bg-nevi">
+            <div class="inner">
+              <h4>{{total_due_amount|floatformat:2}} Tk.</h4>
+              <p>Total due amount</p>
+            </div>
+            <div class="icon">
+              <i class="fas fa-money-bill"></i>
+            </div>
+            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+ 
+  <div class="container-fluid mt-4 table-responsive" >
+  
+    <table id="report_panel" name="schedule" class="table table-bordered table-striped table-info table-sm table-responsive display">
+      <thead>
+        <tr>
+          <th class="text-left text-uppercase bg-info" colspan="53">
+              <h6>Report Panel</h6>
+          </th>
+      </tr>
+        <tr>
+          <th>SL.</th>
+          <th>Company Name</th>
+          <th>Job No</th>
+          <th>Buyer</th>
+          <th> Add Purchase Order </th>
+        </tr>
+      </thead>
+      <tfoot id="tfooter">
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </tfoot>
+      
+      <tbody>
+        {% for i in po_details %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{i.po_job_no.company_name}}</td>
+          <td>{{i.po_job_no}}</td>
+          <td>{{i.po_job_no.buyer_name}}</td>
+          <td>
+            <div class="btn-group">
+              <button type="button" class="btn btn-danger btn-sm"><a class="btn btn-danger btn-sm" href="/merchandise/po/{{ i.id }}/"><i class="fas fa-pencil-alt text-warning mr-2" data-toggle="tooltip" data-placement="bottom" title="Update"></i> Add PO </a></button>
+            </div>
+            
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+     
+      
+      
+    </table>
+  </div>
+{% endblock body %}
+
+{% block script %}
+<script>
+    // FOR SHOWING THE TODAY DATE 
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10) {
+        dd = '0'+dd
+      } 
+    if(mm<10) {
+        mm = '0'+mm
+      } 
+    // today = yyyy + '/' + mm + '/' + dd;
+    today = yyyy + '-' + mm + '-' + dd;
+    console.log(today);
+    document.getElementById('invoice_date').innerHTML = today;
+  </script>
+
+  <script>
+    $(document).ready(function() {
+      // Setup - add a text input to each footer cell
+      $('#report_panel #tfooter th').each( function () {
+          var title = $(this).text();
+          $(this).html( '<input type="text" class="report-control" placeholder="Search" />' );
+      });
+
+      // CALCULATION FOR REPORT PANEL (ORDER VALUE) ===--->
+      // FOR MULTIPLICATION ORDERVALUE STARTS FROM 1
+      $('tr').each(function(){
+        var orderValue = 1;
+        $(this).find('.oq').each(function(){
+          var allquan_per = $(this).text();
+          if(allquan_per.length!==0)
+          {
+            orderValue *=  parseFloat(allquan_per);
+            orderValue = orderValue.toFixed(2);
+          }
+        });
+        $(this).find('#order_value').html(orderValue);
+      });
+      
+      // CALCULATION FOR REPORT PANEL (TOTAL SMV VALUE) ===--->
+      $('tr').each(function(){
+        var totSmv = 1;
+        $(this).find('.tsmv').each(function(){
+          var allquan_per = $(this).text();
+          if(allquan_per.length!==0)
+          {
+            totSmv *=  parseFloat(allquan_per);
+            totSmv = totSmv.toFixed(2)
+          }
+        });
+        $(this).find('#totalSmv').html(totSmv);
+      });
+      // CALCULATION FOR REPORT PANEL (DAYS IN HAND VALUE) ===--->
+      $('tr').each(function(){
+        var dayesInHand = 0;
+        $(this).find('.pub_date').each(function(){
+          var pubDate = $(this).text();
+          pubDate = new Date(pubDate);
+          var present_date = new Date();
+          var pred = present_date.getTime();
+          var pubd = pubDate.getTime();
+          if(pubDate.length!==0)
+          {
+            dit =  pred - pubd;
+            dayesInHand = (dit / (1000 * 3600 *24)).toFixed(0);
+          }
+        });
+        $(this).find('#lead_date').html(dayesInHand);
+      });
+
+      // CALCULATION FOR REPORT PANEL (HIDDEN SMV VALUE) ===--->
+      // HIDDEN FIELD FOR EQUIVALENT BASIC
+      $('tr').each(function(){
+        var finalsmv = 1;
+        $(this).find('.sv').each(function(){
+          var smv = $(this).text();
+          if(smv.length!==0)
+          {
+            // EQUIVALENT BASIC CONFIRMED DIVISION NUMBER IS 4
+            finalsmv = parseFloat(smv / 4) ;
+          }
+        });
+        $(this).find('#hiddensmv').html(finalsmv);
+      });
+
+      $('tr').each(function(){
+        var eqvb = 1;
+        $(this).find('.eqhidesmv').each(function(){
+          var hidesmv = $(this).text();
+          if(hidesmv.length!==0)
+          {
+            eqvb *= parseFloat(hidesmv);
+            eqvb = eqvb.toFixed(2)
+          }
+        });
+        $(this).find('#eqvbasic').html(eqvb);
+      });
+
+      
+     
+   
+      // DataTable
+      var table = $('#report_panel').DataTable({
+        "lengthMenu": [[10,50,100, 150, -1], [10,50,100,150, "All"]],
+        //"scrollY":        "500px",
+        //"scrollCollapse": true,
+          initComplete: function () {
+              // Apply the search
+              this.api().columns().every( function () {
+                  var that = this;
+   
+                  $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                      if ( that.search() !== this.value ) {
+                          that
+                              .search( this.value )
+                              .draw();
+                      }
+                  } );
+              } );
+          }
+      });
+      // FOR GENERATING SERIAL NUMBER
+      table.on( 'order.dt search.dt', function () {
+        table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+  } );
+  </script>
+{% endblock script %}
+

@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% load widget_tweaks %}
 {% load static %}
-{% block title %} Lakshma | Order Entry Form {% endblock title %}
+{% block title %}  Lakshma | Update Order Entry Form {% endblock title %}
 {% block homeactive  %}active{% endblock homeactive  %}
 
 {% block css %}
@@ -48,39 +48,39 @@
     <!-- ORDER ENTRY FORM  -->
     <div class=" card border border-light mb-2 mt-2">
         <div class=" p-1 bg-form-header">
-            <h5 class="text-uppercase text-center ">Order Entry Form</h4>
+            <h5 class="text-uppercase text-center ">Add PO - {{obj.job_no}}</h4>
         </div>
         <div class="container p-4 bg-form">
             <div class="row">
                 <div class="col-md-12 P-4">
-                    <form method="post" action="{% url 'order_entry' %}" enctype="multipart/form-data" id="form">
+                    <form method="post" enctype="multipart/form-data" >
                         {% csrf_token %}
                         <input type="hidden" name="_task" value="form">
                      
                           <div class="form-group row ">
                             <label for="company_name" class="col-sm-2 col-form-label label">Job No.</label>
                             <div class="col-sm-2 ">
-                              <input type="text" name="job_no" id="hidden_job_no" class="form-control" placeholder="Dbl. Click" value="{{ job }}" ondblclick="ord2report()">
+                                <input type="text" name='job_no' id="hidden_job_no" class="form-control" placeholder="Dbl. Click" value="{{obj.job_no}}" readonly>
                             </div>
 
                             <label for="company_name" class="col-sm-2 col-form-label label">Company Name</label>
                             <div class="col-sm-2 ">
-                              {{ form.company_name|attr:"class:form-control"|attr:"required" }}
+                              {{ form.company_name|attr:"class:form-control" }}
                             </div>
                             <label for="company_location" class="col-sm-2 col-form-label label">Location Name</label>
                             <div class="col-sm-2 ">
-                              {{ form.company_location|attr:"class:form-control"|attr:"required" }}
+                              {{ form.company_location|attr:"class:form-control"}}
                             </div>
                           </div>
                         
                           <div class="form-group row ">
                             <label for="buyer_name" class="col-sm-2 col-form-label label ">Buyer Name</label>
                             <div class="col-sm-2 ">
-                              {{ form.buyer_name|attr:"class:form-control"|attr:"required" }}
+                              {{ form.buyer_name|attr:"class:form-control"}}
                             </div>
                             <label for="style_ref" class="col-sm-2 col-form-label label">Style Ref</label>
                             <div class="col-sm-2 ">
-                              {{ form.style_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style Ref"|attr:"required" }}
+                              {{ form.style_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style Ref" }}
                             </div>
                             
                             <label for="style_description" class="col-sm-2 col-form-label ">Style Description</label>
@@ -184,7 +184,7 @@
                                               {{ form.order_uom|attr:"class:form-control"|attr:"required" }}
                                           </td>
                                           <td >
-                                               {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"|attr:"id:smv"|attr:"data-target:#smv_modal"|attr:"required"|attr:"readonly"}}
+                                               {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"|attr:"id:smv"|attr:"data-target:#smv_modal"|attr:"required"}}
                                           </td>
                                           <td >
                                               {{ form.packing|attr:"class:form-control"|attr:"required" }}
@@ -230,18 +230,19 @@
                                                         <th class="text-center " > Gmts Dyeing</th>
                                                         <th class="text-center " > AOP</th>
                                                         <th class="text-center " > Total SMV</th>
+                                                        <th class="text-center " > </th>
                                                         <th class="text-center "  width="80px;"> Action </th>
                                                         
                                                     </tr>
                                                 </thead>
                         
                                                 {{ form_smv_items.management_form }}
-                                                <tbody class="inline_smv_form">
+                                                <tbody >
                                                     {% for sv in form_smv_items %}
-                                                    <tr >
+                                                    <tr class="{% cycle 'row1' 'row2' %} inline_smv_form">
                                                         <td >
                                                            
-                                                            {{ sv.items|attr:"class:form-controls"|attr:"onchange:gmtItms()" }}
+                                                            {{ sv.items|attr:"class:form-controls"|attr:"onClick:gmtItms()" }}
                                                         </td>
                                                         <td >
                                                             {{ sv.set_ratio|attr:"class:form-controls"|attr:"type:number"|attr:"oninput:total_ratio(id)" }}
@@ -327,7 +328,7 @@
                                                         <td >
                                                              {{ sv.tt_smv|attr:"class:form-controls"}}
                                                         </td>
-                                                        
+                                                        <td class="hidden">{{ sv.id }}</td>
                                                         <td class="remov text-center">
                                                         </td>
                                                     </tr>
@@ -376,82 +377,85 @@
 
                           <div class="table-responsive">
   
-                            <table class="table table-bordered table-hover table-sm" >
-                                <thead class="bg-table-header">
-                                    
-                                    <tr>
-                                       
-                                        <th class="text-center"> Agent </th>
-                                        <th class="text-center" width="110px;"> Client  </th>
-                                        <th class="text-center label" width="150px;"> Images </th>
-                                        <th class="text-center" width="150px;">File </th>
-                                        <th class="text-center" width="110px;"> Internal Ref </th>
-                                        <th class="text-center" width="110px;"> Copy Form </th>
-                                        <th class="text-center label"> Working Company</th>
-                                        <th class="text-center label"> Working Location </th>
-                                        <th class="text-center"> Design Source </th>
-                                    </tr>
-                                </thead>
-                                <tbody >
-                                    <tr >
-                                       
-                                        
-                                        <td >
-                                            {{ form.agent|attr:"class:form-control" }}
-                                        </td>
-                                        <td >
-                                            {{ form.client|attr:"class:form-control" }}
-                                        </td>
-                                        <td >
-                                            {{ form.image|attr:"class:form-control"|attr:"type:file"|attr:"required"}}
-                                        </td>
-                                        <td >
-                                            {{ form.file|attr:"class:form-control"|attr:"type:file"}}
-                                        </td>
-                                        <td >
-                                            {{ form.internal_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Internal Ref."}}
-                                        </td>
-                                        <td >
-                                            {{ form.copy_form|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Copy Form"}}
-                                        </td>
-                                       
-                                        <td >
-                                            {{ form.working_company|attr:"class:form-control"|attr:"required" }}
-                                        </td>
-                                        
-                                        <td >
-                                            {{ form.working_location|attr:"class:form-control"|attr:"required" }}
-                                        </td>
-                                        <td>
-                                          {{ form.design_source|attr:"class:form-control" }}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="form-group row ">
+                              <table class="table table-bordered table-hover table-sm" >
+                                  <thead class="bg-table-header">
+                                      
+                                      <tr>
+                                         
+                                          <th class="text-center"> Agent </th>
+                                          <th class="text-center" width="110px;"> Client  </th>
+                                          <th class="text-center label" width="150px;"> Images </th>
+                                          <th class="text-center" width="150px;">File </th>
+                                          <th class="text-center" width="110px;"> Internal Ref </th>
+                                          <th class="text-center" width="110px;"> Copy Form </th>
+                                          <th class="text-center label"> Working Company</th>
+                                          <th class="text-center label"> Working Location </th>
+                                          <th class="text-center"> Design Source </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody >
+                                      <tr >
+                                         
+                                          
+                                          <td >
+                                              {{ form.agent|attr:"class:form-control" }}
+                                          </td>
+                                          <td >
+                                              {{ form.client|attr:"class:form-control" }}
+                                          </td>
+                                          <td >
+                                              {{ form.image|attr:"class:form-control"|attr:"type:file"}}
+                                          </td>
+                                          <td >
+                                              {{ form.file|attr:"class:form-control"|attr:"type:file"}}
+                                          </td>
+                                          <td >
+                                              {{ form.internal_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Internal Ref."}}
+                                          </td>
+                                          <td >
+                                              {{ form.copy_form|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Copy Form"}}
+                                          </td>
+                                         
+                                          <td >
+                                              {{ form.working_company|attr:"class:form-control" }}
+                                          </td>
+                                          
+                                          <td >
+                                              {{ form.working_location|attr:"class:form-control"}}
+                                          </td>
+                                          <td>
+                                            {{ form.design_source|attr:"class:form-control" }}
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                         
+                          <div class="form-group row ">
+                              
+                            <label for="location_name" class="col-sm-2 col-form-label ">Quality Label</label>
+                            <div class="col-sm-2 ">
+                                {{ form.quality_level|attr:"class:form-control" }}
+
+                              
+                            </div>
+                            <label for="shipment_term" class="col-sm-2 col-form-label label">Shipment Term</label>
+                            <div class="col-sm-2 ">
+                                {{ form.shipment_term|attr:"class:form-control" }}
+                            </div>
+
+                            <label for="payment_term" class="col-sm-2 col-form-label ">Payment Term</label>
+                            <div class="col-sm-2 ">
+                                {{ form.payment_term|attr:"class:form-control" }}
+                            </div>
+                          </div>
                            
-                          <label for="location_name" class="col-sm-2 col-form-label ">Quality Label</label>
-                          <div class="col-sm-2 ">
-                              {{ form.quality_level|attr:"class:form-control" }}
-                          </div>
-                          <label for="shipment_term" class="col-sm-2 col-form-label label">Shipment Term</label>
-                          <div class="col-sm-2 ">
-                              {{ form.shipment_term|attr:"class:form-control"|attr:"required" }}
-                          </div>
-                          <label for="payment_term" class="col-sm-2 col-form-label ">Payment Term</label>
-                          <div class="col-sm-2 ">
-                              {{ form.payment_term|attr:"class:form-control" }}
-                          </div>
-                        </div>
-                           
-                           
-                          <div class="text-center mt-3">
-                              <button type="submit"  name="button1" class="btn btn-success btn-sm submitBtn  ml-3 " style=" border-radius: 20px;" onclick="jobNo()">Save</button>
-                              <button type="button" class="btn btn-info btn-sm ml-3" style=" border-radius: 20px;">Update</button>
-                              <button type="button" class="btn btn-danger btn-sm ml-3" style=" border-radius: 20px;">Delete</button>
-                              <button type="button" class="btn btn-dark btn-sm ml-3" style=" border-radius: 20px;">Reset</button>
-                          </div>
+                            <div class="text-center mt-3">
+                                <button type="submit"  name="button1" class="btn btn-success btn-sm submitBtn  ml-3 " style=" border-radius: 20px;" onclick="jobNo()" disabled>Save</button>
+                                <button type="submit" class="btn btn-info btn-sm ml-3" style=" border-radius: 20px;">Update</button>
+                                <button type="submit" class="btn btn-danger btn-sm ml-3" style=" border-radius: 20px;" disabled>Delete</button>
+                                <button type="submit" class="btn btn-warning btn-sm ml-3" style=" border-radius: 20px;" disabled>Refresh</button>
+                            </div>
                     </form>
                   </div>
                 </div>
@@ -463,7 +467,7 @@
 <!-- PO DETAILS  -->
 <div class="container-fluid mb-2 mt-2" >
      <!-- <div class=" card border border-light mb-2 mt-2" id="output"> -->
-     <div class=" card border border-light mb-2 mt-2">
+     <div class=" card border border-light mb-2 mt-2" >
         <div class=" p-1 bg-form-header">
             <h5 class="text-uppercase text-center ">PO Details Entry Form</h4>
         </div>
@@ -471,17 +475,17 @@
             <div class="row">
                 <div class="col-md-12 P-4">
                 
-                    <form method="POST" action="{% url 'order_entry' %}" enctype="multipart/form-data" id="po_form" name="poForm" >
+                    <form method="POST" enctype="multipart/form-data" >
                         {% csrf_token %}
                         <input type="hidden" name="_task" value="PO">
                           <div class="form-group row justify-content-center">
                             <label for="order_status" class="col-sm-1 col-form-label label">Job No.</label>
                             <div class="col-sm-2 ">
-                              <input type="text" name="job_no" class="form-control" id="hidden_job_no" value="{{ job }}">
+                                <input type="text"  class="form-control"  value=" {{po.po_job_no}}" readonly>
                             </div>
                             <label for="order_status" class="col-sm-1 col-form-label label">Order Status</label>
                               <div class="col-sm-2 ">
-                                  {{ po_form.order_status|attr:"class:form-control"|attr:"required"|attr:"id:po_select"|attr:"onChange:checkOption(this)" }}
+                                  {{ po_form.order_status|attr:"class:form-control"|attr:"id:po_select" }}
                             </div>
                             <label for="projected_po" class="col-sm-1 col-form-label ">Projected PO</label>
                             <div class="col-sm-2 ">
@@ -514,14 +518,14 @@
                                       <tr >
                                           <td >
     
-                                              {{ po_form.po_no|attr:"class:form-control"|attr:"required"|attr:"placeholder:Po No" }}
+                                              {{ po_form.po_no|attr:"class:form-control"|attr:"placeholder:Po No" }}
                                               
                                           </td>
                                           <td >
-                                              {{ po_form.po_recieve_date|attr:"type:date"|attr:"class:form-control"|attr:"required" }}
+                                              {{ po_form.po_recieve_date|attr:"type:date"|attr:"class:form-control"}}
                                           </td>
                                           <td >
-                                              {{ po_form.pub_shipment_date|attr:"type:date"|attr:"class:form-control"|attr:"required"|attr:"id:bill_date" }}
+                                              {{ po_form.pub_shipment_date|attr:"type:date"|attr:"class:form-control"|attr:"id:bill_date" }}
                                           </td>
                                           <td >
                                               {{ po_form.lead_time|attr:"type:text"|attr:"class:form-control"|attr:"readonly"|attr:"id:lead_time" }}
@@ -533,7 +537,7 @@
                                               {{ po_form.fac_recieve_date|attr:"type:date"|attr:"class:form-control" }}
                                           </td>
                                           <td >
-                                            {{ po_form.po_quantity|attr:"class:form-control"|attr:"required"|attr:"placeholder:Dbl. Click"|attr:"id:po_quantity"|attr:"data-target:#exampleModal"|attr:"data-toggle:modal"|attr:"ondblclick:test(0)" }}
+                                            {{ po_form.po_quantity|attr:"class:form-control"|attr:"placeholder:Dbl. Click"|attr:"id:po_quantity"|attr:"data-target:#exampleModal"|attr:"data-toggle:modal"|attr:"ondblclick:pushToSmv()" }}
                                         </td>
                                         <td >
                                             {{ po_form.avg_price|attr:"class:form-control" }}
@@ -548,7 +552,7 @@
                                              {{ po_form.plan_cut_qty|attr:"class:form-control"|attr:"type:number"}}
                                         </td>
                                         <td >
-                                            {{ po_form.status_active|attr:"class:form-control"|attr:"required" }}
+                                            {{ po_form.status_active|attr:"class:form-control" }}
                                         </td>
                                           
                                           
@@ -612,7 +616,7 @@
                                         
                                                             <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
                                         
-                                                                <table class="table table-bordered table-hover table-sm table-responsive increment" id="inline_table">
+                                                                <table class="table table-bordered table-hover table-sm table-responsive increment" id="inline_table" >
                                                                     <thead class="bg-table-header">
                                                                         <tr>
                                                                             <th class="text-center"> Gmts Item </th>
@@ -626,15 +630,19 @@
                                                                             <th class="text-center"> Excess Cut </th>
                                                                             <th class="text-center"> Plan Cut Qty. </th>
                                                                             <th class="text-center"> Status </th>
+                                                                            <th class="text-center" hidden> </th>
                                                                             <th class="text-center"  width="80px;"> Action </th>
                                                                         </tr>
                                                                     </thead>
                                                                     {{ form_items.management_form }}
-                                                                        <tbody class='inline_form'>
+                                                                        <tbody >
                                                                             {% for ft in form_items %}
-                                                                            <tr>
+                                                                            <tr class="{% cycle 'row1' 'row2' %} inline_form" >
                                                                                 <td class="text-center">
-                                                                                    {{ ft.gmt_items|attr:"class:form-controls"|attr:"onclick:test('none')" }}
+                                                                                    {{ ft.gmt_items|attr:"class:form-controls"}}
+                                                                                    <!-- <select name="color_size-0-gmt_items" class="form-control" id="id_color_size-0-gmt_items">
+                                                                                        <option value="" selected="">---------</option>
+                                                                                    </select> -->
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.article_number|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Article Number"}}
@@ -666,6 +674,7 @@
                                                                                 <td class="text-center">
                                                                                     {{ ft.status_active|attr:"class:form-control" }}
                                                                                 </td>
+                                                                                <td hidden class="hidden">{{ ft.id }}</td>
                                                                                 <td class="del text-center">
                                                                                 </td>
                                                                             </tr>
@@ -734,7 +743,7 @@
                                   <tbody >
                                       <tr >
                                           <td >
-                                              {{ po_form.po_packing|attr:"class:form-control"|attr:"required" }}
+                                              {{ po_form.po_packing|attr:"class:form-control" }}
                                           </td>
                                           <td >
                                                {{ po_form.tna_from_upto|attr:"class:form-control" }}
@@ -769,44 +778,65 @@
                           
 
                           <div class="text-center">
-                            <button type="submit"  class="btn btn-success btn-sm ml-3 submitPoBtn" style=" border-radius: 20px;" onclick="mainFetcher()">Save</button>
+                            <button type="submit"  class="btn btn-success btn-sm ml-3" style=" border-radius: 20px;" disabled>Save</button>
                             <button type="update" class="btn btn-info btn-sm  ml-3" style=" border-radius: 20px;">Update</button>
-                            <button type="button" class="btn btn-danger btn-sm ml-3" style=" border-radius: 20px;">Delete</button>
-                            <button type="button" class="btn btn-dark btn-sm ml-3 res" onclick="reset()"  style=" border-radius: 20px;">Reset</button>
+                            <button type="button" class="btn btn-danger btn-sm ml-3" style=" border-radius: 20px;" disabled>Delete</button>
+                            <button type="button" class="btn btn-dark btn-sm ml-3"   style=" border-radius: 20px;" disabled>Refresh</button>
                         </div>   
                     </form>
                   </div>
     
                 </div>
         </div>
-        <table  class="table table-bordered table-striped table-hover table-sm mt-3 p-3">
-            <thead>
-              <tr>
-                <!-- <th>SL.</th> -->
-                <th>Order Status</th>
-                <th>PO No</th>
-                <th>PO Recv. Date</th>
-                <th >Ship Date</th>
-                <th >Orgn. Ship Date</th>
-                <th >PO Qty</th>
-                <th >Avg. Rate</th>
-                <th>Amount</th>
-                <th >Excess Cut</th>
-                <th >Plan Cut Qty</th>
-                <th >Lead Time</th>
-                <th >Lead Time on Fac Recv Date</th>
-                <th >Status</th>
-                <th >Ship Status</th>
-              </tr>
-            </thead>
-            <tbody id="hi"></tbody>
-        </table>
+        
         
     </div>
 
 </div>
 
-
+<div class="container-fluid">
+    <table  class="table table-bordered table-striped table-hover table-sm mt-3">
+        <thead>
+          <tr>
+            <th>SL.</th>
+            <th>Order Status</th>
+            <th>PO No</th>
+            <th>PO Recv. Date</th>
+            <th >Ship Date</th>
+            <th >Orgn. Ship Date</th>
+            <th >PO Qty.</th>
+            <th >Avg. Rate</th>
+            <th>Amount</th>
+            <th >Excess Cut %</th>
+            <th >Plan Cut Qty.</th>
+            <th >Lead Time</th>
+            <th >Status</th>
+            <th >Ship Status</th>
+          </tr>
+        </thead>
+        <tbody >
+            {% for i in same_po %}
+            <tr>
+               
+                <td>{{forloop.counter}}</td>
+                <td>{{i.order_status}}</td>
+                <td><a class="dropdown-item" href="{% url 'edit_order' i.id %}">{{i.po_no}}</a></td>
+                <td>{{i.po_recieve_date}}</td>
+                <td>{{i.pub_shipment_date}}</td>
+                <td>{{i.org_shipment_date}}</td>
+                <td>{{i.po_quantity}}</td>
+                <td>{{i.avg_price}}</td>
+                <td>{{i.amount}}</td>
+                <td>{{i.excess_cut_pct}}</td>
+                <td>{{i.plan_cut_qty}}</td>
+                <td>{{i.lead_time}}</td>
+                <td>{{i.status_active}}</td>
+                <td>Full Funding</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 {% endblock body %}
 
@@ -819,13 +849,16 @@
             addText: '+ Add More',
             deleteText: 'X',
             addContainerClass:"adds",
-            addCssClass:"btn btn-sm btn-warning mt-4 mb-3",
+            addCssClass:"btn btn-sm btn-warning mt-4 mb-4",
             deleteCssClass:"btn btn-sm btn-danger",
             deleteContainerClass:"remov",
         });
     });
 </script>
 
+<script type="text/javascript">
+    $('#po_form').trigger("reset");
+</script>
  
 <script >
     // FOR SMV MODAL SHOW 
@@ -843,10 +876,6 @@
 
      var smvID = ['id_order_smv-V-set_ratio', 'id_order_smv-V-sew_smv_pcs', 'id_order_smv-V-cut_smv_pcs', 'id_order_smv-V-fin_smv_pcs', 'id_order_smv-V-print_days', 'id_order_smv-V-embro_days', 'id_order_smv-V-wash_days', 'id_order_smv-V-sp_work_days', 'id_order_smv-V-gmts_dyeing_days', 'id_order_smv-V-aop_days']
      var gmt = []
-
-     function ord2report(){
-         open('/merchandise/add_po/', "_self")
-     }
 
      function update(){
         count++
@@ -1188,25 +1217,6 @@ function totalSMV(id){
   }
  
 </script>
-
-
-
-<script type="text/javascript">
-    $(function () {
-        $("#po_select").change(function () {
-          if ($(this).val() == "Confirmed") {
-            
-            $('#modal').modal({
-                show: false
-            });
-
-            $('#po_quantity').on('dblclick', function() {
-              $('#modal').modal('show');
-            });
-           
-          } 
-      });
-    });
 </script>
 
 <script type="text/javascript"> 
@@ -1290,7 +1300,22 @@ function totalSMV(id){
         })
         });
     </script>
+<script type="text/javascript">
+    // SHOW AND HIDE FORM AFTER SUBMIT
+    $(document).ready(function() {
+        $('#output').hide();
+        $('#form').submit(function(){
+        $('#output').show();   
+        });
+    });
 
+    $(document).ready(function () {
+        $("#form").submit(function () {
+            $(".submitBtn").attr("disabled", true);
+            return true;
+        });
+    });
+</script>
 
 <!-- FOR COLOR SIZE INLINE -->
 <script type="text/javascript">
@@ -1321,53 +1346,6 @@ function totalSMV(id){
     document.getElementById('lead_time').value = Difference_In_Days
     console.log(Difference_In_Days)
 });
-</script>
-<script>
-    function checkOption(obj) {
-        var quantity = document.getElementById("po_quantity");
-        var avgPrice = document.getElementById("id_avg_price");
-        var amount = document.getElementById("id_amount");
-        var excesscut = document.getElementById("id_excess_cut_pct");
-        var planCut = document.getElementById("id_plan_cut_qty");
-        quantity.readOnly = obj.value == "Confirmed";
-        avgPrice.readOnly = obj.value == "Confirmed";
-        amount.readOnly = obj.value == "Confirmed";
-        excesscut.readOnly = obj.value == "Confirmed";
-        planCut.readOnly = obj.value == "Confirmed";
-    }
-</script>
-
-<script type="text/javascript">
-       // SHOW AND HIDE FORM AFTER SUBMIT
-       $(document).ready(function() {
-        $('#output').hide();
-        $('#form').submit(function(){
-        $('#output').show();   
-        });
-    });
-
-    $(document).ready(function () {
-        $("#form").submit(function () {
-            $(".submitBtn").attr("disabled", true);
-            return true;
-        });
-    });
-
-    $(document).ready(function () {
-        $("#po_form").submit(function () {
-            $(".submitPoBtn").attr("disabled", true);
-            return true;
-        });
-    });
-
-    $(document).ready(function(){
-        $(".res").click(function(){
-            $("#po_form").trigger("reset");
-            $(".submitPoBtn").attr("disabled", false);
-            return true;
-        });
-    });
- 
 </script>
 
 

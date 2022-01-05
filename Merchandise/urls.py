@@ -114,6 +114,8 @@ urlpatterns=[
     path('edit_order/<int:id>/', views.edit_order, name= 'edit_order'),
     path('delete_order/<int:id>/', views.delete_order, name= 'delete_order'),
     path('order_report/', views.order_report, name= 'order_report'),
+    path('add_po/', views.report_po),
+    path('po/<int:id>/', views.add_po),
     # path('po_details/', views.po_details, name= 'po_details'),
     # path('color_size_entry/', views.color_size_entry, name= 'color_size_entry'),
     path('pre_costing/', views.pre_costing, name= 'pre_costing'),

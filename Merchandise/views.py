@@ -1130,7 +1130,6 @@ def order_entry(request):
 def order_report(request):
     orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')
     po_details = PO_Details.objects.all().order_by('-id')
-    # orders = OrderEntryInfo.objects.all().order_by('-id')
     order_count = orders.count()
     myFilter = OrderFilter(request.GET , queryset = orders)
     orders = myFilter.qs
@@ -1141,6 +1140,20 @@ def order_report(request):
         'po_details':po_details,
     }
     return render(request, 'Merchandising/Order/order_report.html', context)
+
+def report_po(request):
+    orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')
+    po_details = PO_Details.objects.all().order_by('-id')
+    order_count = orders.count()
+    myFilter = OrderFilter(request.GET , queryset = orders)
+    orders = myFilter.qs
+    context = {
+        'orders': orders,
+        'order_count': order_count,
+        'myFilter': myFilter,
+        'po_details':po_details,
+    }
+    return render(request, 'Merchandising/Order/report_po.html', context)
 
 def view_order(request, id):
     view_po = PO_Details.objects.get(id=id)
@@ -1231,6 +1244,89 @@ def edit_order(request, id):
         'same_po': same_po,
     }
     return render(request, "Merchandising/Order/edit_order.html", context)
+
+def add_po(request, id):
+    po = PO_Details.objects.get(id=id)
+    obj = OrderEntryInfo.objects.get(job_no=po.po_job_no)
+    form = OrderEntryForm(instance=obj)
+    smv_factory = inlineformset_factory(OrderEntryInfo, SmvItems, form=SmvItems_Form, extra=0)
+    form_smv_items = smv_factory(instance=obj)
+    po_form = PoDeatilsForm(instance=po)
+    
+    if request.method == "POST":
+        if request.POST.get('_task') == "form":
+            if request.method == "GET":
+                obj = OrderEntryInfo.objects.get(job_no=po.po_job_no)
+                if obj is None:
+                    return redirect(reverse('order_entry'))
+
+                form = OrderEntryForm(instance=obj)
+                smv_factory = inlineformset_factory(OrderEntryInfo, SmvItems, form=SmvItems_Form, extra=0)
+                form_smv_items = smv_factory(instance=obj)
+            elif request.method == "POST":
+                obj = OrderEntryInfo.objects.get(job_no=po.po_job_no)
+                if obj is None:
+                    return redirect(reverse('order_entry'))
+                form = OrderEntryForm(request.POST, request.FILES, instance=obj)
+                smv_factory = inlineformset_factory(OrderEntryInfo, SmvItems, form=SmvItems_Form)
+                form_smv_items = smv_factory(request.POST, instance=obj)
+                if form.is_valid() and form_smv_items.is_valid():
+                    data = form.save()
+                    form_smv_items.instance = data
+                    form_smv_items.save()
+                    messages.success(request, "Your Order Entry information has been updated!")
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    messages.error(request , "Something went wrong!")
+                    print(form.errors)
+                    print(form_smv_items.errors)
+ 
+        elif request.POST.get('_task') == 'PO':
+            if request.method == "GET":
+                po = PO_Details.objects.get(id=id)
+                if po is None:
+                    return redirect(reverse('order_entry'))
+                po_form = PoDeatilsForm(instance=po)
+                items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm, extra=0)
+                form_items = items_factory(instance=po)
+            elif request.method == "POST":
+                po = PO_Details.objects.get(id=id)
+                if po is None:
+                    return redirect(reverse('order_entry'))
+                po_form = PoDeatilsForm(request.POST, request.FILES, instance=po)
+                items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm)
+                form_items = items_factory(request.POST, instance=po)
+                if po_form.is_valid() and form_items.is_valid():
+                    breakdown = po_form.save()
+                    form_items.instance = breakdown
+                    form_items.save()
+                    messages.success(request, 'Your PO info has been updated Successfully...')
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    messages.error(request , "Something went wrong!")
+                    print(po_form.errors)
+                    print(form_items.errors)
+                    # print(f"data received")
+    #for smv
+    form = OrderEntryForm(instance=obj)
+    smv_factory = inlineformset_factory(OrderEntryInfo, SmvItems, form=SmvItems_Form, extra=0)
+    form_smv_items = smv_factory(instance=obj)
+
+    po_form = PoDeatilsForm(instance=po)
+    items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm, extra=0)
+    form_items = items_factory(instance=po)
+    same_po = PO_Details.objects.filter(po_job_no__job_no=obj)
+    
+    context = {
+        'obj':obj,
+        'po':po,
+        'form': form,
+        'po_form': po_form,
+        'form_items': form_items,
+        'form_smv_items': form_smv_items,
+        'same_po': same_po,
+    }
+    return render(request, "Merchandising/Order/add_po.html", context)
 
 
 def delete_order(request, id):

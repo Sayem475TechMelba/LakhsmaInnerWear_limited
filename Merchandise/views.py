@@ -1241,6 +1241,7 @@ def edit_order(request, id):
         'po_form': po_form,
         'form_items': form_items,
         'form_smv_items': form_smv_items,
+        'count': len(ColorSizeItems.objects.filter(po_color_size=id)),
         'same_po': same_po,
     }
     return render(request, "Merchandising/Order/edit_order.html", context)

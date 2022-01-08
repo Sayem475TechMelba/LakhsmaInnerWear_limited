@@ -65,22 +65,22 @@
 
                             <label for="company_name" class="col-sm-2 col-form-label label">Company Name</label>
                             <div class="col-sm-2 ">
-                              {{ form.company_name|attr:"class:form-control" }}
+                              {{ form.company_name|attr:"class:form-control"|attr:"required" }}
                             </div>
                             <label for="company_location" class="col-sm-2 col-form-label label">Location Name</label>
                             <div class="col-sm-2 ">
-                              {{ form.company_location|attr:"class:form-control"}}
+                              {{ form.company_location|attr:"class:form-control"|attr:"required" }}
                             </div>
                           </div>
                         
                           <div class="form-group row ">
                             <label for="buyer_name" class="col-sm-2 col-form-label label ">Buyer Name</label>
                             <div class="col-sm-2 ">
-                              {{ form.buyer_name|attr:"class:form-control"}}
+                              {{ form.buyer_name|attr:"class:form-control"|attr:"required" }}
                             </div>
                             <label for="style_ref" class="col-sm-2 col-form-label label">Style Ref</label>
                             <div class="col-sm-2 ">
-                              {{ form.style_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style Ref" }}
+                              {{ form.style_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style Ref"|attr:"required" }}
                             </div>
                             
                             <label for="style_description" class="col-sm-2 col-form-label ">Style Description</label>
@@ -390,7 +390,6 @@
                                           <th class="text-center" width="110px;"> Copy Form </th>
                                           <th class="text-center label"> Working Company</th>
                                           <th class="text-center label"> Working Location </th>
-                                          <th class="text-center"> Design Source </th>
                                       </tr>
                                   </thead>
                                   <tbody >
@@ -404,7 +403,7 @@
                                               {{ form.client|attr:"class:form-control" }}
                                           </td>
                                           <td >
-                                              {{ form.image|attr:"class:form-control"|attr:"type:file"}}
+                                              {{ form.image|attr:"class:form-control"|attr:"type:file"|attr:"required"}}
                                           </td>
                                           <td >
                                               {{ form.file|attr:"class:form-control"|attr:"type:file"}}
@@ -417,14 +416,11 @@
                                           </td>
                                          
                                           <td >
-                                              {{ form.working_company|attr:"class:form-control" }}
+                                              {{ form.working_company|attr:"class:form-control"|attr:"required" }}
                                           </td>
                                           
                                           <td >
-                                              {{ form.working_location|attr:"class:form-control"}}
-                                          </td>
-                                          <td>
-                                            {{ form.design_source|attr:"class:form-control" }}
+                                              {{ form.working_location|attr:"class:form-control"|attr:"required" }}
                                           </td>
                                       </tr>
                                   </tbody>
@@ -432,23 +428,23 @@
                           </div>
                          
                           <div class="form-group row ">
-                              
-                            <label for="location_name" class="col-sm-2 col-form-label ">Quality Label</label>
-                            <div class="col-sm-2 ">
-                                {{ form.quality_level|attr:"class:form-control" }}
-
-                              
+                              <label for="company_name" class="col-sm-2 col-form-label ">Design Source</label>
+                              <div class="col-sm-2 ">
+                                  {{ form.design_source|attr:"class:form-control" }}
+  
+                              </div>
+                              <label for="location_name" class="col-sm-2 col-form-label ">Quality Label</label>
+                              <div class="col-sm-2 ">
+                                  {{ form.quality_level|attr:"class:form-control" }}
+  
+                                
+                              </div>
+                              <label for="shipment_term" class="col-sm-2 col-form-label label">Shipment Term</label>
+                              <div class="col-sm-2 ">
+                                  {{ form.shipment_term|attr:"class:form-control"|attr:"required" }}
+                              </div>
                             </div>
-                            <label for="shipment_term" class="col-sm-2 col-form-label label">Shipment Term</label>
-                            <div class="col-sm-2 ">
-                                {{ form.shipment_term|attr:"class:form-control" }}
-                            </div>
-
-                            <label for="payment_term" class="col-sm-2 col-form-label ">Payment Term</label>
-                            <div class="col-sm-2 ">
-                                {{ form.payment_term|attr:"class:form-control" }}
-                            </div>
-                          </div>
+                           
                            
                             <div class="text-center mt-3">
                                 <button type="submit"  name="button1" class="btn btn-success btn-sm submitBtn  ml-3 " style=" border-radius: 20px;" onclick="jobNo()" disabled>Save</button>
@@ -485,15 +481,11 @@
                             </div>
                             <label for="order_status" class="col-sm-1 col-form-label label">Order Status</label>
                               <div class="col-sm-2 ">
-                                  {{ po_form.order_status|attr:"class:form-control"|attr:"id:po_select" }}
+                                  {{ po_form.order_status|attr:"class:form-control"|attr:"required"|attr:"id:po_select" }}
                             </div>
                             <label for="projected_po" class="col-sm-1 col-form-label ">Projected PO</label>
                             <div class="col-sm-2 ">
                               {{ po_form.projected_po|attr:"class:form-control" }}
-                            </div>
-                            <label for="gsm" class="col-sm-1 col-form-label ">GSM</label>
-                            <div class="col-sm-2 ">
-                              {{ po_form.gsm|attr:"class:form-control"|attr:"type:number" }}
                             </div>
                           </div>
                           <div class="table-responsive">
@@ -518,14 +510,14 @@
                                       <tr >
                                           <td >
     
-                                              {{ po_form.po_no|attr:"class:form-control"|attr:"placeholder:Po No" }}
+                                              {{ po_form.po_no|attr:"class:form-control"|attr:"required"|attr:"placeholder:Po No" }}
                                               
                                           </td>
                                           <td >
-                                              {{ po_form.po_recieve_date|attr:"type:date"|attr:"class:form-control"}}
+                                              {{ po_form.po_recieve_date|attr:"type:date"|attr:"class:form-control"|attr:"required" }}
                                           </td>
                                           <td >
-                                              {{ po_form.pub_shipment_date|attr:"type:date"|attr:"class:form-control"|attr:"id:bill_date" }}
+                                              {{ po_form.pub_shipment_date|attr:"type:date"|attr:"class:form-control"|attr:"required"|attr:"id:bill_date" }}
                                           </td>
                                           <td >
                                               {{ po_form.lead_time|attr:"type:text"|attr:"class:form-control"|attr:"readonly"|attr:"id:lead_time" }}
@@ -537,7 +529,7 @@
                                               {{ po_form.fac_recieve_date|attr:"type:date"|attr:"class:form-control" }}
                                           </td>
                                           <td >
-                                            {{ po_form.po_quantity|attr:"class:form-control"|attr:"placeholder:Dbl. Click"|attr:"id:po_quantity"|attr:"data-target:#exampleModal"|attr:"data-toggle:modal"|attr:"ondblclick:pushToSmv()" }}
+                                            {{ po_form.po_quantity|attr:"class:form-control"|attr:"required"|attr:"placeholder:Dbl. Click"|attr:"id:po_quantity"|attr:"data-target:#exampleModal"|attr:"data-toggle:modal"|attr:"ondblclick:pushToSmv()" }}
                                         </td>
                                         <td >
                                             {{ po_form.avg_price|attr:"class:form-control" }}
@@ -552,7 +544,7 @@
                                              {{ po_form.plan_cut_qty|attr:"class:form-control"|attr:"type:number"}}
                                         </td>
                                         <td >
-                                            {{ po_form.status_active|attr:"class:form-control" }}
+                                            {{ po_form.status_active|attr:"class:form-control"|attr:"required" }}
                                         </td>
                                           
                                           
@@ -622,7 +614,6 @@
                                                                             <th class="text-center"> Gmts Item </th>
                                                                             <th class="text-center"> Article Number</th>
                                                                             <th class="text-center"> Color </th>
-                                                                            <th class="text-center"> Fabrication </th>
                                                                             <th class="text-center"> Size</th>
                                                                             <th class="text-center"> Order Qty </th>
                                                                             <th class="text-center"> Rate </th>
@@ -649,9 +640,6 @@
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.color|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Color" }}
-                                                                                </td>
-                                                                                <td class="text-center">
-                                                                                    {{ ft.fabrication|attr:"class:form-control" }}
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.size|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Size" }}
@@ -683,7 +671,7 @@
                                                                         </tbody>
                                                                         <tfoot class="font-weight-bold">
                                                                             <tr>
-                                                                                <td colspan="5" class="text-right">
+                                                                                <td colspan="4" class="text-right">
                                                                                    Total:
                                                                                 </td>
                                                                                 
@@ -743,7 +731,7 @@
                                   <tbody >
                                       <tr >
                                           <td >
-                                              {{ po_form.po_packing|attr:"class:form-control" }}
+                                              {{ po_form.po_packing|attr:"class:form-control"|attr:"required" }}
                                           </td>
                                           <td >
                                                {{ po_form.tna_from_upto|attr:"class:form-control" }}
@@ -868,17 +856,18 @@
       });
 </script>
  <script>
-     var count = 1
-     var gmtCount = 0
+     var count = parseInt('{{ count }}')
 
-     var smvID = ['id_order_smv-V-set_ratio', 'id_order_smv-V-sew_smv_pcs', 'id_order_smv-V-cut_smv_pcs', 'id_order_smv-V-fin_smv_pcs', 'id_order_smv-V-print_days', 'id_order_smv-V-embro_days', 'id_order_smv-V-wash_days', 'id_order_smv-V-sp_work_days', 'id_order_smv-V-gmts_dyeing_days', 'id_order_smv-V-aop_days']
+     var smvid = ['id_order_smv-V-sew_smv_pcs', 'id_order_smv-V-cut_smv_pcs', 'id_order_smv-V-fin_smv_pcs', 'id_order_smv-V-print_days', 'id_order_smv-V-embro_days', 'id_order_smv-V-wash_days', 'id_order_smv-V-sp_work_days', 'id_order_smv-V-gmts_dyeing_days', 'id_order_smv-V-aop_days']
      var gmt = []
+     var ele = document.createElement('option')
 
      function update(){
         count++
      }
 
-    function negUpdate(){}
+     function negUpdate(){}
+
 
      function tdMaker(tr, data, des){
         var td = document.createElement('td')
@@ -888,22 +877,28 @@
         document.getElementById(des).append(tr)
      }
 
-     function test(param){
-         var j = 0
-         state = true
-         if(param === 'none'){
-            j = gmtCount
-            console.log(param)
-         } else {
-             j = 0
-         }
-         for(var i = 1; i<=document.getElementById(`id_color_size-${j}-gmt_items`).children.length; i++){
-             if(gmt.includes(document.getElementById(`id_color_size-${j}-gmt_items`).children[i].innerHTML) == false){
-                document.getElementById(`id_color_size-${j}-gmt_items`).removeChild(document.getElementById(`id_color_size-${j}-gmt_items`).children[i])
-                gmtCount++
-             }
-         }
+     function pushTo(data){
+        ele.innerText = data
+        ele.value = data
      }
+
+     function pushToSmv(){
+         document.getElementById('id_color_size-0-gmt_items').append(ele)
+     }
+
+     function rightID(id){
+        var numPre = []
+        var number = 0
+        for(var i=0; i<id.length; i++){
+            if(parseInt(id[i]) || id[i] == '0'){
+                numPre.push(parseInt(id[i]))
+            }
+        }
+        for(var i = 0; i<numPre.length; i++){
+            number += numPre[i] * (10 ** (numPre.length - (i+1)))
+        }
+        return number
+    }
 
      function pipeLine(){
         var ord_quan = document.getElementById("order_quan").value
@@ -939,7 +934,7 @@
         tdMaker(tr, "null", "table-color")
         tdMaker(tr, document.getElementById("id_status_active").value, "table-color")
         tdMaker(tr, "Active", "table-color")
-     }
+    }
 
      function jobNo(){
         document.getElementById("id_po_job_no").value = '{{ job }}'
@@ -972,22 +967,9 @@
         for(var i = 0; i<count; i++){
             if(gmt.includes(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text) == false){
                 gmt.push(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text)
+                pushTo(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text)
             }
         }
-    }
-
-    function rightID(id){
-        var numPre = []
-        var number = 0
-        for(var i=0; i<id.length; i++){
-            if(parseInt(id[i]) || id[i] == '0'){
-                numPre.push(parseInt(id[i]))
-            }
-        }
-        for(var i = 0; i<numPre.length; i++){
-            number += numPre[i] * (10 ** (numPre.length - (i+1)))
-        }
-        return number
     }
 
     function autoRate(id){
@@ -1016,7 +998,7 @@
     var subTotal = 0;
     for(var i = 0; i<count; i++){
       try{
-        var sub = parseFloat(document.getElementById(`id_color_size-${i}-order_qty`).value)
+        var sub = parseInt(document.getElementById(`id_color_size-${i}-order_qty`).value)
         subTotal += sub  
       }
       catch(err){
@@ -1038,7 +1020,7 @@
         subTotal = subTotal + sub
         // AVERAGE BUG FIX - HAVE TO CHANGE VARIABLE NAME
         x = subTotal / row
-        // console.log(i , row , sub, x)
+        // console.log(i , row ,sub, x)
         row++;
       }
       catch(err){
@@ -1055,7 +1037,7 @@
     var subTotal = 0;
     for(var i = 0; i<count; i++){
       try{
-        var sub = parseFloat(document.getElementById(`id_color_size-${i}-amount`).value)
+        var sub = parseInt(document.getElementById(`id_color_size-${i}-amount`).value)
         subTotal += sub  
       }
       catch(err){
@@ -1108,7 +1090,7 @@
     var subTotal = 0;
     for(var i = 0; i<count; i++){
       try{
-        var sub = parseFloat(document.getElementById(`id_order_smv-${i}-set_ratio`).value)
+        var sub = parseInt(document.getElementById(`id_order_smv-${i}-set_ratio`).value)
         subTotal += sub  
         console.log(subTotal)
       }
@@ -1117,7 +1099,6 @@
       }
     }
     document.getElementById('tt_set_ratio').value = subTotal
-    totalSMV(id)
   }
 
   
@@ -1125,7 +1106,7 @@
     var subTotal = 0;
     for(var i = 0; i<count; i++){
       try{
-        var sub = parseFloat(document.getElementById(`id_order_smv-${i}-sew_smv_pcs`).value)
+        var sub = parseInt(document.getElementById(`id_order_smv-${i}-sew_smv_pcs`).value)
         subTotal += sub  
       }
       catch(err){
@@ -1141,7 +1122,7 @@
         var subTotal = 0;
         for(var i = 0; i<count; i++){
         try{
-            var sub = parseFloat(document.getElementById(`id_order_smv-${i}-cut_smv_pcs`).value)
+            var sub = parseInt(document.getElementById(`id_order_smv-${i}-cut_smv_pcs`).value)
             subTotal += sub  
         }
         catch(err){
@@ -1156,7 +1137,7 @@
         var subTotal = 0;
         for(var i = 0; i<count; i++){
         try{
-            var sub = parseFloat(document.getElementById(`id_order_smv-${i}-fin_smv_pcs`).value)
+            var sub = parseInt(document.getElementById(`id_order_smv-${i}-fin_smv_pcs`).value)
             subTotal += sub  
         }
         catch(err){
@@ -1212,8 +1193,14 @@ function totalSMV(id){
     document.getElementById('tt_smv').value = y
     document.getElementById("smv").value = y
   }
- 
-</script>
+ </script>
+
+
+
+ <script type="text/javascript">
+    $('#po_quantity').on('dblclick', function() {
+        $('#modal').modal('show');
+      });
 </script>
 
 <script type="text/javascript"> 

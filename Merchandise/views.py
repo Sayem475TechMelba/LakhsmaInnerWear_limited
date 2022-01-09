@@ -1252,7 +1252,7 @@ def add_po(request, id):
     form = OrderEntryForm(instance=obj)
     smv_factory = inlineformset_factory(OrderEntryInfo, SmvItems, form=SmvItems_Form, extra=0)
     form_smv_items = smv_factory(instance=obj)
-    po_form = PoDeatilsForm(instance=po)
+    po_form = PoDeatilsForm()
     
     if request.method == "POST":
         if request.POST.get('_task') == "form":
@@ -1287,14 +1287,14 @@ def add_po(request, id):
                 po = PO_Details.objects.get(id=id)
                 if po is None:
                     return redirect(reverse('order_entry'))
-                po_form = PoDeatilsForm(instance=po)
+                po_form = PoDeatilsForm()
                 items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm, extra=0)
                 form_items = items_factory(instance=po)
             elif request.method == "POST":
                 po = PO_Details.objects.get(id=id)
                 if po is None:
                     return redirect(reverse('order_entry'))
-                po_form = PoDeatilsForm(request.POST, request.FILES, instance=po)
+                po_form = PoDeatilsForm(request.POST, request.FILES)
                 items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm)
                 form_items = items_factory(request.POST, instance=po)
                 if po_form.is_valid() and form_items.is_valid():
@@ -1313,7 +1313,7 @@ def add_po(request, id):
     smv_factory = inlineformset_factory(OrderEntryInfo, SmvItems, form=SmvItems_Form, extra=0)
     form_smv_items = smv_factory(instance=obj)
 
-    po_form = PoDeatilsForm(instance=po)
+    po_form = PoDeatilsForm()
     items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm, extra=0)
     form_items = items_factory(instance=po)
     same_po = PO_Details.objects.filter(po_job_no__job_no=obj)

@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'Merchandise',
     'django_filters',
     'widget_tweaks',
-    'Test',
+    'mailing',
     'mathfilters',
     'rest_framework',
 ]

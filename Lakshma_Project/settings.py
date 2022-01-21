@@ -153,6 +153,9 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
+#Vars
+DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+
 # SMTP Configuration
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587

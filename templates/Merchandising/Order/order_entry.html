@@ -60,7 +60,7 @@
                           <div class="form-group row ">
                             <label for="company_name" class="col-sm-2 col-form-label label">Job No.</label>
                             <div class="col-sm-2 ">
-                              <input type="text" name="job_no" id="hidden_job_no" class="form-control" placeholder="Dbl. Click" value="{{ job }}" ondblclick="ord2report()">
+                              <input type="text" name="job_no" id="hidden_job_no" class="form-control" placeholder="Dbl. Click" value="{{ job }}"  ondblclick="ord2report()">
                             </div>
 
                             <label for="company_name" class="col-sm-2 col-form-label label">Company Name</label>
@@ -447,10 +447,7 @@
                            
                            
                           <div class="text-center mt-3">
-                              <button type="submit"  name="button1" class="btn btn-success btn-sm submitBtn  ml-3 " style=" border-radius: 20px;" onclick="jobNo()">Save</button>
-                              <button type="button" class="btn btn-info btn-sm ml-3" style=" border-radius: 20px;">Update</button>
-                              <button type="button" class="btn btn-danger btn-sm ml-3" style=" border-radius: 20px;">Delete</button>
-                              <button type="button" class="btn btn-dark btn-sm ml-3" style=" border-radius: 20px;">Reset</button>
+                            <button type="submit"  name="button1" class="btn btn-success btn-sm submitBtn  ml-3 " style=" border-radius: 20px;" onclick="jobNo()">Save</button>
                           </div>
                     </form>
                   </div>
@@ -769,12 +766,11 @@
                           
 
                           <div class="text-center">
-                            <div class="container" style="visibility: hidden;"  id="gif" >
-                                <small class="text-center text-danger font-weight-bold">Please Wait For a Moment....</small>
-                            </div>
+                              <div class="container" style="visibility: hidden;"  id="gif" >
+                                  <small class="text-center text-danger font-weight-bold">Please Wait For a Moment....</small>
+                              </div>
+
                             <button type="submit"  class="btn btn-success btn-sm ml-3 submitPoBtn" style=" border-radius: 20px;">Save</button>
-                            <button type="update" class="btn btn-info btn-sm  ml-3" style=" border-radius: 20px;">Update</button>
-                            <button type="button" class="btn btn-danger btn-sm ml-3" style=" border-radius: 20px;">Delete</button>
                             <button type="button" class="btn btn-dark btn-sm ml-3 res" onclick="reset()"  style=" border-radius: 20px;">Reset</button>
                         </div>   
                     </form>
@@ -922,6 +918,7 @@
         document.getElementById("id_po_job_no").value = '{{ job }}'
      }
     
+    // MAIN FETCHER SHOULD BE SEEN HERE ... @@########
     function mainFetcher(){
         var tr = document.createElement('tr')
        // tdMaker(tr, '1', 'hi')
@@ -940,6 +937,8 @@
         tdMaker(tr, document.getElementById('id_status_active').options[document.getElementById('id_status_active').selectedIndex].text, 'hi')
         tdMaker(tr, document.getElementById('id_status_active').options[document.getElementById('id_status_active').selectedIndex].text, 'hi')
     }
+    // MAIN FETCHER SHOULD BE SEEN HERE ... @@########
+
     // FOR RESET FORM -- PO DETAILS
     function myFunction() {
         document.getElementsByClassName("poForm").reset();
@@ -1213,59 +1212,54 @@ function totalSMV(id){
 </script>
 
 <script type="text/javascript"> 
-
-    // SUBMIT FORM WITHOUT PAGE RELOAD
-    $("#form").submit(function (event) {
-        event.preventDefault();
-        var form = $(this)
-        url = form.attr('action')
-        // var data = $("#net_amount").val()
-        $.ajax({
-        type: "POST",
-        url: url,
-        data: form.serialize(),
-        afterSend: function () {
-        },
-        success: function (data) {
-            alert("Your Order Successfully Added. Please Confirm Purcahse Order as well.");
-            $("#show").show();
-        },
-        error: function (data) {
-            alert("Something Went Wrong...");
-        }
-        })
+    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
+        $('#form').submit(function(event){
+            event.preventDefault();
+            $form = $(this)
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    alert("Your Order Successfully Added. Please Confirm Purcahse Order as well.");
+                },
+                error: function (response) {
+                    alert("Something Went Wrong...");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
         });
-</script>
-
-<script type="text/javascript"> 
-
-    // SUBMIT FORM WITHOUT PAGE RELOAD
-
-    $("#po_form").submit(function (event) {
-        event.preventDefault();
-        var form = $(this)
-        url = form.attr('action')
-        // var data = $("#net_amount").val()
-        $.ajax({
-        type: "POST",
+</script> 
+<script>
+$('#po_form').submit(function(event){
+    event.preventDefault();
+    $form = $(this)
+    var formData = new FormData(this);
+    $.ajax({
         url: url,
-        data: form.serialize(),
+        type: 'POST',
+        data: formData,
         afterSend: function () {
-        
+    
         },
-        success: function (data) {
+        success: function (response) {
             document.getElementById('gif').style.visibility='hidden'
             mainFetcher()
-            alert("Your Order is Succssfully Confirmed");
-        $("#show").show();
-        
+            
+            $("#show").show();
         },
-        error: function (data) {
-            alert(`Something Went Wrong...`);
-        }
-        })
-        });
-    </script>
+        error: function (response) {
+            alert("Something Went Wrong...");
+        },
+        cache: false,
+        contentType: false,
+        processData: false
+    });
+});
+</script>
 
 <script type="text/javascript"> 
 
@@ -1311,7 +1305,6 @@ function totalSMV(id){
         });
     })
   </script>
-
   <script>
     $('#po_form').submit(function() {
         $('#gif').css('visibility', 'visible');
@@ -1349,6 +1342,19 @@ function totalSMV(id){
 </script>
 
 <script type="text/javascript">
+    $(function () {
+        $('.submitPoBtn').attr('disabled', true);
+        $('#id_po_packing').change(function () {
+            if ($('#id_po_no').val() != '' && $('#bill_date').val() != '' && $('#po_quantity').val() != '' && $('#id_status_active').val() != '' && $('#id_po_packing').val() != '') {
+                $('.submitPoBtn').attr('disabled', false);
+            } else {
+                $('.submitPoBtn').attr('disabled', true);
+            }
+        });
+     });
+</script>
+
+<script type="text/javascript">
        // SHOW AND HIDE FORM AFTER SUBMIT
        $(document).ready(function() {
         $('#output').hide();
@@ -1370,18 +1376,25 @@ function totalSMV(id){
             return true;
         });
     });
+    
 
     $(document).ready(function(){
         $(".res").click(function(){
             $("#po_form").trigger("reset");
-            $(".submitPoBtn").attr("disabled", false);
-            return true;
+            $('#id_po_packing').change(function () {
+                if ($('#id_po_no').val() != '' && $('#bill_date').val() != '' && $('#po_quantity').val() != '' && $('#id_status_active').val() != '' && $('#id_po_packing').val() != '') {
+                    $('.submitPoBtn').attr('disabled', false);
+                } else {
+                    $('.submitPoBtn').attr('disabled', true);
+                }
+            });
+           
         });
     });
+
+    
  
 </script>
-
-
 
 
   

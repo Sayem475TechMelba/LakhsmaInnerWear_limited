@@ -153,7 +153,7 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-#Vars
+#Data input checkup tuned off
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
 
 # SMTP Configuration

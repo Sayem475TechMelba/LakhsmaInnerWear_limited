@@ -632,18 +632,22 @@
                                                                             <tr>
                                                                                 <td class="text-center">
                                                                                     {{ ft.gmt_items|attr:"class:form-controls"|attr:"onclick:test('none')" }}
+                                                                                    
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.article_number|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Article Number"}}
+                                                                                    <input type="checkbox" class="copybox">
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.color|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Color" }}
+                                                                                    <input type="checkbox" class="copybox">
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.fabrication|attr:"class:form-control" }}
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.size|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Size" }}
+                                                                                    <input type="checkbox" class="copybox">
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.order_qty|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalOty(id)" }}
@@ -670,6 +674,7 @@
                                                                         
                                                                         </tbody>
                                                                         <tfoot class="font-weight-bold">
+                                                                            <button type="button" onclick="copy()">Copy</button>
                                                                             <tr>
                                                                                 <td colspan="5" class="text-right">
                                                                                    Total:
@@ -836,6 +841,21 @@
         $('#smv_modal').modal('show');
       });
 </script>
+<script>
+    function autoID(){
+        var id = 0
+        for(var i = 0; i<document.getElementsByClassName('copybox').length; i = i+3){
+            if(i%3 == 0){
+                id++
+            }
+        document.getElementsByClassName('copybox')[i].id = 'article_id_' + String(id-1)
+        document.getElementsByClassName('copybox')[i+1].id = 'color_id_' + String(id-1)
+        document.getElementsByClassName('copybox')[i+2].id = 'size_id_' + String(id-1)
+        }
+    }
+    autoID()
+</script>
+
  <script>
      var count = 1
      var gmtCount = 0
@@ -849,6 +869,27 @@
 
      function update(){
         count++
+        autoID()
+     }
+
+     function copy(){
+        var boxes = document.getElementsByClassName('copybox')
+        var clicled = []
+        var final = []
+        for (var i = 0; i<boxes.length; i++){
+            if(document.getElementsByClassName('copybox')[i].checked == true){
+                clicled.push(document.getElementsByClassName('copybox')[i])
+            }
+        }
+        for (var i = 0; i<clicled.length; i++){
+            if(final.includes(rightID(clicled[i].id)) == false){
+                final.push(rightID(clicled[i].id))
+            }
+        }
+        for (var i = 0;i<final.length;i++){
+            document.getElementsByClassName('btn btn-sm btn-warning mt-4')[1].click()
+        }
+        console.log(final)
      }
 
     function negUpdate(){}

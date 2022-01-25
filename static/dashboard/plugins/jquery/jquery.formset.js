@@ -181,7 +181,7 @@
             // FIXME: Perhaps using $.data would be a better idea?
             options.formTemplate = template;
 
-            var addButtonHTML = '<a class="' + options.addCssClass + '" href="javascript:void(0)" onclick=update()  >' + options.addText + '</a>';
+            var addButtonHTML = '<a class="' + options.addCssClass + '" href="javascript:void(0)" onclick=update() >' + options.addText + '</a>';
             if (options.addContainerClass) {
                 // If we have a specific container for the "add" button,
                 // place it as the last child of that container:

@@ -553,10 +553,46 @@
                                   </tbody>
                               </table>
                           </div>
+
                           <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal">
                             <div class="modal-dialog modal-lg">
                               <div class="modal-content">
                                 <div class="container-fluid p-2">
+                                    <div class="table-responsive mt-2">
+                                        <table class="table table-bordered table-hover table-sm" >
+                                            <thead >
+                                                <tr>
+                                                    <th colspan="5"> <h6  class="font-weight-bold ml-2">Copy Panel </h6> </th>
+                                                </tr>
+                                                <tr class="bg-meroon">
+                                                    <th class="text-center "> Article Number </th>
+                                                    <th class="text-center">Color </th>
+                                                    <th class="text-center ">Fabrication</th>
+                                                    <th class="text-center "> Rate </th>
+                                                    <th class="text-center"> Excess Cut </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody >
+                                                <tr >
+                                                    <td >
+                                                        <input type="text" class="form-control" id="article" oninput="copyState(id)">
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" id="color" oninput="copyState(id)">
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" id="fab" oninput="copyState(id)">
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" id="rate" oninput="copyState(id)">
+                                                    </td>
+                                                    <td >
+                                                        <input type="text" class="form-control" id="ec" oninput="copyState(id)">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                         
                                     <div class=" card border border-dark mb-2 mt-2">
                                         <div class=" p-1 bg-form-header">
@@ -565,7 +601,6 @@
                                         <div class=" p-2 bg-form">
                                             <div class="row">
                                                 <div class="col-md-12 P-4">
-                                                   
                                                             <div class="table-responsive mt-2">
                                                                 <table class="table table-bordered table-hover table-sm" >
                                                                     <thead class="bg-table-header">
@@ -613,17 +648,10 @@
                                                                     <thead class="bg-table-header">
                                                                         <tr>
                                                                             <th class="text-center"> Gmts Item </th>
-                                                                            <th class="text-center"> Article Number
-                                                                                <input type="checkbox" class="copybox" id='article'>
-                                                                            </th>
-                                                                            
-                                                                            <th class="text-center"> Color 
-                                                                                <input type="checkbox" class="copybox" id='color'>
-                                                                            </th>
+                                                                            <th class="text-center"> Article Number</th>
+                                                                            <th class="text-center"> Color </th>
                                                                             <th class="text-center"> Fabrication </th>
-                                                                            <th class="text-center"> Size
-                                                                                <input type="checkbox" class="copybox" id="size">
-                                                                            </th>
+                                                                            <th class="text-center"> Size</th>
                                                                             <th class="text-center"> Order Qty </th>
                                                                             <th class="text-center"> Rate </th>
                                                                             <th class="text-center"> Amount </th>
@@ -639,11 +667,9 @@
                                                                             <tr>
                                                                                 <td class="text-center">
                                                                                     {{ ft.gmt_items|attr:"class:form-controls"|attr:"onclick:test('none')" }}
-                                                                                    
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.article_number|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Article Number"}}
-                                                                                    
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.color|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Color" }}
@@ -661,13 +687,13 @@
                                                                                     {{ ft.rate|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalRate(id)" }}
                                                                                 </td>
                                                                                 <td class="text-center">
-                                                                                    {{ ft.amount|attr:"class:form-control"|attr:"type:number"|attr:"onchange:totalAmt()" }}
+                                                                                    {{ ft.amount|attr:"class:form-control"|attr:"type:number"|attr:"onchange:totalAmt()"|attr:"readonly" }}
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.excess_cut|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalExc(id)" }}
                                                                                 </td>
                                                                                 <td class="text-center">
-                                                                                    {{ ft.plan_cut_qty|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalPCQt()" }}
+                                                                                    {{ ft.plan_cut_qty|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalPCQt()"|attr:"readonly" }}
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.status_active|attr:"class:form-control" }}
@@ -679,29 +705,29 @@
                                                                         
                                                                         </tbody>
                                                                         <tfoot class="font-weight-bold">
-                                                                            <button type="button" onclick="copy()">Copy</button>
                                                                             <tr>
                                                                                 <td colspan="5" class="text-right">
                                                                                    Total:
                                                                                 </td>
                                                                                 
                                                                                 <td colspan=""  >
-                                                                                    {{ po_form.order_quan|attr:"class:form-control"|attr:"type:number"|attr:"id:order_quan"|attr:"step:any"|attr:"oninput:pipeLine()" }}
+                                                                                    {{ po_form.order_quan|attr:"class:form-control"|attr:"type:number"|attr:"id:order_quan"|attr:"step:any"|attr:"oninput:pipeLine()"|attr:"readonly" }}
                                                                                   </td>
                                                                                   <td colspan=""  > 
-                                                                                    {{ po_form.tt_rate|attr:"class:form-control"|attr:"type:number"|attr:"id:tt_rate"|attr:"step:any"|attr:"oninput:pipeLine()" }}
+                                                                                    {{ po_form.tt_rate|attr:"class:form-control"|attr:"type:number"|attr:"id:tt_rate"|attr:"step:any"|attr:"oninput:pipeLine()"|attr:"readonly" }}
                                                                                   </td>
                                                                                   <td colspan=""  >  
-                                                                                    {{ po_form.amt|attr:"class:form-control"|attr:"type:number"|attr:"id:amt"|attr:"step:any"|attr:"oninput:pipeLine()" }}
+                                                                                    {{ po_form.amt|attr:"class:form-control"|attr:"type:number"|attr:"id:amt"|attr:"step:any"|attr:"oninput:pipeLine()"|attr:"readonly" }}
                                                                                   </td>
                                                                                   <td colspan=""  > 
-                                                                                    {{ po_form.exc|attr:"class:form-control"|attr:"type:number"|attr:"id:exc"|attr:"step:any"|attr:"oninput:pipeLine()" }} 
+                                                                                    {{ po_form.exc|attr:"class:form-control"|attr:"type:number"|attr:"id:exc"|attr:"step:any"|attr:"oninput:pipeLine()"|attr:"readonly" }} 
                                                                                   </td>
                                                                                   <td colspan=""  > 
-                                                                                    {{ po_form.plan_cut|attr:"class:form-control"|attr:"type:number"|attr:"id:quan"|attr:"step:any"|attr:"oninput:pipeLine()" }} 
+                                                                                    {{ po_form.plan_cut|attr:"class:form-control"|attr:"type:number"|attr:"id:quan"|attr:"step:any"|attr:"oninput:pipeLine()"|attr:"readonly" }} 
                                                                                   </td>
                                                                                
                                                                             </tr>
+                                                                            <button type="button" id="copybutton" onclick="copyData()">Copy</button>
                                                                         </tfoot>
                                                                 </table>
                                                             </div>
@@ -776,12 +802,16 @@
                           
 
                           <div class="text-center">
-                              <div class="container" style="visibility: hidden;"  id="gif" >
-                                  <small class="text-center text-danger font-weight-bold">Please Wait For a Moment....</small>
-                              </div>
+                                
+                            <div class="container" style="visibility: hidden;" id="gif" >
+                                <figure>
+                                    <img class="loading-image" height="30px" src="{% static 'icon/box.gif' %}">
+                                    <h6> <figcaption class="text-center text-danger loading-image font-weight-bolder">Please Wait For a Moment....</figcaption></h6>
+                                </figure>
+                            </div>
 
-                            <button type="submit"  class="btn btn-success btn-sm ml-3 submitPoBtn" style=" border-radius: 20px;">Save</button>
-                            <button type="button" class="btn btn-dark btn-sm ml-3 res" onclick="reset()"  style=" border-radius: 20px;">Reset</button>
+                            <button type="submit"  class="btn btn-success btn-sm ml-3 submitPoBtn" style=" border-radius: 20px;" >Save</button>
+                            <button type="button" class="btn btn-dark btn-sm ml-3 res" onclick="reset()"  style="border-radius: 20px;">Reset</button>
                         </div>   
                     </form>
                   </div>
@@ -846,21 +876,16 @@
         $('#smv_modal').modal('show');
       });
 </script>
-
  <script>
      var count = 1
      var gmtCount = 0
-     var colorCount = 1
-     var upto = colorCount
-     var lastCount = 1
-     var colorBool = false
+     var copy = false
+     var dbl = false
+     var colorSize = 1
+     document.getElementById('copybutton').disabled = true
 
      var smvID = ['id_order_smv-V-set_ratio', 'id_order_smv-V-sew_smv_pcs', 'id_order_smv-V-cut_smv_pcs', 'id_order_smv-V-fin_smv_pcs', 'id_order_smv-V-print_days', 'id_order_smv-V-embro_days', 'id_order_smv-V-wash_days', 'id_order_smv-V-sp_work_days', 'id_order_smv-V-gmts_dyeing_days', 'id_order_smv-V-aop_days']
      var gmt = []
-
-     String.prototype.replaceAt = function(index, replacement) {
-    return this.substr(0, index) + replacement + this.substr(index + 1, 24);
-}
 
      function ord2report(){
          open('/merchandise/add_po/', "_self")
@@ -868,46 +893,9 @@
 
      function update(){
         count++
-        if(colorBool != false){
-            colorCount++
+        if(dbl){
+            colorSize++
         }
-     }
-
-     function copy(){
-         var conv = {
-            'article': 'id_color_size-0-article_number',
-            'color': 'id_color_size-0-color',
-            'size': 'id_color_size-0-size'
-         }
-         var memory = {
-             'article': undefined,
-             'color': undefined,
-             'size': undefined
-         }
-         var check = []
-         for(var i = 0; i<document.getElementsByClassName('copybox').length; i++){
-            if(document.getElementsByClassName('copybox')[i].checked){
-                check.push(document.getElementsByClassName('copybox')[i])
-            }
-         }
-         for(var i = 0; i<document.getElementsByClassName('copybox').length; i++){
-            var subCount = colorCount
-            for(j = 0; j<subCount; j++){
-                document.getElementsByClassName('btn btn-sm btn-warning mt-4')[1].click()
-            }
-            subCount = 0
-            colorCount = 0
-            break
-         }
-         for(var i = 0; i<check.length; i++){
-             memory[check[i].id] = document.getElementById(conv[check[i].id]).value
-         }
-         
-         for(var i = lastCount; i<count; i++){
-             document.getElementById(conv['article'].replaceAt(14, i)).value = memory['article']
-             document.getElementById(conv['color'].replaceAt(14, i)).value = memory['color']
-             document.getElementById(conv['size'].replaceAt(14, i)).value = memory['size']
-         }
      }
 
     function negUpdate(){}
@@ -920,8 +908,30 @@
         document.getElementById(des).append(tr)
      }
 
+     function copyState(id){
+         if(document.getElementById(id).value == ''){
+            copy = false
+            document.getElementById('copybutton').disabled = true
+         }else{
+             copy = true
+             document.getElementById('copybutton').disabled = false
+         }
+     }
+
+     function copyData(){
+        var articleId = 'id_color_size-V-article_number'.replaceAt(14, colorSize)
+        var colorId = 'id_color_size-V-color'.replaceAt(14, colorSize)
+        var rateId = 'id_color_size-V-rate'.replaceAt(14, colorSize)
+        var ecId = 'id_color_size-0-excess_cut'.replaceAt(14, colorSize)
+        document.getElementsByClassName('btn btn-sm btn-warning mt-4')[1].click()
+        document.getElementById(articleId).value = document.getElementById('article').value
+        document.getElementById(colorId).value = document.getElementById('color').value
+        document.getElementById(rateId).value = document.getElementById('rate').value
+        document.getElementById(ecId).value = document.getElementById('ec').value
+     }
+
      function test(param){
-         colorBool = true
+         dbl = true
          var j = 0
          state = true
          if(param === 'none'){
@@ -1203,6 +1213,10 @@
        totalSMV(id)
   }
 
+  String.prototype.replaceAt = function(index, replacement) {
+    return this.substr(0, index) + replacement + this.substr(index + 1, 24);
+}
+
 function ID(id){
     var calculation_list = []
     for(var i = 0;i<smvID.length;i++){
@@ -1248,6 +1262,13 @@ function totalSMV(id){
 </script>
 
 
+<script>
+    $('#po_form').submit(function() {
+        $('#gif').css('visibility', 'visible');
+    });
+</script>
+
+
 
 <script type="text/javascript">
     $(function () {
@@ -1289,33 +1310,38 @@ function totalSMV(id){
             });
         });
 </script> 
-<script>
-$('#po_form').submit(function(event){
-    event.preventDefault();
-    $form = $(this)
-    var formData = new FormData(this);
-    $.ajax({
-        url: url,
-        type: 'POST',
-        data: formData,
-        afterSend: function () {
-    
-        },
-        success: function (response) {
-            document.getElementById('gif').style.visibility='hidden'
-            mainFetcher()
-            
-            $("#show").show();
-        },
-        error: function (response) {
-            alert("Something Went Wrong...");
-        },
-        cache: false,
-        contentType: false,
-        processData: false
+
+<script type="text/javascript"> 
+
+   // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
+  
+   $('#po_form').submit(function(event){
+        event.preventDefault();
+        $form = $(this)
+        var formData = new FormData(this);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            afterSend: function () {
+        
+            },
+            success: function (response) {
+                document.getElementById('gif').style.visibility='hidden'
+                mainFetcher()
+                alert("Your Order is Succssfully Confirmed");
+                $("#show").show();
+            },
+            error: function (response) {
+                alert("Something Went Wrong...");
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
     });
-});
-</script>
+    
+    </script>
 
 <script type="text/javascript"> 
 
@@ -1361,11 +1387,6 @@ $('#po_form').submit(function(event){
         });
     })
   </script>
-  <script>
-    $('#po_form').submit(function() {
-        $('#gif').css('visibility', 'visible');
-    });
-</script>
 
   <script type = "text/javascript" >
     document.getElementById("bill_date").addEventListener("change", function() {

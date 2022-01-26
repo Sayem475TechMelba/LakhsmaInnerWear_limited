@@ -581,7 +581,7 @@
                                                         <input type="text" class="form-control" id="color" oninput="copyState(id)">
                                                     </td>
                                                     <td >
-                                                        <input type="text" class="form-control" id="fab" oninput="copyState(id)">
+                                                        {{ fab.fabrication|attr:"class:form-control"|attr:"id:fab"|attr:"oninput:copyState(id)" }}
                                                     </td>
                                                     <td >
                                                         <input type="text" class="form-control" id="rate" oninput="copyState(id)">
@@ -922,12 +922,14 @@
         var articleId = 'id_color_size-V-article_number'.replaceAt(14, colorSize)
         var colorId = 'id_color_size-V-color'.replaceAt(14, colorSize)
         var rateId = 'id_color_size-V-rate'.replaceAt(14, colorSize)
-        var ecId = 'id_color_size-0-excess_cut'.replaceAt(14, colorSize)
+        var ecId = 'id_color_size-V-excess_cut'.replaceAt(14, colorSize)
+        var fabId = 'id_color_size-V-fabrication'.replaceAt(14, colorSize)
         document.getElementsByClassName('btn btn-sm btn-warning mt-4')[1].click()
         document.getElementById(articleId).value = document.getElementById('article').value
         document.getElementById(colorId).value = document.getElementById('color').value
         document.getElementById(rateId).value = document.getElementById('rate').value
         document.getElementById(ecId).value = document.getElementById('ec').value
+        document.getElementById(fabId).value = document.getElementById('fab').value
      }
 
      function test(param){
@@ -1072,6 +1074,7 @@
     document.getElementById('order_quan').value = subTotal
 
     autoRate(rightID(id))
+    autoPCQT(rightID(id))
     pipeLine()
   }
 

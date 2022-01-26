@@ -1124,6 +1124,7 @@ def order_entry(request):
         'job': 'LAK-O' + str(job),
         'form_items': form_items,
         'form_smv_items': form_smv_items,
+        'fab': colorsize_ItemsForm()
     }
     return render(request, 'Merchandising/Order/order_entry.html', context)
 

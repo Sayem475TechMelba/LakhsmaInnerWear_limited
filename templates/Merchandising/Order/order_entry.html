@@ -530,7 +530,7 @@
                                               {{ po_form.fac_recieve_date|attr:"type:date"|attr:"class:form-control" }}
                                           </td>
                                           <td >
-                                            {{ po_form.po_quantity|attr:"class:form-control"|attr:"required"|attr:"placeholder:Dbl. Click"|attr:"id:po_quantity"|attr:"data-target:#exampleModal"|attr:"data-toggle:modal"|attr:"ondblclick:test(0)" }}
+                                            {{ po_form.po_quantity|attr:"class:form-control"|attr:"required"|attr:"placeholder:Dbl. Click"|attr:"id:po_quantity"|attr:"data-target:#exampleModal"|attr:"data-toggle:modal"|attr:"ondblclick:dblCount()" }}
                                         </td>
                                         <td >
                                             {{ po_form.avg_price|attr:"class:form-control" }}
@@ -666,7 +666,7 @@
                                                                             {% for ft in form_items %}
                                                                             <tr>
                                                                                 <td class="text-center">
-                                                                                    {{ ft.gmt_items|attr:"class:form-controls"|attr:"onclick:test('none')" }}
+                                                                                    {{ ft.gmt_items|attr:"class:form-controls"|attr:"onclick:gmtItems(id)" }}
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.article_number|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Article Number"}}
@@ -882,7 +882,10 @@
      var copy = false
      var dbl = false
      var colorSize = 1
+     var gmtColorsizeId = 'id_color_size-V-gmt_items'
+
      document.getElementById('copybutton').disabled = true
+
 
      var smvID = ['id_order_smv-V-set_ratio', 'id_order_smv-V-sew_smv_pcs', 'id_order_smv-V-cut_smv_pcs', 'id_order_smv-V-fin_smv_pcs', 'id_order_smv-V-print_days', 'id_order_smv-V-embro_days', 'id_order_smv-V-wash_days', 'id_order_smv-V-sp_work_days', 'id_order_smv-V-gmts_dyeing_days', 'id_order_smv-V-aop_days']
 
@@ -910,14 +913,14 @@
      function copyState(id){
          var ids = ['article', 'color', 'rate', 'ec']
          for(var i = 0; i<3; i++){
-            if(document.getElementById(ids[i]).value == ''){
-                copy = false
-                document.getElementById('copybutton').disabled = true
-                break
-            }else{
+            if(document.getElementById(ids[i]).value != ''){
                 copy = true
                 document.getElementById('copybutton').disabled = false
                 break
+            }else{
+                copy = false
+                document.getElementById('copybutton').disabled = true
+                
             }
          }
      }
@@ -936,9 +939,11 @@
         document.getElementById(fabId).value = document.getElementById('fab').value
      }
 
-     function test(param){
-         dbl = true
+     function dblCount(){
+        dbl = true
      }
+
+     function gmtItems(id){}
 
      function pipeLine(){
         var ord_quan = document.getElementById("order_quan").value
@@ -1006,13 +1011,6 @@
         document.getElementsByClassName("poForm").reset();
     }
 
-    function gmtItms(){
-        for(var i = 0; i<count; i++){
-            if(gmt.includes(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text) == false){
-                gmt.push(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text)
-            }
-        }
-    }
 
     function rightID(id){
         var numPre = []

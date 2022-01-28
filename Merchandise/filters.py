@@ -7,7 +7,6 @@ from django_filters import DateFilter
 from .models import *
 
 class OrderFilter(django_filters.FilterSet):
-    
     start_date = DateFilter(field_name="insert_date",lookup_expr='gte',label='From Date')
     end_date = DateFilter(field_name="insert_date",lookup_expr='lte',label='To Date')
     style_description = django_filters.CharFilter(lookup_expr='icontains')
@@ -35,8 +34,7 @@ class POFilter(django_filters.FilterSet):
     class Meta:
         model = PO_Details
         fields = [
-        
-        'company_name', 
+        'company_name',
         ]
         
 

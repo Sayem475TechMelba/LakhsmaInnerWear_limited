@@ -885,7 +885,6 @@
      document.getElementById('copybutton').disabled = true
 
      var smvID = ['id_order_smv-V-set_ratio', 'id_order_smv-V-sew_smv_pcs', 'id_order_smv-V-cut_smv_pcs', 'id_order_smv-V-fin_smv_pcs', 'id_order_smv-V-print_days', 'id_order_smv-V-embro_days', 'id_order_smv-V-wash_days', 'id_order_smv-V-sp_work_days', 'id_order_smv-V-gmts_dyeing_days', 'id_order_smv-V-aop_days']
-     var gmt = []
 
      function ord2report(){
          open('/merchandise/add_po/', "_self")
@@ -909,12 +908,17 @@
      }
 
      function copyState(id){
-         if(document.getElementById(id).value == ''){
-            copy = false
-            document.getElementById('copybutton').disabled = true
-         }else{
-             copy = true
-             document.getElementById('copybutton').disabled = false
+         var ids = ['article', 'color', 'rate', 'ec']
+         for(var i = 0; i<3; i++){
+            if(document.getElementById(ids[i]).value == ''){
+                copy = false
+                document.getElementById('copybutton').disabled = true
+                break
+            }else{
+                copy = true
+                document.getElementById('copybutton').disabled = false
+                break
+            }
          }
      }
 
@@ -934,20 +938,6 @@
 
      function test(param){
          dbl = true
-         var j = 0
-         state = true
-         if(param === 'none'){
-            j = gmtCount
-            console.log(param)
-         } else {
-             j = 0
-         }
-         for(var i = 1; i<=document.getElementById(`id_color_size-${j}-gmt_items`).children.length; i++){
-             if(gmt.includes(document.getElementById(`id_color_size-${j}-gmt_items`).children[i].innerHTML) == false){
-                document.getElementById(`id_color_size-${j}-gmt_items`).removeChild(document.getElementById(`id_color_size-${j}-gmt_items`).children[i])
-                gmtCount++
-             }
-         }
      }
 
      function pipeLine(){

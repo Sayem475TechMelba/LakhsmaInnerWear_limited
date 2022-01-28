@@ -155,4 +155,4 @@ class PoDeatilsForm(forms.ModelForm):
 class colorsize_ItemsForm(forms.ModelForm):
     class Meta:
         model = ColorSizeItems
-        fields = '__all__' 
+        exclude = ['gmt_items']

@@ -666,7 +666,9 @@
                                                                             {% for ft in form_items %}
                                                                             <tr>
                                                                                 <td class="text-center">
-                                                                                    {{ ft.gmt_items|attr:"class:form-controls"|attr:"onclick:gmtItems(id)" }}
+                                                                                    <select class="form-contrls" id=0 onclick="gmtItems(id)">
+                                                                                        <option selected>---------</option>
+                                                                                    </select>
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.article_number|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Article Number"}}
@@ -913,7 +915,7 @@
      function copyState(id){
          var ids = ['article', 'color', 'rate', 'ec']
          var state = []
-         for(var i = 0; i<3; i++){
+         for(var i = 0; i<4; i++){
             if(document.getElementById(ids[i]).value != ''){
                 state.push(true)
             }

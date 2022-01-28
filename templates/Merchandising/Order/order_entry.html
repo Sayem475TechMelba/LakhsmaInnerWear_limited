@@ -912,17 +912,19 @@
 
      function copyState(id){
          var ids = ['article', 'color', 'rate', 'ec']
+         var state = []
          for(var i = 0; i<3; i++){
             if(document.getElementById(ids[i]).value != ''){
-                copy = true
-                document.getElementById('copybutton').disabled = false
-                break
-            }else{
-                copy = false
-                document.getElementById('copybutton').disabled = true
-                
+                state.push(true)
             }
          }
+         if(state.includes(true)){
+            copy = true
+            document.getElementById('copybutton').disabled = false
+         }else{
+            copy = false
+            document.getElementById('copybutton').disabled = true
+        }
      }
 
      function copyData(){

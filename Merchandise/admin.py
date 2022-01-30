@@ -86,11 +86,12 @@ class ShipmentTermAdmin(admin.ModelAdmin):
     actions = [export_to_csv]
 
 class OrderEntryAdmin(admin.ModelAdmin):
-    list_display = ['id', 'job_no', 'buyer_name', 'company_name']
+    list_display = ['id', 'job_no','insert_date', 'buyer_name', 'company_name']
     actions = [export_to_csv]
 
 class PoAdmin(admin.ModelAdmin):
-    list_display = ['id', 'po_job_no']
+    list_display = ['id', 'pub_shipment_date', 'po_job_no']
+    list_filter = ['pub_shipment_date']
     actions = [export_to_csv]
 
 admin.site.register(LibraryBuyer, BuyerAdmin)

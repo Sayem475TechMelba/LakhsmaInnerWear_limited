@@ -29,7 +29,7 @@ tfoot {
             <h3 class="card-title">Search Here</h3>
           </div>
           <div class=" search mt-3 text-center">
-            <form method="GET" class="ml-2" action="{% url 'order_report' %}">
+            <form method="GET" class="ml-2" action="{% url 'order_selection' %}">
               <table  class="table table-bordered table-responsive  table-sm">
                 <thead>
                   <tr>
@@ -40,6 +40,7 @@ tfoot {
                     <th >Internal Ref</th>
                     <th >File No.</th>
                     <th >Order No.</th>
+                    <th >Inserted By</th>
                     <th >Start Date</th>
                     <th >End Date</th>
                   </tr>
@@ -48,37 +49,30 @@ tfoot {
                 <tbody>
                   <tr>
                     <td>
-                      <select class="form-control">
-                        <option>Lakhsma</option>
-                        <option>Suxtex</option>
-                        
-                      </select>
+                      {{ myFilter.form.company_name|attr:"class:form-control"}}
                     </td>
                     <td>
-                      <select class="form-control">
-                        <option>Asia</option>
-                        <option>Europe</option>
-                        
-                      </select>
+                      {{ myFilter.form.buyer_name|attr:"class:form-control"}}
                     </td>
                     <td>
-                        <input type="text" name="" class="form-control">
+                      {{ myFilter.form.job_no|attr:"class:form-control"}}
                     </td>
 
                     <td>
-                        <input type="text" name="" class="form-control">
+                      {{ myFilter.form.style_ref|attr:"class:form-control"}}
                     </td>
                     <td>
-                        <input type="text" name="" class="form-control">
+                      {{ myFilter.form.internal_ref|attr:"class:form-control"}}
                     </td>
                     <td>
-                        <input type="text" name="" class="form-control">
+                      {{ myFilter.form.file_no|attr:"class:form-control"}}
                     </td>
-                    <td><input type="text" name="" class="form-control"></td>
+                    <td>{{ myFilter.form.po_no|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.inserted_by|attr:"class:form-control"}}</td>
                     
                     
-                    <td><input type="date" name="" class="form-control"></td>
-                    <td><input type="date" name="" class="form-control"></td>
+                    <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control"|attr:"id:start_date"  }}</td>
+                    <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control"|attr:"id:end_date"  }}</td>
 
 
                     <!-- <td><button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search" aria-hidden="true"></i></button>
@@ -121,105 +115,119 @@ tfoot {
               </div>
           </div>
   
-          <!-- /.card-header -->
-          <div class="container-fluid mt-5">
-            <!-- <div class="card-header">
-              <h3 class="text-center">Projected and Comfirmed</h3>
-            </div> -->
-            <table id="selection" name="selection" class="table table-bordered table-striped  table-responsive display">
-              <thead class="bg-secondary">
-                
-                <tr>
-                  <th>SL.</th>
-                  <th>Year
-                   
-                  </th>
-                  <th>Job No</th>
-                  <th>Company</th>
-                  <th >Buyer Name</th>
-                  <th >Style Ref. No</th>
-                  <th >Internal Ref</th>
-                  <th >File No.</th>
-                  <th>Job Qty.</th>
-                   <th >PO Number</th>
-                  <th>PO Quantity</th>
-                  <th>Shipment Date</th>
-                  <th>Precost Id </th>
-                  
-                </tr>
-              </thead>
-              <tfoot>
-                <tr>
-                    <th>SL.</th>
-                  <th>Year
-                   
-                  </th>
-                  <th>Job No</th>
-                  <th>Company</th>
-                  <th >Buyer Name</th>
-                  <th >Style Ref. No</th>
-                  <th >Internal Ref</th>
-                  <th >File No.</th>
-                  <th>Job Qty.</th>
-                   <th >PO Number</th>
-                  <th>PO Quantity</th>
-                  <th>Shipment Date</th>
-                  <th>Precost Id </th>
-                </tr>
-            </tfoot>
-              
-              <tbody>
-                
-                <tr>
-
-                  <td>1.</td>
-                  <td>AST</td>
-                  <td>AFL</td>
-                  <td>7.17</td>
-                  <td>240000</td>
-                  <td >0</td>
-                  <td >0</td>
-                  <td >206800</td>
-                  <td >0</td>
-                  <td >-286,800</td>
-                  
-                  <td>0 </td>
-                  <td>240000</td>
-                  <td>458880.00</td>
-                  
-                </tr>
-                <tr>
-
-                  <td>2.</td>
-                  <td>HST</td>
-                  <td>FFL</td>
-                  <td>9.17</td>
-                  <td>260000</td>
-                  <td >0</td>
-                  <td >0</td>
-                  <td >206800</td>
-                  <td >0</td>
-                  <td >-286,800</td>
-                  
-                  <td>0 </td>
-                  <td>240000</td>
-                  <td>458880.00</td>
-                  
-                </tr>
-                
-              </tbody>
-             
-              
-            </table>
-          </div>
-          <!-- /.card-body -->
+         
         </div>
   </div>
 
+  <div class="container-fluid">
+     <!-- /.card-header -->
+     <div class="container-fluid mt-5">
+           
+      <table id="selection" name="selection" class="table table-bordered table-striped  table-responsive display">
+        <thead class="bg-secondary">
+          
+          <tr>
+            <th>SL.</th>
+            <th>Year
+             
+            </th>
+            <th>Job No</th>
+            <th>Company</th>
+            <th >Buyer Name</th>
+            <th >Style Ref. No</th>
+            <th >Internal Ref</th>
+            <th >File No.</th>
+            <th>Job Qty.</th>
+             <th >PO Number</th>
+            <th>PO Quantity</th>
+            <th>Shipment Date</th>
+            <th>Precost Id </th>
+            
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+              <th>SL.</th>
+            <th>Year</th>
+            <th>Job No</th>
+            <th>Company</th>
+            <th >Buyer Name</th>
+            <th >Style Ref. No</th>
+            <th >Internal Ref</th>
+            <th >File No.</th>
+            <th>Job Qty.</th>
+             <th >PO Number</th>
+            <th>PO Quantity</th>
+            <th>Shipment Date</th>
+            <th>Precost Id </th>
+          </tr>
+      </tfoot>
+        
+        <tbody>
+          {% for i in po_details %}
+          <tr>
+
+            <td>{{forloop.counter}}</td>
+            <td></td>
+            <td>{{i.po_job_no}}</td>
+            <td>{{i.po_job_no.company_name}}</td>
+            <td>{{i.po_job_no.buyer_name}}</td>
+            <td>{{i.po_job_no.style_ref}}</td>
+            <td>{{i.internal_ref}}</td>
+            <td >{{i.file_no}}</td>
+            <td >0</td>
+            <td ><a class="dropdown-item" href="{% url 'add_order' i.id %}">{{i.po_no}}</a></td>
+            <td >{{i.po_quantity}}</td>
+            <td >{{i.pub_shipment_date}}</td>
+            
+            <td>0 </td>
+            
+          </tr>
+          {% endfor %}
+        </tbody>
+       
+        
+      </table>
+    </div>
+    <!-- /.card-body -->
+
+  </div>
 
 {% endblock body %}
 
 {% block script %}
+<script>
+  $(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#selection tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text"  class="form-control" placeholder="Search" />' );
+        
+    } );
+ 
+    // DataTable
+    var table = $('#selection').DataTable({
+      "lengthMenu": [[50,100, 150, -1], [50,100,150, "All"]],
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        }
+    });
+    
+ 
+} );
+
+</script>
 
   
 {% endblock script %}

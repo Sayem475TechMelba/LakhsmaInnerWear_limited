@@ -44,9 +44,10 @@ INSTALLED_APPS = [
     'Merchandise',
     'django_filters',
     'widget_tweaks',
-    'mailing',
+    'Test',
     'mathfilters',
     'rest_framework',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -153,8 +154,9 @@ MESSAGE_TAGS = {
     messages.ERROR: 'danger',
 }
 
-#Data input checkup tuned off
+# to disable the check of inline form data entry exceed limit
 DATA_UPLOAD_MAX_NUMBER_FIELDS = None
+
 
 # SMTP Configuration
 EMAIL_HOST = 'smtp.gmail.com'
@@ -162,3 +164,6 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = 'hermoso.userinfo@gmail.com'
 EMAIL_HOST_PASSWORD = 'hermoso@123'
 EMAIL_USE_TLS = True
+
+
+GRAPH_MODELS = { 'all_applications':True, 'group_models':True,}

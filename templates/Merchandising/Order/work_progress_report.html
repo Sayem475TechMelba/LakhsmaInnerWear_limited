@@ -44,20 +44,6 @@
     margin-left: 5px;
     border: 1px solid black;
 }
-.form-controls {
-    border-radius: 0;
-    box-shadow: none;
-    border: 1px solid #e4e5e7;
-    display: block;
-    width: 130px;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-}
 
 tfoot {
      display: table-header-group;
@@ -105,18 +91,21 @@ tfoot {
 {% endblock css %}
 
 {% block body %}
+<div id="loading" class="text-center">
+  <figure>
+    <img class="loading-image" height="100px" src="{% static 'icon/covid.gif' %}">
+    <h5> <figcaption class="text-center text-danger loading-image font-weight-bolder">Please Wait,Your Content is Loading....</figcaption></h5>
+  </figure>
+</div>
 
 
-<div class="container-fluid">
-      <div class="text-center mt-3 font-weight-bold"><h3>Work In Progress</h3></div>
-      <div class="card mt-2">
-          <div class="card-header text-uppercase bg-secondary">
-            <h3 class="card-title">Search Panel</h3>
-          </div>
-          <div class=" search mt-3 text-center">
-            <form method="GET" class="ml-2"  action="{% url 'work_progress_report' %}">
-              <table  class="table table-bordered table-responsive tabel-hover  ">
-                <thead>
+<div class="container-fluid search-box">
+  <div class="text-center mt-2 font-weight-bold"><h5>Work in Progeress</h5></div>
+      <div class="card mt-1">
+          <div class=" search mt-1 text-center ">
+            <form method="GET" class="ml-2 mr-2"  action="{% url 'work_progress_report' %}">
+              <table  class="table table-bordered table-responsive table-responsive-sm table-sm tabel-hover  ">
+                <thead class="bg-meroon">
                   <tr>
                     <th width="150px;">Company</th>
                     <th >Location</th>
@@ -147,7 +136,6 @@ tfoot {
                     <td>{{ myFilter.form.agent|attr:"class:form-controls"}}</td>
                     <td>{{ myFilter.form.style_description|attr:"class:form-controls"}}</td>
                     <td>{{ myFilter.form.job_no|attr:"class:form-controls"}}</td>
-                  
                     <td>
                       {{ myFilter.form.team_leader|attr:"class:form-controls"}}
                     </td>
@@ -166,40 +154,46 @@ tfoot {
                   </tr>
                 </tbody>
               </table>
-              <div class="container justify-content-center align-content-center text-center mb-3">
+              <div class="container justify-content-center align-content-center text-center mb-1">
                 <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Show</button>
                 <a href="{% url 'work_progress_report' %}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i> Reset</a>
               </div>
             </form>
-            <div class="container  text-center table-responsive  table-responsive-sm">
-              <table class="mb-2 ">
-                <thead >
-                    <td width="20%">
-                      <select class="form-control">
-                        <option>2021</option>
-                        <option>2020</option>
-                      </select>
-                    </td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4 ">Jan</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Feb</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Mar</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Apr</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">May</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Jun</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Jul</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Aug</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Sep</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Oct</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Nov</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Dec</button></td>
-                </thead>
-              </table>
+            <div class="container ">
+              <div class="d-flex justify-content-center table-responsive">
+                <div class="p-2">
+                  <table class="mb-1 table-sm  table-responsive-sm ">
+                    <thead>
+                        <td width="20%">
+                          <select id="getYear" onChange="copyTextValue()" class="form-control">
+                            <option value="" disabled selected>Select</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                          </select>
+                        </td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2 " >Jan</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Feb</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Mar</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Apr</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">May</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Jun</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Jul</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Aug</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Sep</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Oct</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2" onclick="myFunction()"  id="getMonth">Nov</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Dec</button></td>
+                    </thead>
+                  </table>
+                </div>
+              </div>
             </div>
           </div>
   
          
         </div>
 </div>
+
 
  
 <!-- Work Progress REPORT  -->
@@ -376,14 +370,14 @@ tfoot {
         <td>N/A</td>
         <td>N/A</td>
         <td><a href="{% url 'trims_details'  %}">View</a></td>
-        <td><a href="#">104.5 %</a></td>
+        <td><a href="{% url 'cutting_finish_details'  %}">104.5 %</a></td>
         <td><a href="#">0.00 %</a></td>
         <td><a href="#">103.83 %</a></td>
-        <td><a href="#">101.70 %</a></td>
-        <td><a href="#">100.00 %</a></td>
-        <td><a href="#">0.0 %</a></td>
+        <td><a href="{% url 'iron_finish_details'  %}">101.70 %</a></td>
+        <td><a href="{% url 'finishing_details'  %}">100.00 %</a></td>
+        <td><a href="{% url 'buyer_inspection_details'  %}">0.0 %</a></td>
         <td><a href="#">1760</a></td>
-        <td><a href="#">View</a></td>
+        <td><a href="{% url 'actual_shipment_details'  %}">View</a></td>
         <td>1760</td>
         <td>2537.50</td>
         <td>0</td>

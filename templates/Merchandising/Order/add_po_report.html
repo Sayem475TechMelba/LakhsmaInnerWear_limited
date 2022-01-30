@@ -1,0 +1,266 @@
+{% extends "index.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %} Lakshma | Add PO Report {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    .form-controls {
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid #e4e5e7;
+    display: block;
+    width: 130px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+}
+
+.report-control {
+    border-radius: 0;
+    box-shadow: none;
+    border: 1px solid #e4e5e7;
+    display: block;
+    width: 125px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    font-weight: 400;
+    background-clip: padding-box;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+    tfoot {
+     display: table-header-group;
+}
+</style>
+{% endblock css %}
+
+{% block body %}
+<div id="loading" class="text-center">
+  <figure>
+    <img class="loading-image" height="100px" src="{% static 'icon/covid.gif' %}">
+    <h5> <figcaption class="text-center text-danger loading-image font-weight-bolder">Please Wait,Your Content is Loading....</figcaption></h5>
+  </figure>
+</div>
+
+<div class="container-fluid">
+      <div class="card mt-2">
+        <div class="card-header text-uppercase bg-secondary">
+          <h3 class="card-title">Search Panel</h3>
+        </div>
+        <div class=" search mt-3 text-center">
+          <form method="GET" class="ml-2" action="{% url 'add_po_report' %}">
+            <table  class="table table-bordered table-responsive tabel-hover  ">
+              <thead>
+                <tr>
+                  <th width="150px;">Company</th>
+                  <th >Job No.</th>
+                  <th >Location</th>
+                  <th >Buyer</th>
+                  <th >Agent </th>
+                  <th >Style</th>
+                  <th >Team</th>
+                  <th>Inserted By</th>
+                  <th >Dealing Merchant</th>
+                  <th >Factory Merchant</th>
+                  <th >Product Category</th>
+                  <th >Start Date</th>
+                  <th >End Date</th>
+                </tr>
+              </thead>
+            
+              <tbody>
+                <tr>
+                  <td>
+                    {{ myFilter.form.company_name|attr:"class:form-controls"}}
+                  </td>
+                  <td>{{ myFilter.form.job_no|attr:"class:form-controls"}}</td>
+                  <td>
+                    {{ myFilter.form.company_location|attr:"class:form-controls"}}
+                  </td>
+              
+                  <td>
+                    {{ myFilter.form.buyer_name|attr:"class:form-controls"}}
+                  </td>
+                  <td>{{ myFilter.form.agent|attr:"class:form-controls"}}</td>
+                  <td>{{ myFilter.form.style_description|attr:"class:form-controls"}}</td>
+                
+                  <td>
+                    {{ myFilter.form.team_leader|attr:"class:form-controls"}}
+                  </td>
+                  <td>
+                    {{ myFilter.form.inserted_by|attr:"class:form-controls"}}
+                  </td>
+                  <td>
+                    {{ myFilter.form.dealing_merchant|attr:"class:form-controls"}}
+                  </td>
+                  <td>
+                    {{ myFilter.form.factory_merchant|attr:"class:form-controls"}}
+                  </td>
+                  <td>
+                    {{ myFilter.form.product_cate|attr:"class:form-controls"}}
+                  </td>
+          
+                  <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control"|attr:"id:start_date"  }}</td>
+                    <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control"|attr:"id:end_date"  }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="container justify-content-center align-content-center text-center mb-3">
+              <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Show</button>
+              <a href="{% url 'add_po_report' %}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i> Reset</a>
+            </div>
+          </form>
+          <div class="container  text-center table-responsive  table-responsive-sm">
+            <table class="mb-2 ">
+              <thead >
+                  <td width="20%">
+                    <select class="form-control">
+                      <option>2021</option>
+                      <option>2020</option>
+                    </select>
+                  </td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4 ">Jan</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Feb</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Mar</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Apr</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">May</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Jun</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Jul</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Aug</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Sep</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Oct</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Nov</button></td>
+                  <td><button type="" class="btn btn-sm btn-info ml-4">Dec</button></td>
+
+              </thead>
+            </table>
+          </div>
+        </div>
+
+       
+      </div>
+</div>
+ 
+  <div class="container-fluid mt-4 " >
+  
+    <table id="add_po_report" name="schedule" class="table table-bordered table-striped table-info table-sm table-responsive-sm display">
+      <thead>
+        <tr>
+          <th class="text-left text-uppercase bg-info" colspan="53">
+              <h6>Report Panel</h6>
+          </th>
+        </tr>
+        <tr>
+          <th>SL.</th>
+          <th>Company Name</th>
+          <th>Job No</th>
+          <th>Buyer</th>
+          <th >Agent</th>
+          <th >Prod. Dept</th>
+          <th>Image </th>
+          <th>Inserted By </th>
+          <th> Action </th>
+        </tr>
+      </thead>
+      <tfoot id="searchPO">
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </tfoot>
+      
+      <tbody>
+        {% for i in orders %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{i.company_name}}</td>
+          <td>{{i.job_no}}</td>
+          <td>{{i.buyer_name}}</td>
+          <td>{{i.agent}}</td>
+          <td >{{i.product_dept}}</td>
+          <td >
+          {% if i.image %}
+           <a href="{{i.image.url}}"  data-gall="portfolioGallery" class="venobox" title="">
+            <img height="30px" width="30px" src="{{i.image.url}}">
+          </a>
+          {% endif %}
+          </td>
+          <td>{{i.inserted_by.full_name}}</td>
+          <td>
+            <div class="btn-group">
+              <a type="button" class="btn btn-success btn-sm" href="/merchandise/po/{{ i.id }}/"><i class="fas fa-pencil-alt text-warning mr-2" data-toggle="tooltip" data-placement="bottom" title="Update"></i> Add PO </a>
+            </div>
+            
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+     
+      
+      
+    </table>
+  </div>
+{% endblock body %}
+
+{% block script %}
+
+
+  <script>
+    $(document).ready(function() {
+      // Setup - add a text input to each footer cell
+      $('#add_po_report #searchPO th').each( function () {
+          var title = $(this).text();
+          $(this).html( '<input type="text" class="report-control" placeholder="Search" />' );
+      });
+
+      
+     
+   
+      // DataTable
+      var table = $('#add_po_report').DataTable({
+        "lengthMenu": [[10,50,100, 150, -1], [10,50,100,150, "All"]],
+        //"scrollY":        "500px",
+        //"scrollCollapse": true,
+          initComplete: function () {
+              // Apply the search
+              this.api().columns().every( function () {
+                  var that = this;
+   
+                  $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                      if ( that.search() !== this.value ) {
+                          that
+                              .search( this.value )
+                              .draw();
+                      }
+                  } );
+              } );
+          }
+      });
+      // FOR GENERATING SERIAL NUMBER
+      table.on( 'order.dt search.dt', function () {
+        table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+  } );
+  </script>
+{% endblock script %}
+

@@ -25,6 +25,7 @@
   <!-- Daterange picker -->
   <link rel="stylesheet" href="{% static 'dashboard/plugins/daterangepicker/daterangepicker.css' %}">
   <!-- summernote -->
+  
   <link rel="stylesheet" href="{% static 'dashboard/plugins/summernote/summernote-bs4.css' %}">
   <!-- DataTables -->
   <link rel="stylesheet" href="{% static 'dashboard/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
@@ -39,6 +40,8 @@
   <link rel="stylesheet" href="{% static 'dashboard/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+
 
   
   {% block css %}
@@ -50,9 +53,7 @@
     .btn{
       border-radius: 0px;
     }
-    .body{
-      font-size:14px;
-    }
+  
     .font{
     font-size: 14px;
     }
@@ -60,20 +61,141 @@
       content:"*" ;
       color:red    
     }
+
+/* MODIFIED IN 26.01.2022 */
+    body {
+      margin: 0;
+      font-family: "Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+      font-size: 0.9rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #212529;
+      text-align: left;
+      background-color: #fff;
+  }
     
   
     /* SIDEBAR BACKGROUND COLOR  */
     .side-nav{
-      background-color:#000000;
+      background-color:#5a2222;
     }
     .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
-    background-color: #bc1010;
+    background-color: #913131;
     color: #fff;
     }
-    /* SIDE BAR ICON SIZE  */
-    .nav-sidebar>.nav-item .nav-icon.fa, .nav-sidebar>.nav-item .nav-icon.fab, .nav-sidebar>.nav-item .nav-icon.fad, .nav-sidebar>.nav-item .nav-icon.fal, .nav-sidebar>.nav-item .nav-icon.far, .nav-sidebar>.nav-item .nav-icon.fas, .nav-sidebar>.nav-item .nav-icon.ion, .nav-sidebar>.nav-item .nav-icon.svg-inline--fa {
-    font-size: 14px;
+    .navbar-light .navbar-nav .nav-link {
+      color: rgba(121, 116, 116, 0.7);
     }
+    .navbar-white {
+      background-color: #5a2222;
+      color: #fff;
+    }
+    .navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+      color: var(--light);
+  }
+  [class*=sidebar-dark] .nav-legacy.nav-sidebar>.nav-item .nav-treeview, [class*=sidebar-dark] .nav-legacy.nav-sidebar>.nav-item>.nav-treeview {
+    background-color: rgb(70 29 29);
+}
+.nav-sidebar.nav-child-indent.nav-legacy .nav-treeview .nav-treeview {
+  padding-left: 1rem;
+  margin-left: -1rem;
+}
+.nav-flat.nav-sidebar>.nav-item .nav-treeview .nav-item>.nav-link, .nav-flat.nav-sidebar>.nav-item>.nav-treeview .nav-item>.nav-link {
+  border-left: 0.1rem solid #913131;
+}
+.nav-sidebar>.nav-item .nav-icon.fa, .nav-sidebar>.nav-item .nav-icon.fab, .nav-sidebar>.nav-item .nav-icon.fad, .nav-sidebar>.nav-item .nav-icon.fal, .nav-sidebar>.nav-item .nav-icon.far, .nav-sidebar>.nav-item .nav-icon.fas, .nav-sidebar>.nav-item .nav-icon.ion, .nav-sidebar>.nav-item .nav-icon.svg-inline--fa {
+  font-size: 11px;
+}
+.search-box .form-controls {
+  border-radius: 0;
+  box-shadow: none;
+  border: 1px solid #e4e5e7;
+  display: block;
+  width: 130px;
+  height: 26px;
+  padding: 2px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+
+}
+.search-box .form-control {
+  border-radius: 4px;
+  box-shadow: none;
+  border: 1px solid #e4e5e7;
+  display: block;
+  width: 100%;
+  height: 26px;
+  padding: 2px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #ffffffb5;
+  background-image: none;
+}
+.search-box .table {
+  width: 100%;
+  margin-bottom: 0.2rem;
+  color: #212529;
+  background-color: transparent;
+}
+.search-box .btn-group-sm>.btn, .btn-sm {
+  padding: 0.05rem 0.25rem;
+  font-size: .875rem;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+.search-box .table-sm td, .table-sm th {
+padding: 0.1rem;
+}
+.bg-meroon{
+background-color:#763434;
+color:#fff;
+}
+/*for table horizantal scrool*/
+.box {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 100%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;  
+  -moz-user-select: none;   
+  -ms-user-select: none;     
+  user-select: none; 
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0.5rem;
+  font-family: auto;
+  font-weight: 500;
+  line-height: -0.8;
+  color: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  font-weight:bold;
+
+}
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #763434;
+}
+
+/* MODIFIED IN 26.01.2022 */
+
+
+  
     /* BREADCRUMBS  */
     
     ul.breadcrumb {
@@ -208,9 +330,39 @@
   .form-group {
     margin-bottom: 0.2rem;
   }
-
+  /* page load */
+  #loading {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    background-color: #fff;
+    z-index: 99;
+  }
+  
+  .loading-image {
+    z-index: 100;
+  }
+  .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+    padding: 0.5rem 1.25rem;
+    position: relative;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+  }
+  .bg-search {
+    background-color: #29aecd!important;
+    color:#fff;
+  }
 
   </style>
+  
   
 </head>
 
@@ -282,11 +434,19 @@
 <!-- Select2 -->
 <script src="{% static 'dashboard/plugins/select2/js/select2.full.min.js' %}"></script>
 
-<script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+<!-- <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script> -->
 <script src="{% static 'js/pdf.js' %}" type="text/javascript"></script>
 <script src="{% static 'js/autosearch.js' %}" type="text/javascript"></script>
 <script src="{% static 'dashboard/plugins/dataTableGroup/dataTables.rowGroup.min.js' %}"></script>
 <script src="{% static 'dashboard/plugins/dataTableGroup/sum().js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.0/js/bootstrap-datepicker.js"></script>
+<!-- Formset.js  -->
+<script>
+    $(window).on('load', function () {
+      $('#loading').hide();
+    }) 
+</script>
 <!-- Formset.js  -->
 <script>
 
@@ -525,38 +685,6 @@
 });
 </script>
 
-<script>
-  $(document).ready(function() {
-    // Setup - add a text input to each footer cell
-    $('#selection tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input type="text"  class="form-control" placeholder="Search" />' );
-        
-    } );
- 
-    // DataTable
-    var table = $('#selection').DataTable({
-      "lengthMenu": [[50,100, 150, -1], [50,100,150, "All"]],
-        initComplete: function () {
-            // Apply the search
-            this.api().columns().every( function () {
-                var that = this;
- 
-                $( 'input', this.footer() ).on( 'keyup change clear', function () {
-                    if ( that.search() !== this.value ) {
-                        that
-                            .search( this.value )
-                            .draw();
-                    }
-                } );
-            } );
-        }
-    });
-    
- 
-} );
-
-</script>
 
 
 
@@ -592,6 +720,34 @@ $('ul.nav-treeview a').filter(function() {
 }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
 
 </script>
+<script>
+    $(document).ready(function() {
+    $('.select2bs4').select2();
+});
+</script>
+
+<!-- for table horizantal scroll -->
+<script>
+    var elementScroll = document.querySelector('.drag');
+    var mx = 0;
+    
+    elementScroll.addEventListener("mousedown", function(e){
+      this.sx = this.scrollLeft;
+      mx = e.pageX - this.offsetLeft;
+    
+      this.addEventListener("mousemove", mouseMoveFunction);
+    });
+    
+    elementScroll.addEventListener("mouseup", function(e){
+      this.removeEventListener("mousemove", mouseMoveFunction);
+      mx = 0;
+    });
+    
+    function mouseMoveFunction(e){
+      var mx2 = e.pageX - this.offsetLeft;
+      if(mx) this.scrollLeft = this.sx + mx - mx2;
+    }
+  </script>
 
 {% block script %} {% endblock %}
 </body>

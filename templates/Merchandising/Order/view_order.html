@@ -7,6 +7,14 @@
 
 {% block css %}
 <style>
+    table {
+        table-layout: fixed;
+        word-wrap: break-word;
+    }
+
+        table th, table td {
+            overflow: hidden;
+        }
     
     .bg-white{
         background-color: white;
@@ -170,14 +178,14 @@
     </div>
     <div class="invoice-items mt-3">
         <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
-            <table class="table table-bordered table-sm table-responsive-sm " id="table_field">
+            <table class="table table-bordered table-sm  table-responsive-sm " id="table_field">
                 <thead class="bg-light">
                     <tr>
                         <th class=" text-center"> No.</th>
-                        <th class=" text-center" width="180px">Items</th>
-                        <th class=" text-center">Article Number</th>
+                        <th class=" text-center"  width="140px;">Items</th>
+                        <th class=" text-center " width="140px;">Article Number</th>
                         <th class=" text-center">Color</th>
-                        <th class=" text-center">Fabrication</th>
+                        <th class=" text-center" width="120px;">Fabrication</th>
                         <th class=" text-center">Size</th>
                         <th class=" text-center">Order Qty</th>
                         <th class=" text-center">Rate</th>
@@ -196,7 +204,7 @@
                         <td class="text-center">
                             {{ item.gmt_items}}
                         </td>
-                        <td class="text-center">
+                        <td class="text-center" style="width:10%" >
                             {{item.article_number}}
                         </td>
                         <td class="text-center">
@@ -215,13 +223,13 @@
                             {{item.rate}}
                         </td>
                         <td class="text-center">
-                            {{item.amount}}
+                            {{item.amount|floatformat:2}}
                         </td>
                         <td class="text-center">
                             {{item.excess_cut}}
                         </td>
                         <td class="text-center">
-                            {{item.plan_cut_qty}}
+                            {{item.plan_cut_qty|floatformat:2}}
                         </td>
                         
                     </tr>

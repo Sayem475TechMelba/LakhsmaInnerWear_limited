@@ -6,21 +6,6 @@
 {% block homeactive  %}active{% endblock homeactive  %}
 {% block css %}
 <style>
-    
-.form-controls {
-    border-radius: 0;
-    box-shadow: none;
-    border: 1px solid #e4e5e7;
-    display: block;
-    width: 130px;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-}
 
 tfoot {
      display: table-header-group;
@@ -63,100 +48,104 @@ tfoot {
 {% endblock css %}
 
 {% block body %}
+<div id="loading" class="text-center">
+  <figure>
+    <img class="loading-image" height="100px" src="{% static 'icon/covid.gif' %}">
+    <h5> <figcaption class="text-center text-danger loading-image font-weight-bolder">Please Wait,Your Content is Loading....</figcaption></h5>
+  </figure>
+</div>
 
-
-<div class="container-fluid">
-      <div class="text-center mt-3 font-weight-bold"><h3>Capacity and Order Booking</h3></div>
-      <div class="card mt-2">
-          <div class="card-header text-uppercase bg-secondary">
-            <h3 class="card-title">Search Panel</h3>
+<div class="container-fluid search-box">
+  <div class="text-center mt-2 font-weight-bold"><h5>Capacity and Order Booking</h5></div>
+  <div class="card mt-2 table-responsive ">
+      <div class=" search mt-1 text-center ">
+        <form method="GET" class="ml-2"  action="{% url 'capacity_booked' %}">
+          <table  class="table table-sm table-bordered table-responsive  table-responsive-sm  tabel-hover ">
+            <thead class="bg-meroon">
+              <tr>
+                <th width="150px;">Company</th>
+                <th >Location</th>
+                <th >Buyer</th>
+                <th >Agent </th>
+                <th >Style</th>
+                <th >Job No.</th>
+                <th >Order No.</th>
+                <th >Team</th>
+                <th >Dealing Merchant</th>
+                <th >Factory Merchant</th>
+                <th >Product Category</th>
+                <th >Start Date</th>
+                <th >End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {{ myFilter.form.company_name|attr:"class:form-controls"}}
+                </td>
+                <td>
+                  {{ myFilter.form.company_location|attr:"class:form-controls"}}
+                </td>
+                <td>
+                  {{ myFilter.form.buyer_name|attr:"class:form-controls"}}
+                </td>
+                <td>{{ myFilter.form.agent|attr:"class:form-controls"}}</td>
+                <td>{{ myFilter.form.style_description|attr:"class:form-controls"}}</td>
+                <td>{{ myFilter.form.job_no|attr:"class:form-controls"}}</td>
+                <td>{{ myFilter.form.po_no|attr:"class:form-controls"}}</td>
+                <td>
+                  {{ myFilter.form.team_leader|attr:"class:form-controls"}}
+                </td>
+                <td>
+                  {{ myFilter.form.dealing_merchant|attr:"class:form-controls"}}
+                </td>
+                <td>
+                  {{ myFilter.form.factory_merchant|attr:"class:form-controls"}}
+                </td>
+                <td>
+                  {{ myFilter.form.product_cate|attr:"class:form-controls"}}
+                </td>
+                <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control"|attr:"id:start_date"  }}</td>
+                  <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control"|attr:"id:end_date"  }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="container justify-content-center align-content-center text-center mb-1">
+            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Show</button>
+            <a href="{% url 'capacity_booked' %}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i> Reset</a>
           </div>
-          <div class=" search mt-3 text-center">
-            <form method="GET" class="ml-2"  action="{% url 'capacity_booked' %}">
-              <table  class="table table-bordered table-responsive tabel-hover  ">
+        </form>
+        <div class="container ">
+          <div class="d-flex justify-content-center table-responsive">
+            <div class="p-2">
+              <table class="mb-2 table-sm  table-responsive-sm ">
                 <thead>
-                  <tr>
-                    <th width="150px;">Company</th>
-                    <th >Location</th>
-                    <th >Buyer</th>
-                    <th >Agent </th>
-                    <th >Style</th>
-                    <th >Job No.</th>
-                    <th >Team</th>
-                    <th >Dealing Merchant</th>
-                    <th >Factory Merchant</th>
-                    <th >Product Category</th>
-                    <th >Start Date</th>
-                    <th >End Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      {{ myFilter.form.company_name|attr:"class:form-controls"}}
-                    </td>
-                    <td>
-                      {{ myFilter.form.company_location|attr:"class:form-controls"}}
-                    </td>
-                
-                    <td>
-                      {{ myFilter.form.buyer_name|attr:"class:form-controls"}}
-                    </td>
-                    <td>{{ myFilter.form.agent|attr:"class:form-controls"}}</td>
-                    <td>{{ myFilter.form.style_description|attr:"class:form-controls"}}</td>
-                    <td>{{ myFilter.form.job_no|attr:"class:form-controls"}}</td>
-                  
-                    <td>
-                      {{ myFilter.form.team_leader|attr:"class:form-controls"}}
-                    </td>
-                    <td>
-                      {{ myFilter.form.dealing_merchant|attr:"class:form-controls"}}
-                    </td>
-                    <td>
-                      {{ myFilter.form.factory_merchant|attr:"class:form-controls"}}
-                    </td>
-                    <td>
-                      {{ myFilter.form.product_cate|attr:"class:form-controls"}}
-                    </td>
-            
-                    <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control"|attr:"id:start_date"  }}</td>
-                      <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control"|attr:"id:end_date"  }}</td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="container justify-content-center align-content-center text-center mb-3">
-                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Show</button>
-                <a href="{% url 'capacity_booked' %}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i> Reset</a>
-              </div>
-            </form>
-            <div class="container  text-center table-responsive  table-responsive-sm">
-              <table class="mb-2 ">
-                <thead >
                     <td width="20%">
-                      <select class="form-control">
-                        <option>2021</option>
-                        <option>2020</option>
+                      <select id="getYear" onChange="copyTextValue()" class="form-control">
+                        <option value="" disabled selected>Select</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
                       </select>
                     </td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4 ">Jan</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Feb</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Mar</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Apr</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">May</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Jun</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Jul</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Aug</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Sep</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Oct</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Nov</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-4">Dec</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2 " >Jan</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Feb</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Mar</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Apr</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">May</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Jun</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Jul</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Aug</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Sep</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Oct</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2" onclick="myFunction()"  id="getMonth">Nov</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Dec</button></td>
                 </thead>
               </table>
             </div>
           </div>
-  
-         
         </div>
+      </div>
+  </div>
 </div>
 
  <!-- BUYERWISE REPORT ==== BOTH Projected and Confirmed order -->
@@ -545,7 +534,7 @@ tfoot {
         <th> Ship Mode</th>
         <th> Internal Ref Grouping</th>
         <th> File No</th>
-        <th> Id</th>
+        <th> Inserted By</th>
         <th> Pre-Cost Id</th>
         <th> Delay Reason</th>
         <th> Reamrks</th>
@@ -678,7 +667,7 @@ tfoot {
         <td>{{i.ship_mode}}</td>
         <td>{{p.internal_ref}}</td>
         <td>{{p.file_no}}</td>
-        <td></td>
+        <td>{{i.inserted_by.full_name}}</td>
         <td></td>
         <td>{{p.delay_for}}</td>
         <td>{{p.remarks}}</td>
@@ -815,6 +804,7 @@ tfoot {
 
       // DataTable
       var table = $('#shipment_report').DataTable({
+        
         drawCallback: function(){
           const rp_tAvg_smv = this.api().column(20,{search:'applied'}).data().toArray().reduce((total,rp_tAvg_smv) => total+=Number(rp_tAvg_smv.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#rp_tAvg_smv').text(` ${(rp_tAvg_smv)}`);
@@ -839,9 +829,11 @@ tfoot {
   
         },
     
-        "lengthMenu": [[10,50,100, 150, -1], [10,50,100,150, "All"]],
-        //"scrollY":        "500px",
-        //"scrollCollapse": true,
+        "lengthMenu": [[500, 1000, -1], [500,1000, "All"]],
+        "scrollY": "470px",
+        "scrollX": true,
+        columnDefs: [ { type: 'date', 'targets': [17] } ],
+        order: [[ 17, 'asc' ]],
           initComplete: function () {
               // Apply the search
               this.api().columns().every( function () {
@@ -878,7 +870,8 @@ tfoot {
  
     // DataTable
     var table = $('#confirmed').DataTable({
-      orderFixed: [[ 2, 'asc' ]],
+            orderFixed: [[ 2, 'asc' ]],
+      
             rowGroup: {
             endRender: null,
             startRender: function ( rows, group ) {
@@ -905,12 +898,12 @@ tfoot {
                 .data()
                 .pluck(6)
                 .sum();
-                var ttValue = rows
+                var ttValues = rows
                 .data()
                 .pluck(7)
                 .sum();
                 //salesGroupSum = $.fn.dataTable.render.number( '.', ',', 2, '', '' ).display( salesGroupSum );
-
+                var ttValue = ttValues.toFixed(2)
                 var con_tt_avg_smv = con_tt_avg_smvs.toFixed(2);
                 var eqv = eqvs.toFixed(2);
                 var ag_smv = (con_tt_avg_smv / ord_Qty);
@@ -961,7 +954,7 @@ tfoot {
       },
     
 
-      "lengthMenu": [[50, 100, -1], [50, 100, "All"]],
+      "lengthMenu": [[ -1], [ "All"]],
         initComplete: function () {
             // Apply the search
             this.api().columns().every( function () {
@@ -1107,7 +1100,7 @@ tfoot {
                     .pluck(7)
                     .sum();
 
-		var pro_tt_avg_smv = pro_tt_avg_smvs.toFixed(2);
+		            var pro_tt_avg_smv = pro_tt_avg_smvs.toFixed(2);
                 var peqv = peqvs.toFixed(2);
                 var p_ag_smv = (pro_tt_avg_smv / ord_Qty);
                 var p_avg_smv = p_ag_smv.toFixed(2);
@@ -1152,7 +1145,7 @@ tfoot {
       
             },
 
-      "lengthMenu": [[50, 100, -1], [ 50, 100, "All"]],
+      "lengthMenu": [[ -1], [ "All"]],
         initComplete: function () {
             // Apply the search
             this.api().columns().every( function () {
@@ -1295,13 +1288,15 @@ tfoot {
                   .pluck(8)
                   .sum();
                   //salesGroupSum = $.fn.dataTable.render.number( '.', ',', 2, '', '' ).display( salesGroupSum );
-              var tt_ordValue = rows
+              var tt_ordValues = rows
                   .data()
                   .pluck(16)
                   .sum();
                   //salesGroupSum = $.fn.dataTable.render.number( '.', ',', 2, '', '' ).display( salesGroupSum );
+              
+              var tt_ordValue = tt_ordValues.toFixed(2)
               var tt_smv = tt_smvs.toFixed(2)
-	      var booked_basic = booked_basics.toFixed(2)
+	            var booked_basic = booked_basics.toFixed(2)
               var pc_ag_smv = (tt_smv / ord_Qty);
               var pc_avg_smv = pc_ag_smv.toFixed(2);
 
@@ -1370,7 +1365,7 @@ tfoot {
         $('.tt_od_value').text(` ${(tt_od_value)}`);
       },
       
-      "lengthMenu": [[ 50, 100, -1], [ 50, 100, "All"]],
+      "lengthMenu": [[ -1], [ "All"]],
         initComplete: function () {
             // Apply the search
             this.api().columns().every( function () {

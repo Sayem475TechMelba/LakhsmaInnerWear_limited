@@ -1,4 +1,5 @@
 from functools import total_ordering
+from pyexpat import model
 from django.db import models
 import datetime
 from django.utils.timezone import now
@@ -39,7 +40,7 @@ class LibraryCompany(models.Model):
     city = models.CharField(max_length=120, null=True)
     zip_code = models.CharField(max_length=120, null=True)
     trade_license_no = models.CharField(max_length=20, null=True)
-    color = models.CharField(max_length=100, null=True)
+    color = models.CharField(max_length=100, null=True, blank=True)
     insert_date = models.DateTimeField(default=now)
 
     def __str__(self):
@@ -256,6 +257,100 @@ class LibraryFabrication(models.Model):
     def __str__(self):
         return self.fabrication
 
+############# Budget Library ###########
+
+class LibraryCostingPer(models.Model):
+    costing_per = models.CharField(max_length=200, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.costing_per
+
+class LibraryBodyPart(models.Model):
+    body_part_name = models.CharField(max_length=200, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.body_part_name
+
+class LibraryBodyPartType(models.Model):
+    bp_Type_name = models.CharField(max_length=200, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.bp_Type_name
+        
+class LibraryFabNature(models.Model):
+    fab_nature_name = models.CharField(max_length=200, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.fab_nature_name
+
+class LibraryColorType(models.Model):
+    color_type = models.CharField(max_length=200, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.color_type
+
+class LibraryFabricSource(models.Model):
+    fabric_source = models.CharField(max_length=200, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.fabric_source
+
+class LibraryFabricDescription(models.Model):
+    fab_nature = models.ForeignKey(LibraryFabNature, on_delete=models.CASCADE)
+    construction = models.CharField(max_length=200)
+    gsm_weight = models.IntegerField(default=0)
+    color_range = models.CharField(max_length=200, null=True, blank=True)
+    stich_length = models.CharField(max_length=200, null=True, blank=True)
+    process_loss = models.CharField(max_length=200, null=True, blank=True)
+    yarn_one_pct = models.CharField(max_length=120, blank=True, null=True)
+    yarn_one = models.CharField(max_length=120, blank=True, null=True)
+    yarn_count_one = models.CharField(max_length=120, blank=True, null=True)
+    yarn_type_one = models.CharField(max_length=120, blank=True, null=True)
+    yarn_two_pct = models.CharField(max_length=120, blank=True, null=True)
+    yarn_two = models.CharField(max_length=120, blank=True, null=True)
+    yarn_count_two = models.CharField(max_length=120, blank=True, null=True)
+    yarn_type_two = models.CharField(max_length=120, blank=True, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.construction 
+
+class LibraryNominatedSupp(models.Model):
+    supplier_name = models.CharField(max_length=200, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.supplier_name
+
+class LibraryDiaTypes(models.Model):
+    width_dia_name = models.CharField(max_length=200, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.width_dia_name
+
+class LibraryConsumptionBasis(models.Model):
+    consumption_basis = models.CharField(max_length=200, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.consumption_basis
+
+class LibraryColorSizeSensitive(models.Model):
+    color_size_sensitive = models.CharField(max_length=200, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.color_size_sensitive
+
+
+
 #########################################################
 ############### Library Table End #####################
 ##########################################################
@@ -364,7 +459,7 @@ class PO_Details(models.Model):
     po_job_no = models.ForeignKey(OrderEntryInfo, related_name='order_entry', on_delete=models.CASCADE, blank=True, null=True)
     #po_job_no = models.CharField(max_length=20000, blank=True, null=True)
     order_status = models.CharField(max_length=20, choices=ORDER_STATUS, blank=True, null=True)
-    projected_po = models.CharField(max_length=20, choices=PROJECTED_STATUS,blank=True, null=True)
+    projected_po = models.CharField(max_length=20, choices=PROJECTED_STATUS, default="No", blank=True, null=True)
     gsm = models.IntegerField(default= 0, blank=True, null=True)
     po_no = models.CharField(max_length=120, blank=True, null=True)
     po_recieve_date = models.DateField(default=now, blank=True, null=True)
@@ -406,7 +501,13 @@ class PO_Details(models.Model):
 
     def __str__(self):
         return str(self.id)
-
+    
+    # def total_qty(self):
+    #     job = OrderEntryInfo.objects.all()
+    #     po = PO_Details.objects.filter(po_job_no__job_no=job.job_no)
+    #     po_qty = po.annotate(sum('po_quantity'))
+    #     print(po_qty)
+    #     return po_qty
 
 class ColorSizeItems(models.Model):
     STATUS = (
@@ -428,3 +529,43 @@ class ColorSizeItems(models.Model):
     
     def __str__(self):
         return str(self.po_color_size)
+
+
+# class BudgetPreCost(models.Model):
+#     STATUS = (
+#         ('Yes', 'Yes'),
+#         ('No', 'No'),
+#     )
+#     company = models.CharField(max_length=120, blank=True, null=True)
+#     quotation_id = models.CharField(max_length=120, blank=True, null=True)
+#     style_ref = models.CharField(max_length=120, blank=True, null=True)
+#     style_desc = models.CharField(max_length=220, blank=True, null=True)
+#     Buyer_name = models.CharField(max_length=120, blank=True, null=True)
+#     prod_dept= models.CharField(max_length=120, blank=True, null=True)
+#     currency= models.CharField(max_length=120, blank=True, null=True)
+#     er= models.CharField(max_length=120, blank=True, null=True)
+#     agent= models.CharField(max_length=120, blank=True, null=True)
+#     job_qty= models.CharField(max_length=120, blank=True, null=True)
+#     order_unit= models.CharField(max_length=120, blank=True, null=True)
+#     item_details= models.CharField(max_length=250, blank=True, null=True)
+#     costing_date = models.DateField(blank=True, null=True)
+#     incoterm = models.CharField(max_length=250, blank=True, null=True)
+#     incoterm_place = models.CharField(max_length=250, blank=True, null=True)
+#     machine_line = models.CharField(max_length=120, blank=True, null=True)
+#     prod_line = models.CharField(max_length=120, blank=True, null=True)
+#     costing_per = models.CharField(max_length=120, blank=True, null=True)
+#     region = models.CharField(max_length=120, blank=True, null=True)
+#     approved = models.CharField(max_length=20,  choices=STATUS,  blank=True, null=True)
+#     sew_smv = models.FloatField(default=0, blank=True, null=True)
+#     sew_efficiency = models.FloatField(default=0, blank=True, null=True)
+#     cut_smv = models.FloatField(default=0, blank=True, null=True)
+#     cut_efficiency = models.FloatField(default=0, blank=True, null=True)
+#     remarks = models.TextField(blank=True, null=True)
+#     budget_minute = models.IntegerField(default=0, blank=True, null=True)
+#     image = models.ImageField(upload_to='Budget/Image', blank=True, null=True)
+#     file_no = models.CharField(max_length=120, blank=True, null=True)
+#     internal_ref = models.CharField(max_length=120, blank=True, null=True)
+#     copy_form = models.CharField(max_length=120, blank=True, null=True)
+#     redy_to_approved = models.CharField(max_length=20,  choices=STATUS,  blank=True, null=True)
+#     mini_marker_upload = models.FileField(upload_to='Budget/Image', blank=True, null=True)
+    

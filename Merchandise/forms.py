@@ -133,6 +133,63 @@ class LibFabricationForm(forms.ModelForm):
     class Meta:
         model = LibraryFabrication
         fields = '__all__'
+
+############# Budget Library ###########        
+class LibCostingPerForm(forms.ModelForm):
+    class Meta:
+        model = LibraryCostingPer
+        fields = '__all__'
+
+class LibBodyPartForm(forms.ModelForm):
+    class Meta:
+        model = LibraryBodyPart
+        fields = '__all__'
+
+class LibBodyPartTypeForm(forms.ModelForm):
+    class Meta:
+        model = LibraryBodyPartType
+        fields = '__all__'
+
+class LibFabNatureForm(forms.ModelForm):
+    class Meta:
+        model = LibraryFabNature
+        fields = '__all__'
+
+class LibColorTypeForm(forms.ModelForm):
+    class Meta:
+        model = LibraryColorType
+        fields = '__all__'
+        
+class LibFabricSourceForm(forms.ModelForm):
+    class Meta:
+        model = LibraryFabricSource
+        fields = '__all__'
+
+class LibFabricDescriptionForm(forms.ModelForm):
+    class Meta:
+        model = LibraryFabricDescription
+        fields = '__all__'
+
+class LibNominatedSuppForm(forms.ModelForm):
+    class Meta:
+        model = LibraryNominatedSupp
+        fields = '__all__'
+
+class LibDiaTypesForm(forms.ModelForm):
+    class Meta:
+        model = LibraryDiaTypes
+        fields = '__all__'
+        
+class LibConsumptionBasisForm(forms.ModelForm):
+    class Meta:
+        model = LibraryConsumptionBasis
+        fields = '__all__'
+
+class LibColorSizeSensitiveForm(forms.ModelForm):
+    class Meta:
+        model = LibraryColorSizeSensitive
+        fields = '__all__'
+
 ############### ALL Merchandising Forms #############
 
 
@@ -142,9 +199,12 @@ class OrderEntryForm(forms.ModelForm):
         exclude = ['job_no','inserted_by']
 
 class SmvItems_Form(forms.ModelForm):
+    
     class Meta:
         model = SmvItems
         fields = '__all__'   
+
+    
 
 class PoDeatilsForm(forms.ModelForm):
 
@@ -155,4 +215,10 @@ class PoDeatilsForm(forms.ModelForm):
 class colorsize_ItemsForm(forms.ModelForm):
     class Meta:
         model = ColorSizeItems
-        exclude = ['gmt_items']
+        fields = '__all__' 
+
+class AddPoDeatilsForm(forms.ModelForm):
+    
+    class Meta:
+        model = PO_Details
+        exclude = ['inserted_by']

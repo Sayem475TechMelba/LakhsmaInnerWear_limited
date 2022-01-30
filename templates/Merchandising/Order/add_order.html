@@ -1,0 +1,2041 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %} Lakshma | Pre Costing Form {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    .modal-lg{
+        max-width: 90%;
+    }
+    .modal-comm{
+        max-width: 50%;
+    }
+    .modal-wash{
+        max-width: 80%;
+    }
+</style>
+{% endblock css %}
+
+{% block body %}
+
+<div class="container">
+    <div class="">{% include 'Index/alerts.html' %}</div>
+    <div class="d-flex">
+      <div class="mr-auto p-2">
+        <a type="button" href="{% url 'order_report' %}" class="btn btn-sm btn-info gr"><i class="fa fa-bars" aria-hidden="true"></i> Order Report</a>
+      </div>
+      <div class="p-2">
+        <a  type="btn" class="btn btn-sm btn-light " onClick="javascript:history.go(-1);"><i class="fa fa-undo" aria-hidden="true"></i></a>
+      </div>
+    </div>
+  
+  
+    
+    <div class=" card border border-dark mb-2 mt-2">
+      <div class=" p-2  bg-form-header">
+          <h5 class="text-uppercase text-center ">Budget/Pre-Costing Form</h4>
+      </div>
+      <div class="container p-4 bg-form">
+          <div class="row">
+              <div class="col-md-12 P-4">
+              
+                  <form method="post" action="" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      <div class="form-group row ">
+                          <label for="job_no" class="col-sm-2 col-form-label ">Job No.</label>
+                          <div class="col-sm-2 ">
+         
+                              <input type="text" class="form-control" placeholder="Job no" value={{add_po.po_job_no}}>
+                          </div>
+                          <label for="company_name" class="col-sm-2 col-form-label label">Company</label>
+                          <div class="col-sm-2 ">
+                            <input type="text" class="form-control" value={{add_po.po_job_no.company_name}}>
+                            <!-- {{ form.company_name|attr:"class:form-control"|attr:"required" }} -->
+                            
+                          </div>
+                          <label for="company_location" class="col-sm-2 col-form-label label">Quotation ID</label>
+                          <div class="col-sm-2 ">
+                            <input type="text" class="form-control" >
+                           
+                            <!-- {{ form.company_location|attr:"class:form-control"|attr:"required" }} -->
+                            
+                          </div>
+                        </div>
+                        
+  
+                        <div class="form-group row ">
+                            <label for="style_ref" class="col-sm-2 col-form-label label">Style Ref</label>
+                          <div class="col-sm-2 ">
+                            <input type="text" class="form-control" value={{add_po.po_job_no.style_ref}}>
+                            <!-- {{ form.style_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style Ref"|attr:"required" }} -->
+
+                          </div>
+                          
+                          <label for="style_description" class="col-sm-2 col-form-label label">Style Description</label>
+                          <div class="col-sm-2 ">
+                              <textarea type="text" class="form-control" rows="1">{{add_po.po_job_no.style_description}}</textarea>
+                            <!-- {{ form.style_description|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style Description"|attr:"rows:2"}} -->
+
+                          </div>
+                          <label for="buyer_name" class="col-sm-2 col-form-label ">Buyer Name</label>
+                          <div class="col-sm-2 ">
+                            <input type="text" class="form-control" >
+                            <!-- {{ form.buyer_name|attr:"class:form-control"|attr:"required" }} -->
+                            
+                          </div>
+                          
+                        </div>
+                        
+
+                        <div class="table-responsive mt-2">
+                            <table class="table table-bordered table-hover table-sm" >
+                                <thead class="bg-table-header">
+                                    
+                                    <tr>
+                                        <th class="text-center label">Prod. Dept. </th>
+                                        <th class="text-center"> Currency </th>
+                                        <th class="text-center"  width="60px;"> ER </th>
+                                        <th class="text-center label">Agent </th>
+                                        <th class="text-center label" width="150px;">Job Qty </th>
+                                        <th class="text-center"> Order Unit </th>
+                                        <th class="text-center"  width="150px;" > </th>
+                                        <th class="text-center label"> Costing Date </th>
+                                        <th class="text-center label">Incoterm </th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr >
+                                        <td >
+                                            <select class="form-control">
+                                                <option>Ladis</option>
+                                                <option>Gents</option>
+                                                
+                                              </select>
+                                            <!-- {{ form.product_dept|attr:"class:form-control"|attr:"required" }} -->
+                                            
+                                        </td>
+
+                                        <td >
+                                            <select class="form-control">
+                                                <option>USD</option>
+                                                <option>BDT</option>
+                                                
+                                              </select>
+                                            <!-- {{ form.sub_dept|attr:"class:form-control"|attr:"required" }} -->
+                                         
+                                        </td>
+
+                                        <td >
+                                            <input type="text" class="form-control" >
+                                            <!-- {{ form.product_cate|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                        <td >
+                                            <select class="form-control">
+                                                <option disabled selected>Select Agent</option>
+                                                <option></option>
+                                                
+                                              </select>
+                                            <!-- {{ form.product_cate|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" >
+                                            <!-- {{ form.currency|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                        <td >
+                                            <select class="form-control">
+                                                <option>Pcs</option>
+                                                <option>Pound</option>
+                                                
+                                              </select>
+                                            <!-- {{ form.region|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                        <td >
+                                            <textarea type="text" class="form-control" rows="1" placeholder="Item Details"></textarea>
+                                            <!-- {{ form.repeat_job_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Repeat No/Job"}} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="date" class="form-control" >
+                                            <!-- {{ form.team_leader|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                        <td >
+                                            <select class="form-control">
+                                               <option>FOB</option>
+                                               
+                                             </select>
+                                           <!-- {{ form.dealing_merchant|attr:"class:form-control"|attr:"required" }} -->
+
+                                       </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive mt-0">
+
+                            <table class="table table-bordered table-hover table-sm" >
+                                <thead class="bg-table-header">
+                                    
+                                    <tr>
+                                        <th class="text-center"> Incoterm Place </th>
+                                        <th class="text-center"> Machine/Line </th>
+                                        <th class="text-center"> Prod/Line/Hr </th>
+                                        <th class="text-center"> Costing Per  </th>
+                                        <th class="text-center label"> Region </th>
+                                        <th class="text-center"> Approved </th>
+                                        <th class="text-center label">Sew. SMV </th>
+                                        <th class="text-center"> Sew Efficiency % </th>
+                                        <th class="text-center"> Cut SMV</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr >
+                                       
+                                        
+                                        <td >
+                                            <input type="text" class="form-control" >
+                                            <!-- {{ form.factory_merchant|attr:"class:form-control"|attr:"required" }} -->
+
+                                           
+                                        </td>
+                                       
+                                        <td >
+                                            <input type="number" class="form-control" >
+                                            <!-- {{ form.bh_merchant|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Buying House Merchant"}} -->
+
+                                             
+                                        </td>
+                                        
+                                        <td >
+                                            <input type="text" class="form-control" >
+                                             <!-- {{ form.remarks|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Remarks"|attr:"rows:1"}} -->
+
+                                        </td>
+                                        <td >
+                                            <select class="form-control">
+                                                <option>For 1 Dzn</option>
+                                                
+                                              </select>
+                                            <!-- {{ form.ship_mode|attr:"class:form-control"|attr:"required" }} -->
+                                        
+                                            
+                                        </td>
+                                        <td >
+                                            <select class="form-control">
+                                                <option>Asia</option>
+                                                
+                                              </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                        <td >
+                                            <select class="form-control">
+                                                <option>Yes</option>
+                                                <option>No</option>
+                                                
+                                              </select>
+                                            <!-- {{ form.client|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+
+                                        <td >
+                                            <input type="number" class="form-control" >
+                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" >
+                                            <!-- {{ form.packing|attr:"class:form-control"|attr:"required" }} -->
+
+                                           
+                                        </td>
+                                       
+                                        <td >
+                                            <input type="number" class="form-control" >
+                                            <!-- {{ form.season|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive mt-0">
+
+                            <table class="table table-bordered table-hover table-sm" >
+                                <thead class="bg-table-header">
+                                   
+                                    <tr>
+                                        
+                                        <th class="text-center"> Cut Efficiency % </th>
+                                        <th class="text-center"> Reamrks </th>
+                                        <th class="text-center"> Budget Minute </th>
+                                        <th class="text-center label" width="160px;"> Images </th>
+                                        <th class="text-center label" width="160px;">File No.</th>
+                                        <th class="text-center"> Internal Ref </th>
+                                        <th class="text-center"> Copy Form </th>
+                                        <th class="text-center" width="160px;"></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr >
+                                        
+                                        
+                                        
+                                        <td >
+                                            <input type="text" class="form-control" >
+                                            <!-- {{ form.agent|attr:"class:form-control"|attr:"required" }} -->
+
+
+                                        </td>
+                                        
+                                        <td >
+                                            <input type="text" class="form-control" >
+                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                        </td>
+                                        <td >
+                                            <textarea type="text" class="form-control" rows="1" placeholder="Item Details"></textarea>
+                                            <!-- {{ form.ship_mode|attr:"class:form-control"|attr:"required" }} -->
+                                        
+                                            
+                                        </td>
+                                        <td >
+                                            <input type="file" class="form-control" >
+                                            <!-- {{ form.image|attr:"class:form-control"|attr:"type:file"}} -->
+                                           
+                                        </td>
+                                        <td >
+                                            <input type="text" class="form-control" placeholder="Display" >
+                                            <!-- {{ form.file|attr:"class:form-control"|attr:"type:file"}} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="text" class="form-control" placeholder="Display" >
+                                            <!-- {{ form.internal_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Internal Ref."}} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="text" class="form-control"  >
+                                            <!-- {{ form.copy_form|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Copy Form"}} -->
+
+
+                                        </td>
+                                       
+                                        <td >
+                                            <input type="text" class="form-control" placeholder="Copy without consumption" >
+                                            <!-- {{ form.working_company|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                        
+                                       
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="form-group row mt-1">
+                            <label for="company_name" class="col-sm-2 col-form-label label">Ready To Approved</label>
+                            <div class="col-sm-2 ">
+                                <select class="form-control">
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                    
+                                  </select>
+
+                            </div>
+                            <label for="company_name" class="col-sm-2 col-form-label label">Mini Marker Upload</label>
+                            <div class="col-sm-2 ">
+                                <input type="file" class="form-control" >
+                                <!-- {{ form.design_source|attr:"class:form-control"|attr:"required" }} -->
+
+                            </div>
+                            <label for="location_name" class="col-sm-2 col-form-label label">Un-approve Request</label>
+                            <div class="col-sm-2 ">
+                                <input type="text" class="form-control" placeholder="Double Click" >
+                                <!-- {{ form.quality_level|attr:"class:form-control"|attr:"required" }} -->
+
+                              
+                            </div>
+                          </div>
+                          <div class="form-group text-center mt-2">
+                            <button type="submit" name="button1" class="btn btn-info btn-sm" id="submitButton" value="">Submit For Approval</button>
+                          </div>
+                          <hr>
+                       
+
+                        
+                        <div class="mt-2">
+                            
+                            <button type="submit" name="button1" class="btn btn-success btn-sm" style=" border-radius: 20px;">Save</button>
+                     
+                        </div>
+                  </form>
+                </div>
+  
+              </div>
+          </div>
+  
+    </div>
+
+     <!-- SECTION TNA Process  -->
+     
+     <div class="row mt-3">
+         <div class='col-md-4 col-lg-4'>
+        <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+            <form method="post"  enctype="multipart/form-data">
+                {% csrf_token %}
+                <table class="table table-bordered table-sm" >
+                    <thead>
+                        <tr class="bg-info"> 
+                            <th class="text-center bg-form-header"  colspan="7">
+                                <h5 class="">TNA process manual</h5>
+                            </th>
+                        </tr>
+                        <tr class="bg-table-header">
+                            <th class="per70 text-center" width="130px;">Cost Component</th>
+                            <th class="per70 text-center">Budgeted Cost</th>
+                            <th class="per70 text-center">% To Q Price</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label " >Fabric Cost</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" data-toggle="modal" data-target="#fabric" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Trims Cost</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" data-toggle="modal" data-target="#trim">
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Embel Cost</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control"  data-toggle="modal" data-target="#embe">
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Gmts. Wash</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" data-toggle="modal" data-target="#wash">
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Comml Cost</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" data-toggle="modal" data-target="#comm">
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Lab Test</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Inspection</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Freight</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Courier Cost</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Certificate Cost</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Deffd. LC Cost</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Design Cost</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Studio Cost</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                       
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Opert Exp.</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">CM Cost</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Interest</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Income Tax</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Depc & Amount</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Commission</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" data-toggle="modal" data-target="#commission">
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Total Cost</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Price/1 Dzn</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Margin/1 Dzn</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Price/Piece</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Final Cost/Pcs</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">Margin/Pcs</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <label for="location_name" class="col-form-label ">BOM Margin/Pcs</label>
+                                <!-- <input type="text" class="form-control" value="Fabric Cost"> -->
+                                <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
+                            </td>
+                            <td class="text-center">
+                                <input type="text" class="form-control" >
+                                <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
+                            </td>
+                        </tr>
+                    
+                        
+                    </tbody>
+
+                </table>
+                <div class="mt-2">
+                            
+                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                    <button type="submit" class="btn btn-info btn-sm">Update</button>
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
+             
+                </div>
+            </form>
+        </div>
+       </div>
+    </div>
+    
+   <!----------------------------- Modal Start -------------------------------------------------->
+   <!-- Fabric Cost Modal -->
+   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="fabric">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="container-fluid">
+            <div id="accordion">
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link text-dark font-weight-bold" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        + Fabric Cost
+                      </button><span class="text-danger font-weight-bold" style="margin-left: 74%;">Approved</span>
+                    </h5>
+                  </div>
+              
+                  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+
+                            <table class="table table-bordered table-hover table-sm table-responsive" >
+                                <thead class="bg-info">
+                                    <!-- <tr>
+                                        <th class="text-center text-uppercase " colspan="19">
+                                            <h5 class="text-danger">Approved</h5>
+                                        </th>
+                                    </tr> -->
+                                    <tr>
+                                        <th class="text-center label" width="140px"> Gmts Item </th>
+                                        <th class="text-center label" >Body Part</th>
+                                        <th class="text-center" > Body Part Type </th>
+                                        <th class="text-center" > Fab Nature</th>
+                                        <th class="text-center" > Color Type </th>
+                                        <th class="text-center" > Fabric Source </th>
+                                        <th class="text-center" > Nominated Supp </th>
+                                        <th class="text-center" > Width/Dia Type </th>
+                                        <th class="text-center" > GSM/Weight </th>
+                                        <th class="text-center" > Color & Size Sensitive </th>
+                                        <th class="text-center" > Color  </th>
+                                        <th class="text-center" > Consumtion Basis </th>
+                                        <th class="text-center" > Uom </th>
+                                        <th class="text-center" > Avg. Grey Cons </th>
+                                        <th class="text-center" > Rate </th>
+                                        <th class="text-center" > Amount </th>
+                                        <th class="text-center" > Total Quantity </th>
+                                        <th class="text-center" > Total Amount </th>
+                                        <th class="text-center"  width="80px;">  </th>
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr >
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <input type="text" class="form-control" placeholder="Article Number">
+                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                       
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                            <!-- {{ form.agent|attr:"class:form-control"|attr:"required" }} -->
+
+
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                            <!-- {{ form.client|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                            <!-- {{ form.client|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                            <!-- {{ form.client|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                            <!-- {{ form.client|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                        
+                                        <td><button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                            <a  type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                        </td>
+                                       
+
+                                        
+                                    </tr>
+                                    
+                                </tbody>
+                                
+                            </table>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="btn btn-success btn-sm">Save</button>
+                            <button type="submit" class="btn btn-info btn-sm">Update</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
+                        </div>
+                        
+
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed text-dark font-weight-bold" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        + Yarn Cost
+                      </button><span class="text-danger font-weight-bold" style="margin-left: 75%;">Approved</span>
+                    </h5>
+                  </div>
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+
+                            <table class="table table-bordered table-hover table-sm table-responsive" >
+                                <thead class="bg-info">
+                                    <!-- <tr>
+                                        <th class="text-center text-uppercase " colspan="19">
+                                            <h5 class="text-danger">Approved</h5>
+                                        </th>
+                                    </tr> -->
+                                    <tr>
+                                        <th class="text-center label"> Count </th>
+                                        <th class="text-center label" >Comp1</th>
+                                        <th class="text-center" > %</th>
+                                        <th class="text-center" > Color</th>
+                                        <th class="text-center" > Type </th>
+                                        <th class="text-center" > Cons Qnty </th>
+                                        <th class="text-center" > Supplier </th>
+                                        <th class="text-center" > Rate </th>
+                                        <th class="text-center" > Amount</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr >
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" >
+                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="text" class="form-control" placeholder="Color">
+                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                        </td>
+                                       
+                                       
+                                       
+
+                                        
+                                    </tr>
+                                    
+                                </tbody>
+                                <tfoot class="font-weight-bold">
+                                    <tr>
+                                        <td colspan="5" class="text-right">
+                                           SUM:
+                                        </td>
+                                        
+					                    <td colspan=""  >  
+                                            <input type="number" class="form-control" value="0">
+                                        </td>
+					                    <td colspan=""  >  
+                                         
+                                        </td>
+					                   
+					                    <td colspan=""  >  
+                                          
+                                        </td>
+					                    <td colspan=""  >  
+                                            <input type="number" class="form-control" value="0">
+                                        </td>
+                                       
+                                    </tr>
+                                    
+                                  </tfoot>
+                                
+                            </table>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="btn btn-success btn-sm">Save</button>
+                            <button type="submit" class="btn btn-info btn-sm">Update</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
+                        </div>
+                        
+
+                    </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed text-dark font-weight-bold" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        + Conversion Cost
+                      </button><span class="text-danger font-weight-bold" style="margin-left: 71%;">Approved</span>
+                    </h5>
+                  </div>
+                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+                    <div class="card-body">
+                        <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+
+                            <table class="table table-bordered table-hover table-sm table-responsive" >
+                                <thead class="bg-info">
+                                    <!-- <tr>
+                                        <th class="text-center text-uppercase " colspan="19">
+                                            <h5 class="text-danger">Approved</h5>
+                                        </th>
+                                    </tr> -->
+                                    <tr>
+                                        <th class="text-center label"> Fabric Description </th>
+                                        <th class="text-center label" >Process</th>
+                                        <th class="text-center" > Process Loss</th>
+                                        <th class="text-center" > Req. Qty</th>
+                                        <th class="text-center" > Avg. Req. Qty(Less Process Loss) </th>
+                                        <th class="text-center" > Charge/Unit </th>
+                                        <th class="text-center" > Amount </th>
+                                        <th class="text-center" > Status </th>
+                                        <th class="text-center" width="90px" > </th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr >
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>T-Shirt-Short Sleeve</option>
+                                                <option>T-Shirt-Full Sleeve</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                        </td>
+                                        
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        
+                                        <td >
+                                            <input type="number" class="form-control" value="0">
+                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                        </td>
+                                       
+                                        <td >
+                                            <select name="" class="form-control" >
+                                                <option value="" disabled selected>Select</option>
+                                                <option>Active</option>
+                                                <option>Inactive</option>
+                                                
+                                            </select>
+                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td><button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                            <a  type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                        </td>
+                                       
+                                       
+
+                                        
+                                    </tr>
+                                    
+                                </tbody>
+                                <tfoot class="font-weight-bold">
+                                    <tr>
+                                        <td colspan="2" class="text-right">
+                                           SUM:
+                                        </td>
+                                        
+					                    <td colspan=""  >  
+                                            <input type="number" class="form-control" value="0">
+                                        </td>
+					                    <td colspan=""  >  
+                                            <input type="number" class="form-control" value="0">
+                                        </td>
+					                   
+					                    <td colspan=""  >  
+                                            <input type="number" class="form-control" value="0">
+                                        </td>
+					                    <td colspan=""  >  
+                                            <input type="number" class="form-control" value="0">
+                                        </td>
+                                       
+                                    </tr>
+                                    
+                                  </tfoot>
+                                
+                            </table>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="btn btn-success btn-sm">Save</button>
+                            <button type="submit" class="btn btn-info btn-sm">Update</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
+                        </div>
+                        
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+   <!-- Trim Modal -->
+   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="trim">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="container-fluid">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                  
+                  <span class=" font-weight-bold">Trim Cost</span><span class="text-danger font-weight-bold" style="margin-left: 71%;">Approved</span>
+                </h5>
+              </div>
+            <div class="card-body">
+                <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+
+                    <table class="table table-bordered table-hover table-sm table-responsive" >
+                        <thead class="bg-info">
+                            <!-- <tr>
+                                <th class="text-center text-uppercase " colspan="10">
+                                    <span>Trim Cost</span><br>
+                                    <h5 class="text-danger">Approved</h5>
+                                </th>
+                            </tr> -->
+                            <tr>
+                                <th class="text-center"> Seq. </th>
+                                <th class="text-center " >Group</th>
+                                <th class="text-center" > Country</th>
+                                <th class="text-center" > Description</th>
+                                <th class="text-center" > Brand/Sup Ref </th>
+                                <th class="text-center" > Remarks </th>
+                                <th class="text-center" > Nominated Supp</th>
+                                <th class="text-center" > Cons UOM </th>
+                                <th class="text-center" > Cons/Unit Gmts</th>
+                                <th class="text-center" > Rate</th>
+                                <th class="text-center" > Amount</th>
+                                <th class="text-center" > Total Qty</th>
+                                <th class="text-center" > Total Amount</th>
+                                <th class="text-center" > Apvt </th>
+                                <th class="text-center" > Image</th>
+                                <th class="text-center" width="90px" > </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr >
+                                <td >
+                                    <input type="number" class="form-control" value="1">
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control">
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control" placeholder="Browse">
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control" placeholder="Description">
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control">
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control">
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control" placeholder="Browse">
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Dzn</option>
+                                        <option>Pcs</option>
+                                        
+                                    </select>
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                
+                                <td >
+                                    <input type="number" class="form-control" value="0">
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                <td >
+                                    <input type="number" class="form-control" value="0">
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                <td >
+                                    <input type="number" class="form-control" value="0">
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control" placeholder="Click To Load">
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                <td >
+                                    <input type="number" class="form-control" value="0">
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                               
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Yes</option>
+                                        <option>No</option>
+                                        
+                                    </select>
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <input type="file" class="form-control" >
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td><button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    <a  type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                </td>
+                               
+                               
+
+                                
+                            </tr>
+                            
+                        </tbody>
+                        <tfoot class="font-weight-bold">
+                            <tr>
+                                <td colspan="8" class="text-right">
+                                   SUM:
+                                </td>
+                                
+                                <td colspan=""  >  
+                                    <input type="number" class="form-control" value="0">
+                                </td>
+                                <td colspan=""  >  
+                                    <input type="number" class="form-control" value="0">
+                                </td>
+                               
+                                <td colspan=""  >  
+                                    <input type="number" class="form-control" value="0">
+                                </td>
+                                <td colspan=""  >  
+                                    <input type="number" class="form-control">
+                                </td>
+                                <td colspan=""  >  
+                                    <input type="number" class="form-control" value="0">
+                                </td>
+                               
+                            </tr>
+                            
+                          </tfoot>
+                        
+                    </table>
+                </div>
+                
+                <div>
+                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                    <button type="submit" class="btn btn-info btn-sm">Update</button>
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
+                    <button type="button" class="btn btn-secondary btn-sm text-right" data-dismiss="modal">Close</button>
+                </div>
+                
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!-- Embellishment Modal -->
+   <!--Country Modal inside Embellishment-->
+        <div class="modal fade" id="country" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                ...
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+            </div>
+        </div>
+  <!-- Country Modal end-->
+   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="embe">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+          <div class="container-fluid">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                  
+                  <span class=" font-weight-bold">Embellishment Cost</span><span class="text-danger font-weight-bold" style="margin-left: 71%;">Approved</span>
+                </h5>
+              </div>
+            <div class="card-body">
+                <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+
+                    <table class="table table-bordered table-hover table-sm table-responsive" >
+                        <thead class="bg-info">
+                            <!-- <tr>
+                                <th class="text-center text-uppercase " colspan="10">
+                                    <span>Trim Cost</span><br>
+                                    <h5 class="text-danger">Approved</h5>
+                                </th>
+                            </tr> -->
+                            <tr>
+                                <th class="text-center"> Name </th>
+                                <th class="text-center " >Type</th>
+                                <th class="text-center" > Body Part</th>
+                                <th class="text-center" > Country</th>
+                                <th class="text-center" > Emb. Supplier </th>
+                                <th class="text-center" > Cons/1 Dzn Gmts </th>
+                                <th class="text-center" > Rate</th>
+                                <th class="text-center" > Amount</th>
+                                <th class="text-center" > Status</th>
+                                <th class="text-center" width="90px" > </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr >
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Printing</option>
+                                        <option>Others</option>
+                                        
+                                    </select>
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Dzn</option>
+                                        <option>Pcs</option>
+                                        
+                                    </select>
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Dzn</option>
+                                        <option>Pcs</option>
+                                        
+                                    </select>
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control" placeholder="Browse" data-toggle="modal" data-target="#country">
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control" placeholder="Write">
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control">
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control" >
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control" >
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Active</option>
+                                        <option>Inactive</option>
+                                        
+                                    </select>
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                
+                              
+                                <td><button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    <a  type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                </td>
+                               
+                               
+
+                                
+                            </tr>
+                            
+                        </tbody>
+                        <tfoot class="font-weight-bold">
+                            <tr>
+                                <td colspan="6" class="text-right">
+                                   SUM:
+                                </td>
+                                
+                                <td colspan=""  >  
+                                    <input type="number" class="form-control" value="0">
+                                </td>
+                                <td colspan=""  >  
+                                    <input type="number" class="form-control" value="0">
+                                </td>
+                               
+                               
+                               
+                            </tr>
+                            
+                          </tfoot>
+                        
+                    </table>
+                </div>
+                
+                <div>
+                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                    <button type="submit" class="btn btn-info btn-sm">Update</button>
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
+                    <button type="button" class="btn btn-secondary btn-sm text-right" data-dismiss="modal">Close</button>
+                </div>
+                
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!--------- Wash Cost Modal --------------->
+   <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="wash">
+    <div class="modal-dialog modal-wash">
+      <div class="modal-content">
+          <div class="container-fluid">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                  
+                  <span class=" font-weight-bold">Wash Cost</span><span class="text-danger font-weight-bold" style="margin-left: 71%;">Approved</span>
+                </h5>
+              </div>
+            <div class="card-body">
+                <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+
+                    <table class="table table-bordered table-hover table-sm table-responsive" >
+                        <thead class="bg-info">
+                            <!-- <tr>
+                                <th class="text-center text-uppercase " colspan="10">
+                                    <span>Trim Cost</span><br>
+                                    <h5 class="text-danger">Approved</h5>
+                                </th>
+                            </tr> -->
+                            <tr>
+                                <th class="text-center"> Name </th>
+                                <th class="text-center " >Type</th>
+                                <th class="text-center" > Country</th>
+                                <th class="text-center" > Cons/1 Dzn Gmts </th>
+                                <th class="text-center" > Rate</th>
+                                <th class="text-center" > Amount</th>
+                                <th class="text-center" > Status</th>
+                                <th class="text-center" width="90px" > </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr >
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Printing</option>
+                                        <option>Others</option>
+                                        
+                                    </select>
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Dzn</option>
+                                        <option>Pcs</option>
+                                        
+                                    </select>
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                               
+                                
+                                <td >
+                                    <input type="text" class="form-control" placeholder="Browse">
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control" placeholder="Browse">
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control" >
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                <td >
+                                    <input type="text" class="form-control" >
+                                     <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                </td>
+                                
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Active</option>
+                                        <option>Inactive</option>
+                                        
+                                    </select>
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                
+                              
+                                <td><button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    <a  type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                </td>
+                               
+                               
+
+                                
+                            </tr>
+                            
+                        </tbody>
+                        <tfoot class="font-weight-bold">
+                            <tr>
+                                <td colspan="5" class="text-right">
+                                   SUM:
+                                </td>
+                                
+                                <td colspan=""  >  
+                                    <input type="number" class="form-control" value="0">
+                                </td>
+                               
+                               
+                               
+                               
+                            </tr>
+                            
+                          </tfoot>
+                        
+                    </table>
+                </div>
+                
+                <div>
+                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                    <button type="submit" class="btn btn-info btn-sm">Update</button>
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
+                    <button type="button" class="btn btn-secondary btn-sm text-right" data-dismiss="modal">Close</button>
+                </div>
+                
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!--------- Commercial Cost Modal --------------->
+   <div class="modal  fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="comm">
+    <div class="modal-dialog modal-comm">
+      <div class="modal-content">
+          <div class="container-fluid">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                  
+                  <span class=" font-weight-bold">Commercial Cost</span><span class="text-danger font-weight-bold" style="margin-left: 60%;">Approved</span>
+                </h5>
+              </div>
+            <div class="card-body">
+                <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+
+                    <table class="table table-bordered table-hover table-sm table-responsive" >
+                        <thead class="bg-info">
+                            <!-- <tr>
+                                <th class="text-center text-uppercase " colspan="10">
+                                    <span>Trim Cost</span><br>
+                                    <h5 class="text-danger">Approved</h5>
+                                </th>
+                            </tr> -->
+                            <tr>
+                                <th class="text-center"  width="180px"> Item </th>
+                                <th class="text-center " >Rate In %</th>
+                                <th class="text-center" > Amount</th>
+                                <th class="text-center" > Status</th>
+                                <th class="text-center" width="90px" > </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr >
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Printing</option>
+                                        <option>Others</option>
+                                        
+                                    </select>
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                               
+                                <td >
+                                    <input type="number" class="form-control" value="0">
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <input type="number" class="form-control" value="0">
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Active</option>
+                                        <option>Inactive</option>
+                                        
+                                    </select>
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                
+                              
+                                <td><button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    <a  type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                </td>
+                               
+                               
+
+                                
+                            </tr>
+                            
+                        </tbody>
+                        <tfoot class="font-weight-bold">
+                            <tr>
+                                <td colspan="1" class="text-right">
+                                   SUM:
+                                </td>
+                                
+                                <td colspan=""  >  
+                                    <input type="number" class="form-control" value="0">
+                                </td>
+                                <td colspan=""  >  
+                                    <input type="number" class="form-control" value="0">
+                                </td>
+                               
+                               
+                               
+                               
+                            </tr>
+                            
+                          </tfoot>
+                        
+                    </table>
+                </div>
+                
+                <div>
+                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                    <button type="submit" class="btn btn-info btn-sm">Update</button>
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
+                    <button type="button" class="btn btn-secondary btn-sm text-right" data-dismiss="modal">Close</button>
+                </div>
+                
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   <!--------- Commission Cost Modal --------------->
+   <div class="modal  fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="commission">
+    <div class="modal-dialog modal-comm">
+      <div class="modal-content">
+          <div class="container-fluid">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                  
+                  <span class=" font-weight-bold">Commission Cost</span><span class="text-danger font-weight-bold" style="margin-left: 60%;">Approved</span>
+                </h5>
+              </div>
+            <div class="card-body">
+                <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+
+                    <table class="table table-bordered table-hover table-sm table-responsive" >
+                        <thead class="bg-info">
+                            <!-- <tr>
+                                <th class="text-center text-uppercase " colspan="10">
+                                    <span>Trim Cost</span><br>
+                                    <h5 class="text-danger">Approved</h5>
+                                </th>
+                            </tr> -->
+                            <tr>
+                                <th class="text-center"  width="180px"> Item </th>
+                                <th class="text-center " >Rate In %</th>
+                                <th class="text-center" > Amount</th>
+                                <th class="text-center" > Status</th>
+                                <th class="text-center" width="90px" > </th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody >
+                            <tr >
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Printing</option>
+                                        <option>Others</option>
+                                        
+                                    </select>
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                               
+                                <td >
+                                    <input type="number" class="form-control" value="0">
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                <td >
+                                    <input type="number" class="form-control" value="0">
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                
+                                <td >
+                                    <select name="" class="form-control" >
+                                        <option value="" disabled selected>Select</option>
+                                        <option>Active</option>
+                                        <option>Inactive</option>
+                                        
+                                    </select>
+                                    <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                </td>
+                                
+                              
+                                <td><button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    <a  type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                </td>
+                               
+                               
+
+                                
+                            </tr>
+                            
+                        </tbody>
+                        <tfoot class="font-weight-bold">
+                            <tr>
+                                <td colspan="1" class="text-right">
+                                   SUM:
+                                </td>
+                                
+                                <td colspan=""  >  
+                                    <input type="number" class="form-control" value="0">
+                                </td>
+                                <td colspan=""  >  
+                                    <input type="number" class="form-control" value="0">
+                                </td>
+                               
+                               
+                               
+                               
+                            </tr>
+                            
+                          </tfoot>
+                        
+                    </table>
+                </div>
+                
+                <div>
+                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                    <button type="submit" class="btn btn-info btn-sm">Update</button>
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
+                    <button type="button" class="btn btn-secondary btn-sm text-right" data-dismiss="modal">Close</button>
+                </div>
+                
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!----------------------------------- Modal End -------------------------------------->
+
+  </div>
+
+{% endblock body %}
+
+{% block script %}
+<script type="text/javascript">
+    $(function () {
+       
+            document.getElementById("job_no").addEventListener("dblclick", function() {
+            location.href = "{% url 'order_selection' %}";
+            });
+         
+      });
+    
+</script>
+
+
+{% endblock script %}

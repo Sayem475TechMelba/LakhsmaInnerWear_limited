@@ -6,27 +6,7 @@
 
 {% block css %}
 <style>
-    .bg-gray{
-        background-color:rgb(226, 218, 218);
-    }
-    .bg-nevi{
-        background-color:#085d63;
-        color:white;
-    }
-
-    .bg-pur{
-      background-color: #594c6f;
-      color: white;
-    }
-    .bg-pink{
-      background-color: #92466f;
-      color: white;
-    }
     
-    .bg-olive{
-      background-color: #7f821d;
-      color: white;
-    }
     tfoot {
       display:table-header-group;
     }
@@ -34,169 +14,87 @@
 {% endblock css %}
 
 {% block body %}
-
-<section class="content ">
-    <div class="container-fluid">
-      <!-- Small boxes (Stat box) -->
-      <div class="row">
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h4>Tk.</h4>
-                <p>Total Purchase Items</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
-        
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h4>{{total_purchase_amount|floatformat:2}} Tk. </h4>
-                <p>Total purchase amount</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-balance-scale-left"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-        <!-- ./col -->
-  
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-pur">
-            <div class="inner">
-              <h4>{{total_advance|floatformat:2}} TK.</h4>
-              <p>Total advance payment </p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-money-check-alt"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-  
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-nevi">
-            <div class="inner">
-              <h4>{{total_due_amount|floatformat:2}} Tk.</h4>
-              <p>Total due amount</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-money-bill"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-  
-         
-  
-      </div>
+<div class="container-fluid search-box">
+  <div class="d-flex">
+    <div class="mr-auto p-2">
+      <a type="button" href="{% url 'purchase' %}" class="btn btn-sm btn-info gr"><i class="fa fa-plus" aria-hidden="true"></i> Add Purchase</a>
+      <a type="button" href="{% url 'purchase_report' %}" class="btn btn-sm btn-success gr">Purchase Report</a>
     </div>
-  </section>
-  <div class="container-fluid">
-    <div class="d-flex">
-      <div class="mr-auto p-2">
-        <a type="button" href="{% url 'purchase' %}" class="btn btn-sm btn-info gr"><i class="fa fa-plus" aria-hidden="true"></i> Add Purchase</a>
-        <a type="button" href="{% url 'purchase_report' %}" class="btn btn-sm btn-success gr">Purchase Report</a>
-      </div>
-      <div class="p-2">
-        <a  type="btn" class="btn btn-sm btn-light " onClick="javascript:history.go(-1);"><i class="fa fa-undo" aria-hidden="true"></i></a>
-      </div>
+    <div class="p-2">
+      <a  type="btn" class="btn btn-sm btn-light " onClick="javascript:history.go(-1);"><i class="fa fa-undo" aria-hidden="true"></i></a>
     </div>
-   
-      <div class="card mt-2">
-          <div class="card-header">
-            <h3 class="card-title">Purchase Items</h3>
-          </div>
-          <div class="  search mt-3 text-center">
-            <h5><strong>Advance Search: </strong> </h5>
-            <form method="GET" class="p-3" action="{% url 'purchase_report' %}">
-              <div class=" table-responsive">
-                <table  class="table table-bordered  table-sm">
-                  <thead class="bg-secondary">
-                    <tr>
-                      <th>Factory Name</th>
-                      <th>Job No.</th>
-                      <th>Order No.</th>
-                      <th>Buyer Name</th>
-                      <th>Bill No</th>
-                      <th>Payment Status</th>
-                      <th>Purchase Date </th>
-                      <th>Start Date</th>
-                      <th>End Date </th>
-                      <!-- <th>Action</th> -->
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{{ myFilter.form.factory_name|attr:"class:form-control"}}</td>
-                      <td>{{ myFilter.form.job_no|attr:"class:form-control"}}</td>
-                      <td>{{ myFilter.form.order_no|attr:"class:form-control"}}</td>
-                      <td>{{ myFilter.form.buyer_name|attr:"class:form-control"}}</td>
-                      <td>{{ myFilter.form.bill_no|attr:"class:form-control"}}</td>
-                      <td>{{ myFilter.form.payment_status|attr:"class:form-control"}}</td>
-  
-                      <td>{{ myFilter.form.bill_date|attr:"type:date"|attr:"class:form-control" }}</td>
-                      <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control" }}</td>
-                      <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control" }}</td>
-  
-                      <!-- <td><button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search" aria-hidden="true"></i></button>
-                        <a href="{% url 'purchase_report' %}" type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a></td> -->
-                    </tr>
-                  </tbody>
-                </table>
-                
-
-              </div>
-              
-              <div class="container justify-content-center align-content-center text-center">
-                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i> Search</button>
-                <a href="{% url 'purchase_report' %}" type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times mr-2" aria-hidden="true"></i> Reset</a>
-              </div>
-            </form>
-          </div>
-  
-          <div class="container text-center justify-content-center table-responsive table-responsive-sm">
-            <table class="mb-2 ">
-              <thead >
-                  <td class=""><select class="form-control">
-                    <option>2021</option>
-                    <option>2020</option>
-                    
-                  </select>
-                  </td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4 ">Jan</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Feb</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Mar</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Apr</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">May</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Jun</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Jul</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Aug</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Sep</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Oct</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Nov</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Dec</button></td>
-                  <!-- <td><input type="submit" value="Jan" class="btn btn-sm btn-success form-control"></td> -->
-
-              </thead>
-            </table>
-          </div>
-        </div>
   </div>
+  <div class="text-center mt-2 font-weight-bold"><h5>Purchase Report</h5></div>
+    <div class="card mt-2">
+        <div class=" table-responsive  search mt-1 text-center">
+          <form method="GET" class="ml-2 mr-2" action="{% url 'purchase_report' %}">
+              <table  class="table table-bordered  table-responsive-sm table-sm">
+                <thead class="bg-meroon">
+                  <tr>
+                    <th>Factory Name</th>
+                    <th>Job No.</th>
+                    <th>Order No.</th>
+                    <th>Buyer Name</th>
+                    <th>Bill No</th>
+                    <th>Payment Status</th>
+                    <th>Purchase Date </th>
+                    <th>Start Date</th>
+                    <th>End Date </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ myFilter.form.factory_name|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.job_no|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.order_no|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.buyer_name|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.bill_no|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.payment_status|attr:"class:form-control"}}</td>
+
+                    <td>{{ myFilter.form.bill_date|attr:"type:date"|attr:"class:form-control" }}</td>
+                    <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control" }}</td>
+                    <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control" }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            <div class="container justify-content-center align-content-center text-center">
+              <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i> Search</button>
+              <a href="{% url 'purchase_report' %}" type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times mr-2" aria-hidden="true"></i> Reset</a>
+            </div>
+          </form>
+        </div>
+
+        <div class="container ">
+          <div class="d-flex justify-content-center table-responsive">
+            <div class="p-2">
+              <table class="mb-1 table-sm  table-responsive-sm ">
+                <thead>
+                    <td width="20%">
+                      <select id="getYear" onChange="copyTextValue()" class="form-control">
+                        <option value="" disabled selected>Select</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                      </select>
+                    </td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2 " >Jan</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Feb</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Mar</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Apr</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">May</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Jun</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Jul</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Aug</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Sep</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Oct</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2" onclick="myFunction()"  id="getMonth">Nov</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Dec</button></td>
+                </thead>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
 
   {% if  '/purchase_report/?' in request.get_full_path %}
   <div class="container-fluid">
@@ -308,7 +206,7 @@
         </tbody>
         <tfoot>
           <th colspan="8" class="text-right font-weight-bold">Total: </th>
-          <th id="b_amt"></th>
+          <th id="b_amt" class="bg-yel"></th>
           <th class="bg-danger" id="btb">0</th>
           <th class="bg-danger" id="pc">0</th>
           <th class="bg-danger" id="snd">0</th>
@@ -346,46 +244,49 @@
     // DataTable
     var table = $('#purchase_report').DataTable({
         drawCallback: function(){
-          const b_amt = this.api().column(8,{search:'applied'}).data().toArray().reduce((total,b_amt) => total+=Number(b_amt.replace(/[^0-9\.]/g,'')),0);
+          const b_amt = this.api().column(8,{search:'applied'}).data().toArray().reduce((total,b_amt) => total+=Number(b_amt.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#b_amt').text(` ${(b_amt)}`);
 
-          const btb = this.api().column(9,{search:'applied'}).data().toArray().reduce((total,btb) => total+=Number(btb.replace(/[^0-9\.]/g,'')),0);
+          const btb = this.api().column(9,{search:'applied'}).data().toArray().reduce((total,btb) => total+=Number(btb.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#btb').text(` ${(btb)}`);
   
-          const pc = this.api().column(10,{search:'applied'}).data().toArray().reduce((total,pc) => total+=Number(pc.replace(/[^0-9\.]/g,'')),0);
+          const pc = this.api().column(10,{search:'applied'}).data().toArray().reduce((total,pc) => total+=Number(pc.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#pc').text(` ${(pc)}`);
   
-          const snd = this.api().column(11,{search:'applied'}).data().toArray().reduce((total,snd) => total+=Number(snd.replace(/[^0-9\.]/g,'')),0);
+          const snd = this.api().column(11,{search:'applied'}).data().toArray().reduce((total,snd) => total+=Number(snd.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#snd').text(` ${(snd)}`);
   
-          const term = this.api().column(12,{search:'applied'}).data().toArray().reduce((total,term) => total+=Number(term.replace(/[^0-9\.]/g,'')),0);
+          const term = this.api().column(12,{search:'applied'}).data().toArray().reduce((total,term) => total+=Number(term.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#term').text(` ${(term)}`);
   
-          const time = this.api().column(13,{search:'applied'}).data().toArray().reduce((total,time) => total+=Number(time.replace(/[^0-9\.]/g,'')),0);
+          const time = this.api().column(13,{search:'applied'}).data().toArray().reduce((total,time) => total+=Number(time.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#time').text(` ${(time)}`);
   
-          const od = this.api().column(14,{search:'applied'}).data().toArray().reduce((total,od) => total+=Number(od.replace(/[^0-9\.]/g,'')),0);
+          const od = this.api().column(14,{search:'applied'}).data().toArray().reduce((total,od) => total+=Number(od.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#od').text(` ${(od)}`);
   
-          const edf = this.api().column(15,{search:'applied'}).data().toArray().reduce((total,edf) => total+=Number(edf.replace(/[^0-9\.]/g,'')),0);
+          const edf = this.api().column(15,{search:'applied'}).data().toArray().reduce((total,edf) => total+=Number(edf.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#edf').text(` ${(edf)}`);
   
-          const buy = this.api().column(16,{search:'applied'}).data().toArray().reduce((total,buy) => total+=Number(buy.replace(/[^0-9\.]/g,'')),0);
+          const buy = this.api().column(16,{search:'applied'}).data().toArray().reduce((total,buy) => total+=Number(buy.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#buy').text(` ${(buy)}`);
   
-          const tax = this.api().column(17,{search:'applied'}).data().toArray().reduce((total,tax) => total+=Number(tax.replace(/[^0-9\.]/g,'')),0);
+          const tax = this.api().column(17,{search:'applied'}).data().toArray().reduce((total,tax) => total+=Number(tax.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#tax').text(` ${(tax)}`);
   
-          const total_cm_requested = this.api().column(18,{search:'applied'}).data().toArray().reduce((total,total_cm_requested) => total+=Number(total_cm_requested.replace(/[^0-9\.]/g,'')),0);
+          const total_cm_requested = this.api().column(18,{search:'applied'}).data().toArray().reduce((total,total_cm_requested) => total+=Number(total_cm_requested.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#total_cm_requested').text(` ${(total_cm_requested)}`);
   
-          const total_app_cm = this.api().column(19,{search:'applied'}).data().toArray().reduce((total,total_app_cm) => total+=Number(total_app_cm.replace(/[^0-9\.]/g,'')),0);
+          const total_app_cm = this.api().column(19,{search:'applied'}).data().toArray().reduce((total,total_app_cm) => total+=Number(total_app_cm.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#total_app_cm').text(` ${(total_app_cm)}`);
   
-          const dueTotal = this.api().column(20,{search:'applied'}).data().toArray().reduce((total,dueTotal) => total+=Number(dueTotal.replace(/[^0-9\.]/g,'')),0);
+          const dueTotal = this.api().column(20,{search:'applied'}).data().toArray().reduce((total,dueTotal) => total+=Number(dueTotal.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#dueTotal').text(` ${(dueTotal)}`);
         },
-      "lengthMenu": [[50,100, 150, -1], [50,100,150, "All"]],
+
+        "lengthMenu": [[500,1000,-1], [500,1000,"All"]],
+        "scrollY": 470,
+        "scrollX": true,
         initComplete: function () {
             // Apply the search
             this.api().columns().every( function () {

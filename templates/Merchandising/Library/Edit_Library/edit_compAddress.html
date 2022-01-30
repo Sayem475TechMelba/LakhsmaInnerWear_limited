@@ -1,0 +1,81 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %} Lakhsma | Update Company Address Library {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+{% block css %}
+<style>
+</style>
+{% endblock css %}
+
+{% block body %}
+
+<div class="container">
+  <div class="">{% include 'Index/alerts.html' %}</div>
+   {% include 'Merchandising/Library/library_header.html' %}
+    <div class=" card border border-dark mb-2 mt-2">
+      <div class=" p-2 bg-black">
+          <h5 class="text-uppercase text-center ">Update Company Address</h4>
+      </div>
+      <div class="container p-4">
+          <div class="row">
+              <div class="col-md-12 P-4">
+              
+                  <form  method="post" class="needs-validation" action="" enctype="multipart/form-data">
+                      {% csrf_token %}
+
+                        <div class="form-group row ">
+                          <label for="company" class="col-sm-2 col-form-label ">Company Name</label>
+                          <div class="col-sm-4 ">
+                            {{ form.company|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Company Name"}}
+                          </div>
+                        </div>
+                        <div class="form-group row ">
+                          <label for="road_no" class="col-sm-2 col-form-label ">Road No.</label>
+                          <div class="col-sm-4 ">
+                            {{ form.road_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Road No"}}
+                          </div>
+                          <label for="plot_no" class="col-sm-2 col-form-label ">Plot No.</label>
+                          <div class="col-sm-4 ">
+                            {{ form.plot_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Plot No"}}
+                          </div>
+                          
+                        </div>
+                        <div class="form-group row ">
+                          
+                          <label for="location_name" class="col-sm-2 col-form-label ">Location/Village </label>
+                          <div class="col-sm-4 ">
+                            {{ form.location_name|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Location"}}
+                          </div>
+                          <label for="block_no" class="col-sm-2 col-form-label ">Block/Ward No. </label>
+                          <div class="col-sm-4 ">
+                            {{ form.block_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Block No."}}
+                          </div>
+                        </div>
+                        <div class="form-group row ">
+                         
+                          <label for="level_no" class="col-sm-2 col-form-label ">Destrict </label>
+                          <div class="col-sm-4 ">
+                            {{ form.level_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Level No."}}
+                          </div>
+                        </div>
+                        
+                        <div>
+                            <button type="submit" class="btn btn-success btn-sm">Update</button>
+                        </div>
+                  </form>
+                </div>
+          </div>
+
+         
+      </div>
+       
+    </div>
+</div>
+
+{% endblock body %}
+
+{% block script %}
+ 
+{% endblock script %}
+

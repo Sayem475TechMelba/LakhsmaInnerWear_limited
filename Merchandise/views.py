@@ -48,6 +48,7 @@ def lib_company(request):
     return render(request, 'Merchandising/Library/lib_company.html', context)
 
 def lib_company_address(request):
+    com_address = LibraryCompAddress.objects.all() 
     if request.method == 'POST':
         form = LibCompAddressForm(request.POST)
         if form.is_valid():
@@ -58,7 +59,7 @@ def lib_company_address(request):
             messages.error(request , "Something went wrong!")
             print(form.errors)
     form = LibCompAddressForm()
-    return render(request, 'Merchandising/Library/lib_company_address.html', {'form':form})
+    return render(request, 'Merchandising/Library/lib_company_address.html', {'form':form, 'com_address':com_address})
 
 def lib_product_cate(request):
     productCat = LibraryProductCate.objects.all()
@@ -524,6 +525,216 @@ def lib_fabrication(request):
     }
     return render(request, 'Merchandising/Library/lib_fabrications.html', context)
 
+############# Budget costing library ####################
+def lib_costing_per(request):
+    costing_per = LibraryCostingPer.objects.all()
+
+    if request.method == 'POST':
+        form = LibCostingPerForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library costing per info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibCostingPerForm()
+    context ={
+        'form':form, 
+        'costing_per':costing_per,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_costing_per.html', context)
+
+def lib_body_part(request):
+    body_part = LibraryBodyPart.objects.all()
+
+    if request.method == 'POST':
+        form = LibBodyPartForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library body part info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibBodyPartForm()
+    context ={
+        'form':form, 
+        'body_part':body_part,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_body_part.html', context)
+
+def lib_body_part_type(request):
+    body_part_type = LibraryBodyPartType.objects.all()
+
+    if request.method == 'POST':
+        form = LibBodyPartTypeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library body part info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibBodyPartTypeForm()
+    context ={
+        'form':form, 
+        'body_part_type':body_part_type,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_body_part_type.html', context)
+
+def lib_fab_nature(request):
+    fab_nature = LibraryFabNature.objects.all()
+
+    if request.method == 'POST':
+        form = LibFabNatureForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library fabric nature info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibFabNatureForm()
+    context ={
+        'form':form, 
+        'fab_nature':fab_nature,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_fab_nature.html', context)
+
+def lib_color_type(request):
+    color_types = LibraryColorType.objects.all()
+
+    if request.method == 'POST':
+        form = LibColorTypeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library color type info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibColorTypeForm()
+    context ={
+        'form':form, 
+        'color_types':color_types,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_color_type.html', context)
+
+def lib_fabric_source(request):
+    fabric_sources = LibraryFabricSource.objects.all()
+
+    if request.method == 'POST':
+        form = LibFabricSourceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library fabric source info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibFabricSourceForm()
+    context ={
+        'form':form, 
+        'fabric_sources':fabric_sources,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_fabric_source.html', context)
+
+def lib_fabric_description(request):
+    fabric_desc = LibraryFabricDescription.objects.all()
+
+    if request.method == 'POST':
+        form = LibFabricDescriptionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library fabric description info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibFabricDescriptionForm()
+    context ={
+        'form':form, 
+        'fabric_desc':fabric_desc,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_fabric_description.html', context)
+
+def lib_nominated_supp(request):
+    nominated_sup = LibraryNominatedSupp.objects.all()
+
+    if request.method == 'POST':
+        form = LibNominatedSuppForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library nominated supplier info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibNominatedSuppForm()
+    context ={
+        'form':form, 
+        'nominated_sup':nominated_sup,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_nominated_supp.html', context)
+
+def lib_dia_types(request):
+    dia_types = LibraryDiaTypes.objects.all()
+
+    if request.method == 'POST':
+        form = LibDiaTypesForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library width/dia types info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibDiaTypesForm()
+    context ={
+        'form':form, 
+        'dia_types':dia_types,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_dia_types.html', context)
+
+def lib_consumption_basis(request):
+    cons_basis = LibraryConsumptionBasis.objects.all()
+
+    if request.method == 'POST':
+        form = LibConsumptionBasisForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library consumption basis info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibConsumptionBasisForm()
+    context ={
+        'form':form, 
+        'cons_basis':cons_basis,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_consumption_basis.html', context)
+
+def lib_color_size_sensitive(request):
+    cs_sensitive = LibraryColorSizeSensitive.objects.all()
+
+    if request.method == 'POST':
+        form = LibColorSizeSensitiveForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library color size sensitive info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibColorSizeSensitiveForm()
+    context ={
+        'form':form, 
+        'cs_sensitive':cs_sensitive,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_color_size_sensitive.html', context)
+
 ########### EDIT LIBRARY FORMS ##########
 def edit_agent(request,id):
     agent = LibraryAgent.objects.get(id = id)
@@ -606,25 +817,25 @@ def delete_company(request,id):
     cmp.delete()
     return redirect('lib_company')
 
-# def edit_companyAddress(request,id):
-#     cmpadd = LibraryCompAddress.objects.get(id = id)
-#     form = LibCompAddressForm(instance=cmpadd)
-#     if request.method == 'POST':
-#         form = LibCompAddressForm(request.POST,  instance = cmpadd)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, "Your Company Address info has been updated!")
-#             return HttpResponseRedirect(request.path_info)
-#         else:
-#             messages.error("Something went wrong!")
-#             print(form.errors)
-#     context = {'form':form}
-#     return render(request, 'Merchandising/Library/Edit_Library/edit_compAddress.html',context)
+def edit_companyAddress(request,id):
+    cmpadd = LibraryCompAddress.objects.get(id = id)
+    form = LibCompAddressForm(instance=cmpadd)
+    if request.method == 'POST':
+        form = LibCompAddressForm(request.POST,  instance = cmpadd)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your Company Address info has been updated!")
+            return redirect('lib_company_address')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Edit_Library/edit_compAddress.html',context)
 
-# def delete_compAddress(request,id):
-#     cmpadd = LibraryCompAddress.objects.get(id = id)
-#     cmpadd.delete()
-#     return redirect('lib_company_address')
+def delete_compAddress(request,id):
+    cmpadd = LibraryCompAddress.objects.get(id = id)
+    cmpadd.delete()
+    return redirect('lib_company_address')
 
 def edit_prodDept(request,id):
     prodDept = LibraryProdDept.objects.get(id = id)
@@ -1046,6 +1257,227 @@ def delete_fabrication(request,id):
     fabrications.delete()
     return redirect('lib_fabrication')
 
+############# Budget Edit libarary views ###############
+def edit_costing_per(request, id):
+    costing_per = LibraryCostingPer.objects.get(id = id)
+    form = LibCostingPerForm(instance=costing_per)
+    if request.method == 'POST':
+        form = LibCostingPerForm(request.POST,  instance = costing_per)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Costing Per info has been updated!")
+            return redirect('lib_costing_per')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_costing_per.html',context)
+
+def delete_costing_per(request,id):
+    costing_per = LibraryCostingPer.objects.get(id = id)
+    costing_per.delete()
+    return redirect('lib_costing_per')
+
+def edit_body_part(request, id):
+    body_part = LibraryBodyPart.objects.get(id = id)
+    form = LibBodyPartForm(instance=body_part)
+    if request.method == 'POST':
+        form = LibBodyPartForm(request.POST,  instance = body_part)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "body part info has been updated!")
+            return redirect('lib_body_part')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_body_part.html',context)
+
+def delete_body_part(request,id):
+    body_part = LibraryBodyPart.objects.get(id = id)
+    body_part.delete()
+    return redirect('lib_body_part')
+
+def edit_body_part_type(request, id):
+    body_part_type = LibraryBodyPartType.objects.get(id = id)
+    form = LibBodyPartTypeForm(instance=body_part_type)
+    if request.method == 'POST':
+        form = LibBodyPartTypeForm(request.POST,  instance = body_part_type)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "body part Type info has been updated!")
+            return redirect('lib_body_part_type')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_body_part_type.html',context)
+
+def delete_body_part_type(request,id):
+    body_part_type = LibraryBodyPartType.objects.get(id = id)
+    body_part_type.delete()
+    return redirect('lib_body_part_type')
+
+def edit_fab_nature(request, id):
+    fab_nature = LibraryFabNature.objects.get(id = id)
+    form = LibFabNatureForm(instance=fab_nature)
+    if request.method == 'POST':
+        form = LibFabNatureForm(request.POST,  instance = fab_nature)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Fabric nature info has been updated!")
+            return redirect('lib_fab_nature')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_fab_nature.html',context)
+
+def delete_fab_nature(request,id):
+    fab_nature = LibraryFabNature.objects.get(id = id)
+    fab_nature.delete()
+    return redirect('lib_fab_nature')
+
+def edit_color_type(request, id):
+    color_types = LibraryColorType.objects.get(id = id)
+    form = LibColorTypeForm(instance=color_types)
+    if request.method == 'POST':
+        form = LibColorTypeForm(request.POST,  instance = color_types)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Color Types info has been updated!")
+            return redirect('lib_color_type')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_color_type.html',context)
+
+def delete_color_type(request,id):
+    color_types = LibraryColorType.objects.get(id = id)
+    color_types.delete()
+    return redirect('lib_color_type')
+
+def edit_fabric_source(request, id):
+    fabric_sources = LibraryFabricSource.objects.get(id = id)
+    form = LibFabricSourceForm(instance=fabric_sources)
+    if request.method == 'POST':
+        form = LibFabricSourceForm(request.POST,  instance = fabric_sources)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Fabric source info has been updated!")
+            return redirect('lib_fabric_source')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_fabric_source.html',context)
+
+def delete_fabric_source(request,id):
+    fabric_sources = LibraryFabricSource.objects.get(id = id)
+    fabric_sources.delete()
+    return redirect('lib_fabric_source')
+
+def edit_fabric_description(request, id):
+    fabric_desc = LibraryFabricDescription.objects.get(id = id)
+    form = LibFabricDescriptionForm(instance=fabric_desc)
+    if request.method == 'POST':
+        form = LibFabricDescriptionForm(request.POST,  instance = fabric_desc)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Fabric description info has been updated!")
+            return redirect('lib_fabric_description')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_fabric_description.html',context)
+
+def delete_fabric_description(request,id):
+    fabric_desc = LibraryFabricDescription.objects.get(id = id)
+    fabric_desc.delete()
+    return redirect('lib_fabric_description')
+
+def edit_nominated_supp(request, id):
+    nominated_sup = LibraryNominatedSupp.objects.get(id = id)
+    form = LibNominatedSuppForm(instance=nominated_sup)
+    if request.method == 'POST':
+        form = LibNominatedSuppForm(request.POST,  instance = nominated_sup)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Nominated supplier info has been updated!")
+            return redirect('lib_nominated_supp')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_nominated_supp.html',context)
+
+def delete_nominated_supp(request,id):
+    nominated_sup = LibraryNominatedSupp.objects.get(id = id)
+    nominated_sup.delete()
+    return redirect('lib_nominated_supp')
+
+def edit_dia_types(request, id):
+    dia_types = LibraryDiaTypes.objects.get(id = id)
+    form = LibDiaTypesForm(instance=dia_types)
+    if request.method == 'POST':
+        form = LibDiaTypesForm(request.POST,  instance = dia_types)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Width/Dia types info has been updated!")
+            return redirect('lib_dia_types')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_dia_types.html',context)
+
+def delete_dia_types(request,id):
+    dia_types = LibraryDiaTypes.objects.get(id = id)
+    dia_types.delete()
+    return redirect('lib_dia_types')
+
+def edit_consumption_basis(request, id):
+    cons_basis = LibraryConsumptionBasis.objects.get(id = id)
+    form = LibConsumptionBasisForm(instance=cons_basis)
+    if request.method == 'POST':
+        form = LibConsumptionBasisForm(request.POST,  instance = cons_basis)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Consumption basis info has been updated!")
+            return redirect('lib_consumption_basis')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_consumption_basis.html',context)
+
+def delete_consumption_basis(request,id):
+    cons_basis = LibraryConsumptionBasis.objects.get(id = id)
+    cons_basis.delete()
+    return redirect('lib_consumption_basis')
+
+def edit_color_size_sensitive(request, id):
+    cs_sensitive = LibraryColorSizeSensitive.objects.get(id = id)
+    form = LibColorSizeSensitiveForm(instance=cs_sensitive)
+    if request.method == 'POST':
+        form = LibColorSizeSensitiveForm(request.POST,  instance = cs_sensitive)
+        if form.is_valid():
+            form.save()
+            messages.success(request, " Color size sensitive info has been updated!")
+            return redirect('lib_color_size_sensitive')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_color_size_sensitive.html',context)
+
+def delete_color_size_sensitive(request,id):
+    cs_sensitive = LibraryColorSizeSensitive.objects.get(id = id)
+    cs_sensitive.delete()
+    return redirect('lib_color_size_sensitive')
+
 ################## ALL Main Forms Views ###############
 
 def order_entry(request):
@@ -1124,16 +1556,15 @@ def order_entry(request):
         'job': 'LAK-O' + str(job),
         'form_items': form_items,
         'form_smv_items': form_smv_items,
-        'fab': colorsize_ItemsForm()
     }
     return render(request, 'Merchandising/Order/order_entry.html', context)
 
 def order_report(request):
-    orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')
     po_details = PO_Details.objects.all().order_by('-id')
+    orders = OrderEntryInfo.objects.all().order_by('-id')
     order_count = orders.count()
-    myFilter = OrderFilter(request.GET , queryset = orders)
-    orders = myFilter.qs
+    myFilter = POFilter(request.GET , queryset = po_details)
+    po_details = myFilter.qs
     context = {
         'orders': orders,
         'order_count': order_count,
@@ -1142,27 +1573,13 @@ def order_report(request):
     }
     return render(request, 'Merchandising/Order/order_report.html', context)
 
-def report_po(request):
-    orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')
-    po_details = PO_Details.objects.all().order_by('-id')
-    order_count = orders.count()
-    myFilter = OrderFilter(request.GET , queryset = orders)
-    orders = myFilter.qs
-    context = {
-        'orders': orders,
-        'order_count': order_count,
-        'myFilter': myFilter,
-        'po_details':po_details,
-    }
-    return render(request, 'Merchandising/Order/report_po.html', context)
-
 def view_order(request, id):
     view_po = PO_Details.objects.get(id=id)
     context = {
         'view_po':view_po,
     }
     return render(request, 'Merchandising/Order/view_order.html', context )
-
+    
 def edit_order(request, id):
     po = PO_Details.objects.get(id=id)
     obj = OrderEntryInfo.objects.get(job_no=po.po_job_no)
@@ -1247,18 +1664,30 @@ def edit_order(request, id):
     }
     return render(request, "Merchandising/Order/edit_order.html", context)
 
+
+
+def add_po_report(request):
+    orders = OrderEntryInfo.objects.all().order_by('-id')
+    
+    myFilter = PO_OrderFilter(request.GET , queryset = orders)
+    orders = myFilter.qs
+    context = {
+        'orders': orders,
+        'myFilter': myFilter,
+    }
+    return render(request, 'Merchandising/Order/add_po_report.html', context)
+
 def add_po(request, id):
-    po = PO_Details.objects.get(id=id)
-    obj = OrderEntryInfo.objects.get(job_no=po.po_job_no)
+    obj = OrderEntryInfo.objects.get(id=id)
     form = OrderEntryForm(instance=obj)
     smv_factory = inlineformset_factory(OrderEntryInfo, SmvItems, form=SmvItems_Form, extra=0)
     form_smv_items = smv_factory(instance=obj)
-    po_form = PoDeatilsForm()
+    po_form = AddPoDeatilsForm()
     
     if request.method == "POST":
         if request.POST.get('_task') == "form":
             if request.method == "GET":
-                obj = OrderEntryInfo.objects.get(job_no=po.po_job_no)
+                obj = OrderEntryInfo.objects.get(id=id)
                 if obj is None:
                     return redirect(reverse('order_entry'))
 
@@ -1266,7 +1695,7 @@ def add_po(request, id):
                 smv_factory = inlineformset_factory(OrderEntryInfo, SmvItems, form=SmvItems_Form, extra=0)
                 form_smv_items = smv_factory(instance=obj)
             elif request.method == "POST":
-                obj = OrderEntryInfo.objects.get(job_no=po.po_job_no)
+                obj = OrderEntryInfo.objects.get(id=id)
                 if obj is None:
                     return redirect(reverse('order_entry'))
                 form = OrderEntryForm(request.POST, request.FILES, instance=obj)
@@ -1284,44 +1713,40 @@ def add_po(request, id):
                     print(form_smv_items.errors)
  
         elif request.POST.get('_task') == 'PO':
+
             if request.method == "GET":
-                po = PO_Details.objects.get(id=id)
-                if po is None:
-                    return redirect(reverse('order_entry'))
-                po_form = PoDeatilsForm()
-                items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm, extra=0)
-                form_items = items_factory(instance=po)
+                po_form = AddPoDeatilsForm()
+                items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm, extra=1)
+                form_items = items_factory()
             elif request.method == "POST":
-                po = PO_Details.objects.get(id=id)
-                if po is None:
-                    return redirect(reverse('order_entry'))
-                po_form = PoDeatilsForm(request.POST, request.FILES)
+                po_form = AddPoDeatilsForm(request.POST, request.FILES)
                 items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm)
-                form_items = items_factory(request.POST, instance=po)
+                form_items = items_factory(request.POST, request.FILES)
                 if po_form.is_valid() and form_items.is_valid():
                     breakdown = po_form.save()
+                    inserted_by = request.user
+                    po_form.instance.inserted_by = inserted_by
+                    po_form.save()
                     form_items.instance = breakdown
                     form_items.save()
-                    messages.success(request, 'Your PO info has been updated Successfully...')
+                    messages.success(request, 'Your PO info has been Added Successfully...')
                     return HttpResponseRedirect(request.path_info)
                 else:
                     messages.error(request , "Something went wrong!")
                     print(po_form.errors)
                     print(form_items.errors)
-                    # print(f"data received")
     #for smv
     form = OrderEntryForm(instance=obj)
     smv_factory = inlineformset_factory(OrderEntryInfo, SmvItems, form=SmvItems_Form, extra=0)
     form_smv_items = smv_factory(instance=obj)
 
-    po_form = PoDeatilsForm()
-    items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm, extra=0)
-    form_items = items_factory(instance=po)
-    same_po = PO_Details.objects.filter(po_job_no__job_no=obj)
+    po_form = AddPoDeatilsForm()
+    items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm, extra=1)
+    form_items = items_factory()
+    same_po = PO_Details.objects.filter(po_job_no__job_no=obj.job_no)
     
     context = {
         'obj':obj,
-        'po':po,
         'form': form,
         'po_form': po_form,
         'form_items': form_items,
@@ -1329,7 +1754,6 @@ def add_po(request, id):
         'same_po': same_po,
     }
     return render(request, "Merchandising/Order/add_po.html", context)
-
 
 def delete_order(request, id):
     po = PO_Details.objects.get(id=id)
@@ -1367,7 +1791,21 @@ def capacity_booked(request):
     return render(request, 'Merchandising/Order/capacity_booked.html', context)
 
 def order_selection(request):
-    return render(request, 'Merchandising/Order/order_selection.html')
+    po_details = PO_Details.objects.all().order_by('-id')
+    myFilter = OrderSelectFilter(request.GET , queryset = po_details)
+    po_details = myFilter.qs
+    context = {
+        'myFilter': myFilter,
+        'po_details':po_details,
+    }
+    return render(request, 'Merchandising/Order/order_selection.html', context)
+
+def add_order(request, id):
+    add_po = PO_Details.objects.get(id=id)
+    context = {
+        'add_po':add_po,
+    }
+    return render(request, 'Merchandising/Order/add_order.html', context )
 
 def work_progress(request, id):
     work_progress = PO_Details.objects.get(id=id)
@@ -1416,3 +1854,18 @@ def finish_fabric_details(request):
 
 def trims_details(request):
     return render(request, 'Merchandising/Order/trims_details.html')
+
+def cutting_finish_details(request):
+    return render(request, 'Merchandising/Order/cutting_finish.html')
+
+def iron_finish_details(request):
+    return render(request, 'Merchandising/Order/iron_finish_details.html')
+
+def finishing_details(request):
+    return render(request, 'Merchandising/Order/finishing_details.html')
+
+def buyer_inspection_details(request):
+    return render(request, 'Merchandising/Order/buyer_inspection_details.html')
+
+def actual_shipment_details(request):
+    return render(request, 'Merchandising/Order/actual_shipment_details.html')

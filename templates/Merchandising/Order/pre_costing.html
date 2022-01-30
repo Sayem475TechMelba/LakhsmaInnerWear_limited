@@ -20,7 +20,7 @@
 
 {% block body %}
 
-<div class="container">
+<div class="container-fluid">
     <div class="">{% include 'Index/alerts.html' %}</div>
     <div class="d-flex">
       <div class="mr-auto p-2">
@@ -34,10 +34,10 @@
   
     
     <div class=" card border border-dark mb-2 mt-2">
-      <div class=" p-2 bg-black">
+      <div class=" p-2  bg-form-header">
           <h5 class="text-uppercase text-center ">Budget/Pre-Costing Form</h4>
       </div>
-      <div class="container p-4">
+      <div class="container-fluid p-4 bg-form">
           <div class="row">
               <div class="col-md-12 P-4">
               
@@ -45,14 +45,12 @@
                       {% csrf_token %}
                       <div class="form-group row ">
                           <label for="job_no" class="col-sm-2 col-form-label ">Job No.</label>
-                          <div class="col-sm-4 ">
+                          <div class="col-sm-2 ">
          
                               <input type="text" class="form-control" placeholder="Job no" id="job_no">
                           </div>
-                        </div>
-                        <div class="form-group row ">
                           <label for="company_name" class="col-sm-2 col-form-label label">Company</label>
-                          <div class="col-sm-4 ">
+                          <div class="col-sm-2 ">
                             <select class="form-control">
                                 <option>Lakhsma</option>
                                 <option>2</option>
@@ -62,54 +60,54 @@
                             
                           </div>
                           <label for="company_location" class="col-sm-2 col-form-label label">Quotation ID</label>
-                          <div class="col-sm-4 ">
+                          <div class="col-sm-2 ">
                             <input type="text" class="form-control" >
                             <!-- {{ form.company_location|attr:"class:form-control"|attr:"required" }} -->
                             
                           </div>
                         </div>
+                        
   
                         <div class="form-group row ">
-                          <label for="buyer_name" class="col-sm-2 col-form-label ">Buyer Name</label>
-                          <div class="col-sm-4 ">
-                            <input type="text" class="form-control" >
-                            <!-- {{ form.buyer_name|attr:"class:form-control"|attr:"required" }} -->
-                            
-                          </div>
-                          <label for="style_ref" class="col-sm-2 col-form-label label">Style Ref</label>
-                          <div class="col-sm-4 ">
+                            <label for="style_ref" class="col-sm-2 col-form-label label">Style Ref</label>
+                          <div class="col-sm-2 ">
                             <input type="text" class="form-control" >
                             <!-- {{ form.style_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style Ref"|attr:"required" }} -->
 
                           </div>
-                        </div>
-                        <div class="form-group row ">
                           
                           <label for="style_description" class="col-sm-2 col-form-label label">Style Description</label>
-                          <div class="col-sm-10 ">
-                              <textarea type="text" class="form-control" rows="2"></textarea>
+                          <div class="col-sm-2 ">
+                              <textarea type="text" class="form-control" rows="1"></textarea>
                             <!-- {{ form.style_description|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style Description"|attr:"rows:2"}} -->
 
                           </div>
+                          <label for="buyer_name" class="col-sm-2 col-form-label ">Buyer Name</label>
+                          <div class="col-sm-2 ">
+                            <input type="text" class="form-control" >
+                            <!-- {{ form.buyer_name|attr:"class:form-control"|attr:"required" }} -->
+                            
+                          </div>
+                          
                         </div>
+                        
 
-                        <div class="table-responsive mt-5">
+                        <div class="table-responsive mt-2">
                             <table class="table table-bordered table-hover table-sm" >
-                                <thead class="bg-info">
+                                <thead class="bg-table-header">
+                                    
                                     <tr>
-                                        <th class="text-center text-uppercase " colspan="7">
-                                            <h5 >Items Information</h5>
-
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-center label">Product Dept. </th>
+                                        <th class="text-center label">Prod. Dept. </th>
                                         <th class="text-center"> Currency </th>
                                         <th class="text-center"  width="60px;"> ER </th>
                                         <th class="text-center label">Agent </th>
                                         <th class="text-center label" width="150px;">Job Qty </th>
                                         <th class="text-center"> Order Unit </th>
                                         <th class="text-center"  width="150px;" > </th>
+                                        <th class="text-center label"> Costing Date </th>
+                                        <th class="text-center label">Incoterm </th>
+
+
                                     </tr>
                                 </thead>
                                 <tbody >
@@ -167,45 +165,48 @@
                                             <!-- {{ form.repeat_job_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Repeat No/Job"}} -->
 
                                         </td>
-                                        
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="table-responsive mt-4">
-
-                            <table class="table table-bordered table-hover table-sm" >
-                                <thead class="bg-info">
-                                    <tr>
-                                        <th class="text-center text-uppercase " colspan="6">
-                                            <h5 >Costing Information</h5>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-center label"> Costing Date </th>
-                                        <th class="text-center label">Incoterm </th>
-                                        <th class="text-center"> Incoterm Place </th>
-                                        <th class="text-center"> Machine/Line </th>
-                                        <th class="text-center"> Prod/Line/Hr </th>
-                                        <th class="text-center"> Costing Per  </th>
-                                    </tr>
-                                </thead>
-                                <tbody >
-                                    <tr >
                                         <td >
                                             <input type="date" class="form-control" >
                                             <!-- {{ form.team_leader|attr:"class:form-control"|attr:"required" }} -->
 
                                         </td>
                                         <td >
-                                             <select class="form-control">
-                                                <option>FOB</option>
-                                                
-                                              </select>
-                                            <!-- {{ form.dealing_merchant|attr:"class:form-control"|attr:"required" }} -->
+                                            <select class="form-control">
+                                               <option>FOB</option>
+                                               
+                                             </select>
+                                           <!-- {{ form.dealing_merchant|attr:"class:form-control"|attr:"required" }} -->
 
-                                        </td>
+                                       </td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive mt-2">
+
+                            <table class="table table-bordered table-hover table-sm" >
+                                <thead class="bg-table-header">
+                                    
+                                    <tr>
+                                        <th class="text-center"> Incoterm Place </th>
+                                        <th class="text-center"> Machine/Line </th>
+                                        <th class="text-center"> Prod/Line/Hr </th>
+                                        <th class="text-center"> Costing Per  </th>
+                                        <th class="text-center label"> Region </th>
+                                        <th class="text-center"> Approved </th>
+                                        <th class="text-center label">Sew. SMV </th>
+                                        <th class="text-center"> Sew Efficiency % </th>
+                                        <th class="text-center"> Cut SMV</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr >
+                                       
+                                        
                                         <td >
                                             <input type="text" class="form-control" >
                                             <!-- {{ form.factory_merchant|attr:"class:form-control"|attr:"required" }} -->
@@ -234,66 +235,12 @@
                                         
                                             
                                         </td>
-                                        
-
-                                        
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="table-responsive mt-4">
-
-                            <table class="table table-bordered table-hover table-sm" >
-                                <thead class="bg-info">
-                                    <tr>
-                                        <th class="text-center text-uppercase " colspan="8">
-                                            <h5 >Packaging Information</h5>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-center label"> Region </th>
-                                        <th class="text-center label" width="120px;">Sew. SMV </th>
-                                        <th class="text-center"> Sew Efficiency % </th>
-                                        <th class="text-center"> Cut SMV</th>
-                                        <th class="text-center"> Cut Efficiency % </th>
-                                        <th class="text-center"> Approved </th>
-                                        <th class="text-center"> Budget Minute </th>
-                                        <th class="text-center"> Reamrks </th>
-                                    </tr>
-                                </thead>
-                                <tbody >
-                                    <tr >
                                         <td >
                                             <select class="form-control">
                                                 <option>Asia</option>
                                                 
                                               </select>
                                             <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
-
-                                        </td>
-                                        <td >
-                                            <input type="text" class="form-control" >
-                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
-
-                                        </td>
-                                        <td >
-                                            <input type="text" class="form-control" >
-                                            <!-- {{ form.packing|attr:"class:form-control"|attr:"required" }} -->
-
-                                           
-                                        </td>
-                                       
-                                        <td >
-                                            <input type="text" class="form-control" >
-                                            <!-- {{ form.season|attr:"class:form-control"|attr:"required" }} -->
-
-                                        </td>
-                                        
-                                        <td >
-                                            <input type="text" class="form-control" >
-                                            <!-- {{ form.agent|attr:"class:form-control"|attr:"required" }} -->
-
 
                                         </td>
                                         <td >
@@ -305,6 +252,59 @@
                                             <!-- {{ form.client|attr:"class:form-control"|attr:"required" }} -->
 
                                         </td>
+
+                                        <td >
+                                            <input type="number" class="form-control" >
+                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+
+                                        </td>
+                                        <td >
+                                            <input type="number" class="form-control" >
+                                            <!-- {{ form.packing|attr:"class:form-control"|attr:"required" }} -->
+
+                                           
+                                        </td>
+                                       
+                                        <td >
+                                            <input type="number" class="form-control" >
+                                            <!-- {{ form.season|attr:"class:form-control"|attr:"required" }} -->
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive mt-2">
+
+                            <table class="table table-bordered table-hover table-sm" >
+                                <thead class="bg-table-header">
+                                   
+                                    <tr>
+                                        
+                                        <th class="text-center"> Cut Efficiency % </th>
+                                        <th class="text-center"> Reamrks </th>
+                                        <th class="text-center"> Budget Minute </th>
+                                        <th class="text-center label" width="160px;"> Images </th>
+                                        <th class="text-center label" width="160px;">File No.</th>
+                                        <th class="text-center"> Internal Ref </th>
+                                        <th class="text-center"> Copy Form </th>
+                                        <th class="text-center" width="160px;"></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody >
+                                    <tr >
+                                        
+                                        
+                                        
+                                        <td >
+                                            <input type="text" class="form-control" >
+                                            <!-- {{ form.agent|attr:"class:form-control"|attr:"required" }} -->
+
+
+                                        </td>
+                                        
                                         <td >
                                             <input type="text" class="form-control" >
                                              <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
@@ -316,32 +316,6 @@
                                         
                                             
                                         </td>
-
-                                        
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="table-responsive mt-4">
-
-                            <table class="table table-bordered table-hover table-sm" >
-                                <thead class="bg-info">
-                                    <tr>
-                                        <th class="text-center text-uppercase " colspan="6">
-                                            <h5>Validate Information</h5>
-                                        </th>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-center label" width="160px;"> Images </th>
-                                        <th class="text-center label" width="160px;">File No.</th>
-                                        <th class="text-center"> Internal Ref </th>
-                                        <th class="text-center"> Copy Form </th>
-                                        <th class="text-center" width="160px;"></th>
-                                        <th class="text-center"> Ready To Approved</th>
-                                    </tr>
-                                </thead>
-                                <tbody >
-                                    <tr >
                                         <td >
                                             <input type="file" class="form-control" >
                                             <!-- {{ form.image|attr:"class:form-control"|attr:"type:file"}} -->
@@ -370,50 +344,47 @@
 
                                         </td>
                                         
-                                        <td >
-                                            <select class="form-control">
-                                                <option>Yes</option>
-                                                <option>No</option>
-                                                
-                                              </select>
-                                            <!-- {{ form.working_location|attr:"class:form-control"|attr:"required" }} -->
-
-
-                                        </td>
-                                        
-
+                                       
                                         
                                     </tr>
                                 </tbody>
                             </table>
-                            
                         </div>
+                        
+                        <div class="form-group row mt-2">
+                            <label for="company_name" class="col-sm-2 col-form-label label">Ready To Approved</label>
+                            <div class="col-sm-2 ">
+                                <select class="form-control">
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                    
+                                  </select>
 
-                        <div class="form-group row mt-5">
+                            </div>
                             <label for="company_name" class="col-sm-2 col-form-label label">Mini Marker Upload</label>
-                            <div class="col-sm-4 ">
+                            <div class="col-sm-2 ">
                                 <input type="file" class="form-control" >
                                 <!-- {{ form.design_source|attr:"class:form-control"|attr:"required" }} -->
 
                             </div>
                             <label for="location_name" class="col-sm-2 col-form-label label">Un-approve Request</label>
-                            <div class="col-sm-4 ">
+                            <div class="col-sm-2 ">
                                 <input type="text" class="form-control" placeholder="Double Click" >
                                 <!-- {{ form.quality_level|attr:"class:form-control"|attr:"required" }} -->
 
                               
                             </div>
                           </div>
-                          <div class="form-group text-center mt-4">
+                          <div class="form-group text-center mt-2">
                             <button type="submit" name="button1" class="btn btn-info btn-sm" id="submitButton" value="">Submit For Approval</button>
                           </div>
                           <hr>
                        
 
                         
-                        <div class="mt-4">
+                        <div class="mt-2">
                             
-                            <button type="submit" name="button1" class="btn btn-success btn-sm" >Save</button>
+                            <button type="submit" name="button1" class="btn btn-success btn-sm" style=" border-radius: 20px;">Save</button>
                      
                         </div>
                   </form>
@@ -427,18 +398,18 @@
      <!-- SECTION TNA Process  -->
      
      <div class="row mt-3">
-         <div class='col-md-4 col-lg-4'>
+        <div class='col-md-3 col-lg-3'>
         <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
             <form method="post"  enctype="multipart/form-data">
                 {% csrf_token %}
                 <table class="table table-bordered table-sm" >
                     <thead>
                         <tr class="bg-info"> 
-                            <th class="text-center "  colspan="7">
+                            <th class="text-center bg-form-header"  colspan="7">
                                 <h5 class="">TNA process manual</h5>
                             </th>
                         </tr>
-                        <tr class="bg-secondary">
+                        <tr class="bg-table-header">
                             <th class="per70 text-center" width="130px;">Cost Component</th>
                             <th class="per70 text-center">Budgeted Cost</th>
                             <th class="per70 text-center">% To Q Price</th>
@@ -875,7 +846,7 @@
                     <div class="card-body">
                         <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
 
-                            <table class="table table-bordered table-hover table-sm table-responsive" >
+                            <table class="table table-bordered table-hover table-sm table-responsive-sm" >
                                 <thead class="bg-info">
                                     <!-- <tr>
                                         <th class="text-center text-uppercase " colspan="19">
@@ -889,6 +860,7 @@
                                         <th class="text-center" > Fab Nature</th>
                                         <th class="text-center" > Color Type </th>
                                         <th class="text-center" > Fabric Source </th>
+                                        <th class="text-center" > Fabric Description </th>
                                         <th class="text-center" > Nominated Supp </th>
                                         <th class="text-center" > Width/Dia Type </th>
                                         <th class="text-center" > GSM/Weight </th>
@@ -968,6 +940,9 @@
                                                 
                                             </select>
                                             <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                        </td>
+                                        <td >
+                                            <input type="text" placeholder="Fabric Description" class="form-control">
                                         </td>
                                         <td >
                                             <select name="" class="form-control" >

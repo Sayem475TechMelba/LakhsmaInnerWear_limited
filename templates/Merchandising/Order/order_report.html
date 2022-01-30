@@ -1,109 +1,130 @@
 {% extends "index.html" %}
 {% load static %}
 {% load widget_tweaks %}
+{% load mathfilters %}
 {% block title %} Lakshma | Order Report {% endblock title %}
 {% block homeactive  %}active{% endblock homeactive  %}
 
 {% block css %}
 <style>
-    .bg-gray{
-        background-color:rgb(226, 218, 218);
-    }
-    .bg-nevi{
-        background-color:#085d63;
-        color:white;
-    }
-
-    .bg-pur{
-      background-color: #594c6f;
-      color: white;
-    }
-    .bg-pink{
-      background-color: #92466f;
-      color: white;
-    }
-    
-    .bg-olive{
-      background-color: #7f821d;
-      color: white;
-    }
     tfoot {
      display: table-header-group;
 }
+
+
 </style>
 {% endblock css %}
 
 {% block body %}
+<div id="loading" class="text-center">
+  <figure>
+    <img class="loading-image" height="100px" src="{% static 'icon/covid.gif' %}">
+    <h5> <figcaption class="text-center text-danger loading-image font-weight-bolder">Please Wait,Your Content is Loading....</figcaption></h5>
+  </figure>
+</div>
 
-<section class="content ">
-    <div class="container-fluid">
-      <!-- Small boxes (Stat box) -->
-      <div class="row">
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h4>{{order_count}}</h4>
-                <p>Total Orders</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-        </div>
+<div class="container-fluid search-box">
+  <div class="text-center mt-2 font-weight-bold"><h5>Order Report</h5></div>
+  <div class="card mt-2">
+      <div class=" search mt-1 text-center">
+        <form method="GET" class="ml-2 mr-2"  action="{% url 'order_report' %}">
+          <table  class="table table-sm table-bordered table-responsive table-responsive-sm tabel-hover">
+            <thead class="bg-meroon">
+              <tr>
+                <th width="150px;">Company</th>
+                <th >Job No.</th>
+                <th >Order No.</th>
+                <th >Location</th>
+                <th >Buyer</th>
+                <th >Agent </th>
+                <th >Style</th>
+                <th >Team</th>
+                <th >Inserted By</th>
+                <th >Dealing Merchant</th>
+                <th >Factory Merchant</th>
+                <th >Product Category</th>
+                <th >Start Date</th>
+                <th >End Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  {{ myFilter.form.company_name|attr:"class:form-controls"}}
+                </td>
+                <td>{{ myFilter.form.job_no|attr:"class:form-controls"}}</td>
+                <td>{{ myFilter.form.po_no|attr:"class:form-controls"}}</td>
+                <td>
+                  {{ myFilter.form.company_location|attr:"class:form-controls"}}
+                </td>
+                <td>
+                  {{ myFilter.form.buyer_name|attr:"class:form-controls"}}
+                </td>
+                <td>{{ myFilter.form.agent|attr:"class:form-controls"}}</td>
+                <td>{{ myFilter.form.style_description|attr:"class:form-controls"}}</td>
+                <td>
+                  {{ myFilter.form.team_leader|attr:"class:form-controls"}}
+                </td>
+                <td>
+                  {{ myFilter.form.inserted_by|attr:"class:form-controls"}}
+                </td>
+                <td>
+                  {{ myFilter.form.dealing_merchant|attr:"class:form-controls"}}
+                </td>
+                <td>
+                  {{ myFilter.form.factory_merchant|attr:"class:form-controls"}}
+                </td>
+                <td>
+                  {{ myFilter.form.product_cate|attr:"class:form-controls"}}
+                </td>
         
-        <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h4>{{total_purchase_amount|floatformat:2}} Tk. </h4>
-                <p>Total Order amount</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-balance-scale-left"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
+                <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control"|attr:"id:start_date"  }}</td>
+                  <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control"|attr:"id:end_date"  }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="container justify-content-center align-content-center text-center">
+            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Show</button>
+            <a href="{% url 'order_report' %}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i> Reset</a>
           </div>
-        <!-- ./col -->
-  
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-pur">
-            <div class="inner">
-              <h4>{{total_advance|floatformat:2}} TK.</h4>
-              <p>Total advance payment </p>
+        </form>
+        <div class="container ">
+          <div class="d-flex justify-content-center table-responsive">
+            <div class="p-2">
+              <table class="mb-1 table-sm  table-responsive-sm ">
+                <thead>
+                    <td width="20%">
+                      <select id="getYear" onChange="copyTextValue()" class="form-control">
+                        <option value="" disabled selected>Select</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                      </select>
+                    </td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2 " >Jan</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Feb</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Mar</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Apr</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">May</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Jun</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Jul</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Aug</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Sep</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Oct</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2" onclick="myFunction()"  id="getMonth">Nov</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Dec</button></td>
+                </thead>
+              </table>
             </div>
-            <div class="icon">
-              <i class="fas fa-money-check-alt"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-          </div>
-        </div>
-        <!-- ./col -->
-  
-        <!-- ./col -->
-        <div class="col-lg-3 col-6">
-          <!-- small box -->
-          <div class="small-box bg-nevi">
-            <div class="inner">
-              <h4>{{total_due_amount|floatformat:2}} Tk.</h4>
-              <p>Total due amount</p>
-            </div>
-            <div class="icon">
-              <i class="fas fa-money-bill"></i>
-            </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
           </div>
         </div>
       </div>
+
+     
     </div>
-</section>
- 
-  <div class="container-fluid mt-4 table-responsive" >
+</div>
+ <!-- SHIPMENT REPORT  -->
+{% if  '/merchandise/order_report/?' in request.get_full_path %}
+  <div class="container-fluid mt-4 table-responsive box drag" >
   
     <table id="report_panel" name="schedule" class="table table-bordered table-striped table-info table-sm table-responsive display">
       <thead>
@@ -111,10 +132,10 @@
           <th class="text-left text-uppercase bg-info" colspan="53">
               <h6>Report Panel</h6>
           </th>
-      </tr>
+       </tr>
         <tr>
-          <th>SL.</th>
-          <th>Company Name</th>
+          <th scope="col">SL.</th>
+          <th scope="col">Company Name</th>
           <th>Job No</th>
           <th>Buyer</th>
           <th>Agent</th>
@@ -134,7 +155,7 @@
           <th> Fac Receive Date </th>
           <th> Lead Time </th>
           <th> SMV </th>
-          <th hidden> hiddenSMV </th>
+          <!-- <th hidden> hiddenSMV </th> -->
           <th> Total SMV </th>
           <th> Order Qnty </th>
           <th> Uom </th>
@@ -162,7 +183,7 @@
           <th> Ship Mode</th>
           <th> Internal Ref Grouping</th>
           <th> File No</th>
-          <th> Id</th>
+          <th> Inserted By</th>
           <th> Pre-Cost Id</th>
           <th> Delay Reason</th>
           <th> Reamrks</th>
@@ -193,7 +214,7 @@
           <th></th>
           <th></th>
          
-          <th hidden>  </th>
+          <!-- <th hidden>  </th> -->
           <th></th>
           <th></th>
           <th></th>
@@ -236,10 +257,10 @@
         <tr>
           <td>{{forloop.counter}}</td>
           <td>{{i.po_job_no.company_name}}</td>
-          <td>{{i.po_job_no}}</td>
+          <td><a class="dropdown-item" href="{% url 'edit_order' i.id %}">{{i.po_job_no}}</a></td>
           <td>{{i.po_job_no.buyer_name}}</td>
           <td>{{i.po_job_no.agent}}</td>
-          <td >{{i.po_no}}</td>
+          <td ><a class="dropdown-item" href="{% url 'edit_order' i.id %}">{{i.po_no}}</a></td>
           <td >{{i.po_job_no.season}}</td>
           <td >{{i.po_job_no.product_dept}}</td>
           <td >{{i.po_job_no.sub_dept}}</td>
@@ -268,13 +289,12 @@
           <td class="pub_date">{{i.pub_shipment_date}}</td>
           <td>{{i.fac_recieve_date}}</td>
           <td>{{i.lead_time}}</td>
-          <td class="tsmv sv">{{i.po_job_no.smv}}</td>
-          <td id="hiddensmv" class="eqhidesmv" hidden></td>
-          <td id="totalSmv"></td>
+          <td >{{i.po_job_no.smv|floatformat:2}}</td>
+          <td >{{i.po_job_no.smv|mul:i.po_quantity|floatformat:2}}</td>
           <td>{{i.po_quantity}}</td>
           <td>{{i.po_job_no.order_uom}}</td>
           <td class="oq tsmv oqb eqhidesmv">{{i.po_quantity}}</td>
-          <td id="eqvbasic"></td>
+          <td >{{i.po_job_no.smv|div:4|mul:i.po_quantity|floatformat:2}}</td>
           <td class="oq">{{i.avg_price|floatformat:2}}</td>
            <td id="order_value"></td>
            <td></td>
@@ -297,7 +317,7 @@
           <td>{{i.po_job_no.ship_mode}}</td>
           <td>{{i.internal_ref}}</td>
           <td>{{i.file_no}}</td>
-          <td></td>
+          <td>{{i.inserted_by.full_name}}</td>
           <td></td>
           <td>{{i.delay_for}}</td>
           <td>{{i.remarks}}</td>
@@ -306,23 +326,37 @@
               <button type="button" class="btn btn-danger btn-sm" data-toggle="dropdown">Action</button>
               <button type="button" class="btn btn-danger btn-sm dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               </button>
-              <div class="dropdown-menu  dropdown-menu-right">
+              <div class="dropdown-menu dropdown-menu-right">
                 <a class="dropdown-item" href="{% url 'view_order' i.id %}"><i class="fas fa-eye text-info  mr-2" data-toggle="tooltip" data-placement="bottom" title="View"></i> View</a>
                 <a class="dropdown-item" href="{% url 'edit_order' i.id %}"><i class="fas fa-pencil-alt text-warning mr-2" data-toggle="tooltip" data-placement="bottom" title="Update"></i> Edit</a>
+                {% if request.user == i.inserted_by or request.user.is_admin == True %}
                 <a class="dropdown-item" href="{% url 'delete_order' i.id %}" onclick="return confirm('Are you sure you want to delete this item?')"><i class="fas fa-trash text-danger  mr-2 " data-toggle="tooltip" data-placement="bottom" title="Delete"></i> Delete</a>
+                {% endif %}
               </div>
             </div>
-            </div>
-            
           </td>
         </tr>
         {% endfor %}
       </tbody>
+      <tfoot>
+        <th colspan="20" class="text-right font-weight-bold">Total: </th>
+        <th id="rp_tsmv" class="bg-yel"></th>
+        <th id="rp_tt_smv" class="bg-yel"></th>
+        <th id="rp_tt_ord" class="bg-yel"></th>
+        <th ></th>
+        <th id="rp_tt_ordq" class="bg-yel"></th>
+        <th id="rp_tt_eqv" class="bg-yel"></th>
+        <th id="rp_tt_up" class="bg-yel">0</th>
+        <th id="rp_tt_ov" class="bg-yel">0</th>
+        <th class="bg-yel">0</th>
+        <th colspan="23"></th>
+      </tfoot>
+    </table>
+  </div>
+{% endif %}            
      
       
       
-    </table>
-  </div>
 {% endblock body %}
 
 {% block script %}
@@ -367,19 +401,7 @@
         $(this).find('#order_value').html(orderValue);
       });
       
-      // CALCULATION FOR REPORT PANEL (TOTAL SMV VALUE) ===--->
-      $('tr').each(function(){
-        var totSmv = 1;
-        $(this).find('.tsmv').each(function(){
-          var allquan_per = $(this).text();
-          if(allquan_per.length!==0)
-          {
-            totSmv *=  parseFloat(allquan_per);
-            totSmv = totSmv.toFixed(2)
-          }
-        });
-        $(this).find('#totalSmv').html(totSmv);
-      });
+     
       // CALCULATION FOR REPORT PANEL (DAYS IN HAND VALUE) ===--->
       $('tr').each(function(){
         var dayesInHand = 0;
@@ -398,42 +420,38 @@
         $(this).find('#lead_date').html(dayesInHand);
       });
 
-      // CALCULATION FOR REPORT PANEL (HIDDEN SMV VALUE) ===--->
-      // HIDDEN FIELD FOR EQUIVALENT BASIC
-      $('tr').each(function(){
-        var finalsmv = 1;
-        $(this).find('.sv').each(function(){
-          var smv = $(this).text();
-          if(smv.length!==0)
-          {
-            // EQUIVALENT BASIC CONFIRMED DIVISION NUMBER IS 4
-            finalsmv = parseFloat(smv / 4) ;
-          }
-        });
-        $(this).find('#hiddensmv').html(finalsmv);
-      });
-
-      $('tr').each(function(){
-        var eqvb = 1;
-        $(this).find('.eqhidesmv').each(function(){
-          var hidesmv = $(this).text();
-          if(hidesmv.length!==0)
-          {
-            eqvb *= parseFloat(hidesmv);
-            eqvb = eqvb.toFixed(2)
-          }
-        });
-        $(this).find('#eqvbasic').html(eqvb);
-      });
-
       
-     
    
       // DataTable
       var table = $('#report_panel').DataTable({
-        "lengthMenu": [[10,50,100, 150, -1], [10,50,100,150, "All"]],
-        //"scrollY":        "500px",
-        //"scrollCollapse": true,
+
+        drawCallback: function(){
+          const rp_tsmv = this.api().column(20,{search:'applied'}).data().toArray().reduce((total,rp_tsmv) => total+=Number(rp_tsmv.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tsmv').text(` ${(rp_tsmv)}`);
+
+          const rp_tt_smv = this.api().column(21,{search:'applied'}).data().toArray().reduce((total,rp_tt_smv) => total+=Number(rp_tt_smv.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tt_smv').text(` ${(rp_tt_smv)}`);
+  
+          const rp_tt_ord = this.api().column(22,{search:'applied'}).data().toArray().reduce((total,rp_tt_ord) => total+=Number(rp_tt_ord.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tt_ord').text(` ${(rp_tt_ord)}`);
+  
+          const rp_tt_ordq = this.api().column(24,{search:'applied'}).data().toArray().reduce((total,rp_tt_ordq) => total+=Number(rp_tt_ordq.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tt_ordq').text(` ${(rp_tt_ordq)}`);
+  
+          const rp_tt_eqv = this.api().column(25,{search:'applied'}).data().toArray().reduce((total,rp_tt_eqv) => total+=Number(rp_tt_eqv.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tt_eqv').text(` ${(rp_tt_eqv)}`);
+  
+          const rp_tt_up = this.api().column(26,{search:'applied'}).data().toArray().reduce((total,rp_tt_up) => total+=Number(rp_tt_up.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tt_up').text(` ${(rp_tt_up)}`);
+  
+          const rp_tt_ov = this.api().column(27,{search:'applied'}).data().toArray().reduce((total,rp_tt_ov) => total+=Number(rp_tt_ov.replace(/[^0-9\.]/g,'')),0).toFixed(2);
+          $('#rp_tt_ov').text(` ${(rp_tt_ov)}`);
+  
+        },
+        "lengthMenu": [[500,1000,-1], [500,1000,"All"]],
+        "scrollY": 470,
+        "scrollX": true,
+       
           initComplete: function () {
               // Apply the search
               this.api().columns().every( function () {
@@ -447,6 +465,7 @@
                       }
                   } );
               } );
+              
           }
       });
       // FOR GENERATING SERIAL NUMBER
@@ -456,6 +475,29 @@
         } );
     } ).draw();
   } );
+  </script>
+
+  <!-- for table horizantal scroll -->
+  <script>
+    var elementScroll = document.querySelector('.drag');
+    var mx = 0;
+    
+    elementScroll.addEventListener("mousedown", function(e){
+      this.sx = this.scrollLeft;
+      mx = e.pageX - this.offsetLeft;
+    
+      this.addEventListener("mousemove", mouseMoveFunction);
+    });
+    
+    elementScroll.addEventListener("mouseup", function(e){
+      this.removeEventListener("mousemove", mouseMoveFunction);
+      mx = 0;
+    });
+    
+    function mouseMoveFunction(e){
+      var mx2 = e.pageX - this.offsetLeft;
+      if(mx) this.scrollLeft = this.sx + mx - mx2;
+    }
   </script>
 {% endblock script %}
 

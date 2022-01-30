@@ -29,6 +29,20 @@ urlpatterns=[
     path('lib_payment_term/', views.lib_payment_term, name= 'lib_payment_term'),
     path('lib_fabrication/', views.lib_fabrication, name= 'lib_fabrication'),
 
+    ### Budget costing library url #######3
+    path('lib_costing_per/', views.lib_costing_per, name= 'lib_costing_per'),
+    path('lib_body_part/', views.lib_body_part, name= 'lib_body_part'),
+    path('lib_body_part_type/', views.lib_body_part_type, name= 'lib_body_part_type'),
+    path('lib_fab_nature/', views.lib_fab_nature, name= 'lib_fab_nature'),
+    path('lib_color_type/', views.lib_color_type, name= 'lib_color_type'),
+    path('lib_fabric_source/', views.lib_fabric_source, name= 'lib_fabric_source'),
+    path('lib_fabric_description/', views.lib_fabric_description, name= 'lib_fabric_description'),
+    path('lib_nominated_supp/', views.lib_nominated_supp, name= 'lib_nominated_supp'),
+    path('lib_dia_types/', views.lib_dia_types, name= 'lib_dia_types'),
+    path('lib_consumption_basis/', views.lib_consumption_basis, name= 'lib_consumption_basis'),
+    path('lib_color_size_sensitive/', views.lib_color_size_sensitive, name= 'lib_color_size_sensitive'),
+
+
     # EDIT / DELETE
     path('edit_agent/<int:id>/', views.edit_agent, name= 'edit_agent'),
     path('delete_agent/<int:id>/', views.delete_agent, name= 'delete_agent'),
@@ -42,8 +56,8 @@ urlpatterns=[
     path('edit_company/<int:id>/', views.edit_company, name= 'edit_company'),
     path('delete_company/<int:id>/', views.delete_company, name= 'delete_company'),
     
-    # path('edit_companyAddress/<int:id>/', views.edit_companyAddress, name= 'edit_companyAddress'),
-    # path('delete_compAddress/<int:id>/', views.delete_compAddress, name= 'delete_compAddress'),
+    path('edit_companyAddress/<int:id>/', views.edit_companyAddress, name= 'edit_companyAddress'),
+    path('delete_compAddress/<int:id>/', views.delete_compAddress, name= 'delete_compAddress'),
     
     path('edit_prodDept/<int:id>/', views.edit_prodDept, name= 'edit_prodDept'),
     path('delete_prodDept/<int:id>/', views.delete_prodDept, name= 'delete_prodDept'),
@@ -107,6 +121,40 @@ urlpatterns=[
 
     path('edit_fabrication/<int:id>/', views.edit_fabrication, name= 'edit_fabrication'),
     path('delete_fabrication/<int:id>/', views.delete_fabrication, name= 'delete_fabrication'),
+
+    ######### Budget cost edit/delete urls #############
+    path('edit_costing_per/<int:id>/', views.edit_costing_per, name= 'edit_costing_per'),
+    path('delete_costing_per/<int:id>/', views.delete_costing_per, name= 'delete_costing_per'),
+
+    path('edit_body_part/<int:id>/', views.edit_body_part, name= 'edit_body_part'),
+    path('delete_body_part/<int:id>/', views.delete_body_part, name= 'delete_body_part'),
+
+    path('edit_body_part_type/<int:id>/', views.edit_body_part_type, name= 'edit_body_part_type'),
+    path('delete_body_part_type/<int:id>/', views.delete_body_part_type, name= 'delete_body_part_type'),
+
+    path('edit_fab_nature/<int:id>/', views.edit_fab_nature, name= 'edit_fab_nature'),
+    path('delete_fab_nature/<int:id>/', views.delete_fab_nature, name= 'delete_fab_nature'),
+
+    path('edit_color_type/<int:id>/', views.edit_color_type, name= 'edit_color_type'),
+    path('delete_color_type/<int:id>/', views.delete_color_type, name= 'delete_color_type'),
+
+    path('edit_fabric_source/<int:id>/', views.edit_fabric_source, name= 'edit_fabric_source'),
+    path('delete_fabric_source/<int:id>/', views.delete_fabric_source, name= 'delete_fabric_source'),
+
+    path('edit_fabric_description/<int:id>/', views.edit_fabric_description, name= 'edit_fabric_description'),
+    path('delete_fabric_description/<int:id>/', views.delete_fabric_description, name= 'delete_fabric_description'),
+    
+    path('edit_nominated_supp/<int:id>/', views.edit_nominated_supp, name= 'edit_nominated_supp'),
+    path('delete_nominated_supp/<int:id>/', views.delete_nominated_supp, name= 'delete_nominated_supp'),
+    
+    path('edit_dia_types/<int:id>/', views.edit_dia_types, name= 'edit_dia_types'),
+    path('delete_dia_types/<int:id>/', views.delete_dia_types, name= 'delete_dia_types'),
+
+    path('edit_consumption_basis/<int:id>/', views.edit_consumption_basis, name= 'edit_consumption_basis'),
+    path('delete_consumption_basis/<int:id>/', views.delete_consumption_basis, name= 'delete_consumption_basis'),
+    
+    path('edit_color_size_sensitive/<int:id>/', views.edit_color_size_sensitive, name= 'edit_color_size_sensitive'),
+    path('delete_color_size_sensitive/<int:id>/', views.delete_color_size_sensitive, name= 'delete_color_size_sensitive'),
     
     #Main Form Urls
     path('order_entry/', views.order_entry, name= 'order_entry'),
@@ -114,7 +162,7 @@ urlpatterns=[
     path('edit_order/<int:id>/', views.edit_order, name= 'edit_order'),
     path('delete_order/<int:id>/', views.delete_order, name= 'delete_order'),
     path('order_report/', views.order_report, name= 'order_report'),
-    path('add_po/', views.report_po),
+    path('add_po/', views.add_po_report, name= 'add_po_report'),
     path('po/<int:id>/', views.add_po),
     # path('po_details/', views.po_details, name= 'po_details'),
     # path('color_size_entry/', views.color_size_entry, name= 'color_size_entry'),
@@ -122,6 +170,7 @@ urlpatterns=[
     path('capacity_booked/', views.capacity_booked, name= 'capacity_booked'),
     path('shipment_schedule/', views.shipment_schedule, name= 'shipment_schedule'),
     path('order_selection/', views.order_selection, name= 'order_selection'),
+    path('add_order/<int:id>/', views.add_order, name= 'add_order'),
     path('work_progress/<int:id>/', views.work_progress, name= 'work_progress'),
     path('work_progress_report/', views.work_progress_report, name= 'work_progress_report'),
     path('tna_progress_report/<int:id>/', views.tna_progress_report, name= 'tna_progress_report'),
@@ -132,5 +181,10 @@ urlpatterns=[
     path('fabric_booking_details/', views.fabric_booking_details, name= 'fabric_booking_details'),
     path('finish_fabric_details/', views.finish_fabric_details, name= 'finish_fabric_details'),
     path('trims_details/', views.trims_details, name= 'trims_details'),
+    path('cutting_finish_details/', views.cutting_finish_details, name= 'cutting_finish_details'),
+    path('iron_finish_details/', views.iron_finish_details, name= 'iron_finish_details'),
+    path('finishing_details/', views.finishing_details, name= 'finishing_details'),
+    path('buyer_inspection_details/', views.buyer_inspection_details, name= 'buyer_inspection_details'),
+    path('actual_shipment_details/', views.actual_shipment_details, name= 'actual_shipment_details'),
 
 ]

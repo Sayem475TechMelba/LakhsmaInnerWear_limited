@@ -26,6 +26,25 @@
   .form-groups {
      margin-bottom: 0rem; 
 }
+
+.select2-container .select2-selection--single {
+    border-radius: 15px;
+    box-shadow: none;
+    border: 1px solid #e4e5e7;
+    display: block;
+    user-select: none;
+    -webkit-user-select: none;
+    box-shadow: none;
+    border: 1px solid #e4e5e7;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+}
     
 </style>
 
@@ -48,7 +67,7 @@
     <!-- ORDER ENTRY FORM  -->
     <div class=" card border border-light mb-2 mt-2">
         <div class=" p-1 bg-form-header">
-            <h5 class="text-uppercase text-center ">Add PO - {{obj.job_no}}</h4>
+            <h5 class="text-uppercase text-center ">Update Order - {{obj.job_no}}</h4>
         </div>
         <div class="container p-4 bg-form">
             <div class="row">
@@ -451,10 +470,8 @@
                           </div>
                            
                             <div class="text-center mt-3">
-                                <button type="submit"  name="button1" class="btn btn-success btn-sm submitBtn  ml-3 " style=" border-radius: 20px;" onclick="jobNo()" disabled>Save</button>
-                                <button type="submit" class="btn btn-info btn-sm ml-3" style=" border-radius: 20px;">Update</button>
-                                <button type="submit" class="btn btn-danger btn-sm ml-3" style=" border-radius: 20px;" disabled>Delete</button>
-                                <button type="submit" class="btn btn-warning btn-sm ml-3" style=" border-radius: 20px;" disabled>Refresh</button>
+                                <button type="submit" class="btn btn-info btn-sm ml-3" style=" border-radius: 20px;" disabled>Update</button>
+                                <a href="" type="button" style=" border-radius: 20px;" class="btn btn-dark btn-sm ml-3"> Refresh</a>
                             </div>
                     </form>
                   </div>
@@ -469,7 +486,7 @@
      <!-- <div class=" card border border-light mb-2 mt-2" id="output"> -->
      <div class=" card border border-light mb-2 mt-2" >
         <div class=" p-1 bg-form-header">
-            <h5 class="text-uppercase text-center ">PO Details Entry Form</h4>
+            <h5 class="text-uppercase text-center ">PO Details Entry to Job No: {{obj.job_no}}</h4>
         </div>
         <div class="p-2 bg-form">
             <div class="row">
@@ -481,11 +498,11 @@
                           <div class="form-group row justify-content-center">
                             <label for="order_status" class="col-sm-1 col-form-label label">Job No.</label>
                             <div class="col-sm-2 ">
-                                <input type="text"  class="form-control"  value=" {{po.po_job_no}}" readonly>
+                                {{ po_form.po_job_no|attr:"class:form-control select2bs4"|attr:"required" }}
                             </div>
                             <label for="order_status" class="col-sm-1 col-form-label label">Order Status</label>
                               <div class="col-sm-2 ">
-                                  {{ po_form.order_status|attr:"class:form-control"|attr:"id:po_select" }}
+                                  {{ po_form.order_status|attr:"class:form-control"|attr:"required"|attr:"id:po_select"|attr:"onChange:checkOption(this)" }}
                             </div>
                             <label for="projected_po" class="col-sm-1 col-form-label ">Projected PO</label>
                             <div class="col-sm-2 ">
@@ -518,14 +535,14 @@
                                       <tr >
                                           <td >
     
-                                              {{ po_form.po_no|attr:"class:form-control"|attr:"placeholder:Po No" }}
+                                              {{ po_form.po_no|attr:"class:form-control"|attr:"placeholder:Po No"|attr:"required" }}
                                               
                                           </td>
                                           <td >
                                               {{ po_form.po_recieve_date|attr:"type:date"|attr:"class:form-control"}}
                                           </td>
                                           <td >
-                                              {{ po_form.pub_shipment_date|attr:"type:date"|attr:"class:form-control"|attr:"id:bill_date" }}
+                                              {{ po_form.pub_shipment_date|attr:"type:date"|attr:"class:form-control"|attr:"id:bill_date"|attr:"required" }}
                                           </td>
                                           <td >
                                               {{ po_form.lead_time|attr:"type:text"|attr:"class:form-control"|attr:"readonly"|attr:"id:lead_time" }}
@@ -552,7 +569,7 @@
                                              {{ po_form.plan_cut_qty|attr:"class:form-control"|attr:"type:number"}}
                                         </td>
                                         <td >
-                                            {{ po_form.status_active|attr:"class:form-control" }}
+                                            {{ po_form.status_active|attr:"class:form-control"|attr:"required" }}
                                         </td>
                                           
                                           
@@ -743,7 +760,7 @@
                                   <tbody >
                                       <tr >
                                           <td >
-                                              {{ po_form.po_packing|attr:"class:form-control" }}
+                                              {{ po_form.po_packing|attr:"class:form-control"|attr:"required" }}
                                           </td>
                                           <td >
                                                {{ po_form.tna_from_upto|attr:"class:form-control" }}
@@ -778,10 +795,9 @@
                           
 
                           <div class="text-center">
-                            <button type="submit"  class="btn btn-success btn-sm ml-3" style=" border-radius: 20px;" disabled>Save</button>
-                            <button type="update" class="btn btn-info btn-sm  ml-3" style=" border-radius: 20px;">Update</button>
-                            <button type="button" class="btn btn-danger btn-sm ml-3" style=" border-radius: 20px;" disabled>Delete</button>
-                            <button type="button" class="btn btn-dark btn-sm ml-3"   style=" border-radius: 20px;" disabled>Refresh</button>
+                            
+                            <button type="update" class="btn btn-info btn-sm  ml-3 submitPoBtn" style=" border-radius: 20px;"  >Save</button>
+                            <a href="" type="button" style=" border-radius: 20px;" class="btn btn-dark btn-sm ml-3"> Refresh</a>
                         </div>   
                     </form>
                   </div>
@@ -796,7 +812,7 @@
 
 <div class="container-fluid">
     <table  class="table table-bordered table-striped table-hover table-sm mt-3">
-        <thead>
+        <thead class="bg-secondary">
           <tr>
             <th>SL.</th>
             <th>Order Status</th>
@@ -811,27 +827,27 @@
             <th >Plan Cut Qty.</th>
             <th >Lead Time</th>
             <th >Status</th>
-            <th >Ship Status</th>
+            <th >View Order</th>
           </tr>
         </thead>
         <tbody >
             {% for i in same_po %}
             <tr>
                
-                <td>{{forloop.counter}}</td>
-                <td>{{i.order_status}}</td>
+                <td><a class="dropdown-item" href="{% url 'edit_order' i.id %}">{{forloop.counter}}</a></td>
+                <td><a class="dropdown-item" href="{% url 'edit_order' i.id %}">{{i.order_status}}</a></td>
                 <td><a class="dropdown-item" href="{% url 'edit_order' i.id %}">{{i.po_no}}</a></td>
                 <td>{{i.po_recieve_date}}</td>
                 <td>{{i.pub_shipment_date}}</td>
                 <td>{{i.org_shipment_date}}</td>
                 <td>{{i.po_quantity}}</td>
-                <td>{{i.avg_price}}</td>
-                <td>{{i.amount}}</td>
-                <td>{{i.excess_cut_pct}}</td>
-                <td>{{i.plan_cut_qty}}</td>
+                <td>{{i.avg_price|floatformat:2}}</td>
+                <td>{{i.amount|floatformat:2}}</td>
+                <td>{{i.excess_cut_pct|floatformat:2}}</td>
+                <td>{{i.plan_cut_qty|floatformat:2}}</td>
                 <td>{{i.lead_time}}</td>
                 <td>{{i.status_active}}</td>
-                <td>Full Funding</td>
+                <td><a class="dropdown-item" href="{% url 'view_order' i.id %}"><i class="fas fa-eye text-info  mr-2" data-toggle="tooltip" data-placement="bottom" title="View"></i> View</a></td>
             </tr>
             {% endfor %}
         </tbody>
@@ -856,9 +872,6 @@
     });
 </script>
 
-<script type="text/javascript">
-    $('#po_form').trigger("reset");
-</script>
  
 <script >
     // FOR SMV MODAL SHOW 
@@ -870,353 +883,374 @@
         $('#smv_modal').modal('show');
       });
 </script>
- <script>
-     var count = 1
-     var gmtCount = 0
+<script>
+    var count = 1
+    var gmtCount = 0
 
-     var smvID = ['id_order_smv-V-set_ratio', 'id_order_smv-V-sew_smv_pcs', 'id_order_smv-V-cut_smv_pcs', 'id_order_smv-V-fin_smv_pcs', 'id_order_smv-V-print_days', 'id_order_smv-V-embro_days', 'id_order_smv-V-wash_days', 'id_order_smv-V-sp_work_days', 'id_order_smv-V-gmts_dyeing_days', 'id_order_smv-V-aop_days']
-     var gmt = []
+    var smvID = ['id_order_smv-V-set_ratio', 'id_order_smv-V-sew_smv_pcs', 'id_order_smv-V-cut_smv_pcs', 'id_order_smv-V-fin_smv_pcs', 'id_order_smv-V-print_days', 'id_order_smv-V-embro_days', 'id_order_smv-V-wash_days', 'id_order_smv-V-sp_work_days', 'id_order_smv-V-gmts_dyeing_days', 'id_order_smv-V-aop_days']
+    var gmt = []
 
-     function update(){
-        count++
-     }
-
-    function negUpdate(){}
-
-     function tdMaker(tr, data, des){
-        var td = document.createElement('td')
-        td.innerText = data
-
-        tr.append(td)
-        document.getElementById(des).append(tr)
-     }
-
-     function test(param){
-         var j = 0
-         state = true
-         if(param === 'none'){
-            j = gmtCount
-            console.log(param)
-         } else {
-             j = 0
-         }
-         for(var i = 1; i<=document.getElementById(`id_color_size-${j}-gmt_items`).children.length; i++){
-             if(gmt.includes(document.getElementById(`id_color_size-${j}-gmt_items`).children[i].innerHTML) == false){
-                document.getElementById(`id_color_size-${j}-gmt_items`).removeChild(document.getElementById(`id_color_size-${j}-gmt_items`).children[i])
-                gmtCount++
-             }
-         }
-     }
-
-     function pipeLine(){
-        var ord_quan = document.getElementById("order_quan").value
-        var amt = document.getElementById("amt").value
-        var exc = document.getElementById("exc").value
-        var ttrate = document.getElementById("tt_rate").value =  (amt / ord_quan);
-        // var ttrate = document.getElementById("tt_rate").value
-        var quan = document.getElementById("quan").value
-        
-    
-        console.log(amt ,ttrate, ord_quan)
-
-        document.getElementById("po_quantity").value = ord_quan
-        document.getElementById('id_avg_price').value = ttrate
-        document.getElementById('id_amount').value = amt
-        document.getElementById("id_excess_cut_pct").value = exc
-        document.getElementById("id_plan_cut_qty").value = quan
-     }
-
-     function fetcher(){
-        var tr = document.createElement('tr')
-        tdMaker(tr, document.getElementById('table-color').children.length + 1, "table-color")
-        tdMaker(tr, document.getElementById("po_select").value, "table-color")
-        tdMaker(tr, document.getElementById("id_po_no").value, "table-color")
-        tdMaker(tr, document.getElementById('id_po_recieve_date').value, "table-color")
-        tdMaker(tr, document.getElementById("id_org_shipment_date").value, "table-color")
-        tdMaker(tr, document.getElementById("id_pub_shipment_date").value, "table-color")
-        tdMaker(tr, document.getElementById("order_quan").value, "table-color")
-        tdMaker(tr, document.getElementById("tt_rate").value, "table-color")
-        tdMaker(tr, document.getElementById('amt').value, "table-color")
-        tdMaker(tr, document.getElementById("exc").value, "table-color")
-        tdMaker(tr, document.getElementById("quan").value, "table-color")
-        tdMaker(tr, "null", "table-color")
-        tdMaker(tr, document.getElementById("id_status_active").value, "table-color")
-        tdMaker(tr, "Active", "table-color")
-     }
-
-     function jobNo(){
-        document.getElementById("id_po_job_no").value = '{{ job }}'
-     }
-    
-    function mainFetcher(){
-        var tr = document.createElement('tr')
-       // tdMaker(tr, '1', 'hi')
-        tdMaker(tr, document.getElementById('po_select').options[document.getElementById('po_select').selectedIndex].text, 'hi')
-        tdMaker(tr, document.getElementById('id_po_no').value, 'hi')
-        tdMaker(tr, document.getElementById('id_po_recieve_date').value, 'hi')
-        tdMaker(tr, document.getElementById('bill_date').value, 'hi')
-        tdMaker(tr, document.getElementById('id_org_shipment_date').value, 'hi')
-        tdMaker(tr, document.getElementById('po_quantity').value, 'hi')
-        tdMaker(tr, document.getElementById('id_avg_price').value, 'hi')
-        tdMaker(tr, document.getElementById('id_amount').value, 'hi')
-        tdMaker(tr, document.getElementById('id_excess_cut_pct').value, 'hi')
-        tdMaker(tr, document.getElementById('id_plan_cut_qty').value, 'hi')
-        tdMaker(tr, document.getElementById('lead_time').value, 'hi')
-        tdMaker(tr, document.getElementById('id_fac_recieve_date').value, 'hi')
-        tdMaker(tr, document.getElementById('id_status_active').options[document.getElementById('id_status_active').selectedIndex].text, 'hi')
-        tdMaker(tr, document.getElementById('id_status_active').options[document.getElementById('id_status_active').selectedIndex].text, 'hi')
-    }
-    // FOR RESET FORM -- PO DETAILS
-    function myFunction() {
-        document.getElementsByClassName("poForm").reset();
+    function ord2report(){
+        open('/merchandise/add_po/', "_self")
     }
 
-    function gmtItms(){
-        for(var i = 0; i<count; i++){
-            if(gmt.includes(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text) == false){
-                gmt.push(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text)
+    function update(){
+       count++
+    }
+
+   function negUpdate(){}
+
+    function tdMaker(tr, data, des){
+       var td = document.createElement('td')
+       td.innerText = data
+
+       tr.append(td)
+       document.getElementById(des).append(tr)
+    }
+
+    function test(param){
+        var j = 0
+        state = true
+        if(param === 'none'){
+           j = gmtCount
+           console.log(param)
+        } else {
+            j = 0
+        }
+        for(var i = 1; i<=document.getElementById(`id_color_size-${j}-gmt_items`).children.length; i++){
+            if(gmt.includes(document.getElementById(`id_color_size-${j}-gmt_items`).children[i].innerHTML) == false){
+               document.getElementById(`id_color_size-${j}-gmt_items`).removeChild(document.getElementById(`id_color_size-${j}-gmt_items`).children[i])
+               gmtCount++
             }
         }
     }
 
-    function rightID(id){
-        var numPre = []
-        var number = 0
-        for(var i=0; i<id.length; i++){
-            if(parseInt(id[i]) || id[i] == '0'){
-                numPre.push(parseInt(id[i]))
-            }
-        }
-        for(var i = 0; i<numPre.length; i++){
-            number += numPre[i] * (10 ** (numPre.length - (i+1)))
-        }
-        return number
+    function pipeLine(){
+       var ord_quan = document.getElementById("order_quan").value
+       var amt = document.getElementById("amt").value
+       var exc = document.getElementById("exc").value
+       var ttrate = document.getElementById("tt_rate").value =  (amt / ord_quan);
+       // var ttrate = document.getElementById("tt_rate").value
+       var quan = document.getElementById("quan").value
+       
+   
+       console.log(amt ,ttrate, ord_quan)
+
+       document.getElementById("po_quantity").value = ord_quan
+       document.getElementById('id_avg_price').value = ttrate
+       document.getElementById('id_amount').value = amt
+       document.getElementById("id_excess_cut_pct").value = exc
+       document.getElementById("id_plan_cut_qty").value = quan
     }
 
-    function autoRate(id){
-        var oty = document.getElementById(`id_color_size-${id}-order_qty`).value
-        var rate = document.getElementById(`id_color_size-${id}-rate`).value
-
-        document.getElementById(`id_color_size-${id}-amount`).value = oty * rate
-
-        totalAmt()
-        pipeLine()
+    function fetcher(){
+       var tr = document.createElement('tr')
+       tdMaker(tr, document.getElementById('table-color').children.length + 1, "table-color")
+       tdMaker(tr, document.getElementById("po_select").value, "table-color")
+       tdMaker(tr, document.getElementById("id_po_no").value, "table-color")
+       tdMaker(tr, document.getElementById('id_po_recieve_date').value, "table-color")
+       tdMaker(tr, document.getElementById("id_org_shipment_date").value, "table-color")
+       tdMaker(tr, document.getElementById("id_pub_shipment_date").value, "table-color")
+       tdMaker(tr, document.getElementById("order_quan").value, "table-color")
+       tdMaker(tr, document.getElementById("tt_rate").value, "table-color")
+       tdMaker(tr, document.getElementById('amt').value, "table-color")
+       tdMaker(tr, document.getElementById("exc").value, "table-color")
+       tdMaker(tr, document.getElementById("quan").value, "table-color")
+       tdMaker(tr, "null", "table-color")
+       tdMaker(tr, document.getElementById("id_status_active").value, "table-color")
+       tdMaker(tr, "Active", "table-color")
     }
 
-    function autoPCQT(id){
-        var oty = parseFloat(document.getElementById(`id_color_size-${id}-order_qty`).value, 10)
-        var exc = parseFloat(document.getElementById(`id_color_size-${id}-excess_cut`).value, 10)
-
-        var mid = oty*exc/100
-
-        document.getElementById(`id_color_size-${id}-plan_cut_qty`).value = oty + mid
-
-        totalPCQt()
-        pipeLine()
+    function jobNo(){
+       document.getElementById("id_po_job_no").value = '{{ job }}'
     }
+   
+   function mainFetcher(){
+       var tr = document.createElement('tr')
+      // tdMaker(tr, '1', 'hi')
+       tdMaker(tr, document.getElementById('po_select').options[document.getElementById('po_select').selectedIndex].text, 'hi')
+       tdMaker(tr, document.getElementById('id_po_no').value, 'hi')
+       tdMaker(tr, document.getElementById('id_po_recieve_date').value, 'hi')
+       tdMaker(tr, document.getElementById('bill_date').value, 'hi')
+       tdMaker(tr, document.getElementById('id_org_shipment_date').value, 'hi')
+       tdMaker(tr, document.getElementById('po_quantity').value, 'hi')
+       tdMaker(tr, document.getElementById('id_avg_price').value, 'hi')
+       tdMaker(tr, document.getElementById('id_amount').value, 'hi')
+       tdMaker(tr, document.getElementById('id_excess_cut_pct').value, 'hi')
+       tdMaker(tr, document.getElementById('id_plan_cut_qty').value, 'hi')
+       tdMaker(tr, document.getElementById('lead_time').value, 'hi')
+       tdMaker(tr, document.getElementById('id_fac_recieve_date').value, 'hi')
+       tdMaker(tr, document.getElementById('id_status_active').options[document.getElementById('id_status_active').selectedIndex].text, 'hi')
+       tdMaker(tr, document.getElementById('id_status_active').options[document.getElementById('id_status_active').selectedIndex].text, 'hi')
+   }
+   // FOR RESET FORM -- PO DETAILS
+   function myFunction() {
+       document.getElementsByClassName("poForm").reset();
+   }
 
-    function totalOty(id){
-    var subTotal = 0;
-    for(var i = 0; i<count; i++){
-      try{
-        var sub = parseFloat(document.getElementById(`id_color_size-${i}-order_qty`).value)
-        subTotal += sub  
-      }
-      catch(err){
-        continue
-      }
-    }
-    document.getElementById('order_quan').value = subTotal
+   function gmtItms(){
+       for(var i = 0; i<count; i++){
+           if(gmt.includes(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text) == false){
+               gmt.push(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text)
+           }
+       }
+   }
 
-    autoRate(rightID(id))
-    pipeLine()
-  }
+   function rightID(id){
+       var numPre = []
+       var number = 0
+       for(var i=0; i<id.length; i++){
+           if(parseInt(id[i]) || id[i] == '0'){
+               numPre.push(parseInt(id[i]))
+           }
+       }
+       for(var i = 0; i<numPre.length; i++){
+           number += numPre[i] * (10 ** (numPre.length - (i+1)))
+       }
+       return number
+   }
 
-    function totalRate(id){
-    var subTotal = 0;
-    var row = 1;
-    for(var i = 0; i<count; i++){
-      try{
-        var sub = parseFloat(document.getElementById(`id_color_size-${i}-rate`).value, 10)
-        subTotal = subTotal + sub
-        // AVERAGE BUG FIX - HAVE TO CHANGE VARIABLE NAME
-        x = subTotal / row
-        // console.log(i , row , sub, x)
-        row++;
-      }
-      catch(err){
-        continue
-      }
-    }
-    //document.getElementById('tt_rate').value = x
+   function autoRate(id){
+       var oty = document.getElementById(`id_color_size-${id}-order_qty`).value
+       var rate = document.getElementById(`id_color_size-${id}-rate`).value
 
-    autoRate(rightID(id))
-    pipeLine()
-  }
+       document.getElementById(`id_color_size-${id}-amount`).value = oty * rate
 
-    function totalAmt(){
-    var subTotal = 0;
-    for(var i = 0; i<count; i++){
-      try{
-        var sub = parseFloat(document.getElementById(`id_color_size-${i}-amount`).value)
-        subTotal += sub  
-      }
-      catch(err){
-        continue
-      }
-    }
-    document.getElementById('amt').value = subTotal
+       totalAmt()
+       pipeLine()
+   }
 
-    pipeLine()
-  }
+   function autoPCQT(id){
+       var oty = parseFloat(document.getElementById(`id_color_size-${id}-order_qty`).value, 10)
+       var exc = parseFloat(document.getElementById(`id_color_size-${id}-excess_cut`).value, 10)
 
-    function totalExc(id){
-    var subTotal = 0;
-    var row = 1
-    for(var i = 0; i<count; i++){
-      try{
-        var sub = parseFloat(document.getElementById(`id_color_size-${i}-excess_cut`).value, 10)
-        subTotal += sub
-        exc = subTotal / row
-        row++
-      }
-      catch(err){
-        continue
-      }
-    }
-    document.getElementById('exc').value = exc
+       var mid = oty*exc/100
 
-    autoPCQT(rightID(id))
-    pipeLine()
-  }
+       document.getElementById(`id_color_size-${id}-plan_cut_qty`).value = oty + mid
 
-    function totalPCQt(){
-    var subTotal = 0;
-    for(var i = 0; i<count; i++){
-      try{
-        var sub = parseFloat(document.getElementById(`id_color_size-${i}-plan_cut_qty`).value, 10)
-        subTotal += sub  
-      }
-      catch(err){
-        continue
-      }
-    }
-    document.getElementById('quan').value = subTotal
+       totalPCQt()
+       pipeLine()
+   }
 
-    pipeLine()
-  }
+   function totalOty(id){
+   var subTotal = 0;
+   for(var i = 0; i<count; i++){
+     try{
+       var sub = parseFloat(document.getElementById(`id_color_size-${i}-order_qty`).value)
+       subTotal += sub  
+     }
+     catch(err){
+       continue
+     }
+   }
+   document.getElementById('order_quan').value = subTotal
+
+   autoRate(rightID(id))
+   pipeLine()
+ }
+
+   function totalRate(id){
+   var subTotal = 0;
+   var row = 1;
+   for(var i = 0; i<count; i++){
+     try{
+       var sub = parseFloat(document.getElementById(`id_color_size-${i}-rate`).value, 10)
+       subTotal = subTotal + sub
+       // AVERAGE BUG FIX - HAVE TO CHANGE VARIABLE NAME
+       x = subTotal / row
+       // console.log(i , row , sub, x)
+       row++;
+     }
+     catch(err){
+       continue
+     }
+   }
+   //document.getElementById('tt_rate').value = x
+
+   autoRate(rightID(id))
+   pipeLine()
+ }
+
+   function totalAmt(){
+   var subTotal = 0;
+   for(var i = 0; i<count; i++){
+     try{
+       var sub = parseFloat(document.getElementById(`id_color_size-${i}-amount`).value)
+       subTotal += sub  
+     }
+     catch(err){
+       continue
+     }
+   }
+   document.getElementById('amt').value = subTotal
+
+   pipeLine()
+ }
+
+   function totalExc(id){
+   var subTotal = 0;
+   var row = 1
+   for(var i = 0; i<count; i++){
+     try{
+       var sub = parseFloat(document.getElementById(`id_color_size-${i}-excess_cut`).value, 10)
+       subTotal += sub
+       exc = subTotal / row
+       row++
+     }
+     catch(err){
+       continue
+     }
+   }
+   document.getElementById('exc').value = exc
+
+   autoPCQT(rightID(id))
+   pipeLine()
+ }
+
+   function totalPCQt(){
+   var subTotal = 0;
+   for(var i = 0; i<count; i++){
+     try{
+       var sub = parseFloat(document.getElementById(`id_color_size-${i}-plan_cut_qty`).value, 10)
+       subTotal += sub  
+     }
+     catch(err){
+       continue
+     }
+   }
+   document.getElementById('quan').value = subTotal
+
+   pipeLine()
+ }
 
 //   For SMV calculation
-  function total_ratio(id){
-    var subTotal = 0;
-    for(var i = 0; i<count; i++){
-      try{
-        var sub = parseFloat(document.getElementById(`id_order_smv-${i}-set_ratio`).value)
-        subTotal += sub  
-        console.log(subTotal)
-      }
-      catch(err){
-        continue
-      }
-    }
-    document.getElementById('tt_set_ratio').value = subTotal
-    totalSMV(id)
-  }
+ function total_ratio(id){
+   var subTotal = 0;
+   for(var i = 0; i<count; i++){
+     try{
+       var sub = parseFloat(document.getElementById(`id_order_smv-${i}-set_ratio`).value)
+       subTotal += sub  
+       console.log(subTotal)
+     }
+     catch(err){
+       continue
+     }
+   }
+   document.getElementById('tt_set_ratio').value = subTotal
+   totalSMV(id)
+ }
 
-  
-  function totalSew(id){
-    var subTotal = 0;
-    for(var i = 0; i<count; i++){
-      try{
-        var sub = parseFloat(document.getElementById(`id_order_smv-${i}-sew_smv_pcs`).value)
-        subTotal += sub  
-      }
-      catch(err){
-        continue
-      }
-    }
-    document.getElementById('tt_sew_smv').value = subTotal
+ 
+ function totalSew(id){
+   var subTotal = 0;
+   for(var i = 0; i<count; i++){
+     try{
+       var sub = parseFloat(document.getElementById(`id_order_smv-${i}-sew_smv_pcs`).value)
+       subTotal += sub  
+     }
+     catch(err){
+       continue
+     }
+   }
+   document.getElementById('tt_sew_smv').value = subTotal
 
-    totalSMV(id)
-  }
+   totalSMV(id)
+ }
 
-    function totalCut(id){
-        var subTotal = 0;
-        for(var i = 0; i<count; i++){
-        try{
-            var sub = parseFloat(document.getElementById(`id_order_smv-${i}-cut_smv_pcs`).value)
-            subTotal += sub  
-        }
-        catch(err){
-            continue
-        }
-        }
-    document.getElementById('tt_cut_smv').value = subTotal
-    totalSMV(id)
-  }
+   function totalCut(id){
+       var subTotal = 0;
+       for(var i = 0; i<count; i++){
+       try{
+           var sub = parseFloat(document.getElementById(`id_order_smv-${i}-cut_smv_pcs`).value)
+           subTotal += sub  
+       }
+       catch(err){
+           continue
+       }
+       }
+   document.getElementById('tt_cut_smv').value = subTotal
+   totalSMV(id)
+ }
 
-    function totalFin(id){
-        var subTotal = 0;
-        for(var i = 0; i<count; i++){
-        try{
-            var sub = parseFloat(document.getElementById(`id_order_smv-${i}-fin_smv_pcs`).value)
-            subTotal += sub  
-        }
-        catch(err){
-            continue
-        }
-        }
-       document.getElementById('tt_fin_smv').value = subTotal
-       totalSMV(id)
-  }
+   function totalFin(id){
+       var subTotal = 0;
+       for(var i = 0; i<count; i++){
+       try{
+           var sub = parseFloat(document.getElementById(`id_order_smv-${i}-fin_smv_pcs`).value)
+           subTotal += sub  
+       }
+       catch(err){
+           continue
+       }
+       }
+      document.getElementById('tt_fin_smv').value = subTotal
+      totalSMV(id)
+ }
 
-  String.prototype.replaceAt = function(index, replacement) {
-    return this.substr(0, index) + replacement + this.substr(index + 1, 24);
+ String.prototype.replaceAt = function(index, replacement) {
+   return this.substr(0, index) + replacement + this.substr(index + 1, 24);
 }
 
 function ID(id){
-    var calculation_list = []
-    for(var i = 0;i<smvID.length;i++){
-        var rep = smvID[i].replaceAt(13, String(id))
-        calculation_list.push(rep)
-    }
-    return calculation_list
+   var calculation_list = []
+   for(var i = 0;i<smvID.length;i++){
+       var rep = smvID[i].replaceAt(13, String(id))
+       calculation_list.push(rep)
+   }
+   return calculation_list
 }
 
 function totalSMV(id){
-    var arr = ID(rightID(id))
-    var subTotal = 0
+   var arr = ID(rightID(id))
+   var subTotal = 0
 
-    for(var i = 1;i<arr.length;i++){
-      if(parseFloat(document.getElementById(arr[i]).value) != NaN){
-          subTotal += parseFloat(document.getElementById(arr[i]).value)
-      }else{
-        continue
-      }
-    }
-    document.getElementById(`id_order_smv-${rightID(id)}-tt_smv`).value = subTotal * parseInt(document.getElementById(arr[0]).value)
-    smvAvg()
+   for(var i = 1;i<arr.length;i++){
+     if(parseFloat(document.getElementById(arr[i]).value) != NaN){
+         subTotal += parseFloat(document.getElementById(arr[i]).value)
+     }else{
+       continue
+     }
+   }
+   document.getElementById(`id_order_smv-${rightID(id)}-tt_smv`).value = subTotal * parseInt(document.getElementById(arr[0]).value)
+   smvAvg()
 }
 
-  function smvAvg(){
-    var subTotal = 0;
-    var row = 1
-    for(var i = 0; i<count; i++){
-      try{
-        var sub = parseFloat(document.getElementById(`id_order_smv-${i}-tt_smv`).value, 10)
-        subTotal += sub
-        y = subTotal / row
-        row++
-      }
-      catch(err){
-        continue
-      }
-    }
-    document.getElementById('tt_smv').value = y
-    document.getElementById("smv").value = y
-  }
- 
+ function smvAvg(){
+   var subTotal = 0;
+   var row = 1
+   for(var i = 0; i<count; i++){
+     try{
+       var sub = parseFloat(document.getElementById(`id_order_smv-${i}-tt_smv`).value, 10)
+       subTotal += sub
+       y = subTotal / row
+       row++
+     }
+     catch(err){
+       continue
+     }
+   }
+   document.getElementById('tt_smv').value = y
+   document.getElementById("smv").value = y
+ }
+
 </script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#po_select").change(function () {
+          if ($(this).val() == "Confirmed") {
+            
+            $('#modal').modal({
+                show: false
+            });
+
+            $('#po_quantity').on('dblclick', function() {
+              $('#modal').modal('show');
+            });
+           
+          } 
+      });
+    });
 </script>
 
 <script type="text/javascript"> 
@@ -1244,78 +1278,7 @@ function totalSMV(id){
         });
 </script>
 
-<script type="text/javascript"> 
 
-    // SUBMIT FORM WITHOUT PAGE RELOAD
-
-    $("#po_form").submit(function (event) {
-        event.preventDefault();
-        var form = $(this)
-        url = form.attr('action')
-        // var data = $("#net_amount").val()
-        $.ajax({
-        type: "POST",
-        url: url,
-        data: form.serialize(),
-        afterSend: function () {
-        
-        },
-        success: function (data) {
-            alert("Your Order is Succssfully Confirmed");
-        $("#show").show();
-        
-        },
-        error: function (data) {
-            alert("Something Went Wrong...");
-        }
-        })
-        });
-    </script>
-
-<script type="text/javascript"> 
-
-    // SUBMIT FORM WITHOUT PAGE RELOAD
-
-    $("#color").submit(function (event) {
-        event.preventDefault();
-        var form = $(this)
-        url = form.attr('action')
-        // var data = $("#net_amount").val()
-        $.ajax({
-        type: "POST",
-        url: url,
-        data: form.serialize(),
-        afterSend: function () {
-        
-        },
-        success: function (data) {
-            fetcher()
-            alert("Color-Size Added....");
-            $("#show").show();
-        },
-        error: function (data) {
-            alert("Something Went Wrong...");
-        }
-
-        })
-        });
-    </script>
-<script type="text/javascript">
-    // SHOW AND HIDE FORM AFTER SUBMIT
-    $(document).ready(function() {
-        $('#output').hide();
-        $('#form').submit(function(){
-        $('#output').show();   
-        });
-    });
-
-    $(document).ready(function () {
-        $("#form").submit(function () {
-            $(".submitBtn").attr("disabled", true);
-            return true;
-        });
-    });
-</script>
 
 <!-- FOR COLOR SIZE INLINE -->
 <script type="text/javascript">
@@ -1347,9 +1310,21 @@ function totalSMV(id){
     console.log(Difference_In_Days)
 });
 </script>
-
-
-
+<script>
+    function checkOption(obj) {
+        var quantity = document.getElementById("po_quantity");
+        var avgPrice = document.getElementById("id_avg_price");
+        var amount = document.getElementById("id_amount");
+        var excesscut = document.getElementById("id_excess_cut_pct");
+        var planCut = document.getElementById("id_plan_cut_qty");
+        quantity.readOnly = obj.value == "Confirmed";
+        avgPrice.readOnly = obj.value == "Confirmed";
+        amount.readOnly = obj.value == "Confirmed";
+        excesscut.readOnly = obj.value == "Confirmed";
+        planCut.readOnly = obj.value == "Confirmed";
+    }
+</script>
 
   
 {% endblock script %}
+

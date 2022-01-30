@@ -59,6 +59,7 @@
  <!-- Main content -->
  <section class="content ">
     <div class="container-fluid mt-3">
+      <div class="">{% include 'Index/alerts.html' %}</div>
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <!-- ./col -->
@@ -147,12 +148,8 @@
             <div class="card-body">
               <div class="chart text-right">
                 <form action="" method="get">
-                  <select class="dropdown chart-searchbar" id="dd" name="year" onchange="this.form.submit()">
-                    <option value="Select year" selected='selected'>Select year</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
-                    <option value="2023">2023</option>
-                    <option value="2024">2024</option> 
+                  <select class="dropdown chart-searchbar" id="yearPicker" name="year" onchange="this.form.submit()">
+                    <option value="Select year" selected>Select year</option>
                   </select>
                 </form>
                 <canvas id="orderValueChart" width="400" height="200"></canvas>
@@ -170,7 +167,20 @@
 {% endblock body %}
 
 {% block script %}
-
+<script>
+  $('#yearPicker').each(function() {
+    var year = (new Date()).getFullYear();
+    var current = year;
+    console.log(current)
+    year = 2008;
+    for (var i = 0; i < 26; i++) {
+      if ((year+i) == current){
+        $(this).append('<option value="' + (year + i) + '">' + (year + i) + '</option>');}
+      else
+        $(this).append('<option value="' + (year + i) + '">' + (year + i) + '</option>');
+    }
+  });
+</script>
 <script>
   var iter = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec']
   var ov = JSON.parse('{{ api_ov | escapejs }}');
@@ -233,6 +243,7 @@
       }
   });
   </script>
+ 
 
 
 

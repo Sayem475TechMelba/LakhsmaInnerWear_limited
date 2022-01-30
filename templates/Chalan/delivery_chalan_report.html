@@ -6,27 +6,7 @@
 
 {% block css %}
 <style>
-    .bg-gray{
-        background-color:rgb(226, 218, 218);
-    }
-    .bg-nevi{
-        background-color:#085d63;
-        color:white;
-    }
-
-    .bg-pur{
-      background-color: #594c6f;
-      color: white;
-    }
-    .bg-pink{
-      background-color: #92466f;
-      color: white;
-    }
-    
-    .bg-olive{
-      background-color: #7f821d;
-      color: white;
-    }
+   
     tfoot {
       display:table-header-group;
     }
@@ -36,108 +16,95 @@
 {% block body %}
 
 
-  <div class="container-fluid">
-    <div class="d-flex">
-      <div class="mr-auto p-2">
-        <a type="button" href="{% url 'deliveryChalan' %}" class="btn btn-sm btn-info gr"><i class="fa fa-plus" aria-hidden="true"></i> Add Chalan</a>
-      </div>
-      <div class="p-2">
-        <a  type="btn" class="btn btn-sm btn-light " onClick="javascript:history.go(-1);"><i class="fa fa-undo" aria-hidden="true"></i></a>
-      </div>
+<div class="container-fluid search-box">
+  <div class="d-flex">
+    <div class="mr-auto p-2">
+      <a type="button" href="{% url 'deliveryChalan' %}" class="btn btn-sm btn-info gr"><i class="fa fa-plus" aria-hidden="true"></i> Add Chalan</a>
     </div>
-   
-      <div class="card mt-2">
-          <div class="card-header">
-            <h3 class="card-title">Delivery Chalan</h3>
-          </div>
-          <div class="  search mt-3 text-center">
-            <h5><strong>Advance Search: </strong> </h5>
-            <form method="GET" class="p-3" action="{% url 'delivery_chalan_report' %}">
-              <div class="table-responsive-sm table-responsive">
-                <table  class="table table-bordered  table-sm">
-                  <thead class="bg-secondary">
-                    <tr>
-                      <th>Factory Name</th>
-                      <th>Chalan No.</th>
-                      <th>Invoice No.</th>
-                      <th>Job No.</th>
-                      <th>Buyer Name</th>
-                      <th>Driver Name</th>
-                      <th>Ship Mode</th>
-                      <th>Port Name</th>
-                      <th>Start Date</th>
-                      <th>End Date </th>
-                      <!-- <th>Action</th> -->
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>{{ myFilter.form.factory_name|attr:"class:form-control"}}</td>
-                      <td>{{ myFilter.form.chalan_no|attr:"class:form-control"}}</td>
-                      <td>{{ myFilter.form.invoice_no|attr:"class:form-control"}}</td>
-                      <td>{{ myFilter.form.job_no|attr:"class:form-control"}}</td>
-                      <td>{{ myFilter.form.buyer_name|attr:"class:form-control"}}</td>
-                      <td>{{ myFilter.form.driver_name|attr:"class:form-control"}}</td>
-                      <td>{{ myFilter.form.shipmode|attr:"class:form-control"}}</td>
-                      <td>{{ myFilter.form.port_name|attr:"class:form-control"}}</td>
-  
-                      <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control" }}</td>
-                      <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control" }}</td>
-                      
-  
-                      <!-- <td><button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search" aria-hidden="true"></i></button>
-                        <a href="{% url 'delivery_chalan_report' %}" type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times " aria-hidden="true"></i></a></td> -->
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              
-
-              <div class="container justify-content-center align-content-center text-center">
-                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i> Search</button>
-                <a href="{% url 'delivery_chalan_report' %}" type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times mr-2" aria-hidden="true"></i> Reset</a>
-              </div>
-
-
-            </form>
-          </div>
-
-          <div class="container  text-center table-responsive  table-responsive-sm">
-            <table class="mb-2 ">
-              <thead >
-                  <td width="20%">
-                    <select id="getYear" onChange="copyTextValue()" class="form-control">
-                      <option value="" disabled selected>Select</option>
-                      <option value="2021">2021</option>
-                      <option value="2020">2020</option>
-                    </select>
-                  </td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4 " >Jan</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Feb</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Mar</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Apr</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">May</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Jun</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Jul</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Aug</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Sep</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Oct</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4" onclick="myFunction()"  id="getMonth">Nov</button></td>
-                  <td><button type="" class="btn btn-sm btn-info ml-4">Dec</button></td>
-              </thead>
-            </table>
-          </div>
-  
-        
-        </div>
+    <div class="p-2">
+      <a  type="btn" class="btn btn-sm btn-light " onClick="javascript:history.go(-1);"><i class="fa fa-undo" aria-hidden="true"></i></a>
+    </div>
   </div>
+  <div class="text-center mt-2 font-weight-bold"><h5>Delivery Challan</h5></div>
+    <div class="card   ">
+        <div class=" search text-center">
+          <form method="GET" class="p-1" action="{% url 'delivery_chalan_report' %}">
+            <div class="">
+              <table  class="table table-sm table-bordered table-responsive  table-responsive-sm ">
+                <thead class="bg-meroon">
+                  <tr>
+                    <th>Factory Name</th>
+                    <th>Chalan No.</th>
+                    <th>Invoice No.</th>
+                    <th>Job No.</th>
+                    <th>Buyer Name</th>
+                    <th>Driver Name</th>
+                    <th>Ship Mode</th>
+                    <th>Port Name</th>
+                    <th>Start Date</th>
+                    <th>End Date </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{{ myFilter.form.factory_name|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.chalan_no|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.invoice_no|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.job_no|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.buyer_name|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.driver_name|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.shipmode|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.port_name|attr:"class:form-control"}}</td>
+                    <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control" }}</td>
+                    <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control" }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="container justify-content-center align-content-center text-center">
+              <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i> Search</button>
+              <a href="{% url 'delivery_chalan_report' %}" type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times mr-2" aria-hidden="true"></i> Reset</a>
+            </div>
+          </form>
+        </div>
+        <div class="container ">
+          <div class="d-flex justify-content-center table-responsive">
+            <div class="p-2">
+              <table class="mb-1 table-sm  table-responsive-sm ">
+                <thead>
+                    <td width="20%">
+                      <select id="getYear" onChange="copyTextValue()" class="form-control">
+                        <option value="" disabled selected>Select</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                      </select>
+                    </td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2 " >Jan</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Feb</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Mar</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Apr</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">May</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Jun</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Jul</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Aug</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Sep</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Oct</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2" onclick="myFunction()"  id="getMonth">Nov</button></td>
+                    <td><button type="" class="btn btn-sm btn-info ml-2">Dec</button></td>
+                </thead>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
 
   {% if  '/delivery_chalan_report/?' in request.get_full_path %}
   <div class="container-fluid">
       <!-- /.card-header -->
       <div class="card-body table-responsive ">
         <table id="challan_report" class="table table-hover   table-bordered table-striped  table-sm display">
-          <thead class='bg-secondary'>
+          <thead class=' bg-info'>
             <tr>
               <th>SL.</th>
               <th>Factory Name</th>
@@ -224,9 +191,9 @@
           <tfoot >
             <tr>
              <th colspan="7" class="text-right font-weight-bolder">Total:</th>
-             <th id="shipqty"></th>
-             <th id="shipCart_qty"></th>
-             <th id="total_CBM"></th>
+             <th id="shipqty" class="bg-yel"></th>
+             <th id="shipCart_qty" class="bg-yel"></th>
+             <th id="total_CBM" class="bg-yel"></th>
              <th colspan="5" ></th>
 
              
@@ -263,7 +230,10 @@
         const total_CBM = this.api().column(9,{search:'applied'}).data().toArray().reduce((total,total_CBM) => total+=Number(total_CBM.replace(/[^0-9\.]/g,'')),0);
         $('#total_CBM').text(` ${(total_CBM)}`);
       },
-      "lengthMenu": [[50,100, 150, -1], [50,100,150, "All"]],
+
+      "lengthMenu": [[500,1000,-1], [500,1000,"All"]],
+      "scrollY": 470,
+      "scrollX": true,
         initComplete: function () {
             // Apply the search
             this.api().columns().every( function () {

@@ -62,8 +62,9 @@
           <div class="row">
               <div class="col-md-12 P-4">
               
-                  <form method="post" action="}" enctype="multipart/form-data">
+                  <form method="post" action="{% url 'pre_costing' %}" enctype="multipart/form-data">
                       {% csrf_token %}
+                      <input type="hidden" name="_task" value="cost_form">
                       <div class="form-group row ">
                           <label for="job_no" class="col-sm-2 col-form-label ">Job No.</label>
                           <div class="col-sm-2 ">
@@ -72,18 +73,13 @@
                           </div>
                           <label for="company_name" class="col-sm-2 col-form-label label">Company</label>
                           <div class="col-sm-2 ">
-                            <select class="form-control">
-                                <option>Lakhsma</option>
-                                <option>2</option>
-                                
-                              </select>
-                            <!-- {{ form.company_name|attr:"class:form-control"|attr:"required" }} -->
+                            
+                            {{ form.company|attr:"class:form-control"}}
                             
                           </div>
                           <label for="company_location" class="col-sm-2 col-form-label label">Quotation ID</label>
                           <div class="col-sm-2 ">
-                            <input type="text" class="form-control" >
-                            <!-- {{ form.company_location|attr:"class:form-control"|attr:"required" }} -->
+                            {{ form.quotation_id|attr:"class:form-control"}}
                             
                           </div>
                         </div>
@@ -92,21 +88,18 @@
                         <div class="form-group row ">
                             <label for="style_ref" class="col-sm-2 col-form-label label">Style Ref</label>
                           <div class="col-sm-2 ">
-                            <input type="text" class="form-control" >
-                            <!-- {{ form.style_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style Ref"|attr:"required" }} -->
+                            {{ form.style_ref|attr:"class:form-control"|attr:"type:text"}}
 
                           </div>
                           
                           <label for="style_description" class="col-sm-2 col-form-label label">Style Description</label>
                           <div class="col-sm-2 ">
-                              <textarea type="text" class="form-control" rows="1"></textarea>
-                            <!-- {{ form.style_description|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Style Description"|attr:"rows:2"}} -->
+                            {{ form.style_desc|attr:"class:form-control"|attr:"type:text"}}
 
                           </div>
                           <label for="buyer_name" class="col-sm-2 col-form-label ">Buyer Name</label>
                           <div class="col-sm-2 ">
-                            <input type="text" class="form-control" >
-                            <!-- {{ form.buyer_name|attr:"class:form-control"|attr:"required" }} -->
+                            {{ form.buyer_name|attr:"class:form-control" }}
                             
                           </div>
                           
@@ -134,71 +127,49 @@
                                 <tbody >
                                     <tr >
                                         <td >
-                                            <select class="form-control">
-                                                <option>Ladis</option>
-                                                <option>Gents</option>
-                                                
-                                              </select>
-                                            <!-- {{ form.product_dept|attr:"class:form-control"|attr:"required" }} -->
+                                            
+                                            {{ form.prod_dept|attr:"class:form-control" }}
                                             
                                         </td>
 
                                         <td >
-                                            <select class="form-control">
-                                                <option>USD</option>
-                                                <option>BDT</option>
-                                                
-                                              </select>
-                                            <!-- {{ form.sub_dept|attr:"class:form-control"|attr:"required" }} -->
+                                           
+                                            {{ form.currency|attr:"class:form-control" }}
                                          
                                         </td>
 
                                         <td >
-                                            <input type="text" class="form-control" >
-                                            <!-- {{ form.product_cate|attr:"class:form-control"|attr:"required" }} -->
+                                            {{ form.er|attr:"class:form-control" }}
 
                                         </td>
                                         <td >
-                                            <select class="form-control">
-                                                <option disabled selected>Select Agent</option>
-                                                <option></option>
-                                                
-                                              </select>
-                                            <!-- {{ form.product_cate|attr:"class:form-control"|attr:"required" }} -->
+                                            
+                                            {{ form.agent|attr:"class:form-control"}}
 
                                         </td>
                                         <td >
-                                            <input type="number" class="form-control" >
-                                            <!-- {{ form.currency|attr:"class:form-control"|attr:"required" }} -->
+                                            {{ form.job_qty|attr:"class:form-control"}}
+
+                                        </td>
+                                        
+                                        <td >
+                                            {{ form.order_unit|attr:"class:form-control"}}
 
                                         </td>
                                         <td >
-                                            <select class="form-control">
-                                                <option>Pcs</option>
-                                                <option>Pound</option>
-                                                
-                                              </select>
-                                            <!-- {{ form.region|attr:"class:form-control"|attr:"required" }} -->
+                                            {{ form.item_details|attr:"class:form-control"}}
 
                                         </td>
                                         <td >
-                                            <textarea type="text" class="form-control" rows="1" placeholder="Item Details"></textarea>
-                                            <!-- {{ form.repeat_job_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Repeat No/Job"}} -->
-
-                                        </td>
-                                        <td >
-                                            <input type="date" class="form-control" >
-                                            <!-- {{ form.team_leader|attr:"class:form-control"|attr:"required" }} -->
-
-                                        </td>
-                                        <td >
-                                            <select class="form-control">
-                                               <option>FOB</option>
-                                               
-                                             </select>
-                                           <!-- {{ form.dealing_merchant|attr:"class:form-control"|attr:"required" }} -->
+                                           
+                                           {{ form.costing_date|attr:"class:form-control"|attr:"type:date" }}
 
                                        </td>
+                                       <td >
+                                            
+                                        {{ form.incoterm|attr:"class:form-control"}}
+
+                                    </td>
                                         
                                     </tr>
                                 </tbody>
@@ -228,58 +199,43 @@
                                        
                                         
                                         <td >
-                                            <input type="text" class="form-control" >
-                                            <!-- {{ form.factory_merchant|attr:"class:form-control"|attr:"required" }} -->
+                                            {{ form.incoterm_place|attr:"class:form-control"}}
 
-                                           
                                         </td>
                                        
                                         <td >
-                                            <input type="number" class="form-control" >
-                                            <!-- {{ form.bh_merchant|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Buying House Merchant"}} -->
+                                            {{ form.machine_line|attr:"class:form-control"}}
 
-                                             
                                         </td>
                                         
                                         <td >
-                                            <input type="text" class="form-control" >
-                                             <!-- {{ form.remarks|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Remarks"|attr:"rows:1"}} -->
+                                             {{ form.prod_line|attr:"class:form-control"|attr:"type:text"}}
 
                                         </td>
                                         <td >
-                                            <select class="form-control">
-                                                <option>For 1 Dzn</option>
-                                                
-                                              </select>
-                                            <!-- {{ form.ship_mode|attr:"class:form-control"|attr:"required" }} -->
+                                            
+                                            {{ form.costing_per|attr:"class:form-control"}}
                                         
                                             
                                         </td>
                                         <td >
-                                            <select class="form-control">
-                                                <option>Asia</option>
-                                                
-                                              </select>
-                                            <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                            
+                                            {{ form.region|attr:"class:form-control"}}
 
                                         </td>
-                                      
-
+                                       
                                         <td >
-                                            <input type="number" class="form-control" >
-                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
-
-                                        </td>
-                                        <td >
-                                            <input type="number" class="form-control" >
-                                            <!-- {{ form.packing|attr:"class:form-control"|attr:"required" }} -->
+                                            {{ form.sew_smv|attr:"class:form-control"}}
 
                                            
                                         </td>
                                        
                                         <td >
-                                            <input type="number" class="form-control" >
-                                            <!-- {{ form.season|attr:"class:form-control"|attr:"required" }} -->
+                                            {{ form.sew_efficiency|attr:"class:form-control" }}
+
+                                        </td>
+                                        <td >
+                                            {{ form.cut_smv|attr:"class:form-control" }}
 
                                         </td>
                                     </tr>
@@ -311,41 +267,35 @@
                                         
                                         
                                         <td >
-                                            <input type="text" class="form-control" >
-                                            <!-- {{ form.agent|attr:"class:form-control"|attr:"required" }} -->
+                                            {{ form.cut_efficiency|attr:"class:form-control" }}
 
 
                                         </td>
                                         
                                         <td >
-                                            <input type="text" class="form-control" >
-                                             <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+                                             {{ form.remarks|attr:"class:form-control"|attr:"type:text"|attr:"rows:1"}}
 
                                         </td>
                                         <td >
-                                            <textarea type="text" class="form-control" rows="1" placeholder="Item Details"></textarea>
-                                            <!-- {{ form.ship_mode|attr:"class:form-control"|attr:"required" }} -->
+                                            {{ form.budget_minute|attr:"class:form-control" }}
                                         
                                             
                                         </td>
                                         <td >
-                                            <input type="file" class="form-control" >
-                                            <!-- {{ form.image|attr:"class:form-control"|attr:"type:file"}} -->
+                                            {{ form.image|attr:"class:form-control"|attr:"type:file"}}
+
+                                        </td>
+                                        <td >
+                                            {{ form.file_no|attr:"class:form-control"|attr:"type:text"}}
                                            
                                         </td>
+                                       
                                         <td >
-                                            <input type="text" class="form-control" placeholder="Display" >
-                                            <!-- {{ form.file|attr:"class:form-control"|attr:"type:file"}} -->
+                                            {{ form.internal_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Internal Ref."}}
 
                                         </td>
                                         <td >
-                                            <input type="text" class="form-control" placeholder="Display" >
-                                            <!-- {{ form.internal_ref|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Internal Ref."}} -->
-
-                                        </td>
-                                        <td >
-                                            <input type="text" class="form-control"  >
-                                            <!-- {{ form.copy_form|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Copy Form"}} -->
+                                            {{ form.copy_form|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Copy Form"}}
 
 
                                         </td>
@@ -366,17 +316,13 @@
                         <div class="form-group row mt-2">
                             <label for="company_name" class="col-sm-2 col-form-label label">Ready To Approved</label>
                             <div class="col-sm-2 ">
-                                <select class="form-control">
-                                    <option>Yes</option>
-                                    <option>No</option>
-                                    
-                                  </select>
+                                {{ form.redy_to_approved|attr:"class:form-control"}}
+
 
                             </div>
                             <label for="company_name" class="col-sm-2 col-form-label label">Mini Marker Upload</label>
                             <div class="col-sm-2 ">
-                                <input type="file" class="form-control" >
-                                <!-- {{ form.design_source|attr:"class:form-control"|attr:"required" }} -->
+                                {{ form.mini_marker_upload|attr:"class:form-control"}}
 
                             </div>
                             <label for="location_name" class="col-sm-2 col-form-label label">Un-approve Request</label>
@@ -387,10 +333,7 @@
                         <div class="form-group row mt-2">
                             <label for="approved" class="col-sm-2 col-form-label label">Approved</label>
                             <div class="col-sm-2 ">
-                                <select class="form-control">
-                                    <option>Yes</option>
-                                    <option>No</option>
-                                  </select>
+                                {{ form.approved|attr:"class:form-control"}}
                             </div>
                           </div>
 

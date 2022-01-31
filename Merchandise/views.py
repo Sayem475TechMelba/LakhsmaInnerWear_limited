@@ -1762,8 +1762,28 @@ def delete_order(request, id):
     po.delete()
     return redirect('order_report')
 
+####### Budget Pre Costing Form ##########
 def pre_costing(request):
-    return render(request, 'Merchandising/Order/pre_costing.html')
+    form = BudgetPreCostForm(request.POST, request.FILES)
+    if request.method == 'POST':
+        if request.POST.get('_task') == "cost_form":
+            form = BudgetPreCostForm(request.POST)
+            if form.is_valid():
+                form.save()
+                inserted_by = request.user
+                form.instance.inserted_by = inserted_by
+                form.save()
+                messages.success(request, "Your budget costing info has been recorded!")
+                return HttpResponseRedirect(request.path_info)
+            else:
+                messages.error(request , "Something went wrong!")
+                print(form.errors)
+    form = BudgetPreCostForm()
+        
+    context ={
+        'form':form, 
+    }
+    return render(request, 'Merchandising/Order/pre_costing.html', context)
 
 def shipment_schedule(request):
     orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')

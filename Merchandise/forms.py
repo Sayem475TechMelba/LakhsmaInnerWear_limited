@@ -222,3 +222,10 @@ class AddPoDeatilsForm(forms.ModelForm):
     class Meta:
         model = PO_Details
         exclude = ['inserted_by']
+    
+########### All Budget Costing Form ###########
+class BudgetPreCostForm(forms.ModelForm):
+    
+    class Meta:
+        model = BudgetPreCost
+        exclude = ['inserted_by', 'job_no']

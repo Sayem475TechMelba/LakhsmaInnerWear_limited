@@ -10,40 +10,7 @@
 tfoot {
      display: table-header-group;
 }
-.report-control {
-    border-radius: 0;
-    box-shadow: none;
-    border: 1px solid #e4e5e7;
-    display: block;
-    width: 150px;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    font-weight: 400;
-    background-clip: padding-box;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-.schedule-form {
-    border-radius: 0;
-    box-shadow: none;
-    border: 1px solid #e4e5e7;
-    display: block;
-    width: 130px;
-    height: 34px;
-    padding: 6px 12px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #555;
-    background-color: #fff;
-    background-image: none;
-    font-weight: 400;
-    background-clip: padding-box;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
+
 </style>
 {% endblock css %}
 
@@ -725,7 +692,7 @@ tfoot {
       // Setup - add a text input to each footer cell
       $('#shipment_report #tfooter th').each( function () {
           var title = $(this).text();
-          $(this).html( '<input type="text" class="report-control" placeholder="Search" />' );
+          $(this).html( '<input type="text" class="form-controls" placeholder="Search" />' );
       });
 
       // CALCULATION FOR REPORT PANEL (ORDER VALUE) ===--->
@@ -864,7 +831,7 @@ tfoot {
     // Setup - add a text input to each footer cell
     $('#confirmed #tfooter th').each( function () {
         var title = $(this).text();
-        $(this).html( '<input type="text" class="schedule-form" placeholder="Search" />' );
+        $(this).html( '<input type="text" class="form-controls" placeholder="Search" />' );
     } );
     var collapsedGroups = {};
  
@@ -1060,7 +1027,7 @@ tfoot {
     // Setup - add a text input to each footer cell
     $('#projected #tfooter th').each( function () {
         var title = $(this).text();
-        $(this).html( '<input type="text" class="schedule-form" placeholder="Search" />' );
+        $(this).html( '<input type="text" class="form-controls" placeholder="Search" />' );
     });
     
 
@@ -1253,7 +1220,7 @@ tfoot {
     // Setup - add a text input to each footer cell
     $('#pc_report #tfooter th').each( function () {
         var title = $(this).text();
-        $(this).html( '<input type="text" class="schedule-form" placeholder="Search" />' );
+        $(this).html( '<input type="text" class="form-controls" placeholder="Search" />' );
     } );
    
     // DataTable

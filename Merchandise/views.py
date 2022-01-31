@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib import messages, auth
+from sklearn.metrics import consensus_score
 from .forms import *
 from .models import *
 from Merchandise.filters import *
@@ -1778,6 +1779,17 @@ def pre_costing(request):
             else:
                 messages.error(request , "Something went wrong!")
                 print(form.errors)
+        else:
+            print(helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'avg_price'))
+            print(helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'po_quantity'))
+            context ={
+            'form':form,
+            'fetch': OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])),
+            'total_po': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'po_quantity'),
+            'total_avg_price': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'avg_price'),
+            }
+            return render(request, 'Merchandising/Order/pre_costing.html', context)
+
     form = BudgetPreCostForm()
         
     context ={

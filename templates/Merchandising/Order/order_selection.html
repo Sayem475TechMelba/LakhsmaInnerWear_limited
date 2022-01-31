@@ -113,7 +113,8 @@ tfoot {
           </div>
         </div>
   </div>
-
+  <form method="POST" action="{% url 'pre_costing' %}">
+    {% csrf_token %}
   <div class="container-fluid">
      <div class="container-fluid mt-2 table-responsive">
       <table id="selection" name="selection" class="table table-bordered table-striped  table-responsive-sm table-sm display">
@@ -174,14 +175,15 @@ tfoot {
             <td >{{i.pub_shipment_date}}</td>
             
             <td>0 </td>
-            <td> <a href="#" class="btn btn-sm btn-success">Select</a> </td>
-            
+            <td> <button type="submit" name="_task" class="btn btn-sm btn-success" value="{{ i.po_job_no }}">Select</button> </td>
           </tr>
           {% endfor %}
+        </form>
         </tbody>
       </table>
     </div>
   </div>
+  </form>
 
 {% endblock body %}
 

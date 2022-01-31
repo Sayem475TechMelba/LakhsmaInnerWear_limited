@@ -562,7 +562,7 @@
                                         <table class="table table-bordered table-hover table-sm" >
                                             <thead >
                                                 <tr>
-                                                    <th colspan="5"> <h6  class="font-weight-bold ml-2">Copy Panel </h6> </th>
+                                                    <th colspan="6"> <h6  class="font-weight-bold ml-2">Copy Panel </h6> </th>
                                                 </tr>
                                                 <tr class="bg-meroon">
                                                     <th class="text-center "> Article Number </th>
@@ -570,24 +570,38 @@
                                                     <th class="text-center ">Fabrication</th>
                                                     <th class="text-center "> Rate </th>
                                                     <th class="text-center"> Excess Cut </th>
+                                                    <th class="text-center"> Action </th>
                                                 </tr>
                                             </thead>
                                             <tbody >
+
                                                 <tr >
                                                     <td >
-                                                        <input type="text" class="form-control" id="article" oninput="copyState(id)">
+                                                        <input type="text" class="form-control rstCopy" id="article" oninput="copyState(id)">
                                                     </td>
                                                     <td >
-                                                        <input type="text" class="form-control" id="color" oninput="copyState(id)">
+                                                        <input type="text" class="form-control rstCopy" id="color" oninput="copyState(id)">
                                                     </td>
                                                     <td >
-                                                        {{ fab.fabrication|attr:"class:form-control"|attr:"id:fab"|attr:"oninput:copyState(id)" }}
+                                                        <!-- <select class="form-control"  id="fab" oninput="copyState(id)">
+                                                            {% for i in fab %}
+                                                            <option value={{i.fabrication}}>{{i.fabrication}}</option>
+                                                            {% endfor %}
+                                                            
+                                                          </select> -->
+                                                          {% for fab in form_items %}
+                                                        {{ fab.fabrication|attr:"class:form-control rstCopy"|attr:"id:fab"|attr:"oninput:copyState(id)" }}
+                                                         {% endfor %}
                                                     </td>
                                                     <td >
-                                                        <input type="text" class="form-control" id="rate" oninput="copyState(id)">
+                                                        <input type="text" class="form-control rstCopy" id="rate" oninput="copyState(id)">
                                                     </td>
                                                     <td >
-                                                        <input type="text" class="form-control" id="ec" oninput="copyState(id)">
+                                                        <input type="text" class="form-control rstCopy" id="ec" oninput="copyState(id)">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-sm btn-success " id="copybutton" onclick="copyData()">Copy</button>
+                                                        <button type="button" class="btn btn-sm btn-danger ml-1 reset"  onclick="resetCopy()">Reset</button>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -729,7 +743,7 @@
                                                                                   </td>
                                                                                
                                                                             </tr>
-                                                                            <button type="button" id="copybutton" onclick="copyData()">Copy</button>
+                                                                           
                                                                         </tfoot>
                                                                 </table>
                                                             </div>
@@ -941,6 +955,7 @@
         document.getElementById(rateId).value = document.getElementById('rate').value
         document.getElementById(ecId).value = document.getElementById('ec').value
         document.getElementById(fabId).value = document.getElementById('fab').value
+
      }
 
      function dblCount(){
@@ -1466,6 +1481,19 @@ function totalSMV(id){
 
     
  
+</script>
+<script>
+    //For reset copy panel
+    $(document).ready(function() {
+        $(':input.rstCopy').each(function() {
+            $(this).attr('data-rstCopy', $(this).val());
+        });
+        $('button.reset').click(function() {
+            $(':input.rstCopy').each(function() {
+                $(this).val($(this).attr('data-rstCopy'));
+            });
+        });
+    });
 </script>
 
 

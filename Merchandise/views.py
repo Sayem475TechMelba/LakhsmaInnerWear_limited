@@ -1549,12 +1549,14 @@ def order_entry(request):
     po_form = PoDeatilsForm()
     items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm, extra=1)
     form_items = items_factory()
+    fab=LibraryFabrication.objects.all()
     
     context = {
         'form': form,
         'po_form': po_form,
         'job': 'LAK-O' + str(job),
         'form_items': form_items,
+        'fab':fab,
         'form_smv_items': form_smv_items,
     }
     return render(request, 'Merchandising/Order/order_entry.html', context)

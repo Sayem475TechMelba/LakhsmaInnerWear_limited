@@ -23,15 +23,12 @@ tfoot {
 
   <div class="container-fluid">
     
-      <div class="text-center mt-5 font-weight-bold"><h3>Job Order Selection Form</h3></div>
-      <div class="card mt-2">
-          <div class="card-header text-uppercase bg-secondary">
-            <h3 class="card-title">Search Here</h3>
-          </div>
-          <div class=" search mt-3 text-center">
-            <form method="GET" class="ml-2" action="{% url 'order_selection' %}">
-              <table  class="table table-bordered table-responsive  table-sm">
-                <thead>
+      <div class="text-center"><h5>Job Order Selection Form</h5></div>
+      <div class="card mt-2  ">
+          <div class="search table-responsive  mt-1 text-center">
+            <form method="GET" class="ml-2 mr-2" action="{% url 'order_selection' %}">
+              <table  class="table table-bordered table-responsive-sm  table-sm">
+                <thead class="bg-meroon">
                   <tr>
                     <th width="150px;">Company Name</th>
                     <th >Buyer Name</th>
@@ -44,7 +41,6 @@ tfoot {
                     <th >Start Date</th>
                     <th >End Date</th>
                   </tr>
-                  
                 </thead>
                 <tbody>
                   <tr>
@@ -74,62 +70,57 @@ tfoot {
                     <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control"|attr:"id:start_date"  }}</td>
                     <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control"|attr:"id:end_date"  }}</td>
 
-
-                    <!-- <td><button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search" aria-hidden="true"></i></button>
-                      <a href="{% url 'order_report' %}" type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
-                    </td> -->
                   </tr>
                   
                 </tbody>
                
               </table>
-              <div class="container justify-content-center align-content-center text-center mb-3">
+              <div class="container justify-content-center align-content-center text-center">
                 <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Show</button>
                 <a href="{% url 'order_selection' %}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i> Reset</a>
               </div>
               
             </form>
-            <div class="container text-center">
-                <table>
-                  <thead >
-                      <td ><select class="form-control">
-                        <option>2021</option>
-                        <option>2020</option>
-                        
-                      </select>
-                      </td>
-                      <td><button type="" class="btn btn-sm btn-success ml-4 ">Jan</button></td>
-                      <td><button type="" class="btn btn-sm btn-success ml-4">Feb</button></td>
-                      <td><button type="" class="btn btn-sm btn-success ml-4">Mar</button></td>
-                      <td><button type="" class="btn btn-sm btn-success ml-4">Apr</button></td>
-                      <td><button type="" class="btn btn-sm btn-success ml-4">May</button></td>
-                      <td><button type="" class="btn btn-sm btn-success ml-4">Jun</button></td>
-                      <td><button type="" class="btn btn-sm btn-success ml-4">Jul</button></td>
-                      <td><button type="" class="btn btn-sm btn-success ml-4">Aug</button></td>
-                      <td><button type="" class="btn btn-sm btn-success ml-4">Sep</button></td>
-                      <td><button type="" class="btn btn-sm btn-success ml-4">Nov</button></td>
-                      <td><button type="" class="btn btn-sm btn-success ml-4">Dec</button></td>
-  
-                  </thead>
-                </table>
+            <div class="container ">
+              <div class="d-flex justify-content-center table-responsive">
+                <div class="p-2">
+                  <table class="mb-1 table-sm  table-responsive-sm ">
+                    <thead>
+                        <td width="20%">
+                          <select id="getYear" onChange="copyTextValue()" class="form-control">
+                            <option value="" disabled selected>Select</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                          </select>
+                        </td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2 " >Jan</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Feb</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Mar</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Apr</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">May</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Jun</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Jul</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Aug</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Sep</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Oct</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2" onclick="myFunction()"  id="getMonth">Nov</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Dec</button></td>
+                    </thead>
+                  </table>
+                </div>
               </div>
+            </div>
           </div>
-  
-         
         </div>
   </div>
 
   <div class="container-fluid">
-     <!-- /.card-header -->
-     <div class="container-fluid mt-5">
-           
-      <table id="selection" name="selection" class="table table-bordered table-striped  table-responsive display">
-        <thead class="bg-secondary">
-          
+     <div class="container-fluid mt-2 table-responsive">
+      <table id="selection" name="selection" class="table table-bordered table-striped  table-responsive-sm table-sm display">
+        <thead class="bg-info text-center">
           <tr>
             <th>SL.</th>
             <th>Year
-             
             </th>
             <th>Job No</th>
             <th>Company</th>
@@ -142,28 +133,30 @@ tfoot {
             <th>PO Quantity</th>
             <th>Shipment Date</th>
             <th>Precost Id </th>
+            <th>Action </th>
             
           </tr>
         </thead>
         <tfoot>
           <tr>
-              <th>SL.</th>
-            <th>Year</th>
-            <th>Job No</th>
-            <th>Company</th>
-            <th >Buyer Name</th>
-            <th >Style Ref. No</th>
-            <th >Internal Ref</th>
-            <th >File No.</th>
-            <th>Job Qty.</th>
-             <th >PO Number</th>
-            <th>PO Quantity</th>
-            <th>Shipment Date</th>
-            <th>Precost Id </th>
+              <th></th>
+            <th></th>
+            <th> </th>
+            <th></th>
+            <th > </th>
+            <th > </th>
+            <th > </th>
+            <th > </th>
+            <th></th>
+             <th > </th>
+            <th> </th>
+            <th> </th>
+            <th>  </th>
+            <th>  </th>
           </tr>
       </tfoot>
         
-        <tbody>
+        <tbody class="text-center">
           {% for i in po_details %}
           <tr>
 
@@ -181,16 +174,13 @@ tfoot {
             <td >{{i.pub_shipment_date}}</td>
             
             <td>0 </td>
+            <td> <a href="#" class="btn btn-sm btn-success">Select</a> </td>
             
           </tr>
           {% endfor %}
         </tbody>
-       
-        
       </table>
     </div>
-    <!-- /.card-body -->
-
   </div>
 
 {% endblock body %}
@@ -201,30 +191,28 @@ tfoot {
     // Setup - add a text input to each footer cell
     $('#selection tfoot th').each( function () {
         var title = $(this).text();
-        $(this).html( '<input type="text"  class="form-control" placeholder="Search" />' );
-        
+        $(this).html( '<input type="text"  class="form-controls" placeholder="Search" />' );
     } );
  
     // DataTable
     var table = $('#selection').DataTable({
-      "lengthMenu": [[50,100, 150, -1], [50,100,150, "All"]],
+      "lengthMenu": [[500,1000, -1], [500,1000, "All"]],
+      "scrollY": 470,
+      "scrollX": true,
         initComplete: function () {
             // Apply the search
             this.api().columns().every( function () {
                 var that = this;
- 
                 $( 'input', this.footer() ).on( 'keyup change clear', function () {
                     if ( that.search() !== this.value ) {
                         that
-                            .search( this.value )
-                            .draw();
+                        .search( this.value )
+                        .draw();
                     }
                 } );
             } );
         }
     });
-    
- 
 } );
 
 </script>

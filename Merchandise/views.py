@@ -1772,6 +1772,8 @@ def pre_costing(request):
             if form.is_valid():
                 form.save()
                 inserted_by = request.user
+                form.instance.job_no = OrderEntryInfo.objects.get(id=int(request.POST.get('job_no')[5:]))
+                form.instance.job_qty = request.POST.get('job_qty')
                 form.instance.inserted_by = inserted_by
                 form.save()
                 messages.success(request, "Your budget costing info has been recorded!")
@@ -1780,8 +1782,6 @@ def pre_costing(request):
                 messages.error(request , "Something went wrong!")
                 print(form.errors)
         else:
-            print(helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'avg_price'))
-            print(helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'po_quantity'))
             context ={
                 'form':form,
                 'fetch': OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])),

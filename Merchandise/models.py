@@ -536,7 +536,7 @@ class BudgetPreCost(models.Model):
         ('Yes', 'Yes'),
         ('No', 'No'),
     )
-    job_no = models.ForeignKey(OrderEntryInfo, related_name="border_entry", on_delete=models.CASCADE)
+    job_no = models.ForeignKey(OrderEntryInfo, related_name="border_entry", on_delete=models.CASCADE, null=True)
     quotation_id = models.CharField(max_length=120, blank=True, null=True)
     er= models.CharField(max_length=120, blank=True, null=True)
     job_qty= models.FloatField(default=0, blank=True, null=True)

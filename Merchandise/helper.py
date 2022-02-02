@@ -33,7 +33,10 @@ def total(model, type):
         for i in models.PO_Details.objects.filter(po_job_no=model.id):
             total += int(i.po_quantity)
     if type == 'avg_price':
+        count = 0
         for i in models.PO_Details.objects.filter(po_job_no=model.id):
+            count += 1
             total += float(i.avg_price)
+        total /= count
     
     return total

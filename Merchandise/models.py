@@ -531,41 +531,69 @@ class ColorSizeItems(models.Model):
         return str(self.po_color_size)
 
 
-# class BudgetPreCost(models.Model):
-#     STATUS = (
-#         ('Yes', 'Yes'),
-#         ('No', 'No'),
-#     )
-#     company = models.CharField(max_length=120, blank=True, null=True)
-#     quotation_id = models.CharField(max_length=120, blank=True, null=True)
-#     style_ref = models.CharField(max_length=120, blank=True, null=True)
-#     style_desc = models.CharField(max_length=220, blank=True, null=True)
-#     Buyer_name = models.CharField(max_length=120, blank=True, null=True)
-#     prod_dept= models.CharField(max_length=120, blank=True, null=True)
-#     currency= models.CharField(max_length=120, blank=True, null=True)
-#     er= models.CharField(max_length=120, blank=True, null=True)
-#     agent= models.CharField(max_length=120, blank=True, null=True)
-#     job_qty= models.CharField(max_length=120, blank=True, null=True)
-#     order_unit= models.CharField(max_length=120, blank=True, null=True)
-#     item_details= models.CharField(max_length=250, blank=True, null=True)
-#     costing_date = models.DateField(blank=True, null=True)
-#     incoterm = models.CharField(max_length=250, blank=True, null=True)
-#     incoterm_place = models.CharField(max_length=250, blank=True, null=True)
-#     machine_line = models.CharField(max_length=120, blank=True, null=True)
-#     prod_line = models.CharField(max_length=120, blank=True, null=True)
-#     costing_per = models.CharField(max_length=120, blank=True, null=True)
-#     region = models.CharField(max_length=120, blank=True, null=True)
-#     approved = models.CharField(max_length=20,  choices=STATUS,  blank=True, null=True)
-#     sew_smv = models.FloatField(default=0, blank=True, null=True)
-#     sew_efficiency = models.FloatField(default=0, blank=True, null=True)
-#     cut_smv = models.FloatField(default=0, blank=True, null=True)
-#     cut_efficiency = models.FloatField(default=0, blank=True, null=True)
-#     remarks = models.TextField(blank=True, null=True)
-#     budget_minute = models.IntegerField(default=0, blank=True, null=True)
-#     image = models.ImageField(upload_to='Budget/Image', blank=True, null=True)
-#     file_no = models.CharField(max_length=120, blank=True, null=True)
-#     internal_ref = models.CharField(max_length=120, blank=True, null=True)
-#     copy_form = models.CharField(max_length=120, blank=True, null=True)
-#     redy_to_approved = models.CharField(max_length=20,  choices=STATUS,  blank=True, null=True)
-#     mini_marker_upload = models.FileField(upload_to='Budget/Image', blank=True, null=True)
+class BudgetPreCost(models.Model):
+    STATUS = (
+        ('Yes', 'Yes'),
+        ('No', 'No'),
+    )
+    job_no = models.ForeignKey(OrderEntryInfo, related_name="border_entry", on_delete=models.CASCADE, null=True)
+    quotation_id = models.CharField(max_length=120, blank=True, null=True)
+    er= models.CharField(max_length=120, blank=True, null=True)
+    job_qty= models.FloatField(default=0, blank=True, null=True)
+    avg_rate = models.FloatField(default=0, blank=True, null=True) # for hiddden field
+    order_unit= models.CharField(max_length=120, blank=True, null=True)
+    item_details= models.CharField(max_length=250, blank=True, null=True)
+    costing_date = models.DateField(blank=True, null=True)
+    incoterm_place = models.CharField(max_length=250, blank=True, null=True)
+    machine_line = models.CharField(max_length=120, blank=True, null=True)
+    prod_line = models.CharField(max_length=120, blank=True, null=True)
+    costing_per = models.CharField(max_length=120, blank=True, null=True)
+    approved = models.CharField(max_length=20,  choices=STATUS,  blank=True, null=True)
+    sew_efficiency = models.FloatField(default=0, blank=True, null=True)
+    cut_efficiency = models.FloatField(default=0, blank=True, null=True)
+    remarks = models.TextField(blank=True, null=True)
+    budget_minute = models.IntegerField(default=0, blank=True, null=True)
+    file_no = models.CharField(max_length=120, blank=True, null=True)
+    internal_ref = models.CharField(max_length=120, blank=True, null=True)
+    copy_form = models.CharField(max_length=120, blank=True, null=True)
+    redy_to_approved = models.CharField(max_length=20,  choices=STATUS,  blank=True, null=True)
+    mini_marker_upload = models.FileField(upload_to='Budget/Image', blank=True, null=True)
+    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, related_name="bpc_insert_by", null=True, blank=True)
+    insert_date = models.DateTimeField(default=now, blank=True, null=True)
+    
+    def __str__(self):
+        return str(self.job_no)
+    
+class FabricCost(models.Model):
+    b_job_no = models.ForeignKey(BudgetPreCost, related_name='fbudget_cost', on_delete=models.CASCADE, null=True, blank=True)
+    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, related_name="fab_insert_by", null=True, blank=True)
+    insert_date = models.DateTimeField(default=now, blank=True, null=True)
+    def __str__(self):
+        return str(self.b_job_no)
+
+class Fabric_Inline_Item(models.Model):
+    fabric_cost = models.ForeignKey(FabricCost, related_name="fabric_inline", on_delete=models.CASCADE, blank=True, null=True)
+    gmts_items = models.ForeignKey(LibraryProduct, related_name="fab_items", on_delete=models.CASCADE, blank=True, null=True)
+    body_part = models.ForeignKey(LibraryBodyPart, related_name="lib_body_part", on_delete=models.CASCADE, blank=True, null=True)
+    body_part_type = models.ForeignKey(LibraryBodyPartType, related_name="lib_bp_type", on_delete=models.CASCADE, blank=True, null=True)
+    fab_nature = models.ForeignKey(LibraryFabNature, related_name="lib_fn", on_delete=models.CASCADE, blank=True, null=True)
+    color_type = models.ForeignKey(LibraryColorType, related_name="lib_ctype", on_delete=models.CASCADE, blank=True, null=True)
+    fabric_source = models.ForeignKey(LibraryFabricSource, related_name="lib_fsource", on_delete=models.CASCADE, blank=True, null=True)
+    fabric_desc = models.CharField(max_length=200, blank=True, null=True)
+    nom_supplier = models.ForeignKey(LibraryNominatedSupp, related_name="lib_nsupplier", on_delete=models.CASCADE, blank=True, null=True)
+    width_dia = models.ForeignKey(LibraryDiaTypes, related_name="lib_dia_type", on_delete=models.CASCADE, blank=True, null=True)
+    gms = models.CharField(max_length=80, blank=True, null=True)
+    cs_sensitive = models.ForeignKey(LibraryColorSizeSensitive, related_name="lib_cs_sensitive", on_delete=models.CASCADE, blank=True, null=True)
+    color = models.CharField(max_length=200, blank=True, null=True)
+    con_basis = models.ForeignKey(LibraryConsumptionBasis, related_name="lib_con_basis", on_delete=models.CASCADE, blank=True, null=True)
+    uom = models.ForeignKey(LibraryUnit, related_name="lib_uom", on_delete=models.CASCADE, blank=True, null=True)
+    avg_grey_cons = models.FloatField(default=0, blank=True, null=True)
+    rate = models.FloatField(default=0, blank=True, null=True)
+    amount = models.FloatField(default=0, blank=True, null=True)
+    total_quantity = models.FloatField(default=0, blank=True, null=True)
+    total_amount = models.FloatField(default=0, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.fabric_cost)
+    
     

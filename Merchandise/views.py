@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib import messages, auth
+from sklearn.metrics import consensus_score
 from .forms import *
 from .models import *
 from Merchandise.filters import *
@@ -1549,12 +1550,14 @@ def order_entry(request):
     po_form = PoDeatilsForm()
     items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm, extra=1)
     form_items = items_factory()
+    fab=LibraryFabrication.objects.all()
     
     context = {
         'form': form,
         'po_form': po_form,
         'job': 'LAK-O' + str(job),
         'form_items': form_items,
+        'fab':fab,
         'form_smv_items': form_smv_items,
     }
     return render(request, 'Merchandising/Order/order_entry.html', context)
@@ -1760,8 +1763,79 @@ def delete_order(request, id):
     po.delete()
     return redirect('order_report')
 
+####### Budget Pre Costing Form ##########
 def pre_costing(request):
-    return render(request, 'Merchandising/Order/pre_costing.html')
+    fab_desc = LibraryFabricDescription.objects.all()
+    form = BudgetPreCostForm(request.POST, request.FILES)
+    fab_form = FabricCostForm()
+    fc_factory = inlineformset_factory(FabricCost, Fabric_Inline_Item, form=FabricItemForm, extra=1)
+    form_items_fc = fc_factory()
+
+    if request.method == 'POST':
+        if request.POST.get('_task') == "cost_form":
+            form = BudgetPreCostForm(request.POST)
+            if form.is_valid():
+                form.save()
+                inserted_by = request.user
+                form.instance.job_no = OrderEntryInfo.objects.get(id=int(request.POST.get('job_no')[5:]))
+                form.instance.job_qty = request.POST.get('job_qty')
+                form.instance.inserted_by = inserted_by
+                form.save()
+                # messages.success(request, "Your budget costing info has been recorded!")
+                return HttpResponseRedirect(request.path_info)
+            else:
+                messages.error(request , "Something went wrong!")
+                print(form.errors)
+        
+        elif request.POST.get('_task') == "f_form":
+            if request.method == "GET":
+                fab_form = FabricCostForm()
+                fc_factory = inlineformset_factory(FabricCost, Fabric_Inline_Item, form=FabricItemForm, extra=1)
+                form_items_fc = fc_factory()
+           
+            elif request.method == "POST":
+                fab_form = FabricCostForm(request.POST, request.FILES)
+                fc_factory = inlineformset_factory(FabricCost, Fabric_Inline_Item, form=FabricItemForm)
+                form_items_fc = fc_factory(request.POST)
+                if fab_form.is_valid() and form_items_fc.is_valid():
+                    data = fab_form.save()
+                    inserted_by = request.user
+                    fab_form.instance.inserted_by = inserted_by
+                    fab_form.instance.b_job_no = BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=inserted_by)))
+                    fab_form.save()
+                    form_items_fc.instance = data
+                    form_items_fc.save()
+                    # messages.success(request, 'Your fabric cost info has been Added Successfully...')
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    messages.error(request , "Something went wrong!")
+                    print(form_items_fc.errors)
+        else:
+            context ={
+                'form':form,
+                'fab_desc':fab_desc,
+                'fab_form': fab_form,
+                'form_items_fc': form_items_fc,
+                'fetch': OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])),
+                'total_po': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'po_quantity'),
+                'total_avg_price': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'avg_price'),
+            }
+            return render(request, 'Merchandising/Order/pre_costing.html', context)
+
+    form = BudgetPreCostForm()
+    fab_form = FabricCostForm()
+    fc_factory = inlineformset_factory(FabricCost, Fabric_Inline_Item, form=FabricItemForm, extra=1)
+    form_items_fc = fc_factory()
+    fab_desc = LibraryFabricDescription.objects.all()
+        
+    context ={
+        'form':form,
+        'fab_desc':fab_desc, 
+        'fab_form': fab_form,
+        'form_items_fc': form_items_fc,
+       
+    }
+    return render(request, 'Merchandising/Order/pre_costing.html', context)
 
 def shipment_schedule(request):
     orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')

@@ -1765,7 +1765,12 @@ def delete_order(request, id):
 
 ####### Budget Pre Costing Form ##########
 def pre_costing(request):
+    fab_desc = LibraryFabricDescription.objects.all()
     form = BudgetPreCostForm(request.POST, request.FILES)
+    fab_form = FabricCostForm()
+    fc_factory = inlineformset_factory(FabricCost, Fabric_Inline_Item, form=FabricItemForm, extra=1)
+    form_items_fc = fc_factory()
+
     if request.method == 'POST':
         if request.POST.get('_task') == "cost_form":
             form = BudgetPreCostForm(request.POST)
@@ -1776,14 +1781,41 @@ def pre_costing(request):
                 form.instance.job_qty = request.POST.get('job_qty')
                 form.instance.inserted_by = inserted_by
                 form.save()
-                messages.success(request, "Your budget costing info has been recorded!")
+                # messages.success(request, "Your budget costing info has been recorded!")
                 return HttpResponseRedirect(request.path_info)
             else:
                 messages.error(request , "Something went wrong!")
                 print(form.errors)
+        
+        elif request.POST.get('_task') == "f_form":
+            if request.method == "GET":
+                fab_form = FabricCostForm()
+                fc_factory = inlineformset_factory(FabricCost, Fabric_Inline_Item, form=FabricItemForm, extra=1)
+                form_items_fc = fc_factory()
+           
+            elif request.method == "POST":
+                fab_form = FabricCostForm(request.POST, request.FILES)
+                fc_factory = inlineformset_factory(FabricCost, Fabric_Inline_Item, form=FabricItemForm)
+                form_items_fc = fc_factory(request.POST)
+                if fab_form.is_valid() and form_items_fc.is_valid():
+                    data = fab_form.save()
+                    inserted_by = request.user
+                    fab_form.instance.inserted_by = inserted_by
+                    fab_form.instance.b_job_no = BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=inserted_by)))
+                    fab_form.save()
+                    form_items_fc.instance = data
+                    form_items_fc.save()
+                    # messages.success(request, 'Your fabric cost info has been Added Successfully...')
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    messages.error(request , "Something went wrong!")
+                    print(form_items_fc.errors)
         else:
             context ={
                 'form':form,
+                'fab_desc':fab_desc,
+                'fab_form': fab_form,
+                'form_items_fc': form_items_fc,
                 'fetch': OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])),
                 'total_po': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'po_quantity'),
                 'total_avg_price': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'avg_price'),
@@ -1791,9 +1823,17 @@ def pre_costing(request):
             return render(request, 'Merchandising/Order/pre_costing.html', context)
 
     form = BudgetPreCostForm()
+    fab_form = FabricCostForm()
+    fc_factory = inlineformset_factory(FabricCost, Fabric_Inline_Item, form=FabricItemForm, extra=1)
+    form_items_fc = fc_factory()
+    fab_desc = LibraryFabricDescription.objects.all()
         
     context ={
-        'form':form, 
+        'form':form,
+        'fab_desc':fab_desc, 
+        'fab_form': fab_form,
+        'form_items_fc': form_items_fc,
+       
     }
     return render(request, 'Merchandising/Order/pre_costing.html', context)
 

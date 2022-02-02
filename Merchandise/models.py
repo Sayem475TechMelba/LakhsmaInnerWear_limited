@@ -564,3 +564,36 @@ class BudgetPreCost(models.Model):
     def __str__(self):
         return str(self.job_no)
     
+class FabricCost(models.Model):
+    b_job_no = models.ForeignKey(BudgetPreCost, related_name='fbudget_cost', on_delete=models.CASCADE, null=True, blank=True)
+    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, related_name="fab_insert_by", null=True, blank=True)
+    insert_date = models.DateTimeField(default=now, blank=True, null=True)
+    def __str__(self):
+        return str(self.b_job_no)
+
+class Fabric_Inline_Item(models.Model):
+    fabric_cost = models.ForeignKey(FabricCost, related_name="fabric_inline", on_delete=models.CASCADE, blank=True, null=True)
+    gmts_items = models.ForeignKey(LibraryProduct, related_name="fab_items", on_delete=models.CASCADE, blank=True, null=True)
+    body_part = models.ForeignKey(LibraryBodyPart, related_name="lib_body_part", on_delete=models.CASCADE, blank=True, null=True)
+    body_part_type = models.ForeignKey(LibraryBodyPartType, related_name="lib_bp_type", on_delete=models.CASCADE, blank=True, null=True)
+    fab_nature = models.ForeignKey(LibraryFabNature, related_name="lib_fn", on_delete=models.CASCADE, blank=True, null=True)
+    color_type = models.ForeignKey(LibraryColorType, related_name="lib_ctype", on_delete=models.CASCADE, blank=True, null=True)
+    fabric_source = models.ForeignKey(LibraryFabricSource, related_name="lib_fsource", on_delete=models.CASCADE, blank=True, null=True)
+    fabric_desc = models.CharField(max_length=200, blank=True, null=True)
+    nom_supplier = models.ForeignKey(LibraryNominatedSupp, related_name="lib_nsupplier", on_delete=models.CASCADE, blank=True, null=True)
+    width_dia = models.ForeignKey(LibraryDiaTypes, related_name="lib_dia_type", on_delete=models.CASCADE, blank=True, null=True)
+    gms = models.CharField(max_length=80, blank=True, null=True)
+    cs_sensitive = models.ForeignKey(LibraryColorSizeSensitive, related_name="lib_cs_sensitive", on_delete=models.CASCADE, blank=True, null=True)
+    color = models.CharField(max_length=200, blank=True, null=True)
+    con_basis = models.ForeignKey(LibraryConsumptionBasis, related_name="lib_con_basis", on_delete=models.CASCADE, blank=True, null=True)
+    uom = models.ForeignKey(LibraryUnit, related_name="lib_uom", on_delete=models.CASCADE, blank=True, null=True)
+    avg_grey_cons = models.FloatField(default=0, blank=True, null=True)
+    rate = models.FloatField(default=0, blank=True, null=True)
+    amount = models.FloatField(default=0, blank=True, null=True)
+    total_quantity = models.FloatField(default=0, blank=True, null=True)
+    total_amount = models.FloatField(default=0, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.fabric_cost)
+    
+    

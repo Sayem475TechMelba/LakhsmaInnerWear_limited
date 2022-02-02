@@ -229,3 +229,15 @@ class BudgetPreCostForm(forms.ModelForm):
     class Meta:
         model = BudgetPreCost
         exclude = ['inserted_by', 'job_no']
+        
+class FabricCostForm(forms.ModelForm):
+    
+    class Meta:
+        model = FabricCost
+        exclude = ['inserted_by', 'b_job_no']
+
+class FabricItemForm(forms.ModelForm):
+    class Meta:
+        model = Fabric_Inline_Item
+        fields = '__all__' 
+

@@ -6,6 +6,21 @@
 
 {% block css %}
 <style>
+    .fabDesSearch {
+        border-radius: 0;
+        box-shadow: none;
+        border: 1px solid #e4e5e7;
+        display: block;
+        width: 100%;
+        height: 26px;
+        padding: 2px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+      
+      }
     tfoot {
         display: table-header-group;
    }
@@ -62,7 +77,7 @@
           <div class="row">
               <div class="col-md-12 P-4">
               
-                  <form method="post" action="{% url 'pre_costing' %}" enctype="multipart/form-data">
+                  <form method="post" action="{% url 'pre_costing' %}" enctype="multipart/form-data" id="c_form">
                       {% csrf_token %}
                       <input type="hidden" name="_task" value="cost_form">
                       <div class="form-group row ">
@@ -115,6 +130,7 @@
                                         <th class="text-center"  width="60px;"> ER </th>
                                         <th class="text-center label">Agent </th>
                                         <th class="text-center label" width="150px;">Job Qty </th>
+                                        <th class="text-center label" width="150px;" hidden>Avg. Price </th>
                                         <th class="text-center"> Order Unit </th>
                                         <th class="text-center"  width="150px;" > </th>
                                         <th class="text-center label"> Costing Date </th>
@@ -145,6 +161,10 @@
                                         </td>
                                         <td >
                                             <input class="form-control" name="job_qty" value="{{ total_po }}">
+
+                                        </td>
+                                        <td hidden>
+                                            <input hidden class="form-control" name="avg_rate" value="{{ total_avg_price }}">
 
                                         </td>
                                         
@@ -795,9 +815,17 @@
                   
                       <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                         <div class="card-body">
-                            <div class="table-responsive" >
-    
-                                <table class="table table-bordered table-hover table-sm table-responsive-sm" >
+                            <form method="post" action="{% url 'pre_costing' %}" enctype="multipart/form-data" id="fc_form">
+                                {% csrf_token %}
+                              <input hidden name="_task" value="f_form">
+                              <!-- <div class="form-group row mt-2">
+                                <div class="col-sm-2 ">
+                                    {{ fab_form.b_job_no|attr:"class:form-control"|attr:"hidden"}}
+                                    
+                                </div> -->
+                              <div class="table-responsive" >
+                             
+                                <table class="table table-bordered table-hover table-sm table-responsive-sm add_fc" >
                                     <thead class="bg-info">
                                         <tr>
                                             <th class="text-center label" width="140px"> Gmts Item </th>
@@ -819,179 +847,92 @@
                                             <th class="text-center" > Amount </th>
                                             <th class="text-center" > Total Quantity </th>
                                             <th class="text-center" > Total Amount </th>
-                                            <th class="text-center"  width="80px;">  </th>
+                                            <th class="text-center"  width="80px;">Action </th>
                                         </tr>
                                     </thead>
-                                    <tbody >
+                                    {{ form_items_fc.management_form }}
+                                    <tbody class="inline_fabric_form">
+                                        {% for fc in form_items_fc %}
                                         <tr >
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                    
-                                                </select>
-                                                <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                                {{ fc.gmts_items|attr:"class:form-control"}}
                                             </td>
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                    
-                                                </select>
-                                                <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                                {{ fc.body_part|attr:"class:form-control" }}
                                             </td>
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                    
-                                                </select>
-                                                <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                                {{ fc.body_part_type|attr:"class:form-control"}}
                                             </td>
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                    
-                                                </select>
-                                                <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                                {{ fc.fab_nature|attr:"class:form-control" }}
                                             </td>
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                    
-                                                </select>
-                                                <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                                {{ fc.color_type|attr:"class:form-control" }}
                                             </td>
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                    
-                                                </select>
-                                                <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                                {{ fc.fabric_source|attr:"class:form-control" }}
                                             </td>
                                             <td >
-                                                <input type="text" placeholder="Fabric Description" class="form-control" data-toggle="modal" data-target="#fabricDesc">
+                                                {{ fc.fabric_desc|attr:"class:form-control"|attr:"data-target:#fabricDesc"|attr:"data-toggle:modal" }}
                                             </td>
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                    
-                                                </select>
-                                                <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                                {{ fc.nom_supplier|attr:"class:form-control" }}
                                             </td>
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                    
-                                                </select>
-                                                <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                                {{ fc.width_dia|attr:"class:form-control" }}
                                             </td>
                                            
                                             
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                    
-                                                </select>
-                                                <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                            
+                                                {{ fc.gms|attr:"class:form-control" }}
                                             </td>
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                    
-                                                </select>
-                                                <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                                {{ fc.cs_sensitive|attr:"class:form-control" }}
                                             </td>
                                             <td >
-                                                <input type="text" class="form-control" placeholder="Article Number">
-                                                 <!-- {{ form.smv|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:SMV"}} -->
+                                                 {{ fc.color|attr:"class:form-control"}}
     
                                             </td>
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                    
-                                                </select>
-                                                <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                                {{ fc.con_basis|attr:"class:form-control"}}
                                             </td>
                                            
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                    
-                                                </select>
-                                                <!-- {{ form.order_uom|attr:"class:form-control"|attr:"required" }} -->
+                                                {{ fc.uom|attr:"class:form-control" }}
                                             </td>
                                             
                                             <td >
-                                                <input type="number" class="form-control" value="0">
-                                                <!-- {{ form.agent|attr:"class:form-control"|attr:"required" }} -->
-    
-    
+                                                {{ fc.avg_grey_cons|attr:"class:form-control"|attr:"type:number" }}
                                             </td>
                                             <td >
-                                                <input type="number" class="form-control" value="0">
-                                                <!-- {{ form.client|attr:"class:form-control"|attr:"required" }} -->
-    
+                                                {{ fc.rate|attr:"class:form-control"|attr:"type:number" }}
                                             </td>
                                             <td >
-                                                <input type="number" class="form-control" value="0">
-                                                <!-- {{ form.client|attr:"class:form-control"|attr:"required" }} -->
-    
+                                                {{ fc.amount|attr:"class:form-control"|attr:"type:number" }}
                                             </td>
                                             <td >
-                                                <input type="number" class="form-control" value="0">
-                                                <!-- {{ form.client|attr:"class:form-control"|attr:"required" }} -->
-    
+                                                {{ fc.total_quantity|attr:"class:form-control"|attr:"type:number" }}
                                             </td>
                                             <td >
-                                                <input type="number" class="form-control" value="0">
-                                                <!-- {{ form.client|attr:"class:form-control"|attr:"required" }} -->
-    
+                                                {{ fc.total_amount|attr:"class:form-control"|attr:"type:number" }}
                                             </td>
                                             
-                                            <td><button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                <a  type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                            <td class="removefc text-center">
                                             </td>
-                                           
-    
-                                            
                                         </tr>
+                                        {% endfor %}
                                         
                                     </tbody>
                                     
                                 </table>
-                            </div>
-                            
-                            <div>
+                             </div>
+                             <div>
                                 <button type="submit" class="btn btn-success btn-sm">Save</button>
-                                <button type="submit" class="btn btn-info btn-sm">Update</button>
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
+                                
                             </div>
+                            </form>
                             
-    
                         </div>
                       </div>
                     </div>
@@ -1778,74 +1719,86 @@
             </div>
     </div>
  <!-- FABRIC DESCRIPTION TABLE FOR SELECTING FABRIC CONSUMPTION  -->
-    <div class="modal fade " id="fabricDesc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg  " role="document">
+ <div class="modal fade " id="fabricDesc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg  " role="document">
 
-                <div class="container">
-                    <div class="modal-content  ">
-                        <div class="modal-header">
-                        <h6 class="modal-title" id="exampleModalLabel">Fabric Description</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        </div>
-                        <div class="modal-body ">
-                           
-                            <table id="fabric_desc_report" class="table table-bordered table-striped table-responsive table-sm table-responsive-sm table-hover  display" >
-                                <thead class=" bg-meroon">
-                                    <tr>
-                                        <th >S/L No.</th>
-                                        <th>Fabric Nature </th>
-                                        <th>Construction</th>
-                                        <th>GSM/Weight</th>
-                                        <th >Color</th>
-                                        <th >Stich Length</th>
-                                        <th >Process Loss</th>
-                                        <th >Fabric Composition</th>
-                                    </tr>
-                                </thead>
-                                <tfoot id="tfooter">
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                    </tr>
-                                </tfoot>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Knitted</td>
-                                        <td>Single Jersey</td>
-                                        <td>160</td>
-                                        <td>Average</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>100% Cotton (26's Carded)</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Knitted</td>
-                                        <td>L/SJ FF</td>
-                                        <td>160</td>
-                                        <td>Average</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>100% Cotton (26's Carded)</td>
-                                    </tr>
-                                </tbody>
-                                
-                            </table>
+        <div class="container">
+            <div class="modal-content  ">
+                <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel">Fabric Description</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body ">
+                   
+                    <table id="fabric_desc_report" class="table table-bordered table-striped table-responsive table-sm table-responsive-sm table-hover  display" >
+                        <thead class="text-center bg-meroon">
+                            <tr>
+                                <th >S/L No.</th>
+                                <th>Fabric Nature </th>
+                                <th>Construction</th>
+                                <th>GSM/Weight</th>
+                                <th >Color</th>
+                                <th >Stich Length</th>
+                                <th >Process Loss</th>
+                                <th width="400">Fabric Composition</th>
+                                <th >Action</th>
 
-                        </div>
-                    </div>
+                            </tr>
+                        </thead>
+                        <tfoot id="tfooter">
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th width="300"></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                        <tbody class="text-center">
+                            {% for i in fab_desc %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.fab_nature}}</td>
+                                <td>{{i.construction}}</td>
+                                <td>{{i.gsm_weight}}</td>
+                                <td>{{i.color_range}}</td>
+                                <td>{{i.stich_length}}</td>
+                                <td>{{i.process_loss}}</td>
+                                <td>
+                                    {% if i.yarn_one_pct and i.yarn_one %}
+                                    {{i.yarn_one_pct}} {{i.yarn_one}}
+                                    {% endif %}
+                                    {% if i.yarn_two_pct and i.yarn_two %}
+                                    {{i.yarn_two_pct}} {{i.yarn_two}}
+                                    {% endif %}
+                                     ( 
+                                     {% if i.yarn_count_one and i.yarn_type_one %}
+                                    {{i.yarn_count_one}} {{i.yarn_type_one}} 
+                                    {% endif %}
+                                    {% if i.yarn_count_two and  i.yarn_type_two %}
+                                    + {{i.yarn_count_two}} {{i.yarn_type_two}} 
+                                    {% endif %}
+                                    )
+                                </td>
+                                <td><button class="btn btn-sm btn-success btnSelect"><i class="fa fa-check "></i></button> </td>
+                            </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                        
+                    </table>
+
                 </div>
             </div>
+        </div>
     </div>
+</div>
   <!----------------------------------- Modal End -------------------------------------->
 
   </div>
@@ -1853,6 +1806,21 @@
 {% endblock body %}
 
 {% block script %}
+<!-- FOR Fabric COST INLINE  -->
+<script type="text/javascript">
+    $(function() {
+        $('.inline_fabric_form').formset({
+            prefix: '{{ form_items_fc.prefix }}',
+            addText: '+ Add More',
+            deleteText: 'X',
+            addContainerClass:"add_fc",
+            addCssClass:"btn btn-sm btn-warning mt-4 mb-3",
+            deleteCssClass:"btn btn-sm btn-danger",
+            deleteContainerClass:"removefc",
+        });
+    });
+</script>
+
 <script>
    // click on the div FOR SHOWING HIDE DIV FOR COSTING
     function fabric(e, id) {
@@ -1920,8 +1888,21 @@
       // Setup - add a text input to each footer cell
       $('#fabric_desc_report #tfooter th').each( function () {
           var title = $(this).text();
-          $(this).html( '<input type="text" class="form-controls" placeholder="Search" />' );
+          $(this).html( '<input type="text" class="fabDesSearch" placeholder="Search" />' );
       });
+
+      $("#fabric_desc_report").on('click','.btnSelect',function(){
+        var currentRow=$(this).closest("tr"); 
+        var construction=currentRow.find("td:eq(2)").text(); 
+        var gsm=currentRow.find("td:eq(3)").text(); 
+        var composition=currentRow.find("td:eq(7)").text(); 
+        var fabComp= construction + ' ' + ' ' + composition;
+        var fabGSM= gsm;
+        // RISALT NEED TO TAKE CARE OF THIS 
+        var fabricDescription = document.getElementById("fabDes").value = fabComp;
+        var fabricGSM = document.getElementById("fabGsm").value = fabGSM;
+        // UPTO THIS SECTION
+    });
     //For Modal Adminlte Datatable scrolly and scrollx problem solved
       $('#fabricDesc').on('shown.bs.modal',function(){
         tableModal = $("#fabric_desc_report").DataTable({
@@ -1949,6 +1930,52 @@
       });
   });
 </script>
+<script type="text/javascript"> 
+    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
+        $('#c_form').submit(function(event){
+            event.preventDefault();
+            var form = $(this)
+            url = form.attr('action')
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    alert("Your Budget Cost Successfully Added. Please add below form as well.");
+                },
+                error: function (response) {
+                    alert("Something Went Wrong...");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+</script> 
 
+<script type="text/javascript"> 
+    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
+        $('#fc_form').submit(function(event){
+            event.preventDefault();
+            var form = $(this)
+            url = form.attr('action')
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    alert("Your Fabric Cost Successfully Added. Please add below form as well.");
+                },
+                error: function (response) {
+                    alert("Something Went Wrong...");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+</script> 
 
 {% endblock script %}

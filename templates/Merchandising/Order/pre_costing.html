@@ -68,7 +68,7 @@
                       <div class="form-group row ">
                           <label for="job_no" class="col-sm-2 col-form-label">Job No.</label>
                           <div class="col-sm-2 ">
-                              <input type="text" class="form-control" placeholder="Job no" id="job_no" value="{{ fetch.job_no}}">
+                              <input type="text" class="form-control" name="job_no" placeholder="Job no" id="job_no" value="{{ fetch.job_no }}">
                           </div>
                           <label for="company_name" class="col-sm-2 col-form-label label">Company</label>
                           <div class="col-sm-2 ">
@@ -144,7 +144,7 @@
 
                                         </td>
                                         <td >
-                                            {{ form.job_qty|attr:"class:form-control"}}
+                                            <input class="form-control" name="job_qty" value="{{ total_po }}">
 
                                         </td>
                                         
@@ -279,7 +279,8 @@
                                             
                                         </td>
                                         <td >
-                                            <input type="file" class="form-control" value="{{ fetch.image }}">
+                                            
+                                            <img height="30px" width="30px" src="/media/{{fetch.image}}/">
 
                                         </td>
                                         <td >

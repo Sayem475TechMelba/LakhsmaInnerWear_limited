@@ -1823,8 +1823,11 @@
 
 <script>
     var working_id = 0
+    var count = 1
 
-    function update(){}
+    function update(){
+        count++
+    }
 
     function rightID(id){
         var numPre = []
@@ -1851,6 +1854,18 @@
     function fabricationDes(id){
         document.getElementById('id_fabric_inline-V-fabric_desc'.replaceAt(17, working_id)).value = document.getElementById(`td-${rightID(id)}`).children[7].innerText
         document.getElementById('id_fabric_inline-V-gms'.replaceAt(17, working_id)).value = document.getElementById(`td-${rightID(id)}`).children[3].innerText
+    }
+
+    function febCount(){
+        fCout = 0
+        for(var i = 0; i<count; i++){
+            if(document.getElementById('id_fabric_inline-V-fabric_desc'.replaceAt(17, i)).value.includes('+')){
+                fCout += 2
+            }else{
+                fCout++
+            }
+        }
+        return fCout
     }
    // click on the div FOR SHOWING HIDE DIV FOR COSTING
     function fabric(e, id) {

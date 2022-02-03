@@ -735,11 +735,11 @@
                                     <!-- {{ form.export_bill_amount|attr:"class:form-control"|attr:"type:text"|attr:"id:export_bill_amount"|attr:"value:Export Bill Amount"|attr:"required" }} -->
                                 </td>
                                 <td class="text-center">
-                                    <input type="text" class="form-control" >
+                                    <input type="text" class="form-control" value="{{ total_avg_price }}">
                                     <!-- {{ form.export_bill_pct|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_pct"|attr:"required"|attr:"readonly" }} -->
                                 </td>
                                 <td class="text-center">
-                                    <input type="text" class="form-control" >
+                                    <input type="text" class="form-control" value="100%" >
                                     <!-- {{ form.export_bill_amt|attr:"class:form-control"|attr:"type:number"|attr:"id:export_bill_amt"|attr:"required"|attr:"oninput=calc();"|attr:"name:export_bill_amt"|attr:"readonly" }} -->
                                 </td>
                             </tr>
@@ -873,7 +873,7 @@
                                                 {{ fc.fabric_source|attr:"class:form-control" }}
                                             </td>
                                             <td >
-                                                {{ fc.fabric_desc|attr:"class:form-control"|attr:"data-target:#fabricDesc"|attr:"data-toggle:modal" }}
+                                                {{ fc.fabric_desc|attr:"class:form-control"|attr:"data-target:#fabricDesc"|attr:"data-toggle:modal"|attr:"onclick:passID(id)" }}
                                             </td>
                                             <td >
                                                 {{ fc.nom_supplier|attr:"class:form-control" }}
@@ -1762,7 +1762,7 @@
                         </tfoot>
                         <tbody class="text-center">
                             {% for i in fab_desc %}
-                            <tr>
+                            <tr id="td-{{forloop.counter}}">
                                 <td>{{forloop.counter}}</td>
                                 <td>{{i.fab_nature}}</td>
                                 <td>{{i.construction}}</td>
@@ -1786,7 +1786,7 @@
                                     {% endif %}
                                     )
                                 </td>
-                                <td><button class="btn btn-sm btn-success btnSelect"><i class="fa fa-check "></i></button> </td>
+                                <td><button id="btn-{{forloop.counter}}" class="btn btn-sm btn-success btnSelect" onclick="fabricationDes(id)"><i class="fa fa-check "></i></button> </td>
                             </tr>
                             {% endfor %}
                             
@@ -1822,6 +1822,36 @@
 </script>
 
 <script>
+    var working_id = 0
+
+    function update(){}
+
+    function rightID(id){
+        var numPre = []
+        var number = 0
+        for(var i=0; i<id.length; i++){
+            if(parseInt(id[i]) || id[i] == '0'){
+                numPre.push(parseInt(id[i]))
+            }
+        }
+        for(var i = 0; i<numPre.length; i++){
+            number += numPre[i] * (10 ** (numPre.length - (i+1)))
+        }
+        return number
+    }
+
+    String.prototype.replaceAt = function(index, replacement) {
+        return this.substr(0, index) + replacement + this.substr(index + 1, 28);
+    }
+
+    function passID(id){
+        working_id = rightID(id)
+    }
+
+    function fabricationDes(id){
+        document.getElementById('id_fabric_inline-V-fabric_desc'.replaceAt(17, working_id)).value = document.getElementById(`td-${rightID(id)}`).children[7].innerText
+        document.getElementById('id_fabric_inline-V-gms'.replaceAt(17, working_id)).value = document.getElementById(`td-${rightID(id)}`).children[3].innerText
+    }
    // click on the div FOR SHOWING HIDE DIV FOR COSTING
     function fabric(e, id) {
         var el = document.getElementById(id);
@@ -1898,10 +1928,6 @@
         var composition=currentRow.find("td:eq(7)").text(); 
         var fabComp= construction + ' ' + ' ' + composition;
         var fabGSM= gsm;
-        // RISALT NEED TO TAKE CARE OF THIS 
-        var fabricDescription = document.getElementById("fabDes").value = fabComp;
-        var fabricGSM = document.getElementById("fabGsm").value = fabGSM;
-        // UPTO THIS SECTION
     });
     //For Modal Adminlte Datatable scrolly and scrollx problem solved
       $('#fabricDesc').on('shown.bs.modal',function(){

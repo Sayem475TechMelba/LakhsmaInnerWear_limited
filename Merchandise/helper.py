@@ -38,5 +38,6 @@ def total(model, type):
             count += 1
             total += float(i.avg_price)
         total /= count
+        total = round(total, 2)
     
     return total

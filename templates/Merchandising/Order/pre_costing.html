@@ -928,7 +928,7 @@
                                 </table>
                              </div>
                              <div>
-                                <button type="submit" class="btn btn-success btn-sm">Save</button>
+                                <button type="submit" onclick="getYarn()" class="btn btn-success btn-sm">Save</button>
                                 
                             </div>
                             </form>
@@ -948,7 +948,7 @@
                         <div class="card-body">
                             <div class="table-responsive" >
     
-                                <table class="table table-bordered table-hover table-sm table-responsive-sm" >
+                                <table class="table table-bordered table-hover table-sm table-responsive-sm add_yc" >
                                     <thead class="bg-info">
                                         <tr>
                                             <th class="text-center label"> Count </th>
@@ -963,52 +963,41 @@
                                             
                                         </tr>
                                     </thead>
-                                    <tbody >
+                                    {{ form_items_yc.management_form }}
+                                    <tbody class="inline_yarn_form">
+                                        {% for yc in form_items_yc %}
                                         <tr >
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                </select>
+                                                {{ yc.count|attr:"class:form-control"}}
                                             </td>
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                </select>
+                                                {{ yc.comp_one|attr:"class:form-control"}}
                                             </td>
                                             <td >
-                                                <input type="number" class="form-control" >
+                                                {{ yc.pct|attr:"class:form-control"}}
                                             </td>
                                             <td >
-                                                <input type="text" class="form-control" placeholder="Color">
+                                                {{ yc.color|attr:"class:form-control"}}
                                             </td>
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                </select>
+                                                {{ yc.type|attr:"class:form-control"}}
                                             </td>
                                             <td >
-                                                <input type="number" class="form-control" value="0">
+                                                {{ yc.cons_qty|attr:"class:form-control"}}
                                             </td>
                                             <td >
-                                                <select name="" class="form-control" >
-                                                    <option value="" disabled selected>Select</option>
-                                                    <option>T-Shirt-Short Sleeve</option>
-                                                    <option>T-Shirt-Full Sleeve</option>
-                                                </select>
+                                                {{ yc.supplier|attr:"class:form-control"}}
                                             </td>
                                             <td >
-                                                <input type="number" class="form-control" value="0">
+                                                {{ yc.rate|attr:"class:form-control"}}
                                             </td>
                                             <td >
-                                                <input type="number" class="form-control" value="0">
+                                                {{ yc.amount|attr:"class:form-control"}}
+                                            </td>
+                                            <td class="removeyc text-center">
                                             </td>
                                         </tr>
+                                        {% endfor %}
                                     </tbody>
                                     <tfoot class="font-weight-bold">
                                         <tr>
@@ -1026,7 +1015,7 @@
                                                 <input type="number" class="form-control" value="0">
                                             </td>
                                         </tr>
-                                      </tfoot>
+                                    </tfoot>
                                 </table>
                             </div>
                             <div>
@@ -1820,6 +1809,20 @@
         });
     });
 </script>
+<!-- FOR YARN COST INLINE  -->
+<script type="text/javascript">
+    $(function() {
+        $('.inline_yarn_form').formset({
+            prefix: '{{ form_items_yc.prefix }}',
+            addText: '+ Add More',
+            deleteText: 'X',
+            addContainerClass:"add_yc",
+            addCssClass:"btn btn-sm btn-warning mt-4 mb-3 mb-yarn",
+            deleteCssClass:"btn btn-sm btn-danger",
+            deleteContainerClass:"removeyc",
+        });
+    });
+</script>
 
 <script>
     var working_id = 0
@@ -1866,6 +1869,12 @@
             }
         }
         return fCout
+    }
+
+    function getYarn(){
+        for(var i = 0; i<febCount(); i++){
+            document.getElementsByClassName('btn btn-sm btn-warning mt-4 mb-3 mb-yarn')[0].click()
+        }
     }
    // click on the div FOR SHOWING HIDE DIV FOR COSTING
     function fabric(e, id) {

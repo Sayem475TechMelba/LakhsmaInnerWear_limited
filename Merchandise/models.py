@@ -350,6 +350,21 @@ class LibraryColorSizeSensitive(models.Model):
         return self.color_size_sensitive
 
 
+class LibraryYarnType(models.Model):
+    type_name = models.CharField(max_length=200, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.type_name
+
+class LibraryYarnSupplier(models.Model):
+    supplier_name = models.CharField(max_length=200, null=True)
+    insert_date = models.DateTimeField(default=now)
+
+    def __str__(self):
+        return self.supplier_name
+
+
 
 #########################################################
 ############### Library Table End #####################
@@ -596,4 +611,27 @@ class Fabric_Inline_Item(models.Model):
     def __str__(self):
         return str(self.fabric_cost)
     
-    
+class YarnCost(models.Model):
+    b_job_no = models.ForeignKey(BudgetPreCost, related_name='yarn_cost', on_delete=models.CASCADE, null=True, blank=True)
+    tt_cons_qty = models.FloatField(default=0, blank=True, null=True)
+    tt_amount = models.FloatField(default=0, blank=True, null=True)
+    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, related_name="yarn_insert_by", null=True, blank=True)
+    insert_date = models.DateTimeField(default=now, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.b_job_no)
+
+class Yarn_Inline_Item(models.Model):
+    yarn_cost = models.ForeignKey(YarnCost, related_name="yarn_inline", on_delete=models.CASCADE, blank=True, null=True)
+    count = models.IntegerField(default=0, blank=True, null=True)
+    comp_one = models.CharField(max_length=120, blank=True, null=True)
+    pct = models.CharField(max_length=120, blank=True, null=True)
+    color = models.CharField(max_length=120, blank=True, null=True)
+    type = models.ForeignKey(LibraryYarnType, related_name="lib_yarn_type", on_delete=models.CASCADE, blank=True, null=True)
+    cons_qty = models.FloatField(default=0, blank=True, null=True)
+    supplier = models.ForeignKey(LibraryYarnSupplier, related_name="lib_ysupplier", on_delete=models.CASCADE, blank=True, null=True)
+    rate = models.FloatField(default=0, blank=True, null=True)
+    amount = models.FloatField(default=0, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.yarn_cost)

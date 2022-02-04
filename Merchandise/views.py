@@ -1771,6 +1771,10 @@ def pre_costing(request):
     fc_factory = inlineformset_factory(FabricCost, Fabric_Inline_Item, form=FabricItemForm, extra=1)
     form_items_fc = fc_factory()
 
+    yarn_form = YarnCostForm()
+    yc_factory = inlineformset_factory(YarnCost, Yarn_Inline_Item, form=YarnItemForm, extra=1)
+    form_items_yc = yc_factory()
+
     if request.method == 'POST':
         if request.POST.get('_task') == "cost_form":
             form = BudgetPreCostForm(request.POST)
@@ -1810,12 +1814,37 @@ def pre_costing(request):
                 else:
                     messages.error(request , "Something went wrong!")
                     print(form_items_fc.errors)
+
+        elif request.POST.get('_task') == "y_form":
+            if request.method == "GET":
+                yarn_form = YarnCostForm()
+                yc_factory = inlineformset_factory(YarnCost, Yarn_Inline_Item, form=YarnItemForm, extra=1)
+                form_items_yc = yc_factory()
+           
+            elif request.method == "POST":
+                yarn_form = YarnCostForm(request.POST, request.FILES)
+                yc_factory = inlineformset_factory(YarnCost, Yarn_Inline_Item, form=YarnItemForm)
+                form_items_yc = yc_factory(request.POST)
+                if yarn_form.is_valid() and form_items_yc.is_valid():
+                    data = yarn_form.save()
+                    inserted_by = request.user
+                    yarn_form.instance.inserted_by = inserted_by
+                    yarn_form.instance.b_job_no = BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=inserted_by)))
+                    yarn_form.save()
+                    form_items_yc.instance = data
+                    form_items_yc.save()
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    messages.error(request , "Something went wrong!")
+                    print(form_items_yc.errors)
         else:
             context ={
                 'form':form,
                 'fab_desc':fab_desc,
                 'fab_form': fab_form,
                 'form_items_fc': form_items_fc,
+                'yarn_form': yarn_form,
+                'form_items_yc': form_items_yc,
                 'fetch': OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])),
                 'total_po': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'po_quantity'),
                 'total_avg_price': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'avg_price'),
@@ -1827,12 +1856,18 @@ def pre_costing(request):
     fc_factory = inlineformset_factory(FabricCost, Fabric_Inline_Item, form=FabricItemForm, extra=1)
     form_items_fc = fc_factory()
     fab_desc = LibraryFabricDescription.objects.all()
+
+    yarn_form = YarnCostForm()
+    yc_factory = inlineformset_factory(YarnCost, Yarn_Inline_Item, form=YarnItemForm, extra=1)
+    form_items_yc = yc_factory()
         
     context ={
         'form':form,
         'fab_desc':fab_desc, 
         'fab_form': fab_form,
         'form_items_fc': form_items_fc,
+        'yarn_form': yarn_form,
+        'form_items_yc': form_items_yc,
        
     }
     return render(request, 'Merchandising/Order/pre_costing.html', context)

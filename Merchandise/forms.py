@@ -241,3 +241,13 @@ class FabricItemForm(forms.ModelForm):
         model = Fabric_Inline_Item
         fields = '__all__' 
 
+class YarnCostForm(forms.ModelForm):
+    
+    class Meta:
+        model = YarnCost
+        exclude = ['inserted_by', 'b_job_no']
+
+class YarnItemForm(forms.ModelForm):
+    class Meta:
+        model = Yarn_Inline_Item
+        fields = '__all__' 

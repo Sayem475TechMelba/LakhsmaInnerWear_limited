@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib import messages, auth
+from numpy import insert
 from sklearn.metrics import consensus_score
 from .forms import *
 from .models import *
@@ -1563,7 +1564,12 @@ def order_entry(request):
     return render(request, 'Merchandising/Order/order_entry.html', context)
 
 def order_report(request):
-    po_details = PO_Details.objects.all().order_by('-id')
+    try:
+        po_details = PO_Details.objects.filter(insert_date__year=request.GET.get('year'), insert_date__month=request.GET.get('month')).order_by('-id')
+        year = request.GET.get('year')
+    except:
+        po_details = PO_Details.objects.all().order_by('-id')
+        year = 'year'
     orders = OrderEntryInfo.objects.all().order_by('-id')
     order_count = orders.count()
     myFilter = POFilter(request.GET , queryset = po_details)
@@ -1573,6 +1579,7 @@ def order_report(request):
         'order_count': order_count,
         'myFilter': myFilter,
         'po_details':po_details,
+        'year': year,
     }
     return render(request, 'Merchandising/Order/order_report.html', context)
 

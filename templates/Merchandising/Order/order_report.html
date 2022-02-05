@@ -83,40 +83,42 @@
               </tr>
             </tbody>
           </table>
+          <div class="container ">
+            <div class="d-flex justify-content-center table-responsive">
+              <div class="p-2">
+                <table class="mb-1 table-sm  table-responsive-sm ">
+                  <thead>
+                      <td width="20%">
+                        <select name="year" class="form-control">
+                          <option disabled selected>{{ year }}</option>
+                          <option value="2022">2022</option>
+                          <option value="2021">2021</option>
+                          <option value="2020">2020</option>
+                        </select>
+                      </td>
+                      <td><button type="button" onclick="pushMonth(value)" value="1" class="btn btn-sm btn-info ml-2">Jan</button></td>
+                      <td><button type="button" onclick="pushMonth(value)" value="2" class="btn btn-sm btn-info ml-2">Feb</button></td>
+                      <td><button type="button" onclick="pushMonth(value)" value="3" class="btn btn-sm btn-info ml-2">Mar</button></td>
+                      <td><button type="button" onclick="pushMonth(value)" value="4" class="btn btn-sm btn-info ml-2">Apr</button></td>
+                      <td><button type="button" onclick="pushMonth(value)" value="5" class="btn btn-sm btn-info ml-2">May</button></td>
+                      <td><button type="button" onclick="pushMonth(value)" value="6" class="btn btn-sm btn-info ml-2">Jun</button></td>
+                      <td><button type="button" onclick="pushMonth(value)" value="7" class="btn btn-sm btn-info ml-2">Jul</button></td>
+                      <td><button type="button" onclick="pushMonth(value)" value="8" class="btn btn-sm btn-info ml-2">Aug</button></td>
+                      <td><button type="button" onclick="pushMonth(value)" value="9" class="btn btn-sm btn-info ml-2">Sep</button></td>
+                      <td><button type="button" onclick="pushMonth(value)" value="10" class="btn btn-sm btn-info ml-2">Oct</button></td>
+                      <td><button type="button" onclick="pushMonth(value)" value="11" class="btn btn-sm btn-info ml-2">Nov</button></td>
+                      <td><button type="button" onclick="pushMonth(value)" value="12" class="btn btn-sm btn-info ml-2">Dec</button></td>
+                      <input type="hidden" name="month">
+                  </thead>
+                </table>
+              </div>
+            </div>
+          </div>
           <div class="container justify-content-center align-content-center text-center">
             <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Show</button>
             <a href="{% url 'order_report' %}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i> Reset</a>
           </div>
         </form>
-        <div class="container ">
-          <div class="d-flex justify-content-center table-responsive">
-            <div class="p-2">
-              <table class="mb-1 table-sm  table-responsive-sm ">
-                <thead>
-                    <td width="20%">
-                      <select id="getYear" onChange="copyTextValue()" class="form-control">
-                        <option value="" disabled selected>Select</option>
-                        <option value="2021">2021</option>
-                        <option value="2020">2020</option>
-                      </select>
-                    </td>
-                    <td><button type="" class="btn btn-sm btn-info ml-2 " >Jan</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-2">Feb</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-2">Mar</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-2">Apr</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-2">May</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-2">Jun</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-2">Jul</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-2">Aug</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-2">Sep</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-2">Oct</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-2" onclick="myFunction()"  id="getMonth">Nov</button></td>
-                    <td><button type="" class="btn btn-sm btn-info ml-2">Dec</button></td>
-                </thead>
-              </table>
-            </div>
-          </div>
-        </div>
       </div>
 
      
@@ -361,7 +363,13 @@
 
 {% block script %}
 <script>
-    // document.getElementById('filter').submit()
+    function pushMonth(value){
+      document.getElementsByName('month')[0].value = value
+      document.getElementById('filter').submit()
+    }
+    if(document.getElementsByName('year')[0][0].innerText == "None"){
+      document.getElementsByName('year')[0][0].innerText = 'Year'
+    }
     // FOR SHOWING THE TODAY DATE 
     var today = new Date();
     var dd = today.getDate();

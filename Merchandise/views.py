@@ -1576,6 +1576,7 @@ def order_report(request):
     }
     return render(request, 'Merchandising/Order/order_report.html', context)
 
+
 def view_order(request, id):
     view_po = PO_Details.objects.get(id=id)
     context = {

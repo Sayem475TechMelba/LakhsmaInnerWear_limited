@@ -1891,7 +1891,12 @@ def shipment_schedule(request):
     return render(request, 'Merchandising/Order/shipment_schedule.html', context)
 
 def capacity_booked(request):
-    orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')
+    try:
+        orders = OrderEntryInfo.objects.filter(insert_date__year=request.GET.get('year'), insert_date__month=request.GET.get('month')).prefetch_related('order_entry').order_by('-id')
+        year = request.GET.get('year')
+    except:
+        orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')
+        year = 'year'
     # con_and_pro = PO_Details.objects.values_list( 'po_job_no__buyer_name__buyer_name').annotate(avg_smv=Avg('po_job_no__smv'), tt_qty=(Sum('po_quantity'))).values('po_job_no__company_name__company_name','po_job_no__buyer_name__buyer_name', 'avg_smv', 'tt_qty')
     # con_order = PO_Details.objects.values_list( 'po_job_no__buyer_name__buyer_name').annotate(avg_smv=Avg('po_job_no__smv'), tt_qty=(Sum('po_quantity')), tt_value=(Sum(F('po_quantity')*F('avg_price'), output_field=FloatField()))).values('po_job_no__company_name__company_name','po_job_no__buyer_name__buyer_name', 'avg_smv', 'tt_qty', 'tt_value').filter(order_status="Confirmed")
     # pro_order = PO_Details.objects.values_list( 'po_job_no__buyer_name__buyer_name').annotate(avg_smv=Avg('po_job_no__smv'), tt_qty=(Sum('po_quantity')), tt_value=(Sum(F('po_quantity')*F('avg_price'), output_field=FloatField()))).values('po_job_no__company_name__company_name','po_job_no__buyer_name__buyer_name', 'avg_smv', 'tt_qty', 'tt_value').filter(order_status="Projected")
@@ -1901,6 +1906,7 @@ def capacity_booked(request):
     context = {
         'orders': orders,
         'myFilter': myFilter,
+        'year': year,
         # 'con_and_pro':con_and_pro,
         # 'con_order': con_order,
         # 'pro_order': pro_order,

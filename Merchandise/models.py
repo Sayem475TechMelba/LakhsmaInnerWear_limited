@@ -1,5 +1,6 @@
 from functools import total_ordering
 from pyexpat import model
+from statistics import mode
 from django.db import models
 import datetime
 from django.utils.timezone import now
@@ -635,3 +636,10 @@ class Yarn_Inline_Item(models.Model):
 
     def __str__(self):
         return str(self.yarn_cost)
+
+class Grey_Cons_Items(models.Model):
+    color_size = models.ForeignKey(ColorSizeItems, on_delete=models.CASCADE, blank=True, null=True)
+    fabric_cost = models.ForeignKey(Fabric_Inline_Item, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.color_size)

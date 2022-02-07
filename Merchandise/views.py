@@ -1845,6 +1845,10 @@ def pre_costing(request):
                 else:
                     messages.error(request , "Something went wrong!")
                     print(form_items_yc.errors)
+        
+        elif request.POST.get("_task") == 'grey_data':
+            pass
+
         else:
             context ={
                 'form':form,
@@ -1854,6 +1858,7 @@ def pre_costing(request):
                 'yarn_form': yarn_form,
                 'form_items_yc': form_items_yc,
                 'fetch': OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])),
+                'color': helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:]))),
                 'total_po': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'po_quantity'),
                 'total_avg_price': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'avg_price'),
             }

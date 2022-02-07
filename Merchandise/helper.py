@@ -1,5 +1,12 @@
 from . import models
 
+class QS:
+    def __init__(self, id, po, color, size):
+        self.id = id
+        self.po = po
+        self.color = color
+        self.size = size
+
 def job_no(model):
     if len(model) > 0:
         temp = []
@@ -41,3 +48,10 @@ def total(model, type):
         total = round(total, 2)
     
     return total
+
+def color_size(model):
+    temp = []
+    for i in models.PO_Details.objects.filter(po_job_no=model.id):
+        for j in models.ColorSizeItems.objects.filter(po_color_size=i.id):
+            temp.append(QS(j.id, i.po_no, j.color, j.size))
+    return temp

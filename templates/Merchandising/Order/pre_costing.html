@@ -903,11 +903,12 @@
                                             </td>
                                             
                                             <td >
-                                                {{ fc.avg_grey_cons|attr:"class:form-control"|attr:"type:number" }}
+                                                {{ fc.avg_grey_cons|attr:"class:form-control"|attr:"type:number"|attr:"data-target:#colorSizeInline"|attr:"data-toggle:modal" }}
                                             </td>
                                             <td >
                                                 {{ fc.rate|attr:"class:form-control"|attr:"type:number" }}
                                             </td>
+
                                             <td >
                                                 {{ fc.amount|attr:"class:form-control"|attr:"type:number" }}
                                             </td>
@@ -1733,7 +1734,6 @@
                                 <th >Process Loss</th>
                                 <th width="400">Fabric Composition</th>
                                 <th >Action</th>
-
                             </tr>
                         </thead>
                         <tfoot id="tfooter">
@@ -1788,6 +1788,142 @@
         </div>
     </div>
 </div>
+    <!-- COLOR SIZE INLINES TABLE   -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"  id="colorSizeInline" >
+        <div class="modal-dialog modal-lg  " >
+            <div class="container-fluid">
+                <form method="POST" id="color" action="{% url 'pre_costing' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="_task" value="grey_data">
+                    <div class="modal-content  ">
+                        <div class="modal-header">
+                        <h6 class="modal-title" id="exampleModalLabel">Color & Size: Average Grey Consumption</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="d-flex justify-content-center bd-highlight mb-1 mt-1">
+                                <div class="p-2 bd-highlight ml-3">  <input type="checkbox"> <strong>Copy:</strong></div>
+                                <div class="p-2 bd-highlight ml-3"><input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" > Color </div>
+                                <div class="p-2 bd-highlight ml-3"> <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" > Size</div>
+                                <div class="p-2 bd-highlight ml-3"> <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" > PO</div>
+                                <div class="p-2 bd-highlight ml-3"> <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" > Size & Color</div>
+                            </div>
+                        
+                            <table id="" class="table table-bordered table-striped  table-sm table-responsive-sm table-hover  table-info  display" >
+                                <thead class="text-center bg-info">
+                                    <tr>
+                                        <th>S/L</th>
+                                        <th>PO NO.</th>
+                                        <th>Color</th>
+                                        <th>Gmts Sizes</th>
+                                        <th>Dia</th>
+                                        <th>Item Sizes</th>
+                                        <th>Finish Cons (kg)</th>
+                                        <th>Process Loss %</th>
+                                        <th>Grey Cons (kg)</th>
+                                        <th>Rate</th>
+                                        <th>Amount</th>
+                                        <th>Pcs</th>
+                                        <th>Total Qty</th>
+                                        <th>Total Amount</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="base_body" class="text-center">
+                                    {% for i in color %}
+                                    <tr id="base_tr">
+                                        <td>{{ forloop.counter }}</td>                         
+                                        <td><input type="text" class="form-control" value="{{ i.po }}"></td>                         
+                                        <td><input type="text" class="form-control" value="{{ i.color }}"></td>                         
+                                        <td><input type="text" class="form-control" value="{{ i.size  }}"></td>
+                                        <td><input type="text" class="form-control"></td>                         
+                                        <td><input type="text" class="form-control"></td>                         
+                                        <td><input type="text" class="form-control"></td>                         
+                                        <td><input type="text" class="form-control"></td>                         
+                                        <td><input type="text" class="form-control"></td>                         
+                                        <td><input type="text" class="form-control"></td>                         
+                                        <td><input type="text" class="form-control"></td>                         
+                                        <td><input type="text" class="form-control"></td>                         
+                                        <td><input type="text" class="form-control"></td>                         
+                                        <td><input type="text" class="form-control"></td> 
+                                        <td><input type="text" class="form-control"></td> 
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                                <tfoot class="font-weight-bold">
+                                        <tr>
+                                            <td colspan="6" class="text-right">
+                                               Total:
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td> 
+                                                <input type="text" class="form-control"> 
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6" class="text-right">
+                                               Average:
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td> 
+                                                <input type="text" class="form-control"> 
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                            <td>  
+                                                <input type="text" class="form-control">
+                                            </td>
+                                        </tr>
+                                </tfoot>
+
+                            </table>
+                        </div>
+                        <div class="modal-footer justify-content-center">
+                            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-success btn-sm">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
   <!----------------------------------- Modal End -------------------------------------->
 
   </div>
@@ -2026,6 +2162,25 @@
                 processData: false
             });
         });
-</script> 
+</script>
+<script type="text/javascript"> 
+    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
+        $('#color').submit(function(event){
+            event.preventDefault();
+            var form = $(this)
+            url = form.attr('action')
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function (response) {},
+                error: function (response) {},
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+</script>
 
 {% endblock script %}

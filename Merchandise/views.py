@@ -1773,6 +1773,7 @@ def delete_order(request, id):
 
 ####### Budget Pre Costing Form ##########
 def pre_costing(request):
+    seqq = 1
     fab_desc = LibraryFabricDescription.objects.all()
     form = BudgetPreCostForm(request.POST, request.FILES)
     fab_form = FabricCostForm()
@@ -1847,7 +1848,15 @@ def pre_costing(request):
                     print(form_items_yc.errors)
         
         elif request.POST.get("_task") == 'grey_data':
-            pass
+            for i in range(0, len(helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('__po_job')[5:]))))):
+                data = Grey_Cons_Items(
+                    color_size=ColorSizeItems.objects.get(id=request.POST.get(f'id-{i+1}')),
+                    seq=seqq,
+                    inserted_by=request.user,
+                    budget=BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=request.user)))
+                )
+                data.save()
+                seqq += 1
 
         else:
             context ={

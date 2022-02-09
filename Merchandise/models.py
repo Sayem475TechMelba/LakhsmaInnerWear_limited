@@ -1,6 +1,7 @@
 from functools import total_ordering
 from pyexpat import model
 from statistics import mode
+from telnetlib import Telnet
 from django.db import models
 import datetime
 from django.utils.timezone import now
@@ -638,8 +639,12 @@ class Yarn_Inline_Item(models.Model):
         return str(self.yarn_cost)
 
 class Grey_Cons_Items(models.Model):
+    #Grey_Cons
     color_size = models.ForeignKey(ColorSizeItems, on_delete=models.CASCADE, blank=True, null=True)
+    seq = models.IntegerField(null=True, blank=True)
     fabric_cost = models.ForeignKey(Fabric_Inline_Item, on_delete=models.CASCADE, blank=True, null=True)
+    budget = models.ForeignKey(BudgetPreCost, on_delete=models.CASCADE, blank=True, null=True)
+    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return str(self.color_size)

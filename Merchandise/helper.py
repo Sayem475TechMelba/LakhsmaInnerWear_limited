@@ -55,3 +55,11 @@ def color_size(model):
         for j in models.ColorSizeItems.objects.filter(po_color_size=i.id):
             temp.append(QS(j.id, i.po_no, j.color, j.size))
     return temp
+
+def name_starct(string):
+    loc = 0
+    for i in range(0, len(string)):
+        if string[i] == '-':
+            loc = i
+            break
+    return int(string[loc+1:])

@@ -638,12 +638,16 @@ class Yarn_Inline_Item(models.Model):
     def __str__(self):
         return str(self.yarn_cost)
 
-class Grey_Cons_Items(models.Model):
-    #Grey_Cons
-    color_size = models.ForeignKey(ColorSizeItems, on_delete=models.CASCADE, blank=True, null=True)
-    seq = models.IntegerField(null=True, blank=True)
+class Grey_Cons(models.Model): #main
+    b_job_no = models.ForeignKey(BudgetPreCost, related_name="grey_cons", on_delete=models.CASCADE, blank=True, null=True)
     fabric_cost = models.ForeignKey(Fabric_Inline_Item, on_delete=models.CASCADE, blank=True, null=True)
-    budget = models.ForeignKey(BudgetPreCost, on_delete=models.CASCADE, blank=True, null=True)
+    
+    def __str__(self):
+        return str(self.b_job_no)
+
+class Grey_Cons_Items(models.Model):
+    grey_cons = models.ForeignKey(Grey_Cons, related_name="grey_items", on_delete=models.CASCADE, blank=True, null=True)
+    color_size = models.ForeignKey(ColorSizeItems, on_delete=models.CASCADE, blank=True, null=True)
     inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):

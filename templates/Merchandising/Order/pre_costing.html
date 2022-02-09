@@ -1790,7 +1790,7 @@
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"  id="colorSizeInline" >
     <div class="modal-dialog modal-lg  " >
         <div class="container-fluid">
-            <form method="POST" class="color" id="color" action="{% url 'pre_costing' %}" onsubmit="return false;">
+            <form method="POST" class="color" id="color" action="{% url 'pre_costing' %}">
                 {% csrf_token %}
                 <input type="hidden" name="_task" value="grey_data">
                 <div class="modal-content  ">

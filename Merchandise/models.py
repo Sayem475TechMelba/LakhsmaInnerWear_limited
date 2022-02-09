@@ -638,7 +638,7 @@ class Yarn_Inline_Item(models.Model):
     def __str__(self):
         return str(self.yarn_cost)
 
-class Grey_Cons(models.Model): #main
+class Grey_Cons(models.Model):
     b_job_no = models.ForeignKey(BudgetPreCost, related_name="grey_cons", on_delete=models.CASCADE, blank=True, null=True)
     fabric_cost = models.ForeignKey(Fabric_Inline_Item, on_delete=models.CASCADE, blank=True, null=True)
     

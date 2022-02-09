@@ -7,6 +7,10 @@ class QS:
         self.color = color
         self.size = size
 
+class CustomInline:
+    def __init__(self):
+        pass
+
 def job_no(model):
     if len(model) > 0:
         temp = []

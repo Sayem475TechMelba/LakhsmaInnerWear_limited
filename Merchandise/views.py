@@ -1851,7 +1851,7 @@ def pre_costing(request):
             grey_cons_model.save()
             for i in range(0, len(helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('__po_job')[5:]))))):
                 data = Grey_Cons_Items(
-                    color_size=ColorSizeItems.objects.get(id=request.POST.get(f'id-{i+1}')),
+                    color_size=ColorSizeItems.objects.get(id=request.POST.get(f'id_{i+1}')),
                     inserted_by=request.user,
                     grey_cons = grey_cons_model
                 )

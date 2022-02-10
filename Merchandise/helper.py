@@ -63,7 +63,7 @@ def color_size(model):
 def name_starct(string):
     loc = 0
     for i in range(0, len(string)):
-        if string[i] == '-':
+        if string[i] == '_':
             loc = i
             break
     return int(string[loc+1:])

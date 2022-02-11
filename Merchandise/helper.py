@@ -1,6 +1,3 @@
-from statistics import mode
-
-from numpy import piecewise
 from . import models
 
 class QS:

@@ -1859,7 +1859,18 @@ def pre_costing(request):
             for i in range(0, len(helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('__po_job')[5:]))))):
                 data = Grey_Cons_Items(
                     color_size=ColorSizeItems.objects.get(id=request.POST.get(f'id_{i+1}')),
-                    grey_cons = grey_cons_model
+                    grey_cons = grey_cons_model,
+                    dia = request.POST.get(f"dia_{i+1}"),
+                    item_sizes = request.POST.get(f"item_{i+1}"),
+                    fab_cons =  request.POST.get(f"fin_cons_{i+1}"),
+                    process_loss_pct = request.POST.get(f"pro_{i+1}"),
+                    grey_cons_unit =  request.POST.get(f"unit_{i+1}"),
+                    rate = request.POST.get(f"rate_{i+1}"),
+                    amount = request.POST.get(f"amt_{i+1}"),
+                    pcs = request.POST.get(f"pcs_{i+1}"),
+                    total_qty = request.POST.get(f"tt_oty_{i+1}"),
+                    total_amount = request.POST.get(f"tt_amt_{i+1}"),
+                    remarks =  request.POST.get(f"{i+1}")
                 )
                 data.save()
         else:

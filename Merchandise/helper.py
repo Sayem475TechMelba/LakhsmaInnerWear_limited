@@ -75,3 +75,18 @@ def name_starct(string):
             loc = i
             break
     return int(string[loc+1:])
+
+def gmts_item(model, type):
+    if type == 'color':
+        pro = []
+        final = []
+        for i in models.PO_Details.objects.filter(po_job_no=model.id):
+            for j in models.ColorSizeItems.objects.filter(po_color_size=i.id):
+                if str(j.color).lower() not in pro:
+                    pro.append(str(j.color).lower())
+
+        for i in pro:
+            final.append(i.capitalize())
+        return final
+    elif type == "gmt":
+        pass

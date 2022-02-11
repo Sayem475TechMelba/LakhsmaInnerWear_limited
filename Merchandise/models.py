@@ -663,7 +663,7 @@ class Grey_Cons(models.Model):
     insert_date = models.DateTimeField(default=now, blank=True, null=True)
     
     def __str__(self):
-        return str(self.id)
+        return str(self.b_job_no)
 
 class Grey_Cons_Items(models.Model):
     grey_cons = models.ForeignKey(Grey_Cons, related_name="grey_items", on_delete=models.CASCADE, blank=True, null=True)

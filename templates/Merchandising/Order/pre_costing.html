@@ -888,7 +888,7 @@
                                                 {{ fc.gms|attr:"class:form-control" }}
                                             </td>
                                             <td >
-                                                {{ fc.cs_sensitive|attr:"class:form-control" }}
+                                                {{ fc.cs_sensitive|attr:"class:form-control"|attr:"id:colorSelect"|attr:"onChange:colorOptions(this)" }} 
                                             </td>
                                             <td >
                                                  {{ fc.color|attr:"class:form-control"}}
@@ -1707,8 +1707,8 @@
             </div>
             </div>
     </div> -->
- <!-- FABRIC DESCRIPTION TABLE FOR SELECTING FABRIC CONSUMPTION  -->
- <div class="modal fade " id="fabricDesc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- FABRIC DESCRIPTION TABLE FOR SELECTING FABRIC CONSUMPTION  -->
+<div class="modal fade " id="fabricDesc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg  " role="document">
 
         <div class="container">
@@ -1787,7 +1787,49 @@
         </div>
     </div>
 </div>
-    <!-- COLOR SIZE INLINES TABLE   -->
+<!-- CONTRAST COLOR FORM  MODAL  -->
+<div class="modal fade" id="contrastColor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="container">
+            <div class="modal-content  ">
+                <form method="POST" id="cont_color" action="{% url 'pre_costing' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="_task" value="cont_color">
+                    <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">Color Contrast</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body ">
+                        <table id="contrastColorTable" class="table table-bordered table-striped table-sm table-responsive-sm table-hover  display" >
+                            <thead class="text-center bg-meroon">
+                                <tr>
+                                    <th>Gmts Color</th>
+                                    <th>Contrast Color </th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-center">
+                                {% for i in gmts_color %}
+                                <tr>
+                                    <td><input type="text" class="form-control c" value="{{ i }}"></td>
+                                    <td><input type="text" class="form-control"></td>
+                                </tr>
+                                {% endfor %}
+                            
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success btn-sm">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- COLOR SIZE INLINES TABLE -->
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"  id="colorSizeInline" >
     <div class="modal-dialog modal-lg  " >
         <div class="container-fluid">
@@ -2081,14 +2123,27 @@
         return false;
     }
 </script>
+<script>
+    // COLOR CONTRAST ACTIVE MODAL 
+    $(document).ready(function(){ 
+        $('#colorSelect').change(function() { 
+            var opval = $(this).val();
+            if(opval=="2"){
+                $('#contrastColor').modal("show");
+            }
+        });
+    });
+</script>
 <script type="text/javascript">
     $(function () {
-       
-            document.getElementById("job_no").addEventListener("dblclick", function() {
-            location.href = "{% url 'order_selection' %}";
-            });
-         
-      });
+        document.getElementById("job_no").addEventListener("dblclick", function() {
+        location.href = "{% url 'order_selection' %}";
+        });
+    });
+    function colorOptions(obj) {
+        var c = document.getElementById("color");
+        c.readOnly = obj.value == "1";
+    }
 </script>
 <script>
     $(document).ready(function() {
@@ -2097,7 +2152,6 @@
           var title = $(this).text();
           $(this).html( '<input type="text" class="fabDesSearch" placeholder="Search" />' );
       });
-
       $("#fabric_desc_report").on('click','.btnSelect',function(){
         var currentRow=$(this).closest("tr"); 
         var construction=currentRow.find("td:eq(2)").text(); 
@@ -2193,6 +2247,29 @@
             data: formData,
             success: function (response) {
                 alert("Your COLOR & SIZE: AVERAGE GREY CONSUMPTION Successfully Added. Please add below form as well.")
+            },
+            error: function (response) {
+                alert("Something Went Wrong...")
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+    });
+</script>
+<script type="text/javascript"> 
+    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
+    $("#cont_color").submit(function(event){
+        event.preventDefault();
+        var form = $(this)
+        url = form.attr('action')
+        var formData = new FormData(this);
+        $.ajax({
+            url: url,
+            type: 'POST',
+            data: formData,
+            success: function (response) {
+                alert("Conrast Color added")
             },
             error: function (response) {
                 alert("Something Went Wrong...")

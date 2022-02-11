@@ -1873,6 +1873,10 @@ def pre_costing(request):
                     remarks =  request.POST.get(f"{i+1}")
                 )
                 data.save()
+        
+        elif request.POST.get("_task") == 'cont_color':
+            pass
+
         else:
             context ={
                 'form':form,
@@ -1885,6 +1889,7 @@ def pre_costing(request):
                 'color': helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:]))),
                 'total_po': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'po_quantity'),
                 'total_avg_price': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'avg_price'),
+                'gmts_color': helper.gmts_item(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'color')
             }
             return render(request, 'Merchandising/Order/pre_costing.html', context)
 

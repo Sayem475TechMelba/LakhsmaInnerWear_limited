@@ -6,6 +6,7 @@ from django.db import models
 import datetime
 from django.utils.timezone import now
 from django.urls import reverse
+from numpy import insert
 from accounts.models import Account
 
 # Create your models here.
@@ -609,9 +610,10 @@ class Fabric_Inline_Item(models.Model):
     amount = models.FloatField(default=0, blank=True, null=True)
     total_quantity = models.FloatField(default=0, blank=True, null=True)
     total_amount = models.FloatField(default=0, blank=True, null=True)
+    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, related_name="fab_inline_insert_by", null=True, blank=True)
 
     def __str__(self):
-        return str(self.fabric_cost)
+        return str(self.id)
     
 class YarnCost(models.Model):
     b_job_no = models.ForeignKey(BudgetPreCost, related_name='yarn_cost', on_delete=models.CASCADE, null=True, blank=True)
@@ -661,7 +663,7 @@ class Grey_Cons(models.Model):
     insert_date = models.DateTimeField(default=now, blank=True, null=True)
     
     def __str__(self):
-        return str(self.b_job_no)
+        return str(self.id)
 
 class Grey_Cons_Items(models.Model):
     grey_cons = models.ForeignKey(Grey_Cons, related_name="grey_items", on_delete=models.CASCADE, blank=True, null=True)
@@ -681,8 +683,6 @@ class Grey_Cons_Items(models.Model):
     total_qty = models.FloatField(default=0, blank=True, null=True)
     total_amount = models.FloatField(default=0, blank=True, null=True)
     remarks = models.CharField(max_length=200, blank=True, null=True)
-    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True, blank=True)
-    insert_date = models.DateTimeField(default=now, blank=True, null=True)
 
     def __str__(self):
         return str(self.color_size)

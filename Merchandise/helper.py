@@ -1,3 +1,6 @@
+from statistics import mode
+
+from numpy import piecewise
 from . import models
 
 class QS:
@@ -7,18 +10,26 @@ class QS:
         self.color = color
         self.size = size
 
-class CustomInline:
-    def __init__(self):
-        pass
+def coustom_inline(color, fabric, count):
+    color_lis = []
+    fabric_lis = []
+    counter = 0
+    for i in color:
+        color_lis.append(i)
+    for j in fabric:
+        fabric_lis.append(j)
+
+    for i in range(1, count+1):
+        color_lis[counter].fabric_cost = fabric_lis[counter]
+        color_lis[counter].save()
+        counter += 1
 
 def job_no(model):
     if len(model) > 0:
         temp = []
         for i in model:
-            temp.append(i.id)
-        return int(temp[-1]) + 1
-    else:
-        return 1
+            temp.append(i)
+        return temp[-1]
 
 def po_no(model):
     if len(model) > 0:

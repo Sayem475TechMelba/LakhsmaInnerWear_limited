@@ -1817,6 +1817,7 @@ def pre_costing(request):
                     fab_form.save()
                     form_items_fc.instance = data
                     form_items_fc.save()
+                    helper.coustom_inline(Grey_Cons.objects.filter(inserted_by=request.user).order_by('-id')[:int(request.POST.get("inline_count"))-1], Fabric_Inline_Item.objects.filter(fabric_cost=helper.job_no(FabricCost.objects.filter(inserted_by=request.user))) .order_by('-id')[:int(request.POST.get("inline_count"))-1], int(request.POST.get("inline_count"))-1)
                     # messages.success(request, 'Your fabric cost info has been Added Successfully...')
                     return HttpResponseRedirect(request.path_info)
                 else:
@@ -1847,12 +1848,13 @@ def pre_costing(request):
                     print(form_items_yc.errors)
         
         elif request.POST.get("_task") == 'grey_data':
-            grey_cons_model = Grey_Cons(b_job_no=BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=request.user))))
+            grey_cons_model = Grey_Cons(b_job_no=BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=request.user))),
+            inserted_by=request.user
+            )
             grey_cons_model.save()
             for i in range(0, len(helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('__po_job')[5:]))))):
                 data = Grey_Cons_Items(
                     color_size=ColorSizeItems.objects.get(id=request.POST.get(f'id_{i+1}')),
-                    inserted_by=request.user,
                     grey_cons = grey_cons_model
                 )
                 data.save()

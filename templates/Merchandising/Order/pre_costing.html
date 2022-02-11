@@ -932,6 +932,7 @@
                                 <button type="submit" onclick="getYarn()" class="btn btn-success btn-sm">Save</button>
                                 
                             </div>
+                            <input type="hidden" name="inline_count" id="__inline_index">
                             </form>
                             
                         </div>
@@ -1851,7 +1852,6 @@
                                 </tr>
                                 {% endfor %}
                                 <input type="hidden" name="__po_job" value="{{ fetch.job_no }}">
-                                <input type="hidden" name="__inline_index">
                             </tbody>
                             <tfoot class="font-weight-bold">
                                     <tr>
@@ -1966,9 +1966,16 @@
 
     function update(){
         count++
+        document.getElementById('__inline_index').value = count
+    }
+
+    function negUpdate(){
+        count--
+        document.getElementById('__inline_index').value = count
     }
 
     function passColor(id){
+        document.getElementById('__inline_index').value = count
         var a = document.getElementById('colorSizeInline')
         if(rightID(id) != 0){
             if(wModal.includes(rightID(id)) == false){

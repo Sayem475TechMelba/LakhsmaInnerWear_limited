@@ -929,7 +929,7 @@
                                 </table>
                              </div>
                              <div>
-                                <button type="submit" onclick="getYarn()" class="btn btn-success btn-sm">Save</button>
+                                <button type="submit" class="btn btn-success btn-sm">Save</button>
                                 
                             </div>
                             <input type="hidden" name="inline_count" id="__inline_index">
@@ -1837,17 +1837,17 @@
                                     <td><input type="text" class="form-control" value="{{ i.po }}"></td>                         
                                     <td><input type="text" class="form-control" value="{{ i.color }}"></td>                         
                                     <td><input type="text" class="form-control" value="{{ i.size  }}"></td>
-                                    <td><input type="text" name="dia_{{ forloop.counter }}" class="form-control"></td>
-                                    <td><input type="text" name="" class="form-control"></td>
-                                    <td><input type="text" name="" class="form-control"></td>
-                                    <td><input type="text" name="" class="form-control"></td>
-                                    <td><input type="text" name="" class="form-control"></td>
-                                    <td><input type="text" name="" class="form-control"></td>
-                                    <td><input type="text" name="" class="form-control"></td>
-                                    <td><input type="text" name="" class="form-control"></td>
-                                    <td><input type="text" name="" class="form-control"></td>
-                                    <td><input type="text" name="" class="form-control"></td>
-                                    <td><input type="text" name="" class="form-control"></td>
+                                    <td><input type="text" id="dia_{{ forloop.counter }}"  name="dia_{{ forloop.counter }}" class="form-control"></td>
+                                    <td><input type="text" id="item_{{ forloop.counter }}" name="item_{{ forloop.counter }}" class="form-control"></td>
+                                    <td><input type="text" id="fin_cons_{{ forloop.counter }}" name="fin_cons_{{ forloop.counter }}" class="form-control"></td>
+                                    <td><input type="text" id="pro_{{ forloop.counter }}"  name="pro_{{ forloop.counter }}" class="form-control"></td>
+                                    <td><input type="text" id="unit_{{ forloop.counter }}" name="unit_{{ forloop.counter }}" class="form-control"></td>
+                                    <td><input type="text" id="rate_{{ forloop.counter }}" name="rate_{{ forloop.counter }}" class="form-control"></td>
+                                    <td><input type="text" id="amt_{{ forloop.counter }}"  name="amt_{{ forloop.counter }}" class="form-control"></td>
+                                    <td><input type="text" id="pcs_{{ forloop.counter }}"  name="pcs_{{ forloop.counter }}" class="form-control"></td>
+                                    <td><input type="text" id="tt_oty_{{ forloop.counter }}" name="tt_oty_{{ forloop.counter }}" class="form-control"></td>
+                                    <td><input type="text" id="tt_amt_{{ forloop.counter }}" name="tt_amt_{{ forloop.counter }}" class="form-control"></td>
+                                    <td><input type="text" class="form-control"></td>
                                     <input type="hidden" name="id_{{ forloop.counter }}" value="{{ i.id }}">
                                 </tr>
                                 {% endfor %}
@@ -1963,6 +1963,7 @@
     var count = 1
     var modalCount = 0
     var wModal = []
+    var fCout_g = 0
 
     function update(){
         count++
@@ -2026,13 +2027,7 @@
                 fCout++
             }
         }
-        return fCout
-    }
-
-    function getYarn(){
-        for(var i = 0; i<febCount(); i++){
-            document.getElementsByClassName('btn btn-sm btn-warning mt-4 mb-3 mb-yarn')[0].click()
-        }
+        fCout_g = fCout
     }
    // click on the div FOR SHOWING HIDE DIV FOR COSTING
     function fabric(e, id) {

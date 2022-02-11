@@ -1817,7 +1817,11 @@ def pre_costing(request):
                     fab_form.save()
                     form_items_fc.instance = data
                     form_items_fc.save()
-                    helper.coustom_inline(Grey_Cons.objects.filter(inserted_by=request.user).order_by('-id')[:int(request.POST.get("inline_count"))-1], Fabric_Inline_Item.objects.filter(fabric_cost=helper.job_no(FabricCost.objects.filter(inserted_by=request.user))) .order_by('-id')[:int(request.POST.get("inline_count"))-1], int(request.POST.get("inline_count"))-1)
+                    helper.coustom_inline(
+                        Grey_Cons.objects.filter(inserted_by=request.user).order_by('-id')[:int(request.POST.get("inline_count"))],
+                        Fabric_Inline_Item.objects.filter(fabric_cost=helper.job_no(FabricCost.objects.filter(inserted_by=request.user))).order_by('-id')[:int(request.POST.get("inline_count"))],
+                        int(request.POST.get("inline_count"))
+                    )
                     # messages.success(request, 'Your fabric cost info has been Added Successfully...')
                     return HttpResponseRedirect(request.path_info)
                 else:

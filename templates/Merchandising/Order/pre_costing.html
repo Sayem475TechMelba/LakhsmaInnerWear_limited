@@ -891,8 +891,7 @@
                                                 {{ fc.cs_sensitive|attr:"class:form-control"|attr:"id:colorSelect"|attr:"onChange:colorOptions(this)" }} 
                                             </td>
                                             <td >
-                                                 {{ fc.color|attr:"class:form-control"}}
-    
+                                                 {{ fc.color|attr:"class:form-control"|attr:"id:color"}}
                                             </td>
                                             <td >
                                                 {{ fc.con_basis|attr:"class:form-control"}}
@@ -1792,39 +1791,35 @@
     <div class="modal-dialog " role="document">
         <div class="container">
             <div class="modal-content  ">
-                <form method="POST" id="cont_color" action="{% url 'pre_costing' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="_task" value="cont_color">
-                    <div class="modal-header">
-                    <h6 class="modal-title" id="exampleModalLabel">Color Contrast</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body ">
-                        <table id="contrastColorTable" class="table table-bordered table-striped table-sm table-responsive-sm table-hover  display" >
-                            <thead class="text-center bg-meroon">
-                                <tr>
-                                    <th>Gmts Color</th>
-                                    <th>Contrast Color </th>
-                                </tr>
-                            </thead>
-                            <tbody class="text-center">
-                                {% for i in gmts_color %}
-                                <tr>
-                                    <td><input type="text" class="form-control c" value="{{ i }}"></td>
-                                    <td><input type="text" class="form-control"></td>
-                                </tr>
-                                {% endfor %}
-                            
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success btn-sm">Save</button>
-                    </div>
-                </form>
+                <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel">Color Contrast</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body ">
+                    <table id="contrastColorTable" class="table table-bordered table-striped table-sm table-responsive-sm table-hover  display" >
+                        <thead class="text-center bg-meroon">
+                            <tr>
+                                <th>Gmts Color</th>
+                                <th>Contrast Color </th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            {% regroup color by color as color_list  %}
+                            {% for color in color_list%}
+                            <tr>
+                                <td><input type="text" class="form-control c" value="{{color.grouper}}"></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            {% endfor %}
+                         
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1859,6 +1854,8 @@
                                     <th>PO NO.</th>
                                     <th>Color</th>
                                     <th>Gmts Sizes</th>
+                                    <th>Qty.</th>
+
                                     <th>Dia</th>
                                     <th>Item Sizes</th>
                                     <th>Finish Cons (kg)</th>
@@ -1879,6 +1876,7 @@
                                     <td><input type="text" class="form-control" value="{{ i.po }}"></td>                         
                                     <td><input type="text" class="form-control" value="{{ i.color }}"></td>                         
                                     <td><input type="text" class="form-control" value="{{ i.size  }}"></td>
+                                    <td><input type="text" class="form-control" value="{{ i.order_qty }}"></td>                         
                                     <td><input type="text" id="id_dia_{{ forloop.counter }}"  name="dia_{{ forloop.counter }}" class="form-control"></td>
                                     <td><input type="text" id="id_item_{{ forloop.counter }}" name="item_{{ forloop.counter }}" class="form-control"></td>
                                     <td><input type="text" id="id_fin_cons_{{ forloop.counter }}" name="fin_cons_{{ forloop.counter }}" class="form-control"></td>
@@ -2247,29 +2245,6 @@
             data: formData,
             success: function (response) {
                 alert("Your COLOR & SIZE: AVERAGE GREY CONSUMPTION Successfully Added. Please add below form as well.")
-            },
-            error: function (response) {
-                alert("Something Went Wrong...")
-            },
-            cache: false,
-            contentType: false,
-            processData: false
-        });
-    });
-</script>
-<script type="text/javascript"> 
-    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
-    $("#cont_color").submit(function(event){
-        event.preventDefault();
-        var form = $(this)
-        url = form.attr('action')
-        var formData = new FormData(this);
-        $.ajax({
-            url: url,
-            type: 'POST',
-            data: formData,
-            success: function (response) {
-                alert("Conrast Color added")
             },
             error: function (response) {
                 alert("Something Went Wrong...")

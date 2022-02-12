@@ -1876,13 +1876,13 @@
                                     <td><input type="text" class="form-control" value="{{ i.po }}"></td>                         
                                     <td><input type="text" class="form-control" value="{{ i.color }}"></td>                         
                                     <td><input type="text" class="form-control" value="{{ i.size  }}"></td>
-                                    <td><input type="text" class="form-control" value="{{ i.order_qty }}"></td>                         
+                                    <td><input type="text" class="form-control" id="id_qty_{{ forloop.counter }}" value="{{ i.order_qty }}"></td>             
                                     <td><input type="text" id="id_dia_{{ forloop.counter }}"  name="dia_{{ forloop.counter }}" class="form-control"></td>
                                     <td><input type="text" id="id_item_{{ forloop.counter }}" name="item_{{ forloop.counter }}" class="form-control"></td>
-                                    <td><input type="text" id="id_fin_cons_{{ forloop.counter }}" name="fin_cons_{{ forloop.counter }}" class="form-control"></td>
-                                    <td><input type="text" id="id_pro_{{ forloop.counter }}"  name="pro_{{ forloop.counter }}" class="form-control"></td>
+                                    <td><input type="text" id="id_fin_cons_{{ forloop.counter }}" name="fin_cons_{{ forloop.counter }}" class="form-control" oninput="calGreyCons(id)"></td>
+                                    <td><input type="text" id="id_pro_{{ forloop.counter }}"  name="pro_{{ forloop.counter }}" class="form-control" oninput="calGreyCons(id)"></td>
                                     <td><input type="text" id="id_unit_{{ forloop.counter }}" name="unit_{{ forloop.counter }}" class="form-control"></td>
-                                    <td><input type="text" id="id_rate_{{ forloop.counter }}" name="rate_{{ forloop.counter }}" class="form-control"></td>
+                                    <td><input type="text" id="id_rate_{{ forloop.counter }}" name="rate_{{ forloop.counter }}" class="form-control" oninput="calAmt(id)"></td>
                                     <td><input type="text" id="id_amt_{{ forloop.counter }}"  name="amt_{{ forloop.counter }}" class="form-control"></td>
                                     <td><input type="text" id="id_pcs_{{ forloop.counter }}"  name="pcs_{{ forloop.counter }}" class="form-control"></td>
                                     <td><input type="text" id="id_tt_oty_{{ forloop.counter }}" name="tt_oty_{{ forloop.counter }}" class="form-control"></td>
@@ -2047,6 +2047,20 @@
 
     String.prototype.replaceAt = function(index, replacement) {
         return this.substr(0, index) + replacement + this.substr(index + 1, 28);
+    }
+
+    function calGreyCons(id){
+        var res = document.getElementById(`id_unit_${rightID(id)}`).value = (parseFloat(document.getElementById(`id_fin_cons_${rightID(id)}`).value, 10) / (100 - parseInt(document.getElementById(`id_pro_${rightID(id)}`).value))).toFixed(2)
+        if(res != 'NaN'){
+            document.getElementById(`id_unit_${rightID(id)}`).value = res
+        }
+    }
+
+    function calAmt(id){
+        var res = (parseFloat(document.getElementById(`id_qty_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_rate_${rightID(id)}`).value, 10)).toFixed(2)
+        if(res != 'NaN'){
+            document.getElementById(`id_amt_${rightID(id)}`).value = res
+        }
     }
 
     function passID(id){

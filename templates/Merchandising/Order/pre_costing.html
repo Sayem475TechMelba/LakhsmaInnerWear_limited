@@ -1806,10 +1806,9 @@
                             </tr>
                         </thead>
                         <tbody class="text-center">
-                            {% regroup color by color as color_list  %}
-                            {% for color in color_list%}
+                            {% for i in gmts_color %}
                             <tr>
-                                <td><input type="text" class="form-control c" value="{{color.grouper}}"></td>
+                                <td><input type="text" class="form-control c" value="{{i}}"></td>
                                 <td><input type="text" class="form-control"></td>
                             </tr>
                             {% endfor %}

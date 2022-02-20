@@ -2719,6 +2719,9 @@
         }
         return number
     }
+    function idName(id){
+        return id.substr(0, id.length - String(rightID(id)).length)
+    }
     String.prototype.replaceAt = function(index, replacement) {
         return this.substr(0, index) + replacement + this.substr(index + 1, 28);
     }

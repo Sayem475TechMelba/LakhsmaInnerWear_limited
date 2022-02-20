@@ -1,0 +1,286 @@
+{% extends "index.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% load mathfilters %}
+{% block title %} Lakshma | TNA Progress Report {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    
+    .details thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    /*width: 10.6%;*/
+    width: 180px;
+}
+   
+tfoot {
+     display: table-header-group;
+}
+
+.nav-tabs .nav-link {
+    color: #fff;
+    text-decoration: none;
+    background-color: #e74c3c;
+}
+.nav-tabs .nav-link {
+    margin-bottom: -1px;
+    border: 1px solid #f8f9fa;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+ #myTab .nav-item{
+  font-weight: bold;
+
+}
+/* .print-font{
+        font-size:16px;
+    } */
+    @media print {
+        .noprint {
+           visibility: hidden;
+        }
+     }
+</style>
+{% endblock css %}
+
+{% block body %}
+
+
+  <div class="container-fluid print-font ">
+    
+      <div class=" table-responsive ">
+          <div class="card-header text-uppercase bg-info">
+            <h3 class="card-title">TNA Progress Comment</h3>
+          </div>
+          <table class="table table-bordered table-hover table-sm table-info" >
+            <thead >
+                
+                <tr>
+                    <th class="text-left" >Company</th>
+                    <th class="text-left text-muted" >{{tna_progress.po_job_no.company_name}}  </th>
+                    <th class="text-left"> Buyer </th>
+                    <th class="text-left text-muted"> {{tna_progress.po_job_no.buyer_name}}</th>
+                    <th class="text-left" > Job No </th>
+                    <th class="text-left text-muted"> {{tna_progress.po_job_no}}</th>
+                    
+                </tr>
+                <tr>
+                    <th class="text-left" width="190px">Order No</th>
+                    <th class="text-left text-muted" >{{tna_progress.po_no}}</th>
+                    <th class="text-left" width="190px"> Style Ref. </th>
+                    <th class="text-left text-muted">{{tna_progress.po_job_no.style_ref}} </th>
+                    <th class="text-left" width="190px"> Booking Number</th>
+                    <th class="text-left text-muted"> </th>
+                    
+                </tr>
+                <tr>
+                    <th class="text-left" width="190px">Item Name</th>
+                    <th class="text-left text-muted" width="220px">
+                         {% for item in tna_progress.color_size.all|slice:":1" %}
+                        {{item.gmt_items}}
+                        {% endfor %}
+                     </th>
+                    <th class="text-left" width="190px">Embelishment</th>
+                    <th class="text-left text-muted"></th>
+                    <th class="text-left" width="190px">SMV</th>
+                    <th class="text-left text-muted">{{tna_progress.po_job_no.smv}}</th>
+                    
+                </tr>
+                <tr>
+                    <th class="text-left" width="190px">Order Recv. Date</th>
+                    <th class="text-left text-muted"  width="220px">{{tna_progress.po_recieve_date}}  </th>
+                    <th class="text-left" width="190px">Ship Date </th>
+                    <th class="text-left text-muted"> {{tna_progress.pub_shipment_date}}</th>
+                    <th class="text-left" width="190px">Lead Time </th>
+                    <th class="text-left text-muted"> {{tna_progress.lead_time}}</th>
+                    
+                </tr>
+                <tr>
+                    <th class="text-left" width="190px">Quantity (PCS)</th>
+                    <th class="text-left text-muted" width="220px"> {{tna_progress.po_quantity}}  </th>
+                    <th class="text-left" width="190px">Finish Req. (KG) </th>
+                    <th class="text-left text-muted"></th>
+                    <th class="text-left" width="190px">Number of Color </th>
+                    <th class="text-left text-muted">
+                        
+                    </th>
+                    
+                </tr>
+                
+            </thead>
+            
+            
+        </table>
+          
+  
+      </div>
+      <div class="card table-responsive ">
+        <table  class="table table-bordered table-striped  table-responsive table-sm details mb-0">
+          <thead class="bg-info">
+            
+            <tr>
+              <th>Task No</th>
+              <th width="190px;">Task Name</th>
+              <th>Allowed Days</th>
+              <th>Plan Start Date</th>
+              <th >Plan Finish Date</th>
+              <th >Actual Start Date</th>
+              <th >Actual Finish Date</th>
+              <th >Start Delay/Early By</th>
+              <th>Finish Delay/Early By</th>
+               <th >Responsible</th>
+               <th >Comments</th>
+             
+              
+            </tr>
+          </thead>
+          
+          <tbody>
+            
+            <tr>
+
+              <td>1</td>
+              <td>Lab Dip App</td>
+              <td>22</td>
+              <td>08-01-2022</td>
+              <td>29-01-2022</td>
+              <td >07-01-2022</td>
+              <td >07-01-2022</td>
+              <td >1 (Early)</td>
+              <td >22 (Early)</td>
+              <td ></td>
+              <td ></td>
+              
+            
+              
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Fab Bokking [Kint]</td>
+              <td>4</td>
+              <td>08-01-2022</td>
+              <td>29-01-2022</td>
+              <td >07-01-2022</td>
+              <td >07-01-2022</td>
+              <td >1 (Early)</td>
+              <td >8 (Early)</td>
+              <td ></td>
+              <td ></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Yarn Allocation</td>
+              <td>12</td>
+              <td>08-01-2022</td>
+              <td>29-01-2022</td>
+              <td >07-01-2022</td>
+              <td >07-01-2022</td>
+              <td >1 (Early)</td>
+              <td >8 (Early)</td>
+              <td ></td>
+              <td ></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Yarn Issue</td>
+              <td>12</td>
+              <td>08-01-2022</td>
+              <td>29-01-2022</td>
+              <td >07-01-2022</td>
+              <td >07-01-2022</td>
+              <td >1 (Early)</td>
+              <td >8 (Early)</td>
+              <td ></td>
+              <td ></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Sew Tirms Booking</td>
+              <td>12</td>
+              <td>08-01-2022</td>
+              <td>29-01-2022</td>
+              <td >07-01-2022</td>
+              <td >07-01-2022</td>
+              <td >1 (Early)</td>
+              <td >8 (Early)</td>
+              <td ></td>
+              <td ></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Fin Tirms Booking</td>
+              <td>12</td>
+              <td>08-01-2022</td>
+              <td>29-01-2022</td>
+              <td >07-01-2022</td>
+              <td >07-01-2022</td>
+              <td >1 (Early)</td>
+              <td >8 (Early)</td>
+              <td ></td>
+              <td ></td>
+            </tr>
+            <tr>
+              <td>7</td>
+              <td>Size Set App</td>
+              <td>12</td>
+              <td>08-01-2022</td>
+              <td>29-01-2022</td>
+              <td >07-01-2022</td>
+              <td >07-01-2022</td>
+              <td >1 (Early)</td>
+              <td >8 (Early)</td>
+              <td ></td>
+              <td ></td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>PP Sample App</td>
+              <td>12</td>
+              <td>08-01-2022</td>
+              <td>29-01-2022</td>
+              <td >07-01-2022</td>
+              <td >07-01-2022</td>
+              <td >1 (Early)</td>
+              <td >8 (Early)</td>
+              <td ></td>
+              <td ></td>
+            </tr>
+            <tr>
+              <td>9</td>
+              <td>Knit Prod</td>
+              <td>12</td>
+              <td>08-01-2022</td>
+              <td>29-01-2022</td>
+              <td >07-01-2022</td>
+              <td >07-01-2022</td>
+              <td >1 (Early)</td>
+              <td >8 (Early)</td>
+              <td ></td>
+              <td ></td>
+            </tr>
+            
+            
+          </tbody>
+         
+          
+        </table>
+        
+
+    </div>
+
+
+  </div>
+ 
+  <div class="container text-center mt-4 no-print">
+    <button class="btn btn-sm btn-danger" onclick="window.print()">Print </button>
+</div>
+
+{% endblock body %}
+
+{% block script %}
+
+  
+{% endblock script %}
+

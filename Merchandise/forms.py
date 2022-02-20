@@ -134,7 +134,7 @@ class LibFabricationForm(forms.ModelForm):
         model = LibraryFabrication
         fields = '__all__'
 
-############# Budget Library ###########        
+############# Budget Library Form ###########        
 class LibCostingPerForm(forms.ModelForm):
     class Meta:
         model = LibraryCostingPer
@@ -190,8 +190,47 @@ class LibColorSizeSensitiveForm(forms.ModelForm):
         model = LibraryColorSizeSensitive
         fields = '__all__'
 
-############### ALL Merchandising Forms #############
+######### Yarn Library Form ########  
 
+class LibYarnTypeForm(forms.ModelForm):
+    class Meta:
+        model = LibraryYarnType
+        fields = '__all__'  
+
+class LibYarnSupplierForm(forms.ModelForm):
+    class Meta:
+        model = LibraryYarnSupplier
+        fields = '__all__'  
+
+######## Conversion Library Form ########
+
+class LibProcessForm(forms.ModelForm):
+    class Meta:
+        model = LibraryProcess
+        fields = '__all__'
+
+class LibKnittingForm(forms.ModelForm):
+    class Meta:
+        model = LibraryKnitting
+        fields = '__all__'  
+
+class LibDyeingForm(forms.ModelForm):
+    class Meta:
+        model = LibraryDyeing
+        fields = '__all__'  
+
+######## Trims Cost Library Form ########
+
+class LibGroupsItemForm(forms.ModelForm):
+    class Meta:
+        model = LibraryGroupsItem
+        fields = '__all__'
+
+class LibTrimSourceForm(forms.ModelForm):
+    class Meta:
+        model = LibraryTrimSource
+        fields = '__all__'
+############### ALL Merchandising Main Table Forms #############
 
 class OrderEntryForm(forms.ModelForm):
     class Meta:
@@ -203,8 +242,6 @@ class SmvItems_Form(forms.ModelForm):
     class Meta:
         model = SmvItems
         fields = '__all__'   
-
-    
 
 class PoDeatilsForm(forms.ModelForm):
 
@@ -222,8 +259,9 @@ class AddPoDeatilsForm(forms.ModelForm):
     class Meta:
         model = PO_Details
         exclude = ['inserted_by']
-    
-########### All Budget Costing Form ###########
+
+
+##### All Budget Costing Form ########
 class BudgetPreCostForm(forms.ModelForm):
     
     class Meta:
@@ -250,4 +288,27 @@ class YarnCostForm(forms.ModelForm):
 class YarnItemForm(forms.ModelForm):
     class Meta:
         model = Yarn_Inline_Item
+        fields = '__all__' 
+
+class ConversionCostForm(forms.ModelForm):
+    
+    class Meta:
+        model = ConversionCost
+        exclude = ['inserted_by', 'b_job_no']
+
+class ConversionItemForm(forms.ModelForm):
+    class Meta:
+        model = Conversion_Inline
+        fields = '__all__' 
+
+
+class TrimCostForm(forms.ModelForm):
+    
+    class Meta:
+        model = TrimCost
+        exclude = ['inserted_by', 'b_job_no']
+
+class TrimItemsForm(forms.ModelForm):
+    class Meta:
+        model = TrimCostItems
         fields = '__all__' 

@@ -109,10 +109,11 @@ tfoot {
             </div>
           </div>
           <div class="container justify-content-center align-content-center text-center mb-1">
-            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Show</button>
+            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Search</button>
             <a href="{% url 'capacity_booked' %}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i> Reset</a>
           </div>
         </form>
+        
       </div>
   </div>
 </div>
@@ -124,7 +125,7 @@ tfoot {
     <thead>
       <tr>
         <th class="text-left text-uppercase bg-success" colspan="21">
-            <h6 >Buyers Projected and Confirmed Order- (<span id="show_sd"></span>  to <span id="show_ed"></span>)</h6>
+            <h6 >Buyers Projected and Confirmed Order</h6>
         </th>
     </tr>
       <tr>
@@ -292,11 +293,11 @@ tfoot {
     <div class="col-md-6">
       <!-- /.Comfirmed order -->
       <div class="table-responsive" >
-        <table id="confirmed" name="schedule" class="table table-bordered table-striped table-sm table-responsive tabel-hover table-info display">
+        <table id="confirmed" name="schedule" class="table table-bordered table-striped table-sm table-responsive-sm tabel-hover table-info display text-center">
           <thead>
             <tr>
               <th class="text-left text-uppercase bg-success" colspan="20">
-                  <h6 >Confirmed Order-(01-11-2021 to 31-11-2021)</h6>
+                  <h6 >Confirmed Order</h6>
               </th>
           </tr>
             <tr>
@@ -367,12 +368,11 @@ tfoot {
     <!-- PROJECTED BUYERWISE  -->
     <div class="col-md-6">
        <div class="table-responsive" >
-        <table id="projected" name="schedule" class="table table-bordered table-striped table-info table-sm table-responsive table-hover display">
+        <table id="projected" name="schedule" class="table table-bordered table-striped table-info table-sm table-responsive-sm table-hover display text-center">
           <thead>
             <tr>
               <th class="text-left text-uppercase bg-success" colspan="20">
-                  <h6 >Projected Order-(01-11-2021 to 31-11-2021)</h6>
-
+                  <h6 >Projected Order</h6>
               </th>
           </tr>
             <tr>
@@ -447,10 +447,10 @@ tfoot {
 <!-- SHIPMENT REPORT  -->
 {% if  '/merchandise/capacity_booked/?' in request.get_full_path %}
 <div class="container-fluid mt-4 table-responsive" >
-  <table id="shipment_report" name="schedule" class="table table-bordered table-striped table-sm table-responsive table-hover table-primary display">
-    <thead class="fixed-header">
+  <table id="shipment_report" name="schedule" class="table table-bordered table-striped table-sm table-responsive-sm table-hover table-info display text-center">
+    <thead class="fixed-header bg-info">
         <tr>
-            <th class="text-left text-uppercase bg-primary" colspan="53">
+            <th class="text-left text-uppercase " colspan="53">
                 <h6 >Report Panel</h6>
             </th>
         </tr>
@@ -672,6 +672,13 @@ tfoot {
 {% block script %}
 <!-- FOR SHOWING THE TODAY DATE  -->
 <script>
+  function pushMonth(value){
+    document.getElementsByName('month')[0].value = value
+    document.getElementById('filter').submit()
+  }
+  if(document.getElementsByName('year')[0][0].innerText == "None"){
+    document.getElementsByName('year')[0][0].innerText = 'Year'
+  }
     // FOR SHOWING THE TODAY DATE 
     var today = new Date();
     var dd = today.getDate();
@@ -690,13 +697,6 @@ tfoot {
 
 <!-- SHIPMENT REPORT CALCULATION  -->
 <script>
-    function pushMonth(value){
-      document.getElementsByName('month')[0].value = value
-      document.getElementById('filter').submit()
-    }
-    if(document.getElementsByName('year')[0][0].innerText == "None"){
-      document.getElementsByName('year')[0][0].innerText = 'Year'
-    }
     $(document).ready(function() {
       // Setup - add a text input to each footer cell
       $('#shipment_report #tfooter th').each( function () {
@@ -804,9 +804,40 @@ tfoot {
           $('#rp_tt_ov').text(` ${(rp_tt_ov)}`);
   
         },
-    
-        "lengthMenu": [[500, 1000, -1], [500,1000, "All"]],
-        "scrollY": "470px",
+        dom: 'Bfrtip',
+        buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                columns: [0,':visible']
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                columns: [0,':visible']
+              }
+          },
+          {
+              extend: 'csvHtml5',
+              exportOptions: {
+                columns: [0,':visible']
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                columns: [0,':visible']
+              }
+          },
+          'colvis'
+        ],
+        //"targets": 'no-sort',
+        //"bSort": false,
+        "bPaginate": false,
+      
+        //"info":     false,
+        "scrollY": 470,
         "scrollX": true,
         columnDefs: [ { type: 'date', 'targets': [17] } ],
         order: [[ 17, 'asc' ]],
@@ -928,10 +959,10 @@ tfoot {
         $('.con_tt_ordval').text(` ${(con_tt_ordval)}`);
 
       },
-    
-
-      "lengthMenu": [[ -1], [ "All"]],
-        initComplete: function () {
+      "bPaginate": false,
+      "info":     false,
+      "lengthMenu": [[ -1], [ "All"]], 
+      initComplete: function () {
             // Apply the search
             this.api().columns().every( function () {
                 var that = this;
@@ -1120,8 +1151,9 @@ tfoot {
               $('.pro_tt_ordval').text(` ${(pro_tt_ordval)}`);
       
             },
-
-      "lengthMenu": [[ -1], [ "All"]],
+            "bPaginate": false,
+            "info":     false,
+            "lengthMenu": [[ -1], [ "All"]],
         initComplete: function () {
             // Apply the search
             this.api().columns().every( function () {
@@ -1340,7 +1372,10 @@ tfoot {
         const tt_od_value = this.api().column(16,{search:'applied'}).data().toArray().reduce((total,od_value) => total+=Number(od_value.replace(/[^0-9\.]/g,'')),0).toFixed(2);
         $('.tt_od_value').text(` ${(tt_od_value)}`);
       },
-      
+      "bPaginate": false,
+      "info":     false,
+      "scrollY": 510,
+      "scrollX": true,
       "lengthMenu": [[ -1], [ "All"]],
         initComplete: function () {
             // Apply the search
@@ -1378,14 +1413,6 @@ tfoot {
     });
     table.draw(false);
 
-    // $(document).ready(function() {
-    //   $(".sm").css("background-color", "yellow");
-    // });
-
-    // $(".sm ").each(function() {
-    //   var sum = 0;
-    //   var value = $(this).text();
-    // })
     $(document).ready(function(){
       var sum=0;
       var qt_sum = 0;

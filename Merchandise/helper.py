@@ -1,13 +1,14 @@
 from . import models
 
 class QS:
-    def __init__(self, id, po, color, size, order_qty, gmt_items):
+    def __init__(self, id, po, country, color, size, order_qty, gmt_items):
         self.id = id
         self.po = po
         self.color = color
         self.size = size
         self.order_qty = order_qty
         self.gmt_items = gmt_items
+        self.country = country
 
 def coustom_inline(color, fabric, count):
     color_lis = []
@@ -67,7 +68,7 @@ def color_size(model):
     temp = []
     for i in models.PO_Details.objects.filter(po_job_no=model.id):
         for j in models.ColorSizeItems.objects.filter(po_color_size=i.id):
-            temp.append(QS(j.id, i.po_no, j.color, j.size, j.order_qty, j.gmt_items))
+            temp.append(QS(j.id, i.po_no, i.country, j.color, j.size, j.order_qty, j.gmt_items))
     return temp
 
 def name_starct(string):
@@ -91,4 +92,13 @@ def gmts_item(model, type):
             final.append(i.capitalize())
         return final
     elif type == "gmt":
-        pass
+        pro = []
+        final = []
+        for i in models.PO_Details.objects.filter(po_job_no=model.id):
+            for j in models.ColorSizeItems.objects.filter(po_color_size=i.id):
+                if str(j.gmt_items).lower() not in pro:
+                    pro.append(str(j.gmt_items).lower())
+
+        for i in pro:
+            final.append(i.capitalize())
+        return final

@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib import messages, auth
-from numpy import insert
-from sklearn.metrics import consensus_score
 from .forms import *
 from .models import *
 from Merchandise.filters import *
@@ -10,8 +8,16 @@ from django.forms import inlineformset_factory
 from django.urls import reverse
 from . import helper
 from django.db.models import Sum, Avg, F, FloatField
-
+from django.contrib.admin.models import LogEntry, ADDITION, CHANGE
+from django.contrib.contenttypes.models import ContentType
 # Create your views here.
+
+def log_tracking(request):
+
+    logs = LogEntry.objects.all()
+    
+    return render(request, 'Home/log_info.html', {'logs':logs} )
+
 ################## ALL Library Forms Views ###############
 def lib_buyer(request):
     buyers = LibraryBuyer.objects.all()
@@ -737,7 +743,155 @@ def lib_color_size_sensitive(request):
     }
     return render(request, 'Merchandising/Library/Budget/lib_color_size_sensitive.html', context)
 
-########### EDIT LIBRARY FORMS ##########
+############ Yarn Library Views ############
+def lib_yarn_type(request):
+    yarn_type = LibraryYarnType.objects.all()
+
+    if request.method == 'POST':
+        form = LibYarnTypeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library yarn type info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibYarnTypeForm()
+    context ={
+        'form':form, 
+        'yarn_type':yarn_type,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_yarn_type.html', context)
+
+def lib_yarn_supplier(request):
+    yarn_supplier = LibraryYarnSupplier.objects.all()
+
+    if request.method == 'POST':
+        form = LibYarnSupplierForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library yarn supplier info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibYarnSupplierForm()
+    context ={
+        'form':form, 
+        'yarn_supplier':yarn_supplier,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_yarn_supplier.html', context)
+
+############ Convertion Library Views ############
+def lib_process(request):
+    process = LibraryProcess.objects.all()
+
+    if request.method == 'POST':
+        form = LibProcessForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library process info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibProcessForm()
+    context ={
+        'form':form, 
+        'process':process,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_process.html', context)
+
+def lib_knitting(request):
+    # FOR Dollaer Rate
+    field_name = 'usd_rate'
+    obj = LibraryDoller.objects.first()
+    field_object = LibraryDoller._meta.get_field(field_name)
+    usd_price = field_object.value_from_object(obj)
+    knitting_item = LibraryKnitting.objects.all()
+
+    if request.method == 'POST':
+        form = LibKnittingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library knitting info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibKnittingForm()
+    context ={
+        'form':form, 
+        'knitting_item':knitting_item,
+        'usd_price':usd_price,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_knitting.html', context)
+
+def lib_dyeing(request):
+    # FOR Dollaer Rate
+    field_name = 'usd_rate'
+    obj = LibraryDoller.objects.first()
+    field_object = LibraryDoller._meta.get_field(field_name)
+    usd_price = field_object.value_from_object(obj)
+    dyeing_item = LibraryDyeing.objects.all()
+
+    if request.method == 'POST':
+        form = LibDyeingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library dyeing info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibDyeingForm()
+    context ={
+        'form':form, 
+        'dyeing_item':dyeing_item,
+        'usd_price': usd_price,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_dyeing.html', context)
+
+############ Trim Library Views ############
+def lib_groups_item(request):
+    groups = LibraryGroupsItem.objects.all()
+
+    if request.method == 'POST':
+        form = LibGroupsItemForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library groups info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibGroupsItemForm()
+    context ={
+        'form':form, 
+        'groups':groups,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_groups_item.html', context)
+
+def lib_trim_source(request):
+    sources = LibraryTrimSource.objects.all()
+
+    if request.method == 'POST':
+        form = LibTrimSourceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library source info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibTrimSourceForm()
+    context ={
+        'form':form, 
+        'sources':sources,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_trim_source.html', context)
+
+########### EDIT ALL LIBRARY FORMS ##########
 def edit_agent(request,id):
     agent = LibraryAgent.objects.get(id = id)
     form = LibAgentForm(instance=agent)
@@ -1480,6 +1634,161 @@ def delete_color_size_sensitive(request,id):
     cs_sensitive.delete()
     return redirect('lib_color_size_sensitive')
 
+########## Yarn cost edit view ########
+def edit_yarn_type(request, id):
+    yarn_type = LibraryYarnType.objects.get(id = id)
+    form = LibYarnTypeForm(instance=yarn_type)
+    if request.method == 'POST':
+        form = LibYarnTypeForm(request.POST,  instance = yarn_type)
+        if form.is_valid():
+            form.save()
+            messages.success(request, " Yarn type info has been updated!")
+            return redirect('lib_yarn_type')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_yarn_type.html',context)
+
+def delete_yarn_type(request,id):
+    yarn_type = LibraryYarnType.objects.get(id = id)
+    yarn_type.delete()
+    return redirect('lib_yarn_type')
+
+def edit_yarn_supplier(request, id):
+    yarn_supplier = LibraryYarnSupplier.objects.get(id = id)
+    form = LibYarnSupplierForm(instance=yarn_supplier)
+    if request.method == 'POST':
+        form = LibYarnSupplierForm(request.POST,  instance = yarn_supplier)
+        if form.is_valid():
+            form.save()
+            messages.success(request, " Yarn supplier info has been updated!")
+            return redirect('lib_yarn_supplier')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_yarn_supplier.html',context)
+
+def delete_yarn_supplier(request,id):
+    yarn_supplier = LibraryYarnSupplier.objects.get(id = id)
+    yarn_supplier.delete()
+    return redirect('lib_yarn_supplier')
+
+##### Conversion cost lib edit view #####
+def edit_process(request, id):
+    process = LibraryProcess.objects.get(id = id)
+    form = LibProcessForm(instance=process)
+    if request.method == 'POST':
+        form = LibProcessForm(request.POST,  instance = process)
+        if form.is_valid():
+            form.save()
+            messages.success(request, " Process info has been updated!")
+            return redirect('lib_process')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_process.html',context)
+
+def delete_process(request,id):
+    process = LibraryProcess.objects.get(id = id)
+    process.delete()
+    return redirect('lib_process')
+
+def edit_knitting(request, id):
+    # FOR Dollaer Rate
+    field_name = 'usd_rate'
+    obj = LibraryDoller.objects.first()
+    field_object = LibraryDoller._meta.get_field(field_name)
+    usd_price = field_object.value_from_object(obj)
+
+    knitting_item = LibraryKnitting.objects.get(id = id)
+    form = LibKnittingForm(instance=knitting_item)
+    if request.method == 'POST':
+        form = LibKnittingForm(request.POST,  instance = knitting_item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Knitting info has been updated!")
+            return redirect('lib_knitting')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form, 'usd_price':usd_price}
+    return render(request, 'Merchandising/Library/Budget/edit_knitting.html',context)
+
+def delete_knitting(request,id):
+    knitting_item = LibraryKnitting.objects.get(id = id)
+    knitting_item.delete()
+    return redirect('lib_knitting')
+
+def edit_dyeing(request, id):
+    # FOR Dollaer Rate
+    field_name = 'usd_rate'
+    obj = LibraryDoller.objects.first()
+    field_object = LibraryDoller._meta.get_field(field_name)
+    usd_price = field_object.value_from_object(obj)
+    dyeing_item = LibraryDyeing.objects.get(id = id)
+    form = LibDyeingForm(instance=dyeing_item)
+    if request.method == 'POST':
+        form = LibDyeingForm(request.POST,  instance = dyeing_item)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Dyeing info has been updated!")
+            return redirect('lib_dyeing')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form, 'usd_price':usd_price}
+    return render(request, 'Merchandising/Library/Budget/edit_dyeing.html',context)
+
+def delete_dyeing(request,id):
+    dyeing_item = LibraryDyeing.objects.get(id = id)
+    dyeing_item.delete()
+    return redirect('lib_dyeing')
+
+######### Trim cost edit views ##############
+def edit_groups_item(request, id):
+    groups = LibraryGroupsItem.objects.get(id = id)
+    form = LibGroupsItemForm(instance=groups)
+    if request.method == 'POST':
+        form = LibGroupsItemForm(request.POST,  instance = groups)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Groups info has been updated!")
+            return redirect('lib_groups_item')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_groups_item.html',context)
+
+def delete_groups_item(request,id):
+    groups = LibraryGroupsItem.objects.get(id = id)
+    groups.delete()
+    return redirect('lib_groups_item')
+
+def edit_trim_source(request, id):
+    sources = LibraryTrimSource.objects.get(id = id)
+    form = LibTrimSourceForm(instance=sources)
+    if request.method == 'POST':
+        form = LibTrimSourceForm(request.POST,  instance = sources)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Source info has been updated!")
+            return redirect('lib_trim_source')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_trim_source.html',context)
+
+def delete_trim_source(request,id):
+    sources = LibraryTrimSource.objects.get(id = id)
+    sources.delete()
+    return redirect('lib_trim_source')
+
+
 ################## ALL Main Forms Views ###############
 
 def order_entry(request):
@@ -1551,21 +1860,19 @@ def order_entry(request):
     po_form = PoDeatilsForm()
     items_factory = inlineformset_factory(PO_Details, ColorSizeItems, form=colorsize_ItemsForm, extra=1)
     form_items = items_factory()
-    fab=LibraryFabrication.objects.all()
     
     context = {
         'form': form,
         'po_form': po_form,
         'job': 'LAK-O' + str(job),
         'form_items': form_items,
-        'fab':fab,
         'form_smv_items': form_smv_items,
     }
     return render(request, 'Merchandising/Order/order_entry.html', context)
 
 def order_report(request):
     try:
-        po_details = PO_Details.objects.filter(insert_date__year=request.GET.get('year'), insert_date__month=request.GET.get('month')).order_by('-id')
+        po_details = PO_Details.objects.filter(pub_shipment_date__year=request.GET.get('year'), pub_shipment_date__month=request.GET.get('month')).order_by('-id')
         year = request.GET.get('year')
     except:
         po_details = PO_Details.objects.all().order_by('-id')
@@ -1582,7 +1889,6 @@ def order_report(request):
         'year': year,
     }
     return render(request, 'Merchandising/Order/order_report.html', context)
-
 
 def view_order(request, id):
     view_po = PO_Details.objects.get(id=id)
@@ -1774,6 +2080,19 @@ def delete_order(request, id):
 ####### Budget Pre Costing Form ##########
 def pre_costing(request):
     fab_desc = LibraryFabricDescription.objects.all()
+    knitting_item = LibraryKnitting.objects.all()
+    dyeing_item = LibraryDyeing.objects.all()
+    groups = LibraryGroupsItem.objects.all()
+    country = LibraryCountry.objects.all()
+    nom_supp = LibraryNominatedSupp.objects.all()
+
+    # FOR BUDGET - PIECE QUANTITY 
+    field_name = 'pcs_amount'
+    obj = LibraryPcsQty.objects.first()
+    field_object = LibraryPcsQty._meta.get_field(field_name)
+    pcs = field_object.value_from_object(obj)
+    
+    body_parts = LibraryBodyPart.objects.all()
     form = BudgetPreCostForm(request.POST, request.FILES)
     fab_form = FabricCostForm()
     fc_factory = inlineformset_factory(FabricCost, Fabric_Inline_Item, form=FabricItemForm, extra=1)
@@ -1782,9 +2101,18 @@ def pre_costing(request):
     yarn_form = YarnCostForm()
     yc_factory = inlineformset_factory(YarnCost, Yarn_Inline_Item, form=YarnItemForm, extra=1)
     form_items_yc = yc_factory()
+    
+    con_form = ConversionCostForm()
+    cc_factory = inlineformset_factory(ConversionCost, Conversion_Inline, form=ConversionItemForm, extra=1)
+    form_items_cc = cc_factory()
+
+    trim_form = TrimCostForm()
+    tc_factory = inlineformset_factory(TrimCost, TrimCostItems, form=TrimItemsForm, extra=1)
+    trim_form_item = tc_factory()
+
 
     if request.method == 'POST':
-        if request.POST.get('_task') == "cost_form":
+        if request.POST.get('_task') == "cost_form": #For budget cost form
             form = BudgetPreCostForm(request.POST)
             if form.is_valid():
                 form.save()
@@ -1828,7 +2156,7 @@ def pre_costing(request):
                     messages.error(request , "Something went wrong!")
                     print(form_items_fc.errors)
 
-        elif request.POST.get('_task') == "y_form":
+        elif request.POST.get('_task') == "y_form": #for yarn cost form
             if request.method == "GET":
                 yarn_form = YarnCostForm()
                 yc_factory = inlineformset_factory(YarnCost, Yarn_Inline_Item, form=YarnItemForm, extra=1)
@@ -1851,7 +2179,7 @@ def pre_costing(request):
                     messages.error(request , "Something went wrong!")
                     print(form_items_yc.errors)
         
-        elif request.POST.get("_task") == 'grey_data':
+        elif request.POST.get("_task") == 'grey_data': # for avg. grey comsumption form
             grey_cons_model = Grey_Cons(b_job_no=BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=request.user))),
             inserted_by=request.user
             )
@@ -1868,29 +2196,161 @@ def pre_costing(request):
                     rate = request.POST.get(f"rate_{i+1}"),
                     amount = request.POST.get(f"amt_{i+1}"),
                     pcs = request.POST.get(f"pcs_{i+1}"),
-                    total_qty = request.POST.get(f"tt_oty_{i+1}"),
+                    total_qty = request.POST.get(f"tt_qty_{i+1}"),
                     total_amount = request.POST.get(f"tt_amt_{i+1}"),
-                    remarks =  request.POST.get(f"{i+1}")
+                    remarks =  request.POST.get(f"remarks_{i+1}")
                 )
                 data.save()
         
-        elif request.POST.get("_task") == 'cont_color':
-            pass
+        elif request.POST.get("_task") == 'cont_color': #for color contrast form
+            color_con_model = ColorContrast(b_job_no=BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=request.user))),
+            inserted_by=request.user
+            )
+            color_con_model.save()
+            for i in range(0, len(helper.gmts_item(OrderEntryInfo.objects.get(id=int(request.POST.get('__po_job')[5:])), 'color'))):
+                data = ColorContrastItems(
+                    color_contrast = color_con_model,
+                    gmts_color = request.POST.get(f"gmts_color_{i+1}"),
+                    contrast_color = request.POST.get(f"contrast_color_{i+1}")
+                    
+                )
+                data.save()
+         
+        elif request.POST.get("_task") == 'dyeing_color':  # For dyeing pop up form
+            dyeing_color_model = DyeingColor(b_job_no=BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=request.user))),
+            inserted_by=request.user
+            )
+            dyeing_color_model.save()
+            for i in range(0, len(helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('__po_job')[5:]))))):
+                data = DyeingColorItems(
+                    dyeing_color = dyeing_color_model,
+                    gmts_color = request.POST.get(f"gmts_color_{i+1}"),
+                    fabric_color = request.POST.get(f"fabric_color_{i+1}"),
+                    cons_rate = request.POST.get(f"cons_rate_{i+1}"),
+                    charge_unit = request.POST.get(f"charge_unit_{i+1}")
+                    
+                )
+                data.save()
+        elif request.POST.get('_task') == "con_form":          #For conversion cost
+            if request.method == "GET":
+                con_form = ConversionCostForm()
+                cc_factory = inlineformset_factory(ConversionCost, Conversion_Inline, form=ConversionItemForm, extra=1)
+                form_items_cc = cc_factory()
+           
+            elif request.method == "POST":
+                con_form = ConversionCostForm(request.POST, request.FILES)
+                cc_factory = inlineformset_factory(ConversionCost, Conversion_Inline, form=ConversionItemForm)
+                form_items_cc = cc_factory(request.POST)
+                if con_form.is_valid() and form_items_cc.is_valid():
+                    data = con_form.save()
+                    inserted_by = request.user
+                    con_form.instance.b_job_no = BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=inserted_by)))
+                    con_form.instance.inserted_by = inserted_by
+                    con_form.save()
+                    form_items_cc.instance = data
+                    form_items_cc.save()
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    messages.error(request , "Something went wrong!")
+                    print(form_items_cc.errors)
+
+        elif request.POST.get("_task") == 'cl_data':  # For Care Lebel form
+            care_lebel_model = Care_Level(b_job_no=BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=request.user))),
+            inserted_by=request.user,
+            tt_cons = request.POST.get("tt_cons"),
+            tt_ex_pct = request.POST.get("tt_ex_pct"),
+            grand_tt_cons = request.POST.get("grand_tt_cons"),
+            tt_rate = request.POST.get("tt_rate"),
+            sub_tt_amount = request.POST.get("sub_tt_amount"),
+            tt_qty_dzn = request.POST.get("tt_qty_dzn"),
+            grand_tt_amount = request.POST.get("grand_tt_amount"),
+            tt_pcs = request.POST.get("tt_pcs"),
+            avg_tt_cons = request.POST.get("avg_tt_cons"),
+            avg_ex_pct = request.POST.get("avg_ex_pct"),
+            avg_grand_tt_cons = request.POST.get("avg_grand_tt_cons"),
+            avg_tt_rate = request.POST.get("avg_tt_rate"),
+            avg_sub_tt_amount = request.POST.get("avg_sub_tt_amount"),
+            avg_tt_qty_dzn = request.POST.get("avg_tt_qty_dzn"),
+            avg_grand_tt_amount = request.POST.get("avg_grand_tt_amount"),
+            avg_tt_pcs = request.POST.get("avg_tt_pcs"),
+            )
+            care_lebel_model.save()
+            for i in range(0, len(helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('__po_job')[5:]))))):
+                data = Care_level_Items(
+                    color_size=ColorSizeItems.objects.get(id=request.POST.get(f'id_{i+1}')),
+                    care_level = care_lebel_model,
+                    po_no = request.POST.get(f"po_no_{i+1}"),
+                    gmts_item = request.POST.get(f"gmts_item_{i+1}"),
+                    country = request.POST.get(f"country_{i+1}"),
+                    color = request.POST.get(f"color_{i+1}"),
+                    gmts_size = request.POST.get(f"gmts_size_{i+1}"),
+                    item_color = request.POST.get(f"item_color_{i+1}"),
+                    item_sizes = request.POST.get(f"item_sizes_{i+1}"),
+                    cons = request.POST.get(f"cons_{i+1}"),
+                    ex_pct = request.POST.get(f"ex_pct_{i+1}"),
+                    tt_cons = request.POST.get(f"tt_cons_{i+1}"),
+                    rate = request.POST.get(f"rate_{i+1}"),
+                    amount = request.POST.get(f"amount_{i+1}"),
+                    tt_qty = request.POST.get(f"tt_qty_{i+1}"),
+                    tt_amount = request.POST.get(f"tt_amount_{i+1}"),
+                    placement = request.POST.get(f"placement_{i+1}"),
+                    pcs = request.POST.get(f"pcs_{i+1}"),
+                    
+                )
+                data.save()
+
+        elif request.POST.get('_task') == "trim_form":          #For Trim cost
+            if request.method == "GET":
+                trim_form = TrimCostForm()
+                tc_factory = inlineformset_factory(TrimCost, TrimCostItems, form=TrimItemsForm, extra=1)
+                trim_form_item = tc_factory()
+           
+            elif request.method == "POST":
+                trim_form = TrimCostForm(request.POST, request.FILES)
+                tc_factory = inlineformset_factory(TrimCost, TrimCostItems, form=TrimItemsForm, extra=1)
+                trim_form_item = tc_factory(request.POST, request.FILES)
+                if trim_form.is_valid() and trim_form_item.is_valid():
+                    data = trim_form.save()
+                    inserted_by = request.user
+                    trim_form.instance.b_job_no = BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=inserted_by)))
+                    trim_form.instance.inserted_by = inserted_by
+                    trim_form.save()
+                    trim_form_item.instance = data
+                    trim_form_item.save()
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    messages.error(request , "Something went wrong!")
+                    print(trim_form_item.errors)
 
         else:
             context ={
                 'form':form,
                 'fab_desc':fab_desc,
+                'pcs': pcs,
+                'body_parts': body_parts,
+                'knitting_item': knitting_item,
+                'dyeing_item': dyeing_item,
+                'country': country,
+                'groups': groups,
+                'nom_supp': nom_supp,
                 'fab_form': fab_form,
                 'form_items_fc': form_items_fc,
                 'yarn_form': yarn_form,
                 'form_items_yc': form_items_yc,
+                'con_form': con_form,
+                'form_items_cc': form_items_cc,
+                'trim_form': trim_form,
+                'trim_form_item': trim_form_item,
                 'fetch': OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])),
                 'color': helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:]))),
+                'color_count': len(helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])))),
                 'total_po': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'po_quantity'),
                 'total_avg_price': helper.total(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'avg_price'),
-                'gmts_color': helper.gmts_item(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'color')
+                'gmts_item': helper.gmts_item(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'gmt'),
+                'gmts_color': helper.gmts_item(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'color'),
+                'con_color': len(helper.gmts_item(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])), 'color'))
             }
+            
             return render(request, 'Merchandising/Order/pre_costing.html', context)
 
     form = BudgetPreCostForm()
@@ -1906,43 +2366,47 @@ def pre_costing(request):
     context ={
         'form':form,
         'fab_desc':fab_desc, 
+        'body_parts': body_parts,
+        'knitting_item': knitting_item,
+        'dyeing_item': dyeing_item,
+        'country': country,
+        'groups': groups,
+        'nom_supp': nom_supp,
         'fab_form': fab_form,
         'form_items_fc': form_items_fc,
         'yarn_form': yarn_form,
         'form_items_yc': form_items_yc,
-       
+        'con_form': con_form,
+        'form_items_cc': form_items_cc,
+        'trim_form': trim_form,
+        'trim_form_item': trim_form_item,
     }
     return render(request, 'Merchandising/Order/pre_costing.html', context)
 
 def shipment_schedule(request):
-    try:
-        orders = OrderEntryInfo.objects.filter(insert_date__year=request.GET.get('year'), insert_date__month=request.GET.get('month')).prefetch_related('order_entry').order_by('-id')
-        year = request.GET.get('year')
-    except:
-        orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')
-        year = 'year'
+    orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')
     myFilter = OrderFilter(request.GET , queryset = orders)
     orders = myFilter.qs
     context = {
         'orders': orders,
         'myFilter': myFilter,
-        'year': year,
     }
     return render(request, 'Merchandising/Order/shipment_schedule.html', context)
 
 def capacity_booked(request):
-    try:
-        orders = OrderEntryInfo.objects.filter(insert_date__year=request.GET.get('year'), insert_date__month=request.GET.get('month')).prefetch_related('order_entry').order_by('-id')
-        year = request.GET.get('year')
-    except:
-        orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')
-        year = 'year'
+    orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')
+    # con_and_pro = PO_Details.objects.values_list( 'po_job_no__buyer_name__buyer_name').annotate(avg_smv=Avg('po_job_no__smv'), tt_qty=(Sum('po_quantity'))).values('po_job_no__company_name__company_name','po_job_no__buyer_name__buyer_name', 'avg_smv', 'tt_qty')
+    # con_order = PO_Details.objects.values_list( 'po_job_no__buyer_name__buyer_name').annotate(avg_smv=Avg('po_job_no__smv'), tt_qty=(Sum('po_quantity')), tt_value=(Sum(F('po_quantity')*F('avg_price'), output_field=FloatField()))).values('po_job_no__company_name__company_name','po_job_no__buyer_name__buyer_name', 'avg_smv', 'tt_qty', 'tt_value').filter(order_status="Confirmed")
+    # pro_order = PO_Details.objects.values_list( 'po_job_no__buyer_name__buyer_name').annotate(avg_smv=Avg('po_job_no__smv'), tt_qty=(Sum('po_quantity')), tt_value=(Sum(F('po_quantity')*F('avg_price'), output_field=FloatField()))).values('po_job_no__company_name__company_name','po_job_no__buyer_name__buyer_name', 'avg_smv', 'tt_qty', 'tt_value').filter(order_status="Projected")
+    
     myFilter = OrderFilter(request.GET , queryset = orders)
     orders = myFilter.qs
     context = {
         'orders': orders,
         'myFilter': myFilter,
-        'year': year,
+        # 'con_and_pro':con_and_pro,
+        # 'con_order': con_order,
+        # 'pro_order': pro_order,
     }
     return render(request, 'Merchandising/Order/capacity_booked.html', context)
 
@@ -1956,12 +2420,6 @@ def order_selection(request):
     }
     return render(request, 'Merchandising/Order/order_selection.html', context)
 
-def add_order(request, id):
-    add_po = PO_Details.objects.get(id=id)
-    context = {
-        'add_po':add_po,
-    }
-    return render(request, 'Merchandising/Order/add_order.html', context )
 
 def work_progress(request, id):
     work_progress = PO_Details.objects.get(id=id)
@@ -1969,23 +2427,17 @@ def work_progress(request, id):
     context={
         'work_progress': work_progress,
     }
-    return render(request, 'Merchandising/Order/work_progress.html', context)
+    return render(request, 'Merchandising/Order/WIP/work_progress.html', context)
 
 def work_progress_report(request):
-    try:
-        orders = OrderEntryInfo.objects.filter(insert_date__year=request.GET.get('year'), insert_date__month=request.GET.get('month')).prefetch_related('order_entry').order_by('-id')
-        year = request.GET.get('year')
-    except:
-        orders = OrderEntryInfo.objects.all().prefetch_related('order_entry').order_by('-id')
-        year = 'year'
+    orders = OrderEntryInfo.objects.all().prefetch_related('order_entry')
     myFilter = OrderFilter(request.GET , queryset = orders)
     orders = myFilter.qs
     context = {
         'orders': orders,
         'myFilter': myFilter,
-        'year': year,
     }
-    return render(request, 'Merchandising/Order/work_progress_report.html', context)
+    return render(request, 'Merchandising/Order/WIP/work_progress_report.html', context)
 
 def tna_progress_report(request, id):
     tna_progress = PO_Details.objects.get(id=id)
@@ -1993,41 +2445,41 @@ def tna_progress_report(request, id):
     context={
         'tna_progress': tna_progress,
     }
-    return render(request, 'Merchandising/Order/tna_progress_report.html', context)
+    return render(request, 'Merchandising/Order/WIP/tna_progress_report.html', context)
 
 def color_size_summary(request):
     
-    return render(request, 'Merchandising/Order/color_size_summary.html')
+    return render(request, 'Merchandising/Order/WIP/color_size_summary.html')
 
 def sample_approval_details(request):
-    return render(request, 'Merchandising/Order/sample_approval_details.html')
+    return render(request, 'Merchandising/Order/WIP/sample_approval_details.html')
 
 def lapdip_approval_details(request):
-    return render(request, 'Merchandising/Order/lapdip_approval_details.html')
+    return render(request, 'Merchandising/Order/WIP/lapdip_approval_details.html')
 
 def accessories_approval_details(request):
-    return render(request, 'Merchandising/Order/accessories_approval_details.html')
+    return render(request, 'Merchandising/Order/WIP/accessories_approval_details.html')
 
 def fabric_booking_details(request):
-    return render(request, 'Merchandising/Order/fabric_booking_details.html')
+    return render(request, 'Merchandising/Order/WIP/fabric_booking_details.html')
 
 def finish_fabric_details(request):
-    return render(request, 'Merchandising/Order/finish_fabric_details.html')
+    return render(request, 'Merchandising/Order/WIP/finish_fabric_details.html')
 
 def trims_details(request):
-    return render(request, 'Merchandising/Order/trims_details.html')
+    return render(request, 'Merchandising/Order/WIP/trims_details.html')
 
 def cutting_finish_details(request):
-    return render(request, 'Merchandising/Order/cutting_finish.html')
+    return render(request, 'Merchandising/Order/WIP/cutting_finish.html')
 
 def iron_finish_details(request):
-    return render(request, 'Merchandising/Order/iron_finish_details.html')
+    return render(request, 'Merchandising/Order/WIP/iron_finish_details.html')
 
 def finishing_details(request):
-    return render(request, 'Merchandising/Order/finishing_details.html')
+    return render(request, 'Merchandising/Order/WIP/finishing_details.html')
 
 def buyer_inspection_details(request):
-    return render(request, 'Merchandising/Order/buyer_inspection_details.html')
+    return render(request, 'Merchandising/Order/WIP/buyer_inspection_details.html')
 
 def actual_shipment_details(request):
-    return render(request, 'Merchandising/Order/actual_shipment_details.html')
+    return render(request, 'Merchandising/Order/WIP/actual_shipment_details.html')

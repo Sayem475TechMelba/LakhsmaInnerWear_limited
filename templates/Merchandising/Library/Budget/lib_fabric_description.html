@@ -37,7 +37,7 @@
                         <div class="form-group row ">
                           <label for="gsm_weight" class="col-sm-2 col-form-label "> Gsm/Weight</label> 
                           <div class="col-sm-4 ">
-                            {{ form.gsm_weight|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Gsm/Weight "}}
+                            {{ form.gsm_weight|attr:"class:form-control"|attr:"type:number"|attr:"placeholder:Gsm/Weight "}}
                           </div>
                           <label for="color_range" class="col-sm-2 col-form-label ">Color Range</label>
                           <div class="col-sm-4 ">
@@ -80,7 +80,7 @@
                                   <tbody class='inlineform' >
                                       <tr>
                                           <td class="text-center">
-                                            {{ form.yarn_one_pct|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Yarn %"}}
+                                            {{ form.yarn_one_pct|attr:"class:form-control"|attr:"type:number"|attr:"placeholder:Yarn %"}}
                                           </td>
                                           <td class="text-center">
                                             {{ form.yarn_one|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Yarn"}}
@@ -92,7 +92,7 @@
                                             {{ form.yarn_type_one|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Yarn Type"}}
                                           </td>
                                           <td class="text-center">
-                                            {{ form.yarn_two_pct|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Yarn %"}}
+                                            {{ form.yarn_two_pct|attr:"class:form-control"|attr:"type:number"|attr:"placeholder:Yarn %"}}
                                           </td>
                                           <td class="text-center">
                                             {{ form.yarn_two|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Yarn"}}

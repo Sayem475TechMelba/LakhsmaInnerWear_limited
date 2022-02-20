@@ -37,6 +37,7 @@ class OrderFilter(django_filters.FilterSet):
         ]
         
 class POFilter(django_filters.FilterSet):
+    
     start_date = DateFilter(field_name="pub_shipment_date",lookup_expr='gte',label='From Date')
     end_date = DateFilter(field_name="pub_shipment_date",lookup_expr='lte',label='To Date')
     company_name = django_filters.CharFilter(field_name='po_job_no__company_name__company_name', lookup_expr='icontains')
@@ -50,7 +51,6 @@ class POFilter(django_filters.FilterSet):
     factory_merchant = django_filters.CharFilter(field_name='po_job_no__factory_merchant__f_merchant_name', lookup_expr='icontains')
     product_cate = django_filters.CharFilter(field_name='po_job_no__product_cate__category_name', lookup_expr='icontains')
     po_no = django_filters.CharFilter(lookup_expr='icontains')
-    insert_date = DateFilter(field_name="insert_date")
     class Meta:
         model = PO_Details
         fields = [
@@ -65,8 +65,8 @@ class POFilter(django_filters.FilterSet):
         'dealing_merchant', 
         'factory_merchant', 
         'product_cate',
-        'inserted_by', 
-        'insert_date',
+        'inserted_by',
+        
         ]
 
         

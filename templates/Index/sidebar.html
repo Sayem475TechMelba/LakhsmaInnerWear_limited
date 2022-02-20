@@ -42,7 +42,7 @@
               <li class="nav-item has-treeview">
                 <a href="#" class="nav-link ">
                   <i class="nav-icon fas fa-user"></i>
-                  <p>
+                   <p>
                     Merchandising
                     <i class="fas fa-angle-left right"></i>
                   </p>
@@ -314,6 +314,74 @@
                           
                         </ul>
                       </li>
+                      <li class="nav-item ">
+                        <a href="#" class="nav-link ">
+                          <i class="fas fa-plus nav-icon"></i>
+                          <p>Yarn <i class="fas fa-angle-left right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                          <li class="nav-item ">
+                            <a href="{% url 'lib_yarn_type' %}" class="nav-link ">
+                              <i class="fas fa-minus nav-icon"></i>
+                              <p>Yarn Type</p>
+                            </a>
+                          </li>
+                          <li class="nav-item ">
+                            <a href="{% url 'lib_yarn_supplier' %}" class="nav-link ">
+                              <i class="fas fa-minus nav-icon"></i>
+                              <p>Supplier</p>
+                            </a>
+                          </li>
+                          
+                        </ul>
+                      </li>
+                      <li class="nav-item ">
+                        <a href="#" class="nav-link ">
+                          <i class="fas fa-plus nav-icon"></i>
+                          <p>Conversion<i class="fas fa-angle-left right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                          <li class="nav-item ">
+                            <a href="{% url 'lib_process' %}" class="nav-link ">
+                              <i class="fas fa-minus nav-icon"></i>
+                              <p>Process</p>
+                            </a>
+                          </li>
+                          <li class="nav-item ">
+                            <a href="{% url 'lib_knitting' %}" class="nav-link ">
+                              <i class="fas fa-minus nav-icon"></i>
+                              <p>Knitting Items</p>
+                            </a>
+                          </li>
+                          <li class="nav-item ">
+                            <a href="{% url 'lib_dyeing' %}" class="nav-link ">
+                              <i class="fas fa-minus nav-icon"></i>
+                              <p>Dyeing Items</p>
+                            </a>
+                          </li>
+                         
+                        </ul>
+                      </li>
+                      <li class="nav-item ">
+                        <a href="#" class="nav-link ">
+                          <i class="fas fa-plus nav-icon"></i>
+                          <p>Trims<i class="fas fa-angle-left right"></i></p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                          <li class="nav-item ">
+                            <a href="{% url 'lib_groups_item' %}" class="nav-link ">
+                              <i class="fas fa-minus nav-icon"></i>
+                              <p>Groups Items</p>
+                            </a>
+                          </li>
+                          <li class="nav-item ">
+                            <a href="{% url 'lib_trim_source' %}" class="nav-link ">
+                              <i class="fas fa-minus nav-icon"></i>
+                              <p>Trim Source</p>
+                            </a>
+                          </li>
+                        </ul>
+                      </li>
                     </ul>
                   </li>
                 </ul>
@@ -470,6 +538,24 @@
                 <a href="{% url 'order_report' %}" class="nav-link ">
                   <i class="fas fa-minus nav-icon"></i>
                   <p>Order Report</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- LOG INFO  -->
+          <li class="nav-item has-treeview ">
+            <a href="#" class="nav-link {% if url_name == 'order_report' %}active{% endif %}">
+              <i class="nav-icon fa fa-trash-alt" aria-hidden="true"></i>
+              <p>
+                Log Report
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item ">
+                <a href="{% url 'log_tracking' %}" class="nav-link ">
+                  <i class="fas fa-minus nav-icon"></i>
+                  <p>Log Info</p>
                 </a>
               </li>
             </ul>

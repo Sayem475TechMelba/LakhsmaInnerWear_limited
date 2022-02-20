@@ -1,0 +1,552 @@
+{% extends "index.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% load mathfilters %}
+{% block title %} Lakshma | Working Progress Report {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+{% block css %}
+<style>
+.mrs{
+    background-color: yellow;
+    padding-left: 35px;
+    margin-right: 3px;
+    margin-left: 3px;
+    border: 1px solid black;
+}
+
+.ots{
+    background-color: green;
+    padding-left: 35px;
+    margin-right: 3px;
+    margin-left: 5px;
+    border: 1px solid black;
+}
+
+.dls{
+    background-color: rgb(26, 123, 189);
+    padding-left: 35px;
+    margin-right: 3px;
+    margin-left: 5px;
+    border: 1px solid black;
+}
+
+.sdop{
+    background-color: rgb(219, 22, 22);
+    padding-left: 35px;
+    margin-right: 3px;
+    margin-left: 5px;
+    border: 1px solid black;
+}
+.dapv{
+    background-color: rgb(236, 31, 158);
+    padding-left: 35px;
+    margin-right: 3px;
+    margin-left: 5px;
+    border: 1px solid black;
+}
+
+tfoot {
+     display: table-header-group;
+}
+
+.a_color tr td a{
+   color: black;
+   text-decoration: underline 2px solid red;
+}
+</style>
+{% endblock css %}
+
+{% block body %}
+<div id="loading" class="text-center">
+  <figure>
+    <img class="loading-image" height="100px" src="{% static 'icon/covid.gif' %}">
+    <h5> <figcaption class="text-center text-danger loading-image font-weight-bolder">Please Wait,Your Content is Loading....</figcaption></h5>
+  </figure>
+</div>
+
+
+<div class="container-fluid search-box">
+  <div class="text-center mt-2 font-weight-bold"><h5>Work in Progeress</h5></div>
+      <div class="card mt-1">
+          <div class=" search mt-1 text-center ">
+            <form method="GET" class="ml-2 mr-2"  action="{% url 'work_progress_report' %}">
+              <table  class="table table-bordered table-responsive table-responsive-sm table-sm tabel-hover  ">
+                <thead class="bg-meroon">
+                  <tr>
+                    <th width="150px;">Company</th>
+                    <th >Location</th>
+                    <th >Buyer</th>
+                    <th >Agent </th>
+                    <th >Style</th>
+                    <th >Job No.</th>
+                    <th >Team</th>
+                    <th >Dealing Merchant</th>
+                    <th >Factory Merchant</th>
+                    <th >Product Category</th>
+                    <th >Start Date</th>
+                    <th >End Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      {{ myFilter.form.company_name|attr:"class:form-controls"}}
+                    </td>
+                    <td>
+                      {{ myFilter.form.company_location|attr:"class:form-controls"}}
+                    </td>
+                
+                    <td>
+                      {{ myFilter.form.buyer_name|attr:"class:form-controls"}}
+                    </td>
+                    <td>{{ myFilter.form.agent|attr:"class:form-controls"}}</td>
+                    <td>{{ myFilter.form.style_description|attr:"class:form-controls"}}</td>
+                    <td>{{ myFilter.form.job_no|attr:"class:form-controls"}}</td>
+                    <td>
+                      {{ myFilter.form.team_leader|attr:"class:form-controls"}}
+                    </td>
+                    <td>
+                      {{ myFilter.form.dealing_merchant|attr:"class:form-controls"}}
+                    </td>
+                    <td>
+                      {{ myFilter.form.factory_merchant|attr:"class:form-controls"}}
+                    </td>
+                    <td>
+                      {{ myFilter.form.product_cate|attr:"class:form-controls"}}
+                    </td>
+            
+                    <td>{{ myFilter.form.start_date|attr:"type:date"|attr:"class:form-control"|attr:"id:start_date"  }}</td>
+                      <td>{{ myFilter.form.end_date|attr:"type:date"|attr:"class:form-control"|attr:"id:end_date"  }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="container justify-content-center align-content-center text-center mb-1">
+                <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Search</button>
+                <a href="{% url 'work_progress_report' %}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i> Reset</a>
+              </div>
+            </form>
+            <div class="container ">
+              <div class="d-flex justify-content-center table-responsive">
+                <div class="p-1">
+                  <table class="mb-1 table-sm  table-responsive-sm ">
+                    <thead>
+                        <td width="20%">
+                          <select id="getYear" onChange="copyTextValue()" class="form-control">
+                            <option value="" disabled selected>Select</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                          </select>
+                        </td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2 " >Jan</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Feb</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Mar</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Apr</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">May</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Jun</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Jul</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Aug</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Sep</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Oct</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2" onclick="myFunction()"  id="getMonth">Nov</button></td>
+                        <td><button type="" class="btn btn-sm btn-info ml-2">Dec</button></td>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+  
+         
+        </div>
+</div>
+
+
+ 
+<!-- Work Progress REPORT  -->
+
+<div class="container mt-5">
+    <div class="ml-5">
+        <span class="mrs"></span>Maximum 10 days remain to ship <span class="ots"></span> On Time Shipment <span class="dls"></span>Daily Shipment <span class="sdop"></span>Shipment Due Over & Pending <span class="dapv"></span>Delay Approval
+    </div>
+
+</div>
+
+<div class="container-fluid mt-4 table-responsive" >
+  <table id="shipment_report" name="schedule" class="table table-bordered table-striped table-sm table-responsive-sm table-hover table-info display text-center">
+    <thead class="fixed-header bg-info">
+        <tr>
+            <th class="text-left text-uppercase " colspan="53">
+                <h6 >Work In Progress(WIP)</h6>
+            </th>
+        </tr>
+      <tr>
+        <th >SL.</th>
+        <!-- <th>Company Name</th> -->
+        <th>Job No</th>
+        <th>Buyer</th>
+        <th>Team Leader</th>
+        <th> Dealing Merchant</th>
+        <th >Order No</th>
+        <th> File No</th>
+        <th> TNA Progress Report</th>
+        <th> Agent</th>
+        <!-- <th >Season</th>
+        <th >Prod. Dept</th>
+        <th>Sub. Dept</th>
+        <th>Sub. Dept Code</th> -->
+        <th>Image </th>
+        <th>Item Name</th>
+        <th>Sew SMV </th>
+        <th>Style Name </th>
+        <th> Order Qnty </th>
+        <th> Order Value </th>
+        <th> LC/SC Receive </th>
+        <th> Order Qnty(Pcs) </th>
+        <th> Po Insert Date </th>
+        <th> Uom </th>
+        <th> Unit Price </th>
+        <th> PO Receive Date </th>
+        <th> Pub Ship Date </th>
+        <th> Lead Time </th>
+        <th> Days In Hand</th>
+        <th> Sample Approval </th>
+        <th> Lapdip Approval </th>
+        <th> Accessories Approved </th>
+        <th> Emebel Approved</th>
+        <th> Knit Fabric Booking</th>
+        <th> Kniting Finished</th>
+        <th> Finished Fab Recv</th>
+        <th> Woven Fabric Booking</th>
+        <th> Woven Fin Fab Recv</th>
+        <th> Trims Received</th>
+        <th> Cutting Finished</th>
+        <th> Print & Emb Completed</th>
+        <th> Sewing Finished</th>
+        <th> Iron Output</th>
+        <th> Finishing Completed</th>
+        <th> Buyer Inspection</th>
+        <th> Ship Qnty(Pcs) As Per Ex-Fact</th>
+        <th> Actual Shipment Date</th>
+        <th> Ship Qnty(Pcs) As Per Invoice</th>
+        <th> Ship Value(Gross)</th>
+        <th> Balance Ship Qnty As Per Invoice</th>
+        <th> Remarks</th>
+        
+      </tr>
+       
+    </thead>
+    <tfoot id="tfooter">
+      <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+      </tr>
+    </tfoot>
+    <tbody class="a_color">
+      {% for i in orders %}
+        {% for p in i.order_entry.all %}
+         
+      <tr>
+
+        <!-- <td>{{forloop.counter}}</td> -->
+        <td></td>
+        <td>{{i.job_no}}</td>
+        <td>{{i.buyer_name}}</td>
+        <td>{{i.team_leader}}</td>
+        <td>{{i.dealing_merchant}}</td>
+        <td ><a href="{% url 'work_progress' p.id %}"> {{p.po_no}}</a></td>
+        <td>{{p.file_no}}</td>
+        <td><a href="{% url 'tna_progress_report' p.id %}">View</a></td>
+        <td >{{i.agent}}</td>
+        
+        <td >
+            {% if i.image %}
+            <img height="30px" width="30px" src="{{i.image.url}}">
+            {% endif %}
+        </td>
+            
+        <td>
+            {% for item in p.color_size.all|slice:":1" %}
+            {{item.gmt_items}}
+            {% endfor %}
+        </td>
+        <td>{{i.smv}}</td>
+        <td>{{i.style_description}}</td>
+        <td ><a href="{% url 'color_size_summary'  %}">{{p.po_quantity}}</a></td>
+        <td id="order_value"></td>
+        <td><a href="#">2537.50</a></td>
+        <td class="oq tsmv oqb eqhidesmv">{{p.po_quantity}}</td>
+        <td>{{p.insert_date}}</td>
+        <td>{{i.order_uom}}</td>
+        <td class="oq">{{p.avg_price}}</td>
+        <td>{{p.po_recieve_date}}</td>
+        <td class="pub_date">{{p.pub_shipment_date}}</td>
+        <td>{{p.lead_time}}</td>
+        <td id="lead_date"></td>
+        <td ><a href="{% url 'sample_approval_details'  %}">50.00 %</a></td>
+        <td ><a href="{% url 'lapdip_approval_details'  %}">100.00 %</a></td>
+        <td ><a href="{% url 'accessories_approval_details'  %}">100.00 %</a></td>
+        <td >N/A</td>
+        <td ><a href="{% url 'fabric_booking_details'  %}">100 %</a></td>
+        <td><a href="#">0.00 %</a></td>
+        <td><a href="{% url 'finish_fabric_details'  %}">115.03 %</a></td>
+        <td>N/A</td>
+        <td>N/A</td>
+        <td><a href="{% url 'trims_details'  %}">View</a></td>
+        <td><a href="{% url 'cutting_finish_details'  %}">104.5 %</a></td>
+        <td><a href="#">0.00 %</a></td>
+        <td><a href="#">103.83 %</a></td>
+        <td><a href="{% url 'iron_finish_details'  %}">101.70 %</a></td>
+        <td><a href="{% url 'finishing_details'  %}">100.00 %</a></td>
+        <td><a href="{% url 'buyer_inspection_details'  %}">0.0 %</a></td>
+        <td><a href="#">1760</a></td>
+        <td><a href="{% url 'actual_shipment_details'  %}">View</a></td>
+        <td>1760</td>
+        <td>2537.50</td>
+        <td>0</td>
+        <td>{{p.remarks}}</td>
+        
+      </tr>
+            
+         {% endfor %}
+      {% endfor %}
+    </tbody>
+    
+    
+    
+  </table>
+</div>
+
+
+
+
+{% endblock body %}
+
+{% block script %}
+<!-- FOR SHOWING THE TODAY DATE  -->
+<script>
+    // FOR SHOWING THE TODAY DATE 
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10) {
+        dd = '0'+dd
+      } 
+    if(mm<10) {
+        mm = '0'+mm
+      } 
+    // today = yyyy + '/' + mm + '/' + dd;
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById('invoice_date').innerHTML = today;
+</script>
+
+<!-- SHIPMENT REPORT CALCULATION  -->
+<script>
+    $(document).ready(function() {
+      // Setup - add a text input to each footer cell
+      $('#shipment_report #tfooter th').each( function () {
+          var title = $(this).text();
+          $(this).html( '<input type="text" class="form-controls" placeholder="Search" />' );
+      });
+
+      // CALCULATION FOR REPORT PANEL (ORDER VALUE) ===--->
+      // FOR MULTIPLICATION ORDERVALUE STARTS FROM 1
+      $('tr').each(function(){
+        var orderValue = 1;
+        $(this).find('.oq').each(function(){
+          var allquan_per = $(this).text();
+          if(allquan_per.length!==0)
+          {
+            orderValue *=  parseFloat(allquan_per);
+          }
+        });
+        $(this).find('#order_value').html(orderValue);
+      });
+      
+      // CALCULATION FOR REPORT PANEL (TOTAL SMV VALUE) ===--->
+      $('tr').each(function(){
+        var totSmv = 1;
+        $(this).find('.tsmv').each(function(){
+          var allquan_per = $(this).text();
+          if(allquan_per.length!==0)
+          {
+            totSmv *=  parseFloat(allquan_per);
+          }
+        });
+        $(this).find('#totalSmv').html(totSmv);
+      });
+      // CALCULATION FOR REPORT PANEL (DAYS IN HAND VALUE) ===--->
+      $('tr').each(function(){
+        var dayesInHand = 0;
+        $(this).find('.pub_date').each(function(){
+          var pubDate = $(this).text();
+          pubDate = new Date(pubDate);
+          var present_date = new Date();
+          var pred = present_date.getTime();
+          var pubd = pubDate.getTime();
+          if(pubDate.length!==0)
+          {
+            dit =  pred - pubd;
+            dayesInHand = (dit / (1000 * 3600 *24)).toFixed(0);
+          }
+        });
+        $(this).find('#lead_date').html(dayesInHand);
+      });
+
+      // CALCULATION FOR REPORT PANEL (HIDDEN SMV VALUE) ===--->
+      // HIDDEN FIELD FOR EQUIVALENT BASIC
+      $('tr').each(function(){
+        var finalsmv = 1;
+        $(this).find('.sv').each(function(){
+          var smv = $(this).text();
+          if(smv.length!==0)
+          {
+            // EQUIVALENT BASIC CONFIRMED DIVISION NUMBER IS 4
+            finalsmv = parseFloat(smv / 4) ;
+          }
+        });
+        $(this).find('#hiddensmv').html(finalsmv);
+      });
+
+      $('tr').each(function(){
+        var eqvb = 1;
+        $(this).find('.eqhidesmv').each(function(){
+          var hidesmv = $(this).text();
+          if(hidesmv.length!==0)
+          {
+            eqvb *= parseFloat(hidesmv);
+          }
+        });
+        $(this).find('#eqvbasic').html(eqvb);
+      });
+
+      // DataTable
+      var table = $('#shipment_report').DataTable({
+        drawCallback: function(){
+          const rp_tAvg_smv = this.api().column(20,{search:'applied'}).data().toArray().reduce((total,rp_tAvg_smv) => total+=Number(rp_tAvg_smv.replace(/[^0-9\.]/g,'')),0);
+          $('#rp_tAvg_smv').text(` ${(rp_tAvg_smv)}`);
+
+          const rp_tt_smv = this.api().column(21,{search:'applied'}).data().toArray().reduce((total,rp_tt_smv) => total+=Number(rp_tt_smv.replace(/[^0-9\.]/g,'')),0);
+          $('#rp_tt_smv').text(` ${(rp_tt_smv)}`);
+  
+          const rp_tt_ord = this.api().column(22,{search:'applied'}).data().toArray().reduce((total,rp_tt_ord) => total+=Number(rp_tt_ord.replace(/[^0-9\.]/g,'')),0);
+          $('#rp_tt_ord').text(` ${(rp_tt_ord)}`);
+  
+          const rp_tt_ordq = this.api().column(24,{search:'applied'}).data().toArray().reduce((total,rp_tt_ordq) => total+=Number(rp_tt_ordq.replace(/[^0-9\.]/g,'')),0);
+          $('#rp_tt_ordq').text(` ${(rp_tt_ordq)}`);
+  
+          const rp_tt_eqv = this.api().column(25,{search:'applied'}).data().toArray().reduce((total,rp_tt_eqv) => total+=Number(rp_tt_eqv.replace(/[^0-9\.]/g,'')),0);
+          $('#rp_tt_eqv').text(` ${(rp_tt_eqv)}`);
+  
+          const rp_tt_up = this.api().column(26,{search:'applied'}).data().toArray().reduce((total,rp_tt_up) => total+=Number(rp_tt_up.replace(/[^0-9\.]/g,'')),0);
+          $('#rp_tt_up').text(` ${(rp_tt_up)}`);
+  
+          const rp_tt_ov = this.api().column(27,{search:'applied'}).data().toArray().reduce((total,rp_tt_ov) => total+=Number(rp_tt_ov.replace(/[^0-9\.]/g,'')),0);
+          $('#rp_tt_ov').text(` ${(rp_tt_ov)}`);
+  
+        },
+        dom: 'Bfrtip',
+        buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                columns: [0,':visible']
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                columns: [0,':visible']
+              }
+          },
+          {
+              extend: 'csvHtml5',
+              exportOptions: {
+                columns: [0,':visible']
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                columns: [0,':visible']
+              }
+          },
+          'colvis'
+        ],
+        //"targets": 'no-sort',
+        //"bSort": false,
+        "bPaginate": false,
+        "scrollY": 470,
+        "scrollX": true,
+        columnDefs: [ { type: 'date', 'targets': [17] } ],
+        order: [[ 17, 'asc' ]],
+          initComplete: function () {
+              // Apply the search
+              this.api().columns().every( function () {
+                  var that = this;
+   
+                  $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                      if ( that.search() !== this.value ) {
+                          that
+                              .search( this.value )
+                              .draw();
+                      }
+                  } );
+              } );
+          }
+      });
+      // FOR GENERATING SERIAL NUMBER
+      table.on( 'order.dt search.dt', function () {
+        table.column(0, {search:'applied', order:'applied'}).nodes().each( function (cell, i) {
+            cell.innerHTML = i+1;
+        } );
+    } ).draw();
+  } );
+</script>
+
+{% endblock script %}
+

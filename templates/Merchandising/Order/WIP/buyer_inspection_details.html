@@ -1,0 +1,184 @@
+{% extends "index.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% load mathfilters %}
+{% block title %} Lakshma |  finishing Details {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    
+    .details thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    /*width: 10.6%;*/
+    width: 330px;
+}
+   
+tfoot {
+     display: table-header-group;
+}
+
+.nav-tabs .nav-link {
+    color: #fff;
+    text-decoration: none;
+    background-color: #e74c3c;
+}
+.nav-tabs .nav-link {
+    margin-bottom: -1px;
+    border: 1px solid #f8f9fa;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+ #myTab .nav-item{
+  font-weight: bold;
+
+}
+/* .print-font{
+        font-size:16px;
+    } */
+    @media print {
+        .noprint {
+           visibility: hidden;
+        }
+     }
+</style>
+{% endblock css %}
+
+{% block body %}
+
+
+  <div class="container-fluid print-font ">
+      <div class="card table-responsive ">
+        <div class=" text-center text-uppercase bg-info">
+            <h4 class="">Buyer Inspection Details</h4>
+          </div>
+        <table  class="table table-bordered table-striped details table-responsive table-sm  mb-0">
+          <thead class="bg-info text-center">
+            
+            <tr>
+              <th >Job Number</th>
+              <th>Buyer Name</th>
+              <th>Company Name</th>
+              <th >Style Ref. No</th>
+              <th >TNA Actual Finish Date</th>
+                      
+            </tr>
+          </thead>
+          
+          <tbody>
+            
+            <tr class="text-center">
+
+              <td>test</td>
+              <td>test</td>
+              <td>test</td>
+              <td>test</td>
+              <td>test</td>
+              
+              
+            </tr>
+            <tfoot>
+                
+            </tfoot>
+            
+            
+            
+          </tbody>
+         
+          
+        </table>
+        
+
+    </div>
+      <div class="card table-responsive ">
+        
+        <table  class="table table-bordered table-striped details table-responsive table-sm  mb-0">
+            <div class=" bg-secondary text-center"><h6 class="font-weight-bold ml-3"> QC Passed</h6></div>
+          <thead class="text-center">
+            
+            <tr>
+              <th >SL.</th>
+              <th>Inspection Date</th>
+              <th>Inspection Quantity</th>         
+              <th>Inspection Status</th>         
+              <th>Remarks</th>         
+             
+            </tr>
+          </thead>
+          
+          <tbody class="text-center">
+            
+            <tr>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            
+            </tr>
+            <tfoot class="font-weight-bold text-center">
+                <td colspan="4" class="text-right">Total:</td>
+                <td>10</td>
+                
+            </tfoot>
+           
+          </tbody>
+         
+          
+        </table>
+
+        <table  class="table table-bordered table-striped details table-responsive table-sm  ">
+            <div class=" bg-secondary text-center"><h6 class="font-weight-bold ml-3"> QC Failed Or Re-Checked</h6></div>
+          <thead class="text-center">
+            
+            <tr>
+                <th >SL.</th>
+                <th>Inspection Date</th>
+                <th>Inspection Quantity</th>         
+                <th>Inspection Status</th>         
+                <th>Remarks</th>             
+                   
+            </tr>
+          </thead>
+          
+          <tbody class="text-center">
+            
+            <tr>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+            </tr>
+            <tr>
+            
+            
+            <tfoot class="font-weight-bold text-center">
+                <td colspan="4" class="text-right">Total:</td>
+                <td>10</td>
+                
+            </tfoot>
+            
+          </tbody>
+         
+          
+        </table>
+        
+
+    </div>
+
+
+  </div>
+ 
+  <div class="container text-center mt-4 no-print">
+    <button class="btn btn-sm btn-danger" onclick="window.print()">Print </button>
+</div>
+
+{% endblock body %}
+
+{% block script %}
+
+  
+{% endblock script %}
+

@@ -15,6 +15,11 @@
 tfoot {
      display: table-header-group;
 }
+
+.fetch-btn:hover{
+    background-color: green;
+    color:white;
+}
 </style>
 {% endblock css %}
 
@@ -163,14 +168,14 @@ tfoot {
 
             <td>{{forloop.counter}}</td>
             <td></td>
-            <td>{{i.po_job_no}}</td>
+            <td><button type="submit" class="fetch-btn"  name="_task"  value="{{ i.po_job_no }}" style="border:none ;"  data-toggle="tooltip" data-placement="bottom" title="Select job for budget costing">{{i.po_job_no}}</button></td>
             <td>{{i.po_job_no.company_name}}</td>
             <td>{{i.po_job_no.buyer_name}}</td>
             <td>{{i.po_job_no.style_ref}}</td>
             <td>{{i.internal_ref}}</td>
             <td >{{i.file_no}}</td>
             <td >0</td>
-            <td ><a class="dropdown-item" href="{% url 'add_order' i.id %}">{{i.po_no}}</a></td>
+            <td >{{i.po_no}}</td>
             <td >{{i.po_quantity}}</td>
             <td >{{i.pub_shipment_date}}</td>
             

@@ -1,0 +1,267 @@
+{% extends "index.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% load mathfilters %}
+{% block title %} Lakshma | TNA Progress Report {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+
+{% block css %}
+<style>
+    
+    .details thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    /*width: 10.6%;*/
+    width: 180px;
+}
+   
+tfoot {
+     display: table-header-group;
+}
+
+.nav-tabs .nav-link {
+    color: #fff;
+    text-decoration: none;
+    background-color: #e74c3c;
+}
+.nav-tabs .nav-link {
+    margin-bottom: -1px;
+    border: 1px solid #f8f9fa;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+ #myTab .nav-item{
+  font-weight: bold;
+
+}
+
+/* .print-font{
+        font-size:16px;
+    } */
+    @media print {
+        .noprint {
+           visibility: hidden;
+        }
+     }
+</style>
+{% endblock css %}
+
+{% block body %}
+
+
+  <div class="container-fluid print-font ">
+      <div class="card table-responsive ">
+        <div class="card-header text-uppercase bg-info">
+            <h3 class="card-title">Color & Size Wise Summary</h3>
+          </div>
+        <table  class="table table-bordered table-striped details table-responsive-sm table-sm  mb-0">
+          <thead class="bg-info">
+            
+            <tr>
+              <th>Buyer</th>
+              <th >Job Number</th>
+              <th>Style Name</th>
+              <th>Order Number</th>
+              <th >Ship Date</th>
+              <th >Item Name</th>
+              <th >Order Qty.</th>  
+              <th>Total Alter Sewing Qty</th>            
+              <th>Total Reject Sewing Qty</th>            
+              <th>Pack Assortment</th>            
+            </tr>
+          </thead>
+          
+          <tbody>
+            <tr>
+              <td>test</td>
+              <td>test</td>
+              <td>test</td>
+              <td>test</td>
+              <td>test</td>
+              <td>test</td>
+              <td>test</td>
+              <td>test</td>
+              <td>test</td>
+              <td>test</td>
+            </tr>
+            <tfoot>
+            </tfoot>
+          </tbody>
+        </table>
+        
+
+    </div>
+      <div class="card table-responsive ">
+        <table  class="table table-bordered table-striped details table-responsive-sm table-sm  mb-0">
+          <thead class="text-center">
+            <tr>
+              <th>Color Name</th>
+              <th>Production Type</th>
+              <th>S</th>
+              <th>M</th>
+              <th>L</th>
+              <th>XL</th>
+              <th>XXL</th>  
+              <th>Total</th>            
+            </tr>
+          </thead>
+          
+          <tbody class="text-center">
+            <tr>
+              <td rowspan="15" class="font-weight-bolder align-middle" > Yellow </td>
+              <td>Order Quantity</td>
+              <td>50</td>
+              <td>300</td>
+              <td>300</td>
+              <td>150</td>
+              <td>50</td>
+              <td>1050</td>
+            </tr>
+            <tr>
+              <td >Plan To Cut (AVG 3.00%)</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Cutting</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Print Issue</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Print Received</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Embro Issue</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Embro Received</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Issue For Special Works</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Recv. From Special Works</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Sewing Input</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Sewing Output</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Issue For Wash</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Recv. From Wash</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Iron Output</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+            <tr>
+              <td >Finishing Output</td>
+              <td >50</td>
+              <td >300</td>
+              <td >300</td>
+              <td >150</td>
+              <td >50</td>
+              <td >1050</td>
+            </tr>
+          </tbody>
+         
+          
+        </table>
+        
+
+    </div>
+
+
+  </div>
+ 
+  <div class="container text-center mt-4 no-print">
+    <button class="btn btn-sm btn-danger" onclick="window.print()">Print </button>
+</div>
+
+{% endblock body %}
+
+{% block script %}
+
+  
+{% endblock script %}
+

@@ -6,7 +6,6 @@
 
 {% block css %}
 <style>
-    
     tfoot {
       display:table-header-group;
     }
@@ -66,7 +65,7 @@
 
         <div class="container ">
           <div class="d-flex justify-content-center table-responsive">
-            <div class="p-2">
+            <div class="">
               <table class="mb-1 table-sm  table-responsive-sm ">
                 <thead>
                     <td width="20%">
@@ -97,10 +96,10 @@
 </div>
 
   {% if  '/purchase_report/?' in request.get_full_path %}
-  <div class="container-fluid">
-     <div class=" table-responsive  table-responsive-sm">
-      <table id="purchase_report" class="table table-bordered table-hover  table-striped table-sm display">
-        <thead>
+  <div class="container-fluid ">
+     <div class=" table-responsive  ">
+      <table id="purchase_report" class="table table-bordered table-hover text-center table-striped table-sm table-responsive-sm table-info">
+        <thead class="bg-info">
           <tr>
             <th colspan="9"></th>
             <th colspan="9" class="bg-secondary"> <h5  class="text-center font-weight-bold">Liability Adustment </h5></th>
@@ -108,30 +107,30 @@
           </tr>
 
           <tr>
-            <th class="text-center">SL.</th>
-            <th class="text-center">Factory Name</th>
-            <th class="text-center">Job No.</th>
-            <th class="text-center" >Order No.</th>
-            <th class="text-center">Buyer Name</th>
-            <th class="text-center">Purchase No.</th>
-            <th class="text-center" >Purchase Date</th>
-            <th class="text-center">Bill No</th>
-            <th class="text-center" >Bill Amount</th>
+            <th >SL.</th>
+            <th >Factory Name</th>
+            <th >Job No.</th>
+            <th  >Order No.</th>
+            <th >Buyer Name</th>
+            <th >Purchase No.</th>
+            <th >Purchase Date</th>
+            <th>Bill No</th>
+            <th  > Export Bill Amount</th>
 
-            <th class="bg-danger text-center">BTB</th>
-            <th class="bg-danger text-center"> PC </th>
-            <th  class="bg-danger text-center" >SND</th>
-            <th  class="bg-danger text-center">Term </th>
-            <th class="bg-danger text-center">Time </th>
-            <th class="bg-danger text-center">OD </th>
-            <th class="bg-danger text-center">EDF </th>
-            <th class="bg-danger text-center"> Com.</th>
-            <th class="bg-danger text-center">Tax </th>
-            <th class="text-center bg-success" >CM Requested</th>
-            <th class="text-center bg-success" >Approve CM</th>
+            <th class="bg-danger ">BTB</th>
+            <th class="bg-danger "> PC </th>
+            <th  class="bg-danger " >SND</th>
+            <th  class="bg-danger ">Term </th>
+            <th class="bg-danger ">Time </th>
+            <th class="bg-danger ">OD </th>
+            <th class="bg-danger ">EDF </th>
+            <th class="bg-danger "> Com.</th>
+            <th class="bg-danger ">Tax </th>
+            <th class=" bg-success" >CM Requested</th>
+            <th class=" bg-success" >Approve CM</th>
             <th class=" bg-danger">Due</th>
-             <th class="text-center" >Payment Status</th>
-            <th class="text-center">Action </th>
+             <th class="" >Payment Status</th>
+            <th class="">Action </th>
           </tr>
         </thead>
 
@@ -162,7 +161,7 @@
             <th> </th>
           </tr>
         </tfoot>
-        <tbody>
+        <tbody class="bg-form">
           {% for i in purchase_list %}
           <tr>
             <td>{{forloop.counter}}</td>
@@ -173,7 +172,7 @@
             <td>{{i.purchase_no}}</td>
             <td>{{i.bill_date}}</td>
             <td>{{i.bill_no}}</td>
-            <td class="billamount">{{i.net_amount|floatformat:2}}</td>
+            <td class="billamount">{{i.bill_value|floatformat:2}}</td>
 
             <td class="btb_lc_amt">{{i.btb_lc_amt|floatformat:2}}</td>
             <td class="pc_amount_amt">{{i.pc_amount_amt|floatformat:2}}</td>
@@ -237,7 +236,7 @@
     // Setup - add a text input to each footer cell
     $('#purchase_report #purchaseReport th').each( function () {
         var title = $(this).text();
-        $(this).html( '<input type="text" class="form-control" placeholder="Search" />' );
+        $(this).html( '<input type="text" class="search-form-control" placeholder="Search" />' );
     } );
     
  
@@ -283,8 +282,39 @@
           const dueTotal = this.api().column(20,{search:'applied'}).data().toArray().reduce((total,dueTotal) => total+=Number(dueTotal.replace(/[^0-9\.]/g,'')),0).toFixed(2);
           $('#dueTotal').text(` ${(dueTotal)}`);
         },
-
-        "lengthMenu": [[500,1000,-1], [500,1000,"All"]],
+        dom: 'Bfrtip',
+        buttons: [
+          {
+              extend: 'copyHtml5',
+              exportOptions: {
+                columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14,15,16,17,18,19,20,21]
+              }
+          },
+          {
+              extend: 'excelHtml5',
+              exportOptions: {
+                columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14,15,16,17,18,19,20,21]
+              }
+          },
+          {
+              extend: 'csvHtml5',
+              exportOptions: {
+                columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,14,15,16,17,18,19,20,21]
+              }
+          },
+          {
+              extend: 'pdfHtml5',
+              exportOptions: {
+                columns: ':visible'
+              }
+          },
+          'colvis'
+        ],
+        "targets": 'no-sort',
+        "bSort": false,
+        "bPaginate": false,
+        "ordering": false,
+        "info":     false,
         "scrollY": 470,
         "scrollX": true,
         initComplete: function () {

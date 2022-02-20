@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns=[
+    path('log_tracking/', views.log_tracking, name= 'log_tracking'),
     path('lib_buyer/', views.lib_buyer, name= 'lib_buyer'),
     path('lib_company/', views.lib_company, name= 'lib_company'),
     path('lib_company_address/', views.lib_company_address, name= 'lib_company_address'),
@@ -41,6 +42,13 @@ urlpatterns=[
     path('lib_dia_types/', views.lib_dia_types, name= 'lib_dia_types'),
     path('lib_consumption_basis/', views.lib_consumption_basis, name= 'lib_consumption_basis'),
     path('lib_color_size_sensitive/', views.lib_color_size_sensitive, name= 'lib_color_size_sensitive'),
+    path('lib_yarn_type/', views.lib_yarn_type, name= 'lib_yarn_type'),
+    path('lib_yarn_supplier/', views.lib_yarn_supplier, name= 'lib_yarn_supplier'),
+    path('lib_process/', views.lib_process, name= 'lib_process'),
+    path('lib_knitting/', views.lib_knitting, name= 'lib_knitting'),
+    path('lib_dyeing/', views.lib_dyeing, name= 'lib_dyeing'),
+    path('lib_groups_item/', views.lib_groups_item, name= 'lib_groups_item'),
+    path('lib_trim_source/', views.lib_trim_source, name= 'lib_trim_source'),
 
 
     # EDIT / DELETE
@@ -155,6 +163,27 @@ urlpatterns=[
     
     path('edit_color_size_sensitive/<int:id>/', views.edit_color_size_sensitive, name= 'edit_color_size_sensitive'),
     path('delete_color_size_sensitive/<int:id>/', views.delete_color_size_sensitive, name= 'delete_color_size_sensitive'),
+
+    path('edit_yarn_type/<int:id>/', views.edit_yarn_type, name= 'edit_yarn_type'),
+    path('delete_yarn_type/<int:id>/', views.delete_yarn_type, name= 'delete_yarn_type'),
+
+    path('edit_yarn_supplier/<int:id>/', views.edit_yarn_supplier, name= 'edit_yarn_supplier'),
+    path('delete_yarn_supplier/<int:id>/', views.delete_yarn_supplier, name= 'delete_yarn_supplier'),
+
+    path('edit_process/<int:id>/', views.edit_process, name= 'edit_process'),
+    path('delete_process/<int:id>/', views.delete_process, name= 'delete_process'),
+
+    path('edit_knitting/<int:id>/', views.edit_knitting, name= 'edit_knitting'),
+    path('delete_knitting/<int:id>/', views.delete_knitting, name= 'delete_knitting'),
+
+    path('edit_dyeing/<int:id>/', views.edit_dyeing, name= 'edit_dyeing'),
+    path('delete_dyeing/<int:id>/', views.delete_dyeing, name= 'delete_dyeing'),
+
+    path('edit_groups_item/<int:id>/', views.edit_groups_item, name= 'edit_groups_item'),
+    path('delete_groups_item/<int:id>/', views.delete_groups_item, name= 'delete_groups_item'),
+
+    path('edit_trim_source/<int:id>/', views.edit_trim_source, name= 'edit_trim_source'),
+    path('delete_trim_source/<int:id>/', views.delete_trim_source, name= 'delete_trim_source'),
     
     #Main Form Urls
     path('order_entry/', views.order_entry, name= 'order_entry'),
@@ -170,7 +199,6 @@ urlpatterns=[
     path('capacity_booked/', views.capacity_booked, name= 'capacity_booked'),
     path('shipment_schedule/', views.shipment_schedule, name= 'shipment_schedule'),
     path('order_selection/', views.order_selection, name= 'order_selection'),
-    path('add_order/<int:id>/', views.add_order, name= 'add_order'),
     path('work_progress/<int:id>/', views.work_progress, name= 'work_progress'),
     path('work_progress_report/', views.work_progress_report, name= 'work_progress_report'),
     path('tna_progress_report/<int:id>/', views.tna_progress_report, name= 'tna_progress_report'),

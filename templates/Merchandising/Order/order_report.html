@@ -27,7 +27,7 @@
   <div class="text-center mt-2 font-weight-bold"><h5>Order Report</h5></div>
   <div class="card mt-2">
       <div class=" search mt-1 text-center">
-        <form method="GET" class="ml-2 mr-2" id="filter" action="{% url 'order_report' %}">
+        <form method="GET" class="ml-2 mr-2" id="filter"  action="{% url 'order_report' %}">
           <table  class="table table-sm table-bordered table-responsive table-responsive-sm tabel-hover">
             <thead class="bg-meroon">
               <tr>
@@ -85,7 +85,7 @@
           </table>
           <div class="container ">
             <div class="d-flex justify-content-center table-responsive">
-              <div class="p-2">
+              <div class="p-1">
                 <table class="mb-1 table-sm  table-responsive-sm ">
                   <thead>
                       <td width="20%">
@@ -114,24 +114,24 @@
               </div>
             </div>
           </div>
-          <div class="container justify-content-center align-content-center text-center">
-            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Show</button>
-            <a href="{% url 'order_report' %}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i> Reset</a>
+          <div class="container justify-content-center align-content-center text-center mb-2">
+            <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-search mr-2" aria-hidden="true"></i>Search</button>
+            <a href="{% url 'order_report'%}" type="button" class="btn btn-sm btn-danger "><i class="fa fa-times" aria-hidden="true"></i>Reset</a>
           </div>
         </form>
-      </div>
+       
 
-     
+      </div>
     </div>
 </div>
  <!-- SHIPMENT REPORT  -->
-{% if '/merchandise/order_report/?' in request.get_full_path %}
+{% if  '/merchandise/order_report/?' in request.get_full_path %}
   <div class="container-fluid mt-4 table-responsive box drag" >
   
-    <table id="report_panel" name="schedule" class="table table-bordered table-striped table-info table-sm table-responsive display">
-      <thead>
+    <table id="report_panel" name="schedule" class="table table-bordered table-striped table-info table-sm table-responsive display text-center">
+      <thead class="bg-info">
         <tr>
-          <th class="text-left text-uppercase bg-info" colspan="53">
+          <th class="text-left text-uppercase " colspan="53">
               <h6>Report Panel</h6>
           </th>
        </tr>
@@ -157,7 +157,6 @@
           <th> Fac Receive Date </th>
           <th> Lead Time </th>
           <th> SMV </th>
-          <!-- <th hidden> hiddenSMV </th> -->
           <th> Total SMV </th>
           <th> Order Qnty </th>
           <th> Uom </th>
@@ -215,8 +214,6 @@
           <th></th>
           <th></th>
           <th></th>
-         
-          <!-- <th hidden>  </th> -->
           <th></th>
           <th></th>
           <th></th>
@@ -238,8 +235,6 @@
           <th></th>
           <th></th>
           <th></th>
-
-          
           <th></th>
           <th></th>
           <th></th>
@@ -355,7 +350,7 @@
       </tfoot>
     </table>
   </div>
-{% endif %}
+{% endif %}            
      
       
       
@@ -363,36 +358,37 @@
 
 {% block script %}
 <script>
-    function pushMonth(value){
-      document.getElementsByName('month')[0].value = value
-      document.getElementById('filter').submit()
-    }
-    if(document.getElementsByName('year')[0][0].innerText == "None"){
-      document.getElementsByName('year')[0][0].innerText = 'Year'
-    }
-    // FOR SHOWING THE TODAY DATE 
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    if(dd<10) {
-        dd = '0'+dd
-      } 
-    if(mm<10) {
-        mm = '0'+mm
-      } 
-    // today = yyyy + '/' + mm + '/' + dd;
-    today = yyyy + '-' + mm + '-' + dd;
-    console.log(today);
-    document.getElementById('invoice_date').innerHTML = today;
-  </script>
+  function pushMonth(value){
+    document.getElementsByName('month')[0].value = value
+    document.getElementById('filter').submit()
+  }
+  if(document.getElementsByName('year')[0][0].innerText == "None"){
+    document.getElementsByName('year')[0][0].innerText = 'Year'
+  }
+  // FOR SHOWING THE TODAY DATE 
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
+  if(dd<10) {
+      dd = '0'+dd
+    } 
+  if(mm<10) {
+      mm = '0'+mm
+    } 
+  // today = yyyy + '/' + mm + '/' + dd;
+  today = yyyy + '-' + mm + '-' + dd;
+  console.log(today);
+  document.getElementById('invoice_date').innerHTML = today;
+</script>
+
 
   <script>
     $(document).ready(function() {
       // Setup - add a text input to each footer cell
       $('#report_panel #tfooter th').each( function () {
           var title = $(this).text();
-          $(this).html( '<input type="text" class="report-control" placeholder="Search" />' );
+          $(this).html( '<input type="text" class="form-controls" placeholder="Search" />' );
       });
 
       // CALCULATION FOR REPORT PANEL (ORDER VALUE) ===--->
@@ -457,11 +453,40 @@
           $('#rp_tt_ov').text(` ${(rp_tt_ov)}`);
   
         },
-        "lengthMenu": [[500,1000,-1], [500,1000,"All"]],
-        "scrollY": 470,
-        "scrollX": true,
-       
-          initComplete: function () {
+      dom: 'Bfrtip',
+      buttons: [
+        {
+            extend: 'copyHtml5',
+            exportOptions: {
+              columns: ':visible'
+            }
+        },
+        {
+            extend: 'excelHtml5',
+            exportOptions: {
+              columns: ':visible'
+            }
+        },
+        {
+            extend: 'csvHtml5',
+            exportOptions: {
+              columns: ':visible'
+            }
+        },
+        
+        'colvis'
+      ],
+      "targets": 'no-sort',
+      "bSort": false,
+      "bPaginate": false,
+      "ordering": false,
+      "info":     false,
+      "scrollY": 470,
+      "scrollX": true,
+      columnDefs: [ { type: 'date', 'targets': [17] } ],
+      order: [[ 17, 'asc' ]],
+      initComplete: function () {
+        
               // Apply the search
               this.api().columns().every( function () {
                   var that = this;

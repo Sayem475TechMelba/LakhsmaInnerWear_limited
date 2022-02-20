@@ -238,7 +238,7 @@
                                                 {{ form_smv_items.management_form }}
                                                 <tbody class="inline_smv_form">
                                                     {% for sv in form_smv_items %}
-                                                    <tr >
+                                                    <tr>
                                                         <td >
                                                            
                                                             {{ sv.items|attr:"class:form-controls"|attr:"onchange:gmtItms()" }}
@@ -362,9 +362,10 @@
                                                        
                                                     </tr>
                                                     
-                                                  </tfoot>
+                                                </tfoot>
                                                 
                                             </table>
+                            
                                           </div>
                                           
                                     </div>
@@ -530,7 +531,7 @@
                                               {{ po_form.fac_recieve_date|attr:"type:date"|attr:"class:form-control" }}
                                           </td>
                                           <td >
-                                            {{ po_form.po_quantity|attr:"class:form-control"|attr:"required"|attr:"placeholder:Dbl. Click"|attr:"id:po_quantity"|attr:"data-target:#exampleModal"|attr:"data-toggle:modal"|attr:"ondblclick:dblCount()" }}
+                                            {{ po_form.po_quantity|attr:"class:form-control"|attr:"required"|attr:"placeholder:Dbl. Click"|attr:"id:po_quantity"|attr:"data-target:#exampleModal"|attr:"data-toggle:modal"|attr:"ondblclick:test(0)" }}
                                         </td>
                                         <td >
                                             {{ po_form.avg_price|attr:"class:form-control" }}
@@ -553,60 +554,10 @@
                                   </tbody>
                               </table>
                           </div>
-
                           <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal">
                             <div class="modal-dialog modal-lg">
                               <div class="modal-content">
                                 <div class="container-fluid p-2">
-                                    <div class="table-responsive mt-2">
-                                        <table class="table table-bordered table-hover table-sm" >
-                                            <thead >
-                                                <tr>
-                                                    <th colspan="6"> <h6  class="font-weight-bold ml-2">Copy Panel </h6> </th>
-                                                </tr>
-                                                <tr class="bg-meroon">
-                                                    <th class="text-center "> Article Number </th>
-                                                    <th class="text-center">Color </th>
-                                                    <th class="text-center ">Fabrication</th>
-                                                    <th class="text-center "> Rate </th>
-                                                    <th class="text-center"> Excess Cut </th>
-                                                    <th class="text-center"> Action </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody >
-
-                                                <tr >
-                                                    <td >
-                                                        <input type="text" class="form-control rstCopy" id="article" oninput="copyState(id)">
-                                                    </td>
-                                                    <td >
-                                                        <input type="text" class="form-control rstCopy" id="color" oninput="copyState(id)">
-                                                    </td>
-                                                    <td >
-                                                        <!-- <select class="form-control"  id="fab" oninput="copyState(id)">
-                                                            {% for i in fab %}
-                                                            <option value={{i.fabrication}}>{{i.fabrication}}</option>
-                                                            {% endfor %}
-                                                            
-                                                          </select> -->
-                                                          {% for fab in form_items %}
-                                                        {{ fab.fabrication|attr:"class:form-control rstCopy"|attr:"id:fab"|attr:"oninput:copyState(id)" }}
-                                                         {% endfor %}
-                                                    </td>
-                                                    <td >
-                                                        <input type="text" class="form-control rstCopy" id="rate" oninput="copyState(id)">
-                                                    </td>
-                                                    <td >
-                                                        <input type="text" class="form-control rstCopy" id="ec" oninput="copyState(id)">
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <button type="button" class="btn btn-sm btn-success " id="copybutton" onclick="copyData()">Copy</button>
-                                                        <button type="button" class="btn btn-sm btn-danger ml-1 reset"  onclick="resetCopy()">Reset</button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
                         
                                     <div class=" card border border-dark mb-2 mt-2">
                                         <div class=" p-1 bg-form-header">
@@ -615,6 +566,7 @@
                                         <div class=" p-2 bg-form">
                                             <div class="row">
                                                 <div class="col-md-12 P-4">
+                                                   
                                                             <div class="table-responsive mt-2">
                                                                 <table class="table table-bordered table-hover table-sm" >
                                                                     <thead class="bg-table-header">
@@ -680,9 +632,7 @@
                                                                             {% for ft in form_items %}
                                                                             <tr>
                                                                                 <td class="text-center">
-                                                                                    <select class="form-contrls" id=0 onclick="gmtItems(id)">
-                                                                                        <option selected>---------</option>
-                                                                                    </select>
+                                                                                    {{ ft.gmt_items|attr:"class:form-controls"|attr:"onclick:test('none')" }}
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.article_number|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Article Number"}}
@@ -703,13 +653,13 @@
                                                                                     {{ ft.rate|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalRate(id)" }}
                                                                                 </td>
                                                                                 <td class="text-center">
-                                                                                    {{ ft.amount|attr:"class:form-control"|attr:"type:number"|attr:"onchange:totalAmt()"|attr:"readonly" }}
+                                                                                    {{ ft.amount|attr:"class:form-control"|attr:"type:number"|attr:"onchange:totalAmt()" }}
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.excess_cut|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalExc(id)" }}
                                                                                 </td>
                                                                                 <td class="text-center">
-                                                                                    {{ ft.plan_cut_qty|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalPCQt()"|attr:"readonly" }}
+                                                                                    {{ ft.plan_cut_qty|attr:"class:form-control"|attr:"type:number"|attr:"oninput:totalPCQt()" }}
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     {{ ft.status_active|attr:"class:form-control" }}
@@ -726,24 +676,23 @@
                                                                                    Total:
                                                                                 </td>
                                                                                 
-                                                                                <td colspan=""  >
-                                                                                    {{ po_form.order_quan|attr:"class:form-control"|attr:"type:number"|attr:"id:order_quan"|attr:"step:any"|attr:"oninput:pipeLine()"|attr:"readonly" }}
+                                                                                <td colspan="">
+                                                                                    {{ po_form.order_quan|attr:"class:form-control"|attr:"type:number"|attr:"id:order_quan"|attr:"step:any"|attr:"oninput:pipeLine()" }}
                                                                                   </td>
-                                                                                  <td colspan=""  > 
-                                                                                    {{ po_form.tt_rate|attr:"class:form-control"|attr:"type:number"|attr:"id:tt_rate"|attr:"step:any"|attr:"oninput:pipeLine()"|attr:"readonly" }}
+                                                                                  <td colspan=""> 
+                                                                                    {{ po_form.tt_rate|attr:"class:form-control"|attr:"type:number"|attr:"id:tt_rate"|attr:"step:any"|attr:"oninput:pipeLine()" }}
                                                                                   </td>
-                                                                                  <td colspan=""  >  
-                                                                                    {{ po_form.amt|attr:"class:form-control"|attr:"type:number"|attr:"id:amt"|attr:"step:any"|attr:"oninput:pipeLine()"|attr:"readonly" }}
+                                                                                  <td colspan="">  
+                                                                                    {{ po_form.amt|attr:"class:form-control"|attr:"type:number"|attr:"id:amt"|attr:"step:any"|attr:"oninput:pipeLine()" }}
                                                                                   </td>
-                                                                                  <td colspan=""  > 
-                                                                                    {{ po_form.exc|attr:"class:form-control"|attr:"type:number"|attr:"id:exc"|attr:"step:any"|attr:"oninput:pipeLine()"|attr:"readonly" }} 
+                                                                                  <td colspan=""> 
+                                                                                    {{ po_form.exc|attr:"class:form-control"|attr:"type:number"|attr:"id:exc"|attr:"step:any"|attr:"oninput:pipeLine()" }} 
                                                                                   </td>
-                                                                                  <td colspan=""  > 
-                                                                                    {{ po_form.plan_cut|attr:"class:form-control"|attr:"type:number"|attr:"id:quan"|attr:"step:any"|attr:"oninput:pipeLine()"|attr:"readonly" }} 
+                                                                                  <td colspan=""> 
+                                                                                    {{ po_form.plan_cut|attr:"class:form-control"|attr:"type:number"|attr:"id:quan"|attr:"step:any"|attr:"oninput:pipeLine()" }} 
                                                                                   </td>
                                                                                
                                                                             </tr>
-                                                                           
                                                                         </tfoot>
                                                                 </table>
                                                             </div>
@@ -818,17 +767,16 @@
                           
 
                           <div class="text-center">
-                                
                             <div class="container" style="visibility: hidden;" id="gif" >
                                 <figure>
-                                    <img class="loading-image" height="30px" src="{% static 'icon/box.gif' %}">
                                     <h6> <figcaption class="text-center text-danger loading-image font-weight-bolder">Please Wait For a Moment....</figcaption></h6>
                                 </figure>
                             </div>
-
                             <button type="submit"  class="btn btn-success btn-sm ml-3 submitPoBtn" style=" border-radius: 20px;" >Save</button>
-                            <button type="button" class="btn btn-dark btn-sm ml-3 res" onclick="reset()"  style="border-radius: 20px;">Reset</button>
+                            <button type="button" class="btn btn-dark btn-sm ml-3 res" onclick="reset()"  style=" border-radius: 20px;">Reset</button>
                         </div>   
+                        {{ po_form.po_packing.errors }}  
+                        {{ po_form.non_field_errors }}
                     </form>
                   </div>
     
@@ -895,15 +843,9 @@
  <script>
      var count = 1
      var gmtCount = 0
-     var copy = false
-     var dbl = false
-     var colorSize = 1
-     var gmtColorsizeId = 'id_color_size-V-gmt_items'
-
-     document.getElementById('copybutton').disabled = true
-
 
      var smvID = ['id_order_smv-V-set_ratio', 'id_order_smv-V-sew_smv_pcs', 'id_order_smv-V-cut_smv_pcs', 'id_order_smv-V-fin_smv_pcs', 'id_order_smv-V-print_days', 'id_order_smv-V-embro_days', 'id_order_smv-V-wash_days', 'id_order_smv-V-sp_work_days', 'id_order_smv-V-gmts_dyeing_days', 'id_order_smv-V-aop_days']
+     var gmt = []
 
      function ord2report(){
          open('/merchandise/add_po/', "_self")
@@ -911,9 +853,6 @@
 
      function update(){
         count++
-        if(dbl){
-            colorSize++
-        }
      }
 
     function negUpdate(){}
@@ -926,43 +865,22 @@
         document.getElementById(des).append(tr)
      }
 
-     function copyState(id){
-         var ids = ['article', 'color', 'rate', 'ec']
-         var state = []
-         for(var i = 0; i<4; i++){
-            if(document.getElementById(ids[i]).value != ''){
-                state.push(true)
-            }
+     function test(param){
+         var j = 0
+         state = true
+         if(param === 'none'){
+            j = gmtCount
+            console.log(param)
+         } else {
+             j = 0
          }
-         if(state.includes(true)){
-            copy = true
-            document.getElementById('copybutton').disabled = false
-         }else{
-            copy = false
-            document.getElementById('copybutton').disabled = true
-        }
+         for(var i = 1; i<=document.getElementById(`id_color_size-${j}-gmt_items`).children.length; i++){
+             if(gmt.includes(document.getElementById(`id_color_size-${j}-gmt_items`).children[i].innerHTML) == false){
+                document.getElementById(`id_color_size-${j}-gmt_items`).removeChild(document.getElementById(`id_color_size-${j}-gmt_items`).children[i])
+                gmtCount++
+             }
+         }
      }
-
-     function copyData(){
-        var articleId = 'id_color_size-V-article_number'.replaceAt(14, colorSize)
-        var colorId = 'id_color_size-V-color'.replaceAt(14, colorSize)
-        var rateId = 'id_color_size-V-rate'.replaceAt(14, colorSize)
-        var ecId = 'id_color_size-V-excess_cut'.replaceAt(14, colorSize)
-        var fabId = 'id_color_size-V-fabrication'.replaceAt(14, colorSize)
-        document.getElementsByClassName('btn btn-sm btn-warning mt-4')[1].click()
-        document.getElementById(articleId).value = document.getElementById('article').value
-        document.getElementById(colorId).value = document.getElementById('color').value
-        document.getElementById(rateId).value = document.getElementById('rate').value
-        document.getElementById(ecId).value = document.getElementById('ec').value
-        document.getElementById(fabId).value = document.getElementById('fab').value
-
-     }
-
-     function dblCount(){
-        dbl = true
-     }
-
-     function gmtItems(id){}
 
      function pipeLine(){
         var ord_quan = document.getElementById("order_quan").value
@@ -1004,7 +922,6 @@
         document.getElementById("id_po_job_no").value = '{{ job }}'
      }
     
-    // MAIN FETCHER SHOULD BE SEEN HERE ... @@########
     function mainFetcher(){
         var tr = document.createElement('tr')
        // tdMaker(tr, '1', 'hi')
@@ -1023,13 +940,18 @@
         tdMaker(tr, document.getElementById('id_status_active').options[document.getElementById('id_status_active').selectedIndex].text, 'hi')
         tdMaker(tr, document.getElementById('id_status_active').options[document.getElementById('id_status_active').selectedIndex].text, 'hi')
     }
-    // MAIN FETCHER SHOULD BE SEEN HERE ... @@########
-
     // FOR RESET FORM -- PO DETAILS
     function myFunction() {
         document.getElementsByClassName("poForm").reset();
     }
 
+    function gmtItms(){
+        for(var i = 0; i<count; i++){
+            if(gmt.includes(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text) == false){
+                gmt.push(document.getElementById(`id_order_smv-${i}-items`).options[document.getElementById(`id_order_smv-${i}-items`).selectedIndex].text)
+            }
+        }
+    }
 
     function rightID(id){
         var numPre = []
@@ -1048,9 +970,7 @@
     function autoRate(id){
         var oty = document.getElementById(`id_color_size-${id}-order_qty`).value
         var rate = document.getElementById(`id_color_size-${id}-rate`).value
-
         document.getElementById(`id_color_size-${id}-amount`).value = oty * rate
-
         totalAmt()
         pipeLine()
     }
@@ -1058,11 +978,8 @@
     function autoPCQT(id){
         var oty = parseFloat(document.getElementById(`id_color_size-${id}-order_qty`).value, 10)
         var exc = parseFloat(document.getElementById(`id_color_size-${id}-excess_cut`).value, 10)
-
         var mid = oty*exc/100
-
         document.getElementById(`id_color_size-${id}-plan_cut_qty`).value = oty + mid
-
         totalPCQt()
         pipeLine()
     }
@@ -1081,7 +998,6 @@
     document.getElementById('order_quan').value = subTotal
 
     autoRate(rightID(id))
-    autoPCQT(rightID(id))
     pipeLine()
   }
 
@@ -1102,7 +1018,6 @@
       }
     }
     //document.getElementById('tt_rate').value = x
-
     autoRate(rightID(id))
     pipeLine()
   }
@@ -1159,7 +1074,7 @@
     pipeLine()
   }
 
-//   For SMV calculation
+    //   For SMV calculation
   function total_ratio(id){
     var subTotal = 0;
     for(var i = 0; i<count; i++){
@@ -1271,14 +1186,11 @@ function totalSMV(id){
  
 </script>
 
-
 <script>
     $('#po_form').submit(function() {
         $('#gif').css('visibility', 'visible');
     });
 </script>
-
-
 
 <script type="text/javascript">
     $(function () {
@@ -1324,7 +1236,6 @@ function totalSMV(id){
 <script type="text/javascript"> 
 
    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
-  
    $('#po_form').submit(function(event){
         event.preventDefault();
         $form = $(this)
@@ -1350,7 +1261,6 @@ function totalSMV(id){
             processData: false
         });
     });
-    
     </script>
 
 <script type="text/javascript"> 
@@ -1481,19 +1391,6 @@ function totalSMV(id){
 
     
  
-</script>
-<script>
-    //For reset copy panel
-    $(document).ready(function() {
-        $(':input.rstCopy').each(function() {
-            $(this).attr('data-rstCopy', $(this).val());
-        });
-        $('button.reset').click(function() {
-            $(':input.rstCopy').each(function() {
-                $(this).val($(this).attr('data-rstCopy'));
-            });
-        });
-    });
 </script>
 
 

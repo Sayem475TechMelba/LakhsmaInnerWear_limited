@@ -168,7 +168,6 @@
                                           <th class=" text-center">Order No</th>
                                           <th class=" text-center">Style No.</th>
                                           <th class=" text-center" width="200px">Article No./ Kimball No.</th>
-
                                           <th class=" text-center">Destination</th>
                                           <th class=" text-center">Goods Qty</th>
                                           <th class=" text-center">Pc/Pack</th>
@@ -181,10 +180,8 @@
                                   <tbody class='inlineform' >
                                     {% for ft in form_item %}
                                     <tr>
-                                        
                                           <td class="text-center">
                                             {{ ft.item_desc|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Details"|attr:"rows:1"}}
-
                                           </td>
                                           <td class="text-center">
                                             {{ ft.order_no|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Order No."}}
@@ -223,7 +220,7 @@
                                           </td>
                                         </tr>
                                         {% endfor %}
-                                      </tbody>
+                                  </tbody>
                                   <tfoot class="font-weight-bold">
                                     <tr>
                                         <td colspan="2" class="text-right">
@@ -251,7 +248,7 @@
                                       <td colspan="3"class="text-center">
                                         {{ form.delivery_status|attr:"class:form-control"}}
                                       </td>
-                                  </tr>
+                                    </tr>
                                   </tfoot>
                               </table>
                           </div>
@@ -263,17 +260,6 @@
                           {{ form.remarks|attr:"class:form-control"|attr:"type:text"|attr:"rows:2"}}
                         </div>
                       </div>
-
-                        <!-- <div class="mb-5">
-                            <p class="font-weight-bold">Received The Above Quantity of Goods In Good Condition.</p>
-                        </div> -->
-
-                        <!-- <div class="d-flex justify-content-between mt-1 mb-1">
-                            <div class="p-2 bd-highlight font-weight-bold">Receiver's Signature</div>
-                            <div class="p-2 bd-highlight font-weight-bold">Security Rep. </div>
-                            <div class="p-2 bd-highlight font-weight-bold">Store Officer</div>
-                            <div class="p-2 bd-highlight font-weight-bold">Authorised Signature</div>
-                        </div> -->
                         
                         <div class="row mt-2">
                           <div class="col-md-6 col-lg-6">
@@ -366,8 +352,6 @@
     </div>
 </div>
 
-  
-
 {% endblock body %}
 
 {% block script %}
@@ -424,7 +408,7 @@
   }
 
 </script>
-  <script type="text/javascript">
+<script type="text/javascript">
   var time = new Date();
   var tt = time.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
   document.getElementById("currentTime").value = tt;

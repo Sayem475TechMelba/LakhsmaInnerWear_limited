@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% load widget_tweaks %}
 {% load static %}
-{% block title %} Lakhsma |Update Body Part Library {% endblock title %}
+{% block title %} Lakhsma |Update Groups Item Library {% endblock title %}
 {% block homeactive  %}active{% endblock homeactive  %}
 {% block css %}
 <style>
@@ -14,7 +14,7 @@
      {% include 'Merchandising/Library/library_header.html' %}
       <div class=" card border border-dark mb-2 mt-2">
         <div class=" p-2 bg-black">
-            <h5 class="text-uppercase text-center ">Update Body Part Library</h4>
+            <h5 class="text-uppercase text-center "> Update Group Library</h4>
         </div>
         <div class="container p-4">
             <div class="row">
@@ -24,16 +24,20 @@
                         {% csrf_token %}
 
                           <div class="form-group row ">
-                            <label for="body_part_name" class="col-sm-2 col-form-label ">Body Part Name</label>
+                            <label for="group_item_name" class="col-sm-2 col-form-label ">Groups Item Name</label>
                             <div class="col-sm-4 ">
-                              {{ form.body_part_name|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Body Part"}}
+                              {{ form.group_item_name|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Item Name"}}
                             </div>
-                            <label for="bp_Type" class="col-sm-2 col-form-label ">Body Type</label>
+                            <label for="group_item_uom" class="col-sm-2 col-form-label ">Groups Item UOM</label>
                             <div class="col-sm-4 ">
-                              {{ form.bp_Type|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Body Part Type"}}
+                              {{ form.group_item_uom|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Item UOM"}}
                             </div>
                           </div>
                           <div class="form-group row ">
+                            <label for="trims_type" class="col-sm-2 col-form-label ">Trim Type </label>
+                            <div class="col-sm-4 ">
+                              {{ form.trims_type|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Trims Type"}}
+                            </div>
                             <label for="insert_date" class="col-sm-2 col-form-label ">Inserted Date </label>
                             <div class="col-sm-4 ">
                               {{ form.insert_date|attr:"class:form-control"|attr:"type:datetime"|attr:"id:insert_date"}}
@@ -51,6 +55,7 @@
     
       </div>
 </div>
+
 
 
 {% endblock body %}

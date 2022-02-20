@@ -1,0 +1,131 @@
+{% extends "index.html" %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %} Lakhsma |Update Knitting Library {% endblock title %}
+{% block homeactive  %}active{% endblock homeactive  %}
+{% block css %}
+<style>
+</style>
+{% endblock css %}
+
+{% block body %}
+
+<div class="container">
+  <div class="">{% include 'Index/alerts.html' %}</div>
+   {% include 'Merchandising/Library/library_header.html' %}
+    <div class=" card border border-dark mb-2 mt-2">
+      <div class=" p-2 bg-black">
+          <h5 class="text-uppercase text-center ">Update Knitting Library</h4>
+      </div>
+      <div class="container p-4">
+          <div class="row">
+              <div class="col-md-12 P-4">
+              
+                  <form  method="post" class="needs-validation" action="" enctype="multipart/form-data">
+                      {% csrf_token %}
+
+                        <div class="form-group row ">
+                          <label for="company_name" class="col-sm-2 col-form-label ">Company Name</label>
+                          <div class="col-sm-4 ">
+                            {{ form.company_name|attr:"class:form-control"|attr:"Company Name"}}
+                          </div>
+                          <label for="body_part" class="col-sm-2 col-form-label ">Body Part </label>
+                          <div class="col-sm-4 ">
+                            {{ form.body_part|attr:"class:form-control"|attr:"type:text"|attr:"Body Part"}}
+                          </div>
+                        </div>
+                        <div class="form-group row ">
+                            <label for="const_and_comp" class="col-sm-2 col-form-label ">Construction & Composition</label>
+                            <div class="col-sm-4 ">
+                              {{ form.const_and_comp|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Construction & Composition"}}
+                            </div>
+                            <label for="gsm" class="col-sm-2 col-form-label "> Gsm/Weight</label> 
+                            <div class="col-sm-4 ">
+                                {{ form.gsm|attr:"class:form-control"|attr:"type:number"|attr:"placeholder:Gsm/Weight "}}
+                            </div>
+                        </div>
+                        <div class="form-group row ">
+                          <label for="insert_date" class="col-sm-2 col-form-label ">Inserted Date</label>
+                          <div class="col-sm-4 ">
+                            {{ form.insert_date|attr:"class:form-control"|attr:"type:datetime"}}
+                          </div>
+                          <label for="insert_date" class="col-sm-2 col-form-label ">USD Rate</label>
+                          <div class="col-sm-4 ">
+                            <input type=""  class="form-control" value="{{usd_price}}" id="us_doller" oninput="calc()" readonly>
+                          </div>
+                        </div>
+                        
+
+                       
+                        <div class="invoice-items mt-3">
+                          <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                              <table class="table table-bordered table-hover table-striped table-sm  " id="table_field">
+                                  <thead class="bg-info">
+                                      <tr>
+                                          <th class=" text-center" >Yarn Description</th>
+                                          <th class=" text-center" >Uom</th>
+                                          <th class=" text-center">In-House Rate(BDT)</th>
+                                          <th class=" text-center">USD</th>
+                                          <th class=" text-center" >Status</th>
+                                          
+                                          
+                                      </tr>
+                                  </thead>
+                                  <tbody class='inlineform' >
+                                    <tr>
+                                        <td class="text-center">
+                                          {{ form.yarn_desc|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Yarn Description"}}
+                                        </td>
+                                        <td class="text-center">
+                                          {{ form.uom|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Uom"}}
+                                        </td>
+                                        <td class="text-center">
+                                          {{ form.inhouse_rate|attr:"class:form-control"|attr:"type:number"|attr:"id:bdt"|attr:"oninput=calc();"}}
+                                        </td>
+                                        <td class="text-center">
+                                          {{ form.bdt_to_usd|attr:"class:form-control"|attr:"type:number"|attr:"id:usd"|attr:"oninput=calc();"}}
+                                        </td>
+                                        <td class="text-center">
+                                          {{ form.status|attr:"class:form-control"}}
+                                        </td>
+                                        
+                                        
+                                    </tr>
+                                  
+                                </tbody>
+                              </table>
+                          </div>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="btn btn-success btn-sm">Update </button>
+                        </div>
+                  </form>
+                </div>
+          </div>
+            
+                    
+      </div>
+  
+    </div>
+</div>
+
+
+{% endblock body %}
+
+{% block script %}
+<script type="text/javascript">
+  function calc(){
+    var tk = parseFloat(document.getElementById("bdt").value, 10);
+    var dollar = parseFloat(document.getElementById("us_doller").value);
+
+    console.log( dollar)
+    var con_usd = (tk/dollar)
+    document.getElementById("usd").value = con_usd.toFixed(2);
+  }
+   
+ 
+</script>
+ 
+{% endblock script %}
+

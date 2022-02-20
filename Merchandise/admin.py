@@ -5,6 +5,49 @@ from django.utils.safestring import mark_safe
 import csv
 import datetime
 from django.http import HttpResponse
+from django.contrib.admin.models import LogEntry, DELETION
+from django.utils.html import escape
+
+
+
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    
+    # to have a date-based drilldown navigation in the admin page
+    date_hierarchy = 'action_time'
+
+    # to filter the resultes by users, content types and action flags
+    list_filter = [
+        'user',
+        'content_type',
+        'action_flag'
+    ]
+
+    # when searching the user will be able to search in both object_repr and change_message
+    search_fields = [
+        'object_repr',
+        'change_message'
+    ]
+
+    list_display = [
+        'action_time',
+        'user',
+        'content_type',
+        'object_link',
+        'action_flag',
+    ]
+    def object_link(self, obj):
+        if obj.action_flag == DELETION:
+            link = escape(obj.object_repr)
+        else:
+            ct = obj.content_type
+            link = '<a href="%s">%s</a>' % (
+                reverse('admin:%s_%s_change' % (ct.app_label, ct.model), args=[obj.object_id]),
+                escape(obj.object_repr),
+            )
+        return mark_safe(link)
+    object_link.admin_order_field = "object_repr"
+    object_link.short_description = "object"
 
 def export_to_csv(modeladmin, request, queryset):
     opts = modeladmin.model._meta
@@ -120,7 +163,19 @@ admin.site.register(LibraryProduct)
 admin.site.register(ColorSizeItems)
 admin.site.register(SmvItems)
 admin.site.register(BudgetPreCost)
-admin.site.register(Grey_Cons_Items)
-admin.site.register(Grey_Cons)
-admin.site.register(Fabric_Inline_Item)
 admin.site.register(FabricCost)
+admin.site.register(Fabric_Inline_Item)
+admin.site.register(YarnCost)
+admin.site.register(Yarn_Inline_Item)
+admin.site.register(ConversionCost)
+admin.site.register(Conversion_Inline)
+admin.site.register(Grey_Cons)
+admin.site.register(Grey_Cons_Items)
+admin.site.register(ColorContrast)
+admin.site.register(ColorContrastItems)
+admin.site.register(LibraryPcsQty)
+admin.site.register(LibraryDoller)
+admin.site.register(LibraryGroupsItem)
+admin.site.register(Care_Level)
+admin.site.register(Care_level_Items)
+

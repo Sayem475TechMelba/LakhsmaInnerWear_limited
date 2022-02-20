@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% load widget_tweaks %}
 {% load static %}
-{% block title %} Lakhsma |Update Body Part Library {% endblock title %}
+{% block title %} Lakhsma |Update Fabric Process Library {% endblock title %}
 {% block homeactive  %}active{% endblock homeactive  %}
 {% block css %}
 <style>
@@ -14,7 +14,7 @@
      {% include 'Merchandising/Library/library_header.html' %}
       <div class=" card border border-dark mb-2 mt-2">
         <div class=" p-2 bg-black">
-            <h5 class="text-uppercase text-center ">Update Body Part Library</h4>
+            <h5 class="text-uppercase text-center "> Process Library</h4>
         </div>
         <div class="container p-4">
             <div class="row">
@@ -24,13 +24,9 @@
                         {% csrf_token %}
 
                           <div class="form-group row ">
-                            <label for="body_part_name" class="col-sm-2 col-form-label ">Body Part Name</label>
+                            <label for="process_name" class="col-sm-2 col-form-label ">Update Process Name</label>
                             <div class="col-sm-4 ">
-                              {{ form.body_part_name|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Body Part"}}
-                            </div>
-                            <label for="bp_Type" class="col-sm-2 col-form-label ">Body Type</label>
-                            <div class="col-sm-4 ">
-                              {{ form.bp_Type|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Body Part Type"}}
+                              {{ form.process_name|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Process Name"}}
                             </div>
                           </div>
                           <div class="form-group row ">
@@ -46,7 +42,7 @@
                     </form>
                   </div>
             </div>
-              
+             
         </div>
     
       </div>

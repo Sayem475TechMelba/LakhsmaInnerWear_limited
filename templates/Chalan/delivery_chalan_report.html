@@ -6,7 +6,8 @@
 
 {% block css %}
 <style>
-   
+
+  
     tfoot {
       display:table-header-group;
     }
@@ -69,7 +70,7 @@
         </div>
         <div class="container ">
           <div class="d-flex justify-content-center table-responsive">
-            <div class="p-2">
+            <div class="">
               <table class="mb-1 table-sm  table-responsive-sm ">
                 <thead>
                     <td width="20%">
@@ -103,8 +104,8 @@
   <div class="container-fluid">
       <!-- /.card-header -->
       <div class="card-body table-responsive ">
-        <table id="challan_report" class="table table-hover   table-bordered table-striped  table-sm display">
-          <thead class=' bg-info'>
+        <table id="challan_report" class="table table-hover text-center table-bordered table-striped table-info table-sm display">
+          <thead class="bg-info">
             <tr>
               <th>SL.</th>
               <th>Factory Name</th>
@@ -142,7 +143,7 @@
              <th></th>
             </tr>
           </tfoot>
-          <tbody>
+          <tbody >
             {% for i in chalan %}
             <tr>
 
@@ -195,8 +196,6 @@
              <th id="shipCart_qty" class="bg-yel"></th>
              <th id="total_CBM" class="bg-yel"></th>
              <th colspan="5" ></th>
-
-             
             </tr>
           </tfoot>
         
@@ -215,11 +214,12 @@
     // Setup - add a text input to each footer cell
     $('#challan_report #chalanSearch th').each( function () {
         var title = $(this).text();
-        $(this).html( '<input type="text" class="form-control"  placeholder="Search" />' );
+        $(this).html( '<input type="text" class="search-form-control"  placeholder="Search" />' );
     } );
    
     // DataTable
     var table = $('#challan_report').DataTable({
+      
       drawCallback: function(){
         const shipqty = this.api().column(7,{search:'applied'}).data().toArray().reduce((total,shipqty) => total+=Number(shipqty.replace(/[^0-9\.]/g,'')),0);
         $('#shipqty').text(` ${(shipqty)}`);
@@ -230,11 +230,43 @@
         const total_CBM = this.api().column(9,{search:'applied'}).data().toArray().reduce((total,total_CBM) => total+=Number(total_CBM.replace(/[^0-9\.]/g,'')),0);
         $('#total_CBM').text(` ${(total_CBM)}`);
       },
-
-      "lengthMenu": [[500,1000,-1], [500,1000,"All"]],
+      dom: 'Bfrtip',
+      buttons: [
+        {
+            extend: 'copyHtml5',
+            exportOptions: {
+              columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+            }
+        },
+        {
+            extend: 'excelHtml5',
+            exportOptions: {
+              columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+            }
+        },
+        {
+            extend: 'csvHtml5',
+            exportOptions: {
+              columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+            }
+        },
+        {
+            extend: 'pdfHtml5',
+            exportOptions: {
+                columns: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
+            }
+        },
+        'colvis'
+      ],
+      "targets": 'no-sort',
+      "bSort": false,
+      "bPaginate": false,
+      "ordering": false,
+      "info":     false,
       "scrollY": 470,
       "scrollX": true,
-        initComplete: function () {
+      
+      initComplete: function () {
             // Apply the search
             this.api().columns().every( function () {
                 var that = this;
@@ -252,19 +284,6 @@
 } );
 </script>
 
-<script>
-  function myFunction() {
-    document.getElementById("getDate").value = "Nov";
-  }
-</script>
-
-<script>
-  function copyTextValue() {
-    var text1 = document.getElementById("getYear").value;
-    var x = document.getElementById("getDate").value = text1+' ';
-    document.getElementById("helloId").value = x;
-  }
-</script>
 
   
 

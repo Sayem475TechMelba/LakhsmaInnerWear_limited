@@ -750,19 +750,19 @@
                                                     <td></td>
                                                     </td>
                                                     <td>  
-                                                        <input type="number" class="form-control">
+                                                        <input type="number" id="id_total_grey_cons" class="form-control">
                                                     </td>
                                                     <td>  
-                                                        <input type="number" class="form-control">
+                                                        <input type="number" id="id_total_rate" class="form-control">
                                                     </td>
                                                     <td>  
-                                                        <input type="number" class="form-control">
+                                                        <input type="number" id="id_total_amt" class="form-control">
                                                     </td>
                                                     <td>  
-                                                        <input type="number" class="form-control">
+                                                        <input type="number" id="id_total_total_qty" class="form-control">
                                                     </td>
                                                     <td>  
-                                                        <input type="number" class="form-control">
+                                                        <input type="number" id="id_total_total_amt" class="form-control">
                                                     </td>
                                                 </tr>
                                               
@@ -784,7 +784,7 @@
                                 <h5 class="mb-0">
                                 <button class="btn btn-link collapsed text-dark font-weight-bold" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     + Yarn Cost
-                                </button><span class="text-danger font-weight-bold" style="margin-left: 50%;">Approved</span>
+                                </button><span id="demo"></span><span class="text-danger font-weight-bold" style="margin-left: 50%;">Approved</span>
                                 </h5>
                             </div>
                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
@@ -2841,6 +2841,78 @@
         document.getElementById(type).value = total
     }
 
+    function totalAvgGreyCons(){
+        var subTotal = 0;
+        for(var i = 0; i<count; i++){
+            try{
+                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-avg_grey_cons`).value, 10)
+                subTotal += sub
+            }
+            catch(err){
+                continue
+            }
+        }
+        document.getElementById("id_total_grey_cons").value = subTotal
+        document.getElementById("demo").innerText = subTotal
+    }
+
+    function totalRate(){
+        var subTotal = 0;
+        for(var i = 0; i<count; i++){
+            try{
+                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-rate`).value, 10)
+                subTotal += sub
+            }
+            catch(err){
+                continue
+            }
+        }
+        document.getElementById("id_total_rate").value = subTotal
+    }
+
+    function TotalAmt(){
+        var subTotal = 0;
+        for(var i = 0; i<count; i++){
+            try{
+                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-amount`).value, 10)
+                subTotal += sub
+            }
+            catch(err){
+                continue
+            }
+        }
+        document.getElementById("id_total_amt").value = subTotal
+    }
+
+    function totalTotalOty(){
+        var subTotal = 0;
+        for(var i = 0; i<count; i++){
+            try{
+                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-total_quantity`).value, 10)
+                subTotal += sub
+            }
+            catch(err){
+                continue
+            }
+        }
+        document.getElementById("id_total_total_qty").value = subTotal
+    }
+
+    function totalTotalAmt(){
+        var subTotal = 0;
+        for(var i = 0; i<count; i++){
+            try{
+                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-total_amount`).value, 10)
+                subTotal += sub
+            }
+            catch(err){
+                continue
+            }
+        }
+        document.getElementById("id_total_total_amt").value = subTotal
+    }
+
+
     function avg(type){
         var total = 0
         for(var i = 0; i<parseInt(color_count); i++){
@@ -2863,6 +2935,11 @@
         document.getElementById(`id_fabric_inline-V-amount`.replaceAt(17, working_id)).value = document.getElementById('avgAmt').value
         document.getElementById(`id_fabric_inline-V-total_quantity`.replaceAt(17, working_id)).value = document.getElementById('avgQty').value
         document.getElementById(`id_fabric_inline-V-total_amount`.replaceAt(17, working_id)).value = document.getElementById('avgmasTtAmt').value
+        totalAvgGreyCons()
+        totalRate()
+        TotalAmt()
+        totalTotalOty()
+        totalTotalAmt()
     }
 
     function passID(id){

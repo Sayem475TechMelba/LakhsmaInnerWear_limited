@@ -2655,7 +2655,7 @@
     var count = 1
     var modalCount = 0
     var wModal = []
-    var count = []
+    var countArr = []
     var fCout_g = 0
     var color_count = '{{ color_count }}'
     var conColorCount = '{{ con_color }}'
@@ -2684,21 +2684,14 @@
      }
     var avg_Consump = {
         'avgCons':'id_cl_tt_cons_',
-    }
-     
-    var yarnData = {
-        'count': undefined,
-        'comp': undefined,
-        'rate': undefined,
-        'amt': undefined
-    }
-   
+    }  
     var totalQtyCount = 0
     for(var i = 0; i<color_count; i++){
         totalQtyCount += parseFloat(document.getElementById(`id_cl_order_qty_${i+1}`).value, 10)
     }
     var totalFinish = 0
     var averageFinishCons  = 0
+    var yarnData = {}
 
     function update(){
         count++
@@ -2912,6 +2905,13 @@
     }
 
     function parsing(string){
+        var yarnDataTemp = {
+            'count': undefined,
+            'comp': undefined,
+            'rate': undefined,
+            'amt': undefined
+        }
+        var hash = 0
         var temp = ''
         var state = false
         for(var i = 0; i<string.length; i++){
@@ -2921,14 +2921,26 @@
         }
         for(var i = 0; i<temp.length; i++){
             if(temp[i] == "+"){
-                count.push(rightID(temp.substr(0, i)))
-                count.push(rightID(temp.substr(i, temp.length)))
+                countArr.push(rightID(temp.substr(0, i)))
+                yarnDataTemp1 = Object.assign({}, yarnDataTemp)
+                yarnDataTemp1['count'] = rightID(temp.substr(0, i))
+                yarnData[hash] = yarnDataTemp1
+                hash++
+                countArr.push(rightID(temp.substr(i, temp.length)))
+                yarnDataTemp2 = Object.assign({}, yarnDataTemp)
+                yarnDataTemp2['count'] = rightID(temp.substr(i, temp.length))
+                yarnData[hash] = yarnDataTemp2
+                hash++
                 state = true
                 break
             }
         }
         if(state == false){
-            count.push(rightID(temp))
+            countArr.push(rightID(temp))
+            yarnDataTemp1 = Object.assign({}, yarnDataTemp)
+            yarnDataTemp1['count'] = rightID(temp)
+            yarnData[hash] = yarnDataTemp1
+            hash++
         }
     }
     // FABRIC COUNTER FOR YARN
@@ -2937,8 +2949,10 @@
         for(var i = 0; i<count; i++){
             if(document.getElementById('id_fabric_inline-V-fabric_desc'.replaceAt(17, i)).value.includes('+')){
                 fCout += 2
+                parsing(document.getElementById('id_fabric_inline-V-fabric_desc'.replaceAt(17, i)).value)
             }else{
                 fCout++
+                parsing(document.getElementById('id_fabric_inline-V-fabric_desc'.replaceAt(17, i)).value)
             }
         }
         fCout_g = fCout
@@ -2948,6 +2962,10 @@
         febCount()
         for(var i = 0; i<fCout_g-1; i++){
             document.getElementsByClassName('btn btn-sm btn-warning mt-4 mb-3')[1].click()
+            document.getElementById(`id_yarn_inline-${i+1}-pct`).value = 100
+        }
+        for(var i = 0; i<Object.keys(yarnData).length; i++){
+            document.getElementById(`id_yarn_inline-${i}-count`).value = yarnData[i].count
         }
     }
 

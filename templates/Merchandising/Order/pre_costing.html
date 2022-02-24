@@ -2655,7 +2655,6 @@
     var count = 1
     var modalCount = 0
     var wModal = []
-    var countArr = []
     var fCout_g = 0
     var color_count = '{{ color_count }}'
     var conColorCount = '{{ con_color }}'
@@ -2812,7 +2811,7 @@
 
     function totalAmt(id){
         document.getElementById(`id_tt_amt_${rightID(id)}`).value = (parseFloat(document.getElementById(`id_rate_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_tt_qty_${rightID(id)}`).value, 10)).toFixed(2)
-
+        greyCons(id)
         total('ttRate')
         avg('avgRate')
         pipeline()
@@ -2904,7 +2903,7 @@
         document.getElementById(`id_charge_${rightID(id)}`).value = document.getElementById(`dyeing-${rightID(id)}`).children[8].innerText
     }
 
-    function parsing(string){
+    function parsing(string, id){
         var yarnDataTemp = {
             'count': undefined,
             'comp': undefined,
@@ -2921,13 +2920,15 @@
         }
         for(var i = 0; i<temp.length; i++){
             if(temp[i] == "+"){
-                countArr.push(rightID(temp.substr(0, i)))
                 yarnDataTemp1 = Object.assign({}, yarnDataTemp)
                 yarnDataTemp1['count'] = rightID(temp.substr(0, i))
+                yarnDataTemp1['rate'] = document.getElementById(`id_fabric_inline-${id}-rate`).value
+                yarnDataTemp1['amt'] = document.getElementById(`id_fabric_inline-${id}-amount`).value
                 yarnData[hash] = yarnDataTemp1
                 hash++
-                countArr.push(rightID(temp.substr(i, temp.length)))
                 yarnDataTemp2 = Object.assign({}, yarnDataTemp)
+                yarnDataTemp2['rate'] = document.getElementById(`id_fabric_inline-${id}-rate`).value
+                yarnDataTemp2['amt'] = document.getElementById(`id_fabric_inline-${id}-amount`).value
                 yarnDataTemp2['count'] = rightID(temp.substr(i, temp.length))
                 yarnData[hash] = yarnDataTemp2
                 hash++
@@ -2936,9 +2937,10 @@
             }
         }
         if(state == false){
-            countArr.push(rightID(temp))
             yarnDataTemp1 = Object.assign({}, yarnDataTemp)
             yarnDataTemp1['count'] = rightID(temp)
+            yarnDataTemp1['rate'] = document.getElementById(`id_fabric_inline-${id}-rate`).value
+            yarnDataTemp1['amt'] = document.getElementById(`id_fabric_inline-${id}-amount`).value
             yarnData[hash] = yarnDataTemp1
             hash++
         }
@@ -2947,12 +2949,12 @@
     function febCount(){
         fCout = 0
         for(var i = 0; i<count; i++){
-            if(document.getElementById('id_fabric_inline-V-fabric_desc'.replaceAt(17, i)).value.includes('+')){
+            if(document.getElementById(`id_fabric_inline-${i}-fabric_desc`).value.includes('+')){
                 fCout += 2
-                parsing(document.getElementById('id_fabric_inline-V-fabric_desc'.replaceAt(17, i)).value)
+                parsing(document.getElementById(`id_fabric_inline-${i}-fabric_desc`).value, i)
             }else{
                 fCout++
-                parsing(document.getElementById('id_fabric_inline-V-fabric_desc'.replaceAt(17, i)).value)
+                parsing(document.getElementById(`id_fabric_inline-${i}-fabric_desc`).value, i)
             }
         }
         fCout_g = fCout
@@ -2966,6 +2968,8 @@
         }
         for(var i = 0; i<Object.keys(yarnData).length; i++){
             document.getElementById(`id_yarn_inline-${i}-count`).value = yarnData[i].count
+            document.getElementById(`id_yarn_inline-${i}-rate`).value = yarnData[i].rate
+            document.getElementById(`id_yarn_inline-${i}-amount`).value = yarnData[i].amt
         }
     }
 

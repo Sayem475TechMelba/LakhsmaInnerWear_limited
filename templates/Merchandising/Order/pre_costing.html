@@ -2704,6 +2704,7 @@
     }
 
     function passColor(id){
+        passID(id)
         document.getElementById('__inline_index').value = count
         var a = document.getElementById('colorSizeInline')
         if(rightID(id) != 0){
@@ -2784,21 +2785,21 @@
         }
         if(document.getElementById('exampleRadios4').checked == true){
             for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
-                if(document.getElementsByClassName("base_tr")[i].childNodes[5].childNodes[0].value == document.getElementById(`id_size_${rightID(id)}`).value){
+                if(document.getElementsByClassName("base_tr")[i].childNodes[7].childNodes[0].value == document.getElementById(`id_size_${rightID(id)}`).value){
                     document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
                 }
             } 
         }
         if(document.getElementById('exampleRadios2').checked == true){
             for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
-                if(document.getElementsByClassName("base_tr")[i].childNodes[5].childNodes[0].value == document.getElementById(`id_size_${rightID(id)}`).value || document.getElementsByClassName("base_tr")[i].childNodes[5].childNodes[0].value == document.getElementById(`id_color_${rightID(id)}`).value){
+                if(document.getElementsByClassName("base_tr")[i].childNodes[7].childNodes[0].value == document.getElementById(`id_size_${rightID(id)}`).value || document.getElementsByClassName("base_tr")[i].childNodes[5].childNodes[0].value == document.getElementById(`id_color_${rightID(id)}`).value){
                     document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
                 }
             }
         }
         if(document.getElementById('exampleRadios3').checked == true){
             for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
-                if(document.getElementsByClassName("base_tr")[i].childNodes[5].childNodes[0].value == document.getElementById(`id_po_${rightID(id)}`).value){
+                if(document.getElementsByClassName("base_tr")[i].childNodes[3].childNodes[0].value == document.getElementById(`id_po_${rightID(id)}`).value){
                     document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
                 }
             }

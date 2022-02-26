@@ -230,6 +230,30 @@ class LibTrimSourceForm(forms.ModelForm):
     class Meta:
         model = LibraryTrimSource
         fields = '__all__'
+
+######## Embellishments Cost Library Form ########
+
+class LibEmbCostNameForm(forms.ModelForm):
+    class Meta:
+        model = LibraryEmbCostName
+        fields = '__all__'
+
+class LibyEmbCostTypeForm(forms.ModelForm):
+    class Meta:
+        model = LibraryEmbCostType
+        fields = '__all__'
+
+######## Wash Cost Library Form ########
+
+class LibWashCost_NameForm(forms.ModelForm):
+    class Meta:
+        model = LibraryWash_CostName
+        fields = '__all__'
+
+class LibywashCost_TypeForm(forms.ModelForm):
+    class Meta:
+        model = LibraryWash_CostType
+        fields = '__all__'
 ############### ALL Merchandising Main Table Forms #############
 
 class OrderEntryForm(forms.ModelForm):
@@ -311,4 +335,24 @@ class TrimCostForm(forms.ModelForm):
 class TrimItemsForm(forms.ModelForm):
     class Meta:
         model = TrimCostItems
+        fields = '__all__' 
+
+class EmbellishmentCostForm(forms.ModelForm):
+    class Meta:
+        model = EmbellishmentCost
+        exclude = ['inserted_by', 'b_job_no']
+
+class EmbellishmentItemsForm(forms.ModelForm):
+    class Meta:
+        model = EmbellishmentCostItem
+        fields = '__all__' 
+
+class WashCostForm(forms.ModelForm):
+    class Meta:
+        model = WashCost
+        exclude = ['inserted_by', 'b_job_no']
+
+class WashCostItemsForm(forms.ModelForm):
+    class Meta:
+        model = WashCost_Items
         fields = '__all__' 

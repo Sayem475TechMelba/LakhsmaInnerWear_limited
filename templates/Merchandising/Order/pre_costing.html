@@ -46,12 +46,17 @@
     .dzn{display: none;}
     .pcs{ display: none; }
     .cone{ display: none; }
+    .roll{ display: none; }
+    .meter{ display: none; }
+    .yard{ display: none; }
+    .gross{ display: none; }
+    .gg{ display: none; }
 
 </style>
 {% endblock css %}
 
 {% block body %}
-<!-- BUDGET PRE-COSTING FORM  -->
+    <!-- BUDGET PRE-COSTING FORM  -->
     <div class="container">
         <div class="">{% include 'Index/alerts.html' %}</div>
         <div class="d-flex">
@@ -64,7 +69,7 @@
         </div>
         <div class=" card border border-dark mb-2 mt-2">
         <div class=" p-2  bg-form-header">
-            <h5 class="text-uppercase text-center ">pre-costing form</h4>
+            <h5 class="text-uppercase text-center ">Budget Pre Costing</h4>
         </div>
         <div class="container-fluid p-4 bg-form">
             <div class="row">
@@ -310,8 +315,8 @@
                         <table class="table table-bordered table-sm table-responsive-sm" >
                             <thead>
                                 <tr class="bg-info"> 
-                                    <th class="text-center bg-form-header"  colspan="7">
-                                        <h6>TNA process manual</h6>
+                                    <th class="text-center bg-form-header"  colspan="3">
+                                        <h6>Cost Breakdown</h6>
                                     </th>
                                 </tr>
                                 <tr class="bg-table-header">
@@ -733,45 +738,11 @@
                                                 {% endfor %}
                                             </tbody>
                                             <input type="hidden" name="inline_count" id="__inline_index">
-                                            <tfoot class="font-weight-bold">
-                                                <tr>
-                                                    <td colspan="3" class="text-right">
-                                                    Total:
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    </td>
-                                                    <td>  
-                                                        <input type="number" id="id_total_grey_cons" class="form-control">
-                                                    </td>
-                                                    <td>  
-                                                        <input type="number" id="id_total_rate" class="form-control">
-                                                    </td>
-                                                    <td>  
-                                                        <input type="number" id="id_total_amt" class="form-control">
-                                                    </td>
-                                                    <td>  
-                                                        <input type="number" id="id_total_total_qty" class="form-control">
-                                                    </td>
-                                                    <td>  
-                                                        <input type="number" id="id_total_total_amt" class="form-control">
-                                                    </td>
-                                                </tr>
-                                              
-                                        </tfoot>
                                             
                                         </table>
                                     </div>
                                     <div>
-                                        <button type="submit" class="btn btn-success btn-sm">Save</button>
+                                        <button type="submit" onclick="getYarn()" class="btn btn-success btn-sm">Save</button>
                                     </div>
                                     </form>
                                     
@@ -784,7 +755,7 @@
                                 <h5 class="mb-0">
                                 <button class="btn btn-link collapsed text-dark font-weight-bold" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     + Yarn Cost
-                                </button><span id="demo"></span><span class="text-danger font-weight-bold" style="margin-left: 50%;">Approved</span>
+                                </button><span class="text-danger font-weight-bold" style="margin-left: 50%;">Approved</span>
                                 </h5>
                             </div>
                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
@@ -976,8 +947,8 @@
                         </div>
                     </div>
                 </div>
-               <!-- TRIM COST  -->
-               <div class="container-fluid" id="trimHide">
+                <!-- TRIM COST  -->
+                <div class="container-fluid" id="trimHide">
                 <div id="accordion">
                     <div class="card inpSize">
                     <div class="card-header" id="trimCollapse">
@@ -1049,21 +1020,21 @@
                                                 {{ tc.cons_uom|attr:"class:form-control"|attr:"onclick:passID(id)"}}
                                             </td>
                                             <td >
-                                                {{ tc.cons_unit_gmts|attr:"class:form-control"|attr:"type:number"|attr:"data-target:#careLabelInline"|attr:"data-toggle:modal" }}
+                                                {{ tc.cons_unit_gmts|attr:"class:form-control"|attr:"type:number"|attr:"data-target:#careLabelInline"|attr:"data-toggle:modal"|attr:"onclick:passTrim(id)" }}
             
                                             </td>
                                             <td >
-                                                {{ tc.rate|attr:"class:form-control"|attr:"type:number" }}
+                                                {{ tc.rate|attr:"class:form-control"|attr:"type:number"|attr:"readonly" }}
             
                                             </td>
                                             <td >
-                                                {{ tc.amount|attr:"class:form-control"|attr:"type:number" }}
+                                                {{ tc.amount|attr:"class:form-control"|attr:"type:number"|attr:"readonly" }}
                                             </td>
                                             <td >
-                                                {{ tc.tt_qty|attr:"class:form-control"|attr:"type:number" }}
+                                                {{ tc.tt_qty|attr:"class:form-control"|attr:"type:number"|attr:"readonly" }}
                                             </td>
                                             <td >
-                                                {{ tc.tt_amt|attr:"class:form-control"|attr:"type:number" }}
+                                                {{ tc.tt_amt|attr:"class:form-control"|attr:"type:number"|attr:"readonly" }}
                                             </td>
                                         
                                             <td >
@@ -1077,7 +1048,7 @@
                                         </tr>
                                         {% endfor %}
                                     </tbody>
-                                    
+                                    <input type="hidden" name="trim_count" id="__inline_index">
                                     <tfoot class="font-weight-bold">
                                         <tr>
                                             <td colspan="8" class="text-right">
@@ -1085,20 +1056,20 @@
                                             </td>
                                             
                                             <td >  
-                                                {{ trim_form.tt_cons_unit|attr:"class:form-control"|attr:"type:number" }}
+                                                {{ trim_form.tt_cons_unit|attr:"class:form-control"|attr:"type:number"|attr:"readonly" }}
                                             </td>
                                             <td >  
-                                                {{ trim_form.tt_rate|attr:"class:form-control"|attr:"type:number" }}
+                                                {{ trim_form.tt_rate|attr:"class:form-control"|attr:"type:number"|attr:"readonly" }}
                                             </td>
                                         
                                             <td>  
-                                                {{ trim_form.tt_sub_amount|attr:"class:form-control"|attr:"type:number" }}
+                                                {{ trim_form.tt_sub_amount|attr:"class:form-control"|attr:"type:number"|attr:"readonly" }}
                                             </td>
                                             <td>  
-                                                {{ trim_form.tt_grand_quantity|attr:"class:form-control"|attr:"type:number" }}
+                                                {{ trim_form.tt_grand_quantity|attr:"class:form-control"|attr:"type:number"|attr:"readonly" }}
                                             </td>
                                             <td >  
-                                                {{ trim_form.tt_grand_amount|attr:"class:form-control"|attr:"type:number" }}
+                                                {{ trim_form.tt_grand_amount|attr:"class:form-control"|attr:"type:number"|attr:"readonly" }}
                                             </td>
                                         </tr>
                                     </tfoot>
@@ -1113,7 +1084,7 @@
                     </div>
                     </div>
                 </div>
-            </div>
+                </div>
                 <!-- EMBLLISHMENT COST  -->
                 <div class="container-fluid" id="embllishHide">
                     <div id="accordion">
@@ -1128,8 +1099,11 @@
                     
                         <div id="collapseEmb" class="collapse show" aria-labelledby="EmbCollapse" data-parent="#accordion">
                             <div class="card-body">
+                               <form method="post" action="{% url 'pre_costing' %}" enctype="multipart/form-data" id="emb_form">
+                                    {% csrf_token %}
+                                    <input hidden name="_task" value="embl_form">
                                 <div class="table-responsive" >
-                                    <table class="table table-bordered table-hover table-sm table-responsive-sm" >
+                                    <table class="table table-bordered table-hover table-sm table-responsive-sm add_embl" >
                                         <thead class="bg-info">
                                             <tr>
                                                 <th class="text-center"> Name </th>
@@ -1141,84 +1115,72 @@
                                                 <th class="text-center" > Rate</th>
                                                 <th class="text-center" > Amount</th>
                                                 <th class="text-center" > Status</th>
-                                                <th class="text-center" width="90px" > </th>
+                                                <th class="text-center" width="90px" >Action </th>
                                             </tr>
                                         </thead>
-                                        <tbody >
+                                        {{ embl_form_item.management_form }}
+                                      <tbody class="inline_embl_form">
+                                        {% for ec in embl_form_item %}
                                             <tr >
                                                 <td >
-                                                    <select name="" class="form-control" >
-                                                        <option value="" disabled selected>Select</option>
-                                                        <option>Printing</option>
-                                                        <option>Others</option>
-                                                    </select>
+                                                    {{ ec.cost_name|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Browse"|attr:"data-target:#embNameModal"|attr:"data-toggle:modal"|attr:"onclick:passID(id)" }}
                                                 </td>
                                                 <td >
-                                                    <select name="" class="form-control" >
-                                                        <option value="" disabled selected>Select</option>
-                                                        <option>Dzn</option>
-                                                        <option>Pcs</option>
-                                                    </select>
+                                                    {{ ec.type_name|attr:"class:form-control"|attr:"type:text" }}
                                                 </td>
                                                 <td >
-                                                    <select name="" class="form-control" >
-                                                        <option value="" disabled selected>Select</option>
-                                                        <option>Dzn</option>
-                                                        <option>Pcs</option>
-                                                    </select>
+                                                    {{ ec.body_part|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Browse"|attr:"data-target:#emb_bodypart"|attr:"data-toggle:modal"|attr:"onclick:passID(id)"  }}
                                                 </td>
                                                 <td >
-                                                    <input type="text" class="form-control" placeholder="Browse" data-toggle="modal" data-target="#country">
+                                                    {{ ec.country|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Browse"|attr:"data-target:#embCountryModal"|attr:"data-toggle:modal"|attr:"onclick:passID(id)"  }}
                                                 </td>
                                                 <td >
-                                                    <input type="text" class="form-control" placeholder="Write">
+                                                    {{ ec.emb_supplier|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Write" }}
                                                 </td>
                                                 <td >
-                                                    <input type="text" class="form-control">
+                                                    {{ ec.cons_dzn|attr:"class:form-control"|attr:"type:number"|attr:"data-target:#embConsumpInline"|attr:"data-toggle:modal"|attr:"onclick:passEmbelishment(id)"  }}
                                                 </td>
                                                 <td >
-                                                    <input type="text" class="form-control" >
+                                                    {{ ec.rate|attr:"class:form-control"|attr:"type:number" }}
                 
                                                 </td>
                                                 <td >
-                                                    <input type="text" class="form-control" >
+                                                    {{ ec.amount|attr:"class:form-control"|attr:"type:number" }}
                 
                                                 </td>
                                                 
                                                 <td >
-                                                    <select name="" class="form-control" >
-                                                        <option value="" disabled selected>Select</option>
-                                                        <option>Active</option>
-                                                        <option>Inactive</option>
-                                                    </select>
+                                                    {{ ec.status|attr:"class:form-control" }}
                                                 </td>
-                                                <td><button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                    <a  type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
+                                                <td class="removeec text-center">
                                                 </td>
                                             </tr>
+                                        {% endfor %}
                                         </tbody>
+                                        <input type="hidden" name="embl_count" id="__inline_index">
+                                        
                                         <tfoot class="font-weight-bold">
                                             <tr>
                                                 <td colspan="6" class="text-right">
-                                                SUM:
+                                                    SUM:
                                                 </td>
                                                 <td colspan=""  >  
-                                                    <input type="number" class="form-control" value="0">
+                                                    {{ embl_form.tt_rate|attr:"class:form-control"|attr:"type:number"  }}
                                                 </td>
                                                 <td colspan=""  >  
-                                                    <input type="number" class="form-control" value="0">
+                                                    {{ embl_form.tt_amount|attr:"class:form-control"|attr:"type:number"  }}
                                                 </td>
                                             </tr>
                                         </tfoot>
+
                                     </table>
 
                                 </div>
                                 <div>
                                     <button type="submit" class="btn btn-success btn-sm">Save</button>
-                                    <button type="submit" class="btn btn-info btn-sm">Update</button>
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
+                                    
                                 </div>
+                              </form>
                             </div>
                         </div>
                         </div>
@@ -1237,78 +1199,78 @@
                         </div>
                         <div id="collapseWash" class="collapse show" aria-labelledby="washCollapse" data-parent="#accordion">
                             <div class="card-body">
-                                <div class="table-responsive" >
-                                    <table class="table table-bordered table-hover table-sm table-responsive-sm" >
-                                        <thead class="bg-info">
-                                            <tr>
-                                                <th class="text-center"> Name </th>
-                                                <th class="text-center " >Type</th>
-                                                <th class="text-center" > Country</th>
-                                                <th class="text-center" > Cons/1 Dzn Gmts </th>
-                                                <th class="text-center" > Rate</th>
-                                                <th class="text-center" > Amount</th>
-                                                <th class="text-center" > Status</th>
-                                                <th class="text-center" width="90px" > </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody >
-                                            <tr >
-                                                <td >
-                                                    <select name="" class="form-control" >
-                                                        <option value="" disabled selected>Select</option>
-                                                        <option>Printing</option>
-                                                        <option>Others</option>
-                                                    </select>
-                                                </td>
-                                                <td >
-                                                    <select name="" class="form-control" >
-                                                        <option value="" disabled selected>Select</option>
-                                                        <option>Dzn</option>
-                                                        <option>Pcs</option>
-                                                    </select>
-                                                </td>
-                                                <td >
-                                                    <input type="text" class="form-control" placeholder="Browse">
-                                                </td>
-                                                <td >
-                                                    <input type="text" class="form-control" placeholder="Browse">
-                                                </td>
-                                                <td >
-                                                    <input type="text" class="form-control" >
-                                                </td>
-                                                <td >
-                                                    <input type="text" class="form-control" >
-                                                </td>
-                                                <td >
-                                                    <select name="" class="form-control" >
-                                                        <option value="" disabled selected>Select</option>
-                                                        <option>Active</option>
-                                                        <option>Inactive</option>
-                                                    </select>
-                                                </td>
-                                                <td><button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                    <a  type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot class="font-weight-bold">
-                                            <tr>
-                                                <td colspan="5" class="text-right">
-                                                SUM:
-                                                </td>
-                                                <td colspan=""  >  
-                                                    <input type="number" class="form-control" value="0">
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                                <div>
-                                    <button type="submit" class="btn btn-success btn-sm">Save</button>
-                                    <button type="submit" class="btn btn-info btn-sm">Update</button>
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
-                                </div>
+                               <form method="post" action="{% url 'pre_costing' %}" enctype="multipart/form-data" id="wc_form">
+                                        {% csrf_token %}
+                                    <input hidden name="_task" value="wash_form">
+                                    <div class="table-responsive" >
+                                        <table class="table table-bordered table-hover table-sm table-responsive-sm add_wash" >
+                                            <thead class="bg-info">
+                                                <tr>
+                                                    <th class="text-center"> Name </th>
+                                                    <th class="text-center " >Type</th>
+                                                    <th class="text-center" > Country</th>
+                                                    <th class="text-center" > Cons/1 Dzn Gmts </th>
+                                                    <th class="text-center" > Rate</th>
+                                                    <th class="text-center" > Amount</th>
+                                                    <th class="text-center" > Status</th>
+                                                    <th class="text-center" width="90px" >Action </th>
+                                                </tr>
+                                            </thead>
+                                            {{ wash_form_item.management_form }}
+                                            <tbody class="inline_wash_form">
+                                              {% for wac in wash_form_item %}
+                                                <tr >
+                                                    <td >
+                                                        {{ wac.cost_name|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Browse"|attr:"data-target:#washNameModal"|attr:"data-toggle:modal"|attr:"onclick:passID(id)" }}
+                                                    </td>
+                                                    <td >
+                                                        {{ wac.cost_type|attr:"class:form-control"|attr:"type:text" }}
+                                                    </td>
+                                                    
+                                                    <td >
+                                                        {{ wac.country|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Browse"|attr:"data-target:#washCountryModal"|attr:"data-toggle:modal"|attr:"onclick:passID(id)" }}
+                                                    </td>
+                                                    
+                                                    <td >
+                                                        {{ wac.cons_dzn|attr:"class:form-control"|attr:"type:number"|attr:"data-target:#washConsumpInline"|attr:"data-toggle:modal"|attr:"onclick:passWash(id)"  }}
+                                                    </td>
+                                                    <td >
+                                                        {{ wac.rate|attr:"class:form-control"|attr:"type:number" }}
+                    
+                                                    </td>
+                                                    <td >
+                                                        {{ wac.amount|attr:"class:form-control"|attr:"type:number" }}
+                    
+                                                    </td>
+                                                    
+                                                    <td >
+                                                        {{ wac.status|attr:"class:form-control" }}
+                                                    </td>
+                                                    <td class="removewac text-center">
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                            <input type="hidden" name="wash_count" id="__inline_index">
+                                            <tfoot class="font-weight-bold">
+                                                <tr>
+                                                    <td colspan="5" class="text-right">
+                                                    SUM:
+                                                    </td>
+                                                    <td colspan=""  >  
+                                                        {{ wash_form.tt_rate|attr:"class:form-control"|attr:"type:number"  }}
+                                                    </td>
+                                                    <td colspan=""  >  
+                                                        {{ wash_form.tt_amount|attr:"class:form-control"|attr:"type:number"  }}
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="btn btn-success btn-sm">Save</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         </div>
@@ -1474,26 +1436,7 @@
     <!--======================================================= 
      GREY CONSUMPTION MODA FORMS
     ========================================================-->
-    <!-- Embellishment Modal Country Modal inside Embellishment-->
-    <div class="modal fade" id="country" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                ...
-                </div>
-                <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-            </div>
-    </div>
+   
     <!-- BODY PART TABLE FOR SELECTING BODY PART AND BODY PART TYPE  -->
     <div class="modal fade " id="body_part" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -1641,10 +1584,10 @@
                                         <tbody class="text-center">
                                             <tr>
                                                 <td><input type="checkbox" name="copy" id="copyCheck"> <strong>Copy:</td>
-                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" > Color </td>
-                                                <td> <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" value="option2" > Size</td>
-                                                <td> <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option3" > Size & Color</td>
-                                                <td> <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option4" > PO</td>
+                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="colorFilter" value="option1" > Color </td>
+                                                <td> <input class="form-check-input" type="radio" name="exampleRadios" id="sizeFilter" value="option2" > Size</td>
+                                                <td> <input class="form-check-input" type="radio" name="exampleRadios" id="sizeColorFilter" value="option3" > Size & Color</td>
+                                                <td> <input class="form-check-input" type="radio" name="exampleRadios" id="poFilter" value="option4" > PO</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1677,20 +1620,23 @@
                                     </thead>
                                     <tbody id="base_body" class="text-center">
                                         {% for i in color %}
-                                        <tr class="base_tr">
-                                            <td>{{ forloop.counter }}</td>
-                                            <td><input type="text" class="form-control" id="id_po_{{ forloop.counter }}" value="{{ i.po }}" readonly></td>                         
-                                            <td><input type="text" class="form-control" id="id_color_{{ forloop.counter }}" value="{{ i.color }}" readonly></td>                         
-                                            <td><input type="text" class="form-control" id="id_size_{{ forloop.counter }}" value="{{ i.size  }}" readonly></td>
-                                            <td><input type="text" class="form-control" id="id_qty_{{ forloop.counter }}" value="{{ i.order_qty }}" oninput="totalQty(id)" onchange="totalQty(id)" readonly></td>
+                                        <tr id="base_tr">
+                                            <td>{{ forloop.counter }}</td>                         
+                                            <td><input type="text" class="form-control" value="{{ i.po }}" readonly></td>                         
+                                            <td><input type="text" class="form-control" value="{{ i.color }}" readonly></td>                         
+                                            <td><input type="text" class="form-control" value="{{ i.size  }}" readonly></td>
+                                            <td><input type="text" class="form-control" id="id_qty_{{ forloop.counter }}" value="{{ i.order_qty }}" oninput="totalQty(id)" readonly></td>             
                                             <td><input type="text" id="id_dia_{{ forloop.counter }}"  name="dia_{{ forloop.counter }}" class="form-control"></td>
                                             <td><input type="text" id="id_item_{{ forloop.counter }}" name="item_{{ forloop.counter }}" class="form-control"></td>
-                                            <td><input type="text" id="id_fin_cons_{{ forloop.counter }}" name="fin_cons_{{ forloop.counter }}" class="form-control"  value="0" oninput="GreyCons(id)" onchange="GreyCons(id)"></td>
-                                            <td><input type="text" id="id_pro_{{ forloop.counter }}"  name="pro_{{ forloop.counter }}" class="form-control"  value="0" oninput="GreyCons(id)" onchange="GreyCons(id)"></td>
+
+                                            <td><input type="text" id="id_fin_cons_{{ forloop.counter }}" name="fin_cons_{{ forloop.counter }}" class="form-control"  value="0" oninput="GreyCons(id)"></td>
+
+                                            <td><input type="text" id="id_pro_{{ forloop.counter }}"  name="pro_{{ forloop.counter }}" class="form-control"  value="0" oninput="GreyCons(id)"></td>
+
                                             <td><input type="text" id="id_unit_{{ forloop.counter }}" name="unit_{{ forloop.counter }}" class="form-control" value="0" readonly></td>
-                                            <td><input type="text" id="id_rate_{{ forloop.counter }}" name="rate_{{ forloop.counter }}" class="form-control"  value="0" oninput="totalAmt(id)" onchange="totalAmt(id)" ></td>
+                                            <td><input type="text" id="id_rate_{{ forloop.counter }}" name="rate_{{ forloop.counter }}" class="form-control"  value="0" oninput="totalAmt(id)" ></td>
                                             <td><input type="text" id="id_amt_{{ forloop.counter }}"  name="amt_{{ forloop.counter }}" class="form-control"  value="0" readonly></td>
-                                            <td><input type="text" id="id_pcs_{{ forloop.counter }}"  name="pcs_{{ forloop.counter }}" class="form-control" value="{{pcs}}" oninput="totalPcs(id)" onchange="totalPcs(id)" readonly></td>
+                                            <td><input type="text" id="id_pcs_{{ forloop.counter }}"  name="pcs_{{ forloop.counter }}" class="form-control" value="{{pcs}}" onchange="totalPcs(id)" readonly></td>
                                             <td><input type="text" id="id_tt_qty_{{ forloop.counter }}" name="tt_qty_{{ forloop.counter }}" class="form-control"  value="0" readonly></td>
                                             <td><input type="text" id="id_tt_amt_{{ forloop.counter }}" name="tt_amt_{{ forloop.counter }}" class="form-control"  value="0" readonly></td>
                                             <td><input type="text" id="id_remarks_{{ forloop.counter }}" name="remarks_{{ forloop.counter }}" class="form-control" value="No Remarks"></td>
@@ -1705,7 +1651,7 @@
                                                 Total:
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" id="qtys" value={{ total_po }} step="any" readonly>
+                                                    <input type="number" class="form-control" id="qtys" value="{{ total_po }}" step="any" readonly>
                                                 </td>
                                                 <td>  
                                                     <input type="number" class="form-control"  step="any" readonly>
@@ -2185,7 +2131,7 @@
             </div>
         </div>
     </div>
-    <!-- CARE LEVEL INLINES TABLE   -->
+    <!--TRIM CARE LEVEL INLINES TABLE   -->
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"  id="careLabelInline" >
         <div class="modal-dialog modal-lg  " >
             <div class="container-fluid">
@@ -2201,90 +2147,272 @@
                             <!-- RADIO BUTTON SECTION FOR CALCULATION  -->
                             <div class="container-fluid mb-4">
                                 <div class="row">
-                                    <div class="col-md-2 col-sm-12">
-                                        <div class="form-check">
-                                            <input class="form-check-input showHideCalc" type="radio" name="labelGroup" id="dzn" value="dzn" >
+                                    <div class="col-md-12 col-sm-12 text-center">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input showHideCalc" type="radio" name="calcRadio" id="dzn"  value="dzn" >
                                             <label class="form-check-label font-weight-bold" for="exampleRadios2">
                                                 Dzn
                                             </label>
                                           </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input showHideCalc " type="radio" name="labelGroup" id="pcs" value="pcs" >
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input showHideCalc " type="radio" name="calcRadio" id="pcs" value="pcs" >
                                             <label class="form-check-label font-weight-bold" for="exampleRadios1">
                                                 Pcs
                                             </label>
                                           </div>
                                          
-                                          <div class="form-check">
-                                            <input class="form-check-input showHideCalc" type="radio" name="labelGroup" id="cone" value="cone" >
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input showHideCalc" type="radio" name="calcRadio" id="cone" value="cone" >
                                             <label class="form-check-label font-weight-bold" for="exampleRadios2">
                                                 Cone
                                             </label>
                                           </div>
-                                          <div class="form-check">
-                                            <input class="form-check-input showHideCalc" type="radio" name="labelGroup" id="reset" value="reset" >
+
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input showHideCalc" type="radio" name="calcRadio" id="roll" value="roll" >
                                             <label class="form-check-label font-weight-bold" for="exampleRadios2">
+                                                Roll
+                                            </label>
+                                          </div>
+
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input showHideCalc" type="radio" name="calcRadio" id="yard" value="yard" >
+                                            <label class="form-check-label font-weight-bold" for="exampleRadios2">
+                                                Yds
+                                            </label>
+                                          </div>
+                                          
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input showHideCalc" type="radio" name="calcRadio" id="meter" value="meter" >
+                                            <label class="form-check-label font-weight-bold" for="exampleRadios2">
+                                                Meter
+                                            </label>
+                                          </div>
+
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input showHideCalc" type="radio" name="calcRadio" id="gross" value="gross" >
+                                            <label class="form-check-label font-weight-bold" for="exampleRadios2">
+                                                Gross
+                                            </label>
+                                          </div>
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input showHideCalc" type="radio" name="calcRadio" id="gg" value="gg" >
+                                            <label class="form-check-label font-weight-bold" for="exampleRadios2">
+                                                GG
+                                            </label>
+                                          </div>
+                                          <div class="form-check form-check-inline">
+                                            <input class="form-check-input showHideCalc bg-danger" type="radio" name="calcRadio" id="reset" value="reset" >
+                                            <label class="form-check-label font-weight-bold text-danger" for="exampleRadios2">
                                                 Reset/None
                                             </label>
                                           </div>
                                     </div>
-                                    <div class="col-md-8 col-sm-12">
-                                        <div class="mt-1 dzn hideBox">
-                                                <h6 class="text-center font-weight-bold "> Dzn Calculator: </h6>
-                                                <div class="row">
-                                                  <div class="col">
-                                                    <input type="number" class="form-control"  style="border:1px solid grey" placeholder="Value 01">
-                                                  </div>
-                                                  <div class="col">
-                                                    <input type="number" class="form-control"  style="border:1px solid grey" placeholder="Value 02">
-                                                  </div>
-                                                  <div class="col">
-                                                    <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 03">
-                                                  </div>
-                                                  <div class="col">
-                                                    <input type="number" class="form-control" style="border:1px solid grey" placeholder="Result" readonly>
-                                                  </div>
-                                                </div>
-                                        </div>
-                                        <div class="mt-1 pcs hideBox">
-                                            <h6 class="text-center font-weight-bold "> Piece Calculator: </h6>
+                                </div>
 
-                                                <div class="row">
-                                                  <div class="col">
-                                                    <input type="number" class="form-control"  style="border:1px solid grey" placeholder="Value 01">
-                                                  </div>
-                                                  <div class="col">
-                                                    <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 02">
-                                                  </div>
-                                                  <div class="col">
-                                                    <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 03">
-                                                  </div>
-                                                  <div class="col">
-                                                    <input type="number" class="form-control" style="border:1px solid grey" placeholder="Result" readonly>
-                                                  </div>
-                                                </div>
-                                        </div>
-                                        <div class="mt-1 cone hideBox">
-                                            <h6 class="text-center font-weight-bold "> Cone Calculator: </h6>
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8 col-sm-12 bg-info ">
+                                        <div class="mt-1 dzn hideBox bg-info p-2">
+                                                    <h6 class=" font-weight-bold text-center"> Dzn Calculator: </h6>
+                                                    <div class="row">
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" name="hel" id="dzn_Pcs"  style="border:1px solid grey" placeholder="Per Piece" oninput="dznCalculator()">
+                                                        <small class="text-left">Per Piece</small>
+                                                      </div>
+                                                     
+                                                      <div class="col">
+                                                        <input type="hidden" id="calcPcs" value="{{pcs}}">
+                                                        <input type="number" class="form-control" id="dzn_perDzn"  style="border:1px solid grey" placeholder="Per Dzn">
+                                                        <small class="text-left">Per Dzn</small>
 
-                                                <div class="row">
-                                                  <div class="col">
-                                                    <input type="number" class="form-control"  style="border:1px solid grey" placeholder="Value 01">
-                                                  </div>
-                                                  <div class="col">
-                                                    <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 02">
-                                                  </div>
-                                                  <div class="col">
-                                                    <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 03">
-                                                  </div>
-                                                  <div class="col">
-                                                    <input type="number" class="form-control" style="border:1px solid grey" placeholder="Result" readonly>
-                                                  </div>
-                                                </div>
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" id="dzn_inDzn" style="border:1px solid grey" placeholder="In Dzn" oninput="dznCalculator()">
+                                                        <small class="text-left">In Dzn</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" id="dzn_Result" style="border:1px solid grey" placeholder="Result" readonly>
+                                                        <small class="text-left">Result</small>
+                                                      </div>
+                                                    </div>
+                                        </div>
+                                        <div class="mt-1 pcs hideBox  bg-info p-2">
+                                                <h6 class="font-weight-bold text-center"> Piece Calculator: </h6>
+                                                    <div class="row">
+                                                      <div class="col">
+                                                        <input type="number" class="form-control"  style="border:1px solid grey" placeholder="Value 01">
+                                                        <small class="text-left">Per Piece</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 02">
+                                                        <small class="text-left">Per Piece</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 03">
+                                                        <small class="text-left">Per Piece</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Result" readonly>
+                                                        <small class="text-left">Result</small>
+
+                                                      </div>
+                                                    </div>
+                                        </div>
+                                        <div class="mt-1 cone hideBox bg-info p-2">
+                                                <h6 class="font-weight-bold text-center"> Cone Calculator: </h6>
+                                                    <div class="row">
+                                                      <div class="col">
+                                                        <input type="number" class="form-control"  style="border:1px solid grey" placeholder="Value 01">
+                                                        <small class="text-left">Per Cone</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 02">
+                                                        <small class="text-left">Per Cone</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 03">
+                                                        <small class="text-left">Per Cone</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Result" readonly>
+                                                        <small class="text-left">Result</small>
+
+                                                      </div>
+                                                    </div>
+                                        </div>
+                                        <div class="mt-1 roll hideBox bg-info p-2">
+                                                <h6 class="font-weight-bold text-center"> Roll Calculator: </h6>
+                                                    <div class="row">
+                                                      <div class="col">
+                                                        <input type="number" class="form-control"  style="border:1px solid grey" placeholder="Value 01">
+                                                        <small class="text-left">Per Roll</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 02">
+                                                        <small class="text-left">Per Roll</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 03">
+                                                        <small class="text-left">Per Roll</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Result" readonly>
+                                                        <small class="text-left">Result</small>
+                                                      </div>
+                                                    </div>
+                                        </div>
+                                        <div class="mt-1 yard hideBox bg-info p-2">
+                                                <h6 class="font-weight-bold text-center"> Yard Calculator: </h6>
+                                                    <div class="row">
+                                                      <div class="col">
+                                                        <input type="number" class="form-control"  style="border:1px solid grey" placeholder="Value 01">
+                                                        <small class="text-left">Per Yard</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 02">
+                                                        <small class="text-left">Per Yard</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 03">
+                                                        <small class="text-left">Per Yard</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Result" readonly>
+                                                        <small class="text-left">Result</small>
+                                                      </div>
+                                                    </div>
+                                        </div>
+                                        <div class="mt-1 meter hideBox bg-info p-2">
+                                                <h6 class="font-weight-bold text-center"> Meter Calculator: </h6>
+                                                    <div class="row">
+                                                      <div class="col">
+                                                        <input type="number" class="form-control"  style="border:1px solid grey" placeholder="Value 01">
+                                                        <small class="text-left">Per Meter</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 02">
+                                                        <small class="text-left">Per Meter</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 03">
+                                                        <small class="text-left">Per Meter</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Result" readonly>
+                                                        <small class="text-left">Result</small>
+                                                      </div>
+                                                    </div>
+                                        </div>
+                                        <div class="mt-1 gross hideBox bg-info p-2">
+                                                <h6 class="font-weight-bold text-center"> Gross Calculator: </h6>
+                                                    <div class="row">
+                                                      <div class="col">
+                                                        <input type="number" class="form-control"  style="border:1px solid grey" placeholder="Value 01">
+                                                        <small class="text-left">Per Gross</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 02">
+                                                        <small class="text-left">Per Gross</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 03">
+                                                        <small class="text-left">Per Gross</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Result" readonly>
+                                                        <small class="text-left">Result</small>
+                                                      </div>
+                                                    </div>
+                                        </div>
+                                        <div class="mt-1 gg hideBox bg-info p-2">
+                                                <h6 class="font-weight-bold text-center"> GG Calculator: </h6>
+                                                    <div class="row">
+                                                      <div class="col">
+                                                        <input type="number" class="form-control"  style="border:1px solid grey" placeholder="Value 01">
+                                                        <small class="text-left">Per GG</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 02">
+                                                        <small class="text-left">Per GG</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Value 03">
+                                                        <small class="text-left">Per GG</small>
+
+                                                      </div>
+                                                      <div class="col">
+                                                        <input type="number" class="form-control" style="border:1px solid grey" placeholder="Result" readonly>
+                                                        <small class="text-left">Result</small>
+                                                      </div>
+                                                    </div>
                                         </div>
                                     </div>
                                     <div class="col-md-2"></div>
+
                                 </div>
+                                
                             </div>
                             <!-- COPY SECTION  -->
                             <div class="row bd-highlight mt-2">
@@ -2336,12 +2464,12 @@
                                         {% for i in color %}
                                         <tr id="Cl_tr">
                                             <td>{{forloop.counter}}</td>                         
-                                            <td><input type="text" id="id_cl_po_{{ forloop.counter }}" name="po_no_{{ forloop.counter }}" class="form-control" value="{{i.po}}" readonly></td>                         
-                                            <td><input type="text" class="form-control" id="id_cl_gmts_item_{{ forloop.counter }}" name="gmts_item_{{ forloop.counter }}" class="form-control" value="{{i.gmt_items}}"  readonly></td>                         
-                                            <td><input type="text" class="form-control" id="id_cl_country_{{ forloop.counter }}" name="country_{{ forloop.counter }}" class="form-control" value="{{i.country}}" readonly></td>
-                                            <td><input type="text" class="form-control" id="id_cl_color_{{ forloop.counter }}" name="color_{{ forloop.counter }}" class="form-control" value="{{i.color}}" readonly></td>             
-                                            <td><input type="text" class="form-control" id="id_cl_gmts_size_{{ forloop.counter }}" name="gmts_size_{{ forloop.counter }}" class="form-control" value="{{i.size}}" readonly></td>  
-                                            <td><input type="text" class="form-control" id="id_cl_order_qty_{{ forloop.counter }}" class="form-control" value="{{i.order_qty}}" oninput="totalQuantity(id)" readonly ></td>  
+                                            <td><input type="text" class="form-control" id="id_cl_po_{{ forloop.counter }}" name="po_no_{{ forloop.counter }}"  value="{{i.po}}" readonly></td>                         
+                                            <td><input type="text" class="form-control" id="id_cl_gmts_item_{{ forloop.counter }}" name="gmts_item_{{ forloop.counter }}"  value="{{i.gmt_items}}"  readonly></td>                         
+                                            <td><input type="text" class="form-control" id="id_cl_country_{{ forloop.counter }}" name="country_{{ forloop.counter }}"  value="{{i.country}}" readonly></td>
+                                            <td><input type="text" class="form-control" id="id_cl_color_{{ forloop.counter }}" name="color_{{ forloop.counter }}"  value="{{i.color}}" readonly></td>             
+                                            <td><input type="text" class="form-control" id="id_cl_gmts_size_{{ forloop.counter }}" name="gmts_size_{{ forloop.counter }}"  value="{{i.size}}" readonly></td>  
+                                            <td><input type="text" class="form-control" id="id_cl_order_qty_{{ forloop.counter }}"  value="{{i.order_qty}}" oninput="totalQuantity(id)" readonly ></td>  
                                             <td><input type="text" class="form-control" id="id_cl_item_color_{{ forloop.counter }}" name="item_color_{{ forloop.counter }}"></td>
                                             <td><input type="text" class="form-control" id="id_cl_item_sizes_{{ forloop.counter }}" name="item_sizes_{{ forloop.counter }}"></td>
 
@@ -2372,31 +2500,29 @@
                                                 Total:
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="tt_cons" step="any" readonly>
+                                                    <input type="number" class="form-control" name="tt_cons" id="trim_tt_Cons" step="any" readonly>
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="tt_ex_pct" step="any" readonly>
+                                                    <input type="number" class="form-control" name="tt_ex_pct" id="trim_tt_ex" step="any" readonly>
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="grand_tt_cons" step="any" readonly>
+                                                    <input type="number" class="form-control" name="grand_tt_cons" id="trim_grd_tt_cons" step="any" readonly>
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="tt_rate" readonly>
+                                                    <input type="number" class="form-control" name="tt_rate" id="trim_tt_rate" readonly>
                                                 </td>
                                                 <td> 
-                                                    <input type="number" class="form-control" name="sub_tt_amount" readonly> 
+                                                    <input type="number" class="form-control" name="sub_tt_amount" id="trim_sub_amt" readonly> 
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="tt_qty_dzn" readonly>
+                                                    <input type="number" class="form-control" name="tt_qty_dzn" id="trim_tt_qty" readonly>
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="grand_tt_amount" readonly>
+                                                    <input type="number" class="form-control" name="grand_tt_amount" id="trim_grd_tt_amt" readonly>
                                                 </td>
                                                 <td>  
-                                                    <input type="text" class="form-control" readonly>
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="tt_pcs" readonly>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -2404,31 +2530,29 @@
                                                 Average:
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="avg_tt_cons" readonly>
+                                                    <input type="number" class="form-control" name="avg_tt_cons" id="avg_trim_cons" readonly>
                                                 </td>
                                                 <td> 
-                                                    <input type="number" class="form-control" name="avg_ex_pct" readonly> 
+                                                    <input type="number" class="form-control" name="avg_ex_pct" id="avg_trim_ex" readonly> 
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="avg_grand_tt_cons" readonly>
+                                                    <input type="number" class="form-control" name="avg_grand_tt_cons" id="avg_trim_grdtt_cons" readonly>
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="avg_tt_rate" readonly>
+                                                    <input type="number" class="form-control" name="avg_tt_rate" id="avg_trim_tt_rate" readonly>
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="avg_sub_tt_amount" readonly>
+                                                    <input type="number" class="form-control" name="avg_sub_tt_amount" id="avg_trim_sub_amt" readonly>
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="avg_tt_qty_dzn" readonly>
+                                                    <input type="number" class="form-control" name="avg_tt_qty_dzn" id="avg_trim_tt_qty" readonly>
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="avg_grand_tt_amount" readonly>
+                                                    <input type="number" class="form-control" name="avg_grand_tt_amount" id="avg_trim_grdtt_amt" readonly>
                                                 </td>
                                                 <td>  
-                                                    <input type="text" class="form-control" readonly>
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" name="avg_tt_pcs" readonly>
                                                 </td>
                                             </tr>
                                     </tfoot>
@@ -2585,6 +2709,560 @@
             </div>
         </div>
     </div>
+
+
+    <!-- EMBLISHMENT NAME  MODAL  -->
+    <div class="modal fade" id="embNameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="container">
+                <div class="modal-content ">
+                    <div class="modal-header ">
+                    <h6 class="modal-title" id="nameEmb">Name</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body ">
+                        <table id="emb_name_Table" class="table table-bordered table-striped table-sm table-responsive-sm table-hover  display" >
+                            <thead class="text-center bg-meroon">
+                                <tr>
+                                    <th>S/L</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot id="tfooter">
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="text-center">
+                                {% for i in types %}
+                                <tr id="emb_types-{{forloop.counter}}">
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{i.cost_name}}</td>
+                                    <td>{{i.type_name}}</td>
+                                    <td><button id="btn-{{forloop.counter}}" class="btn btn-sm btn-outline-success " onclick="embNameFunc(id)" data-dismiss="modal"><i class="fa fa-check "></i></button> </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- EMBLISHMENT CONSUMPTION FORM INLINES TABLE   -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"  id="embConsumpInline" >
+        <div class="modal-dialog modal-lg  " >
+            <div class="container-fluid">
+                    <div class="modal-content  ">
+                        <div class="modal-header bg-info">
+                        <!-- <h6 class="modal-title" id="exampleModalLabel getName">Care Label[Dzn](Dzn)</h6> -->
+                        <h6 class="modal-title" id="embConsModal ">Consumption Entry From Costing For 1 Dzn</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            
+                            <!-- COPY SECTION  -->
+                            <div class="row bd-highlight mt-2">
+                                <div class="col-md-2 col-sm-12 "></div>
+                                <div class="col-md-8 col-sm-12 table-responsive">
+                                    <table id="embConsumption_Table" class="table table-bordered table-striped table-sm table-responsive-sm table-hover  display" >
+                                        <tbody class="text-center">
+                                            <tr>
+                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="noCopy" value="noCopy" > <strong>No Copy</strong></td>
+                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="copyAll" value="copyAll" > <strong> Copy to All</strong></td>
+                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="copySize" value="copySize" ><strong>Copy Gmts Size Wise</strong>  </td>
+                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="copyColor" value="copyColor" > <strong>Copy Gmts Color Wise</strong> </td>
+                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="copyPo" value="copyPo" > <strong>Copy Gmts PO Wise </strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-2 col-sm-12 "></div>
+                            </div>
+                            <form method="POST" id="embcost_Form" action="{% url 'pre_costing' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="_task" value="embcost_data">
+                                <table  class="table table-bordered table-striped table-responsive  table-sm table-responsive-sm table-hover  table-info  display" >
+                                    <thead class="text-center bg-info">
+                                        <tr>
+                                            <th>S/L</th>
+                                            <th>PO NO.</th>
+                                            <th>Country</th>
+                                            <th>Gmts Items</th>
+                                            <th>Gmts Color</th>
+                                            <th>Gmts Sizes</th>
+                                            <th>Gmts qty</th>
+
+                                            <th>Cons.</th>
+                                            <th>Ex. %</th>
+                                            <th>Total Cons.</th>
+                                            <th>Rate</th>
+                                            <th>Amount</th>
+                                            <th>Total Qty</th>
+                                            <th>Total Amount</th>
+                                            <th>Pcs</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bodyCare" class="text-center">
+                                        {% for i in color %}
+                                        <tr id="Emb_tr">
+                                            <td>{{forloop.counter}}</td>                         
+                                            <td><input type="text" class="form-control" id="id_ec_po_{{ forloop.counter }}" name="po_no_{{ forloop.counter }}"  value="{{i.po}}" readonly></td>                         
+                                            <td><input type="text" class="form-control" id="id_ec_country_{{ forloop.counter }}" name="country_{{ forloop.counter }}"  value="{{i.country}}" readonly></td>
+                                            <td><input type="text" class="form-control" id="id_ec_gmts_item_{{ forloop.counter }}" name="gmts_item_{{ forloop.counter }}"  value="{{i.gmt_items}}"  readonly></td>                         
+                                            <td><input type="text" class="form-control" id="id_ec_color_{{ forloop.counter }}" name="color_{{ forloop.counter }}"  value="{{i.color}}" readonly></td>             
+                                            <td><input type="text" class="form-control" id="id_ec_gmts_size_{{ forloop.counter }}" name="gmts_size_{{ forloop.counter }}" value="{{i.size}}" readonly></td>  
+                                            
+                                            <td><input type="text" class="form-control" id="id_ec_order_qty_{{ forloop.counter }}" value="{{i.order_qty}}" oninput="embOrdQty(id)" readonly ></td>  
+
+                                            <td><input type="text" class="form-control" id="id_ec_cons_{{ forloop.counter }}" name="cons_{{ forloop.counter }}" value="0" oninput="embConsFunc(id)"></td>
+                                            <td><input type="text" class="form-control" id="id_ec_ex_pct_{{ forloop.counter }}" name="ex_pct_{{ forloop.counter }}"  value="0" oninput="embConsFunc(id)"></td>
+
+                                            <td><input type="text" class="form-control" id="id_ec_tt_cons_{{ forloop.counter }}" name="tt_cons_{{ forloop.counter }}" readonly  value="0"></td>  
+
+                                            <td><input type="text" class="form-control" id="id_ec_rate_{{ forloop.counter }}" name="rate_{{ forloop.counter }}"  value="0" oninput="embttAmt(id)"></td>
+
+                                            <td><input type="text" class="form-control" id="id_ec_amount_{{ forloop.counter }}" name="amount_{{ forloop.counter }}" readonly value="0"></td>  
+                                            <td><input type="text" class="form-control" id="id_ec_tt_qty_{{ forloop.counter }}" name="tt_qty_{{ forloop.counter }}" readonly  value="0"></td> 
+                                            <td><input type="text" class="form-control" id="id_ec_tt_amount_{{ forloop.counter }}" name="tt_amount_{{ forloop.counter }}" readonly  value="0" ></td>
+
+                                            <td><input type="text" class="form-control" id="id_ec_pcs_{{ forloop.counter }}" name="pcs_{{ forloop.counter }}" value={{pcs}} onchange="totalPieces(id)" readonly></td>  
+                                            <input type="hidden" name="id_{{ forloop.counter }}" value="{{ i.id }}">
+                                        </tr>
+                                        {% endfor %}
+                                        <input type="hidden" name="__po_job" value="{{ fetch.job_no }}">
+                                    </tbody>
+                                    <tfoot class="font-weight-bold">
+                                            <tr>
+                                                <td colspan="7" class="text-right">
+                                                Total:
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control" name="tt_cons" id="emb_tt_cons" value="0" step="any" readonly>
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control" name="tt_ex" id="emb_tt_ex" value="0" step="any" readonly>
+                                                </td>
+                                                <td> 
+                                                    <input type="number" class="form-control" name="gd_tt_cons" id="emb_grd_tt_cons" value="0" readonly> 
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control" name="tt_rate" id="emb_tt_rate" value="0" readonly>
+                                                </td>
+                                                <td> 
+                                                    <input type="number" class="form-control" name="tt_amount" id="emb_tt_amt" value="0" readonly> 
+                                                </td>
+                                                <td> 
+                                                    <input type="number" class="form-control" name="gd_tt_ordQty" id="emb_grd_tt_qty" value="0" readonly> 
+                                                </td>
+                                                <td> 
+                                                    <input type="number" class="form-control" name="gd_tt_amt" id="emb_grd_tt_amt" value="0" readonly> 
+                                                </td>
+                                               
+                                                <td> 
+                                                </td>
+                                             
+                                            </tr>
+                                            <tr>
+                                                <td colspan="7" class="text-right">
+                                                Average:
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control" name="avg_tt_cons" id="avg_emb_tt_cons" value="0" readonly>
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control" name="avg_tt_ex" id="avg_emb_tt_ex" step="any" value="0" readonly>
+                                                </td>
+                                                <td> 
+                                                    <input type="number" class="form-control" name="avg_gd_tt_cons" id="avg_emb_grd_tt_cons" value="0" readonly> 
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control" name="avg_tt_rate" id="avg_emb_tt_rate" value="0" readonly>
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control" name="avg_tt_amount" id="avg_emb_tt_amt" value="0" readonly>
+                                                </td>
+                                                
+                                                <td> 
+                                                    <input type="number" class="form-control" name="gd_tt_ordQty" id="avg_emb_grdtt_qty" value="0" readonly> 
+                                                </td>
+                                                <td> 
+                                                    <input type="number" class="form-control" name="gd_tt_amt" id="avg_emb_grdtt_amt" value="0" readonly> 
+                                                </td>
+                                               
+                                                <td> </td>
+                                              
+                                            </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div id="copy_embConsumption_label"></div>
+    <!-- EMBLISHMENT COUNTRY  MODAL  -->
+    <div class="modal fade" id="embCountryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="container">
+                <div class="modal-content ">
+                    <div class="modal-header ">
+                    <h6 class="modal-title" id="embCount">Country</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body ">
+                        <table id="emb_Country_Table" class="table table-bordered table-striped table-sm table-responsive-sm table-hover  display" >
+                            <thead class="text-center bg-meroon">
+                                <tr>
+                                    <th>S/L</th>
+                                    <th>Country Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot id="tfooter">
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="text-center">
+                               {% for i in country %}
+                                <tr id="emb_country-{{forloop.counter}}">
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{i.country_name}}</td>
+                                    <td><button id="btn-{{forloop.counter}}" class="btn btn-sm btn-outline-success " onclick="embCountryFunc(id)" data-dismiss="modal"><i class="fa fa-check "></i></button> </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- EMBLISHMENT BODY PART -->
+    <div class="modal fade " id="emb_bodypart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="container table-responsive">
+                <div class="modal-content ">
+                    <div class="modal-header">
+                    <h6 class="modal-title" id="exampleModalLabel">Body Part Description</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                        
+                    <div class="modal-body ">
+                        <table id="bp_reports" class="table table-bordered table-striped table-sm table-responsive-sm table-hover  display" >
+                            <thead class="text-center bg-meroon">
+                                <tr>
+                                    <th >S/L No.</th>
+                                    <th width="500">Body Part Name </th>
+                                    <th>Type</th>
+                                    <th >Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot id="tfooter">
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="text-center">
+                                {% for i in body_parts %}
+                                <tr id="emblbp-{{forloop.counter}}">
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{i.body_part_name}}</td>
+                                    <td>{{i.bp_Type}}</td>
+
+                                    <td><button id="bp-{{forloop.counter}}" class="btn btn-sm btn-outline-success " onclick="embBodyPart(id)"  data-dismiss="modal"><i class="fa fa-check"></i></button> </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- WASH COST NAME  MODAL  -->
+    <div class="modal fade" id="washNameModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="container">
+                <div class="modal-content ">
+                    <div class="modal-header ">
+                    <h6 class="modal-title" id="nameEmb">Name</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body ">
+                        <table id="wash_name_Table" class="table table-bordered table-striped table-sm table-responsive-sm table-hover  display" >
+                            <thead class="text-center bg-meroon">
+                                <tr>
+                                    <th>S/L</th>
+                                    <th> Name</th>
+                                    <th> Type</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot id="tfooter">
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="text-center">
+                                {% for i in w_types %}
+                                <tr id="wash_types-{{forloop.counter}}">
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{i.w_cost_name}}</td>
+                                    <td>{{i.w_type_name}}</td>
+                                    <td><button id="btn-{{forloop.counter}}" class="btn btn-sm btn-outline-success " onclick="washNameFunc(id)" data-dismiss="modal"><i class="fa fa-check "></i></button> </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- WASH COST CONSUMPTION FORM INLINES TABLE   -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"  id="washConsumpInline" >
+        <div class="modal-dialog modal-lg  " >
+            <div class="container-fluid">
+                    <div class="modal-content  ">
+                        <div class="modal-header bg-info">
+                        <!-- <h6 class="modal-title" id="exampleModalLabel getName">Care Label[Dzn](Dzn)</h6> -->
+                        <h6 class="modal-title" id="washConsModal ">Consumption Entry From Costing For 1 Dzn</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            
+                            <!-- COPY SECTION  -->
+                            <div class="row bd-highlight mt-2">
+                                <div class="col-md-2 col-sm-12 "></div>
+                                <div class="col-md-8 col-sm-12 table-responsive">
+                                    <table id="washConsumption_Table" class="table table-bordered table-striped table-sm table-responsive-sm table-hover  display" >
+                                        <tbody class="text-center">
+                                            <tr>
+                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="noCopy" value="noCopy" > <strong>No Copy</strong></td>
+                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="copyAll" value="copyAll" > <strong> Copy to All</strong></td>
+                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="copySize" value="copySize" ><strong>Copy Gmts Size Wise</strong>  </td>
+                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="copyColor" value="copyColor" > <strong>Copy Gmts Color Wise</strong> </td>
+                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="copyPo" value="copyPo" > <strong>Copy Gmts PO Wise </strong></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-2 col-sm-12 "></div>
+                            </div>
+                            <form method="POST" id="wcons_Form" action="{% url 'pre_costing' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="_task" value="washcost_data">
+                                <table  class="table table-bordered table-striped table-responsive  table-sm table-responsive-sm table-hover  table-info  display" >
+                                    <thead class="text-center bg-info">
+                                        <tr>
+                                            <th>S/L</th>
+                                            <th>PO NO.</th>
+                                            <th>Country</th>
+                                            <th>Gmts Items</th>
+                                            <th>Gmts Color</th>
+                                            <th>Gmts Sizes</th>
+                                            <th>Gmts qty</th>
+
+                                            <th>Cons.</th>
+                                            <th>Ex. %</th>
+                                            <th>Total Cons.</th>
+                                            <th>Rate</th>
+                                            <th>Amount</th>
+                                            <th>Total Qty</th>
+                                            <th>Total Amount</th>
+                                            <th>Pcs</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody id="bodyCare" class="text-center">
+                                        {% for i in color %}
+                                        <tr id="wash_tr">
+                                            <td>{{forloop.counter}}</td>                         
+                                            <td><input type="text" class="form-control" id="id_wc_po_{{ forloop.counter }}" name="w_po_no_{{ forloop.counter }}"  value="{{i.po}}" readonly></td>                         
+                                            <td><input type="text" class="form-control" id="id_wc_country_{{ forloop.counter }}" name="w_country_{{ forloop.counter }}"  value="{{i.country}}" readonly></td>
+                                            <td><input type="text" class="form-control" id="id_wc_gmts_item_{{ forloop.counter }}" name="w_gmts_item_{{ forloop.counter }}"  value="{{i.gmt_items}}"  readonly></td>                         
+                                            <td><input type="text" class="form-control" id="id_wc_color_{{ forloop.counter }}" name="w_color_{{ forloop.counter }}"  value="{{i.color}}" readonly></td>             
+                                            <td><input type="text" class="form-control" id="id_wc_gmts_size_{{ forloop.counter }}" name="w_gmts_size_{{ forloop.counter }}" value="{{i.size}}" readonly></td>  
+                                            
+                                            <td><input type="number" class="form-control" id="id_wc_order_qty_{{ forloop.counter }}" name="w_item_qty_{{ forloop.counter }}" value="{{i.order_qty}}" oninput="washOrdQty(id)" ></td>  
+
+                                            <td><input type="number" class="form-control" id="id_wc_cons_{{ forloop.counter }}" name="w_cons_{{ forloop.counter }}" value="0" oninput="washConsFunc(id)"></td>
+                                            <td><input type="number" class="form-control" id="id_wc_ex_pct_{{ forloop.counter }}" name="w_ex_pct_{{ forloop.counter }}"  value="0" oninput="washConsFunc(id)"></td>
+
+                                            <td><input type="number" class="form-control" id="id_wc_tt_cons_{{ forloop.counter }}" name="w_tt_cons_{{ forloop.counter }}" readonly  value="0"></td>  
+
+                                            <td><input type="number" class="form-control" id="id_wc_rate_{{ forloop.counter }}" name="w_rate_{{ forloop.counter }}"  value="0" oninput="washttAmt(id)"></td>
+
+                                            <td><input type="text" class="form-control" id="id_wc_amount_{{ forloop.counter }}" name="w_amount_{{ forloop.counter }}" readonly value="0"></td>  
+                                            <td><input type="number" class="form-control" id="id_wc_tt_qty_{{ forloop.counter }}" name="w_tt_qty_{{ forloop.counter }}" readonly  value="0"></td> 
+                                            <td><input type="number" class="form-control" id="id_wc_tt_amount_{{ forloop.counter }}" name="w_tt_amount_{{ forloop.counter }}" readonly  value="0" ></td>
+
+                                            <td><input type="number" class="form-control" id="id_wc_pcs_{{ forloop.counter }}" name="w_pcs_{{ forloop.counter }}" value={{pcs}} onchange="totalPieces(id)" readonly></td>  
+                                            <input type="hidden" name="id_{{ forloop.counter }}" value="{{ i.id }}">
+                                        </tr>
+                                        {% endfor %}
+                                        <input type="hidden" name="__po_job" value="{{ fetch.job_no }}">
+                                    </tbody>
+                                    <tfoot class="font-weight-bold">
+                                            <tr>
+                                                <td colspan="7" class="text-right">
+                                                Total:
+                                                </td>
+                                               
+                                                <td>  
+                                                    <input type="number" class="form-control"  step="any" value="0" name="w_tt_cons"  id="wash_tt_cons" readonly>
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control"  step="any"  value="0" name="w_tt_ex_pct" id="wash_tt_ex" readonly>
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control" name="w_grand_tt_cons"  value="0" step="any" id="wash_grand_tt_cons" readonly>
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control" name="w_tt_rate"  value="0" id="wash_tt_rate" readonly>
+                                                </td>
+                                                <td> 
+                                                    <input type="number" class="form-control" name="w_sub_tt_amount"  value="0" id="wash_tt_amount" readonly> 
+                                                </td>
+                                                <td> 
+                                                    <input type="number" class="form-control" name="w_grand_tt_qty"  value="0" id="wash_grand_tt_qty" readonly> 
+                                                </td>
+                                                <td> 
+                                                    <input type="number" class="form-control" name="w_grand_tt_amount"  value="0" id="wash_grand_tt_amount" readonly> 
+                                                </td>
+                                                <td> 
+                                                </td>
+                                             
+                                            </tr>
+                                            <tr>
+                                                <td colspan="7" class="text-right">
+                                                Average:
+                                                </td>
+                                                
+                                               
+                                                <td> 
+                                                    <input type="number" class="form-control" name="w_avg_tt_cons" id="avg_wash_tt_cons"  value="0" readonly> 
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control" name="w_avg_ex_pct" id="avg_wash_tt_ex"  value="0"readonly>
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control" name="w_avg_grand_tt_cons" id="avg_wash_grd_tt_cons"  value="0" readonly>
+                                                </td>
+                                                <td>  
+                                                    <input type="number" class="form-control" name="w_avg_tt_rate" id="avg_wash_tt_rate"  value="0" readonly>
+                                                </td>
+                                                <td> 
+                                                    <input type="number" class="form-control" name="w_avg_sub_tt_amount" id="avg_wash_tt_amt"  value="0" readonly> 
+                                                </td>
+                                                <td> 
+                                                    <input type="number" class="form-control" name="w_avg_grand_tt_qty" id="avg_wash_grdtt_qty"  value="0" readonly> 
+                                                </td>
+                                                <td> 
+                                                    <input type="number" class="form-control" name="w_avg_grand_tt_amount" id="avg_wash_grdtt_amt"  value="0" readonly> 
+                                                </td>
+                                              
+                                            </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div id="copy_washConsumption_label"></div>
+    <!-- WASH COST COUNTRY  MODAL  -->
+    <div class="modal fade" id="washCountryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="container">
+                <div class="modal-content ">
+                    <div class="modal-header ">
+                    <h6 class="modal-title" id="embCount">Country</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body ">
+                        <table id="wash_Country_Table" class="table table-bordered table-striped table-sm table-responsive-sm table-hover  display" >
+                            <thead class="text-center bg-meroon">
+                                <tr>
+                                    <th>S/L</th>
+                                    <th>Country Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tfoot id="tfooter">
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </tfoot>
+                            <tbody class="text-center">
+                               {% for i in country %}
+                                <tr id="wash_country-{{forloop.counter}}">
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{i.country_name}}</td>
+                                    <td><button id="btn-{{forloop.counter}}" class="btn btn-sm btn-outline-success " onclick="washCountryFunc(id)" data-dismiss="modal"><i class="fa fa-check "></i></button> </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            
+                        </table>
+                    </div>
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!---------------------------------- Modal End -------------------------------------->
 {% endblock body %}
 
@@ -2648,19 +3326,49 @@
         });
     });
 </script>
+<!-- FOR EMBELLISHMENT COST INLINE  -->
+<script type="text/javascript">
+    $(function() {
+        $('.inline_embl_form').formset({
+            prefix: '{{ embl_form_item.prefix }}',
+            addText: '+ Add More',
+            deleteText: 'X',
+            addContainerClass:"add_embl",
+            addCssClass:"btn btn-sm btn-warning mt-4 mb-3",
+            deleteCssClass:"btn btn-sm btn-danger",
+            deleteContainerClass:"removeec",
+        });
+    });
+</script>
+
+<!-- FOR WASH COST INLINE  -->
+<script type="text/javascript">
+    $(function() {
+        $('.inline_wash_form').formset({
+            prefix: '{{ wash_form_item.prefix }}',
+            addText: '+ Add More',
+            deleteText: 'X',
+            addContainerClass:"add_wash",
+            addCssClass:"btn btn-sm btn-warning mt-4 mb-3",
+            deleteCssClass:"btn btn-sm btn-danger",
+            deleteContainerClass:"removewac",
+        });
+    });
+</script>
 <!-- ALL INLINE FOR FABRIC COST  -->
 <script>
     var working_id = 0
     var conWorkingId = 0
     var count = 1
     var modalCount = 0
+
+    //  =====   NEW RRRR
     var hash = 0
     var wModal = []
     var fCout_g = 0
     var color_count = '{{ color_count }}'
     var conColorCount = '{{ con_color }}'
     var total_conv = {
-        
         'ttFinish':'id_fin_cons_',
         'ttProcess': 'id_pro_',
         'totalGreyCons': 'id_unit_',
@@ -2668,27 +3376,86 @@
         'ttAmt': 'id_amt_',
         'ttorderQT': 'id_pcs_',
         'ttQty': 'id_tt_qty_',
-        'masTtAmt': 'id_tt_amt_'
+        'masTtAmt': 'id_tt_amt_',
+
+        'trim_tt_Cons':'id_cl_cons_',
+        'trim_tt_ex':'id_cl_ex_pct_',
+        'trim_grd_tt_cons':'id_cl_tt_cons_',
+        'trim_tt_rate':'id_cl_rate_',
+        'trim_sub_amt':'id_cl_amount_',
+        'trim_tt_qty':'id_cl_tt_qty_',
+        'trim_grd_tt_amt':'id_cl_tt_amount_',
+
+        'emb_tt_cons':'id_ec_cons_',
+        'emb_tt_ex':'id_ec_ex_pct_',
+        'emb_grd_tt_cons':'id_ec_tt_cons_',
+        'emb_tt_rate':'id_ec_rate_',
+        'emb_tt_amt':'id_ec_amount_',
+        'emb_grd_tt_qty':'id_ec_tt_qty_',
+        'emb_grd_tt_amt':'id_ec_tt_amount_',
+
+        'wash_tt_cons':'id_wc_cons_',
+        'wash_tt_ex':'id_wc_ex_pct_',
+        'wash_grand_tt_cons':'id_wc_tt_cons_',
+        'wash_tt_rate':'id_wc_rate_',
+        'wash_tt_amount':'id_wc_amount_',
+        'wash_grand_tt_qty':'id_wc_tt_qty_',
+        'wash_grand_tt_amount':'id_wc_tt_amount_',
     }
+
     var avg_conv = {
         'avgFinish':'id_fin_cons_',
         'avgProcess': 'id_pro_',
+        'avgGreyCons': 'id_unit_',
         'avgRate': 'id_rate_',
         'avgAmt': 'id_amt_',
         'avgorderQT': 'id_pcs_',
         'avgQty': 'id_tt_qty_',
-        'avgmasTtAmt': 'id_tt_amt_'
+        'avgmasTtAmt': 'id_tt_amt_',
+
+        'avg_trim_cons': 'id_cl_cons_',
+        'avg_trim_ex': 'id_cl_ex_pct_',
+        'avg_trim_grdtt_cons': 'id_cl_tt_cons_',
+        'avg_trim_tt_rate': 'id_cl_rate_',
+        'avg_trim_sub_amt': 'id_cl_amount_',
+        'avg_trim_tt_qty': 'id_cl_tt_qty_',
+        'avg_trim_grdtt_amt': 'id_cl_tt_amount_',
+
+        'avg_emb_tt_cons':'id_ec_cons_',
+        'avg_emb_tt_ex':'id_ec_ex_pct_',
+        'avg_emb_grd_tt_cons':'id_ec_tt_cons_',
+        'avg_emb_tt_rate':'id_ec_rate_',
+        'avg_emb_tt_amt':'id_ec_amount_',
+        'avg_emb_grdtt_qty':'id_ec_tt_qty_',
+        'avg_emb_grdtt_amt':'id_ec_tt_amount_',
+
+        'avg_wash_tt_cons':'id_wc_cons_',
+        'avg_wash_tt_ex':'id_wc_ex_pct_',
+        'avg_wash_grd_tt_cons':'id_wc_tt_cons_',
+        'avg_wash_tt_rate':'id_wc_rate_',
+        'avg_wash_tt_amt':'id_wc_amount_',
+        'avg_wash_grdtt_qty':'id_wc_tt_qty_',
+        'avg_wash_grdtt_amt':'id_wc_tt_amount_',
     }
-    var total_Consump = {
-         'gnd_tt_cons':'id_cl_tt_cons_',
-     }
-    var avg_Consump = {
-        'avgCons':'id_cl_tt_cons_',
-    }  
+
+   
     var totalQtyCount = 0
     for(var i = 0; i<color_count; i++){
         totalQtyCount += parseFloat(document.getElementById(`id_cl_order_qty_${i+1}`).value, 10)
     }
+
+    var totalEmbQtyCount = 0
+    for(var i = 0; i<color_count; i++){
+        totalEmbQtyCount += parseFloat(document.getElementById(`id_ec_order_qty_${i+1}`).value, 10)
+    }
+
+    var totalwashQtyCount = 0
+    for(var i = 0; i<color_count; i++){
+        totalwashQtyCount += parseFloat(document.getElementById(`id_wc_order_qty_${i+1}`).value, 10)
+    }
+
+
+    //  ====   NEW RRRR
     var totalFinish = 0
     var averageFinishCons  = 0
     var yarnData = {}
@@ -2704,7 +3471,6 @@
     }
 
     function passColor(id){
-        passID(id)
         document.getElementById('__inline_index').value = count
         var a = document.getElementById('colorSizeInline')
         if(rightID(id) != 0){
@@ -2719,7 +3485,54 @@
             }
         }
     }
-   
+    
+    function passTrim(id){
+        document.getElementById('__inline_index').value = count
+        var cl = document.getElementById('careLabelInline')
+        if(rightID(id) != 0){
+            if(wModal.includes(rightID(id)) == false){
+                document.getElementById('copy_care_label').append(cl.cloneNode(true))
+                document.getElementById("CLForm").reset()
+                document.getElementById('copy_care_label').lastChild.id = `careLabelInline${modalCount}`
+                document.getElementById('id_trim_items-V-cons_unit_gmts'.replaceAt(14, rightID(id)-1)).dataset.target = `#careLabelInline${modalCount}`
+                document.getElementById("copy_care_label").lastChild.childNodes[1].childNodes[1].childNodes[1].id = ''
+                wModal.push(rightID(id))
+                modalCount++
+            }
+        }
+    }
+
+    function passEmbelishment(id){
+        document.getElementById('__inline_index').value = count
+        var e = document.getElementById('embConsumpInline')
+        if(rightID(id) != 0){
+            if(wModal.includes(rightID(id)) == false){
+                document.getElementById('copy_embConsumption_label').append(e.cloneNode(true))
+                document.getElementById("embcost_Form").reset()
+                document.getElementById('copy_embConsumption_label').lastChild.id = `embConsumpInline${modalCount}`
+                document.getElementById('id_embl_items-V-cons_dzn'.replaceAt(14, rightID(id)-1)).dataset.target = `#embConsumpInline${modalCount}`
+                document.getElementById("copy_embConsumption_label").lastChild.childNodes[1].childNodes[1].childNodes[1].id = ''
+                wModal.push(rightID(id))
+                modalCount++
+            }
+        }
+    }
+    
+    function passWash(id){
+        document.getElementById('__inline_index').value = count
+        var w = document.getElementById('washConsumpInline')
+        if(rightID(id) != 0){
+            if(wModal.includes(rightID(id)) == false){
+                document.getElementById('copy_washConsumption_label').append(w.cloneNode(true))
+                document.getElementById("wcons_Form").reset()
+                document.getElementById('copy_washConsumption_label').lastChild.id = `washConsumpInline${modalCount}`
+                document.getElementById('id_wash_items-V-cons_dzn'.replaceAt(14, rightID(id)-1)).dataset.target = `#washConsumpInline${modalCount}`
+                document.getElementById("copy_washConsumption_label").lastChild.childNodes[1].childNodes[1].childNodes[1].id = ''
+                wModal.push(rightID(id))
+                modalCount++
+            }
+        }
+    }
 
     function passColorCon(){
         for(var i = 0; i<parseInt(conColorCount); i++){
@@ -2755,8 +3568,9 @@
         }
         return number
     }
+    //  ====   NEW RRRR
     function idName(id){
-        return id.substr(0, id.length - String(rightID(id)).length)
+       return id.substr(0, id.length - String(rightID(id)).length)
     }
     String.prototype.replaceAt = function(index, replacement) {
         return this.substr(0, index) + replacement + this.substr(index + 1, 28);
@@ -2771,33 +3585,34 @@
         total('totalGreyCons')
         avg('avgFinish')
         avg('avgProcess')
-        greyCons(id)
+        avg('avgGreyCons')
         pipeline()
-    }
 
+    }
+    // ======= NEW RRRRR
     function copy(id){
-        if(document.getElementById("exampleRadios1").checked == true){
+        if(document.getElementById("colorFilter").checked == true){
             for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
                 if(document.getElementsByClassName("base_tr")[i].childNodes[5].childNodes[0].value == document.getElementById(`id_color_${rightID(id)}`).value){
                     document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
                 }
             }
         }
-        if(document.getElementById('exampleRadios4').checked == true){
+        if(document.getElementById('sizeFilter').checked == true){
             for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
                 if(document.getElementsByClassName("base_tr")[i].childNodes[7].childNodes[0].value == document.getElementById(`id_size_${rightID(id)}`).value){
                     document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
                 }
             } 
         }
-        if(document.getElementById('exampleRadios2').checked == true){
+        if(document.getElementById('sizeColorFilter').checked == true){
             for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
                 if(document.getElementsByClassName("base_tr")[i].childNodes[7].childNodes[0].value == document.getElementById(`id_size_${rightID(id)}`).value || document.getElementsByClassName("base_tr")[i].childNodes[5].childNodes[0].value == document.getElementById(`id_color_${rightID(id)}`).value){
                     document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
                 }
             }
         }
-        if(document.getElementById('exampleRadios3').checked == true){
+        if(document.getElementById('poFilter').checked == true){
             for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
                 if(document.getElementsByClassName("base_tr")[i].childNodes[3].childNodes[0].value == document.getElementById(`id_po_${rightID(id)}`).value){
                     document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
@@ -2806,9 +3621,10 @@
         }
     }
 
+
     function totalQty(id){
         document.getElementById(`id_tt_qty_${rightID(id)}`).value = (parseFloat(document.getElementById(`id_qty_${rightID(id)}`).value, 10) / parseFloat(document.getElementById(`id_pcs_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_unit_${rightID(id)}`).value, 10)).toFixed(2)
-        copy(id)
+        copy(id) 
     }
 
     function totalAmt(id){
@@ -2817,7 +3633,7 @@
         total('ttRate')
         avg('avgRate')
         pipeline()
-        copy(id)
+        copy(id) 
     }
 
     function greyCons(id){
@@ -2828,9 +3644,9 @@
         avg('avgAmt')
         avg('avgQty')
         avg('avgmasTtAmt')
-        avgGreyCons()
         pipeline()
-        copy(id)
+        copy(id) 
+
     }
 
     function total(type){
@@ -2841,78 +3657,6 @@
         document.getElementById(type).value = total
     }
 
-    function totalAvgGreyCons(){
-        var subTotal = 0;
-        for(var i = 0; i<count; i++){
-            try{
-                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-avg_grey_cons`).value, 10)
-                subTotal += sub
-            }
-            catch(err){
-                continue
-            }
-        }
-        document.getElementById("id_total_grey_cons").value = subTotal
-        document.getElementById("demo").innerText = subTotal
-    }
-
-    function totalRate(){
-        var subTotal = 0;
-        for(var i = 0; i<count; i++){
-            try{
-                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-rate`).value, 10)
-                subTotal += sub
-            }
-            catch(err){
-                continue
-            }
-        }
-        document.getElementById("id_total_rate").value = subTotal
-    }
-
-    function TotalAmt(){
-        var subTotal = 0;
-        for(var i = 0; i<count; i++){
-            try{
-                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-amount`).value, 10)
-                subTotal += sub
-            }
-            catch(err){
-                continue
-            }
-        }
-        document.getElementById("id_total_amt").value = subTotal
-    }
-
-    function totalTotalOty(){
-        var subTotal = 0;
-        for(var i = 0; i<count; i++){
-            try{
-                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-total_quantity`).value, 10)
-                subTotal += sub
-            }
-            catch(err){
-                continue
-            }
-        }
-        document.getElementById("id_total_total_qty").value = subTotal
-    }
-
-    function totalTotalAmt(){
-        var subTotal = 0;
-        for(var i = 0; i<count; i++){
-            try{
-                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-total_amount`).value, 10)
-                subTotal += sub
-            }
-            catch(err){
-                continue
-            }
-        }
-        document.getElementById("id_total_total_amt").value = subTotal
-    }
-
-
     function avg(type){
         var total = 0
         for(var i = 0; i<parseInt(color_count); i++){
@@ -2920,14 +3664,14 @@
         }
         document.getElementById(type).value = total / color_count
     }
-
+    // ====== NEW RRRRR
     function avgGreyCons(){
         var total = 0
         for(var i = 0; i<parseInt(color_count); i++){
-            total += parseFloat(document.getElementById(`masTtAmt`).value, 10)
+             total += parseFloat(document.getElementById(`masTtAmt`).value, 10)
         }
-        document.getElementById("avgGreyCons").value = (total / totalQtyCount) * parseFloat(document.getElementById("id_pcs_1").value, 10)
-    }
+        document.getElementById("avgGreyCons").value = (total / totalQtyCount) * parseFloat//(document.getElementById("id_pcs_1").value, 10)
+     }
 
     function pipeline(){
         document.getElementById(`id_fabric_inline-V-avg_grey_cons`.replaceAt(17, working_id)).value = document.getElementById(`avgGreyCons`).value
@@ -2935,11 +3679,23 @@
         document.getElementById(`id_fabric_inline-V-amount`.replaceAt(17, working_id)).value = document.getElementById('avgAmt').value
         document.getElementById(`id_fabric_inline-V-total_quantity`.replaceAt(17, working_id)).value = document.getElementById('avgQty').value
         document.getElementById(`id_fabric_inline-V-total_amount`.replaceAt(17, working_id)).value = document.getElementById('avgmasTtAmt').value
-        totalAvgGreyCons()
-        totalRate()
-        TotalAmt()
-        totalTotalOty()
-        totalTotalAmt()
+        
+        // TRIM DATA PIPELINE
+        document.getElementById(`id_trim_items-V-cons_unit_gmts`.replaceAt(14, working_id)).value = document.getElementById('avg_trim_grdtt_cons').value
+        document.getElementById(`id_trim_items-V-rate`.replaceAt(14, working_id)).value = document.getElementById('avg_trim_tt_rate').value
+        document.getElementById(`id_trim_items-V-amount`.replaceAt(14, working_id)).value = document.getElementById('avg_trim_sub_amt').value
+        document.getElementById(`id_trim_items-V-tt_qty`.replaceAt(14, working_id)).value = document.getElementById('trim_tt_qty').value
+        document.getElementById(`id_trim_items-V-tt_amt`.replaceAt(14, working_id)).value = document.getElementById('trim_grd_tt_amt').value
+       
+        // EMBLISHMENT DATA PIPELINE
+        document.getElementById(`id_embl_items-V-cons_dzn`.replaceAt(14, working_id)).value = document.getElementById('avg_emb_grd_tt_cons').value
+        document.getElementById(`id_embl_items-V-rate`.replaceAt(14, working_id)).value = document.getElementById('avg_emb_tt_rate').value
+        document.getElementById(`id_embl_items-V-amount`.replaceAt(14, working_id)).value = document.getElementById('avg_emb_tt_amt').value
+
+        // WASH DATA PIPELINE
+        document.getElementById(`id_wash_items-V-cons_dzn`.replaceAt(14, working_id)).value = document.getElementById('avg_wash_grd_tt_cons').value
+        document.getElementById(`id_wash_items-V-rate`.replaceAt(14, working_id)).value = document.getElementById('avg_wash_tt_rate').value
+        document.getElementById(`id_wash_items-V-amount`.replaceAt(14, working_id)).value = document.getElementById('avg_wash_tt_amt').value
     }
 
     function passID(id){
@@ -2955,11 +3711,11 @@
         }
   }
 
-    //GARMENTS ITEM
+    // FABRIC COST INLINE GARMENTS ITEM
     function gmtItem(id){
         document.getElementById('id_fabric_inline-V-gmts_items'.replaceAt(17, working_id)).value = document.getElementById(`gmt-${rightID(id)}`).children[1].innerText
     }
-    // FABRIC DESC
+
     function fabricationDes(id){
         var construction = document.getElementById(`td-${rightID(id)}`).children[2].innerText
         var fabdescription = document.getElementById(`td-${rightID(id)}`).children[7].innerText
@@ -2967,21 +3723,22 @@
         document.getElementById('id_fabric_inline-V-fabric_desc'.replaceAt(17, working_id)).value = fabComp
         document.getElementById('id_fabric_inline-V-gms'.replaceAt(17, working_id)).value = document.getElementById(`td-${rightID(id)}`).children[3].innerText
     }
-    //BODY PART
+
     function bodyPart(id){
         document.getElementById('id_fabric_inline-V-body_part'.replaceAt(17, working_id)).value = document.getElementById(`bodytd-${rightID(id)}`).children[1].innerText
         document.getElementById('id_fabric_inline-V-body_part_type'.replaceAt(17, working_id)).value = document.getElementById(`bodytd-${rightID(id)}`).children[2].innerText
     }
+
     //CONVERSION COST KNITTING ITEM RATE 
     function knitItem(id){
         document.getElementById('id_conver_inline-V-charge_unit'.replaceAt(17, working_id)).value = document.getElementById(`knit-${rightID(id)}`).children[8].innerText
     }
-
-    //CONVERSION COST DYEING ITEM RATE 
+ 
     function dyeingItem(id){ 
         document.getElementById(`id_charge_${rightID(id)}`).value = document.getElementById(`dyeing-${rightID(id)}`).children[8].innerText
     }
 
+    // ==== NEW RRRR
     function parsing(string, id){
         var yarnDataTemp = {
             'count': undefined,
@@ -3023,6 +3780,7 @@
             hash++
         }
     }
+
     // FABRIC COUNTER FOR YARN
     function febCount(){
         fCout = 0
@@ -3077,7 +3835,6 @@
         document.getElementById('id_trim_items-V-cons_uom'.replaceAt(14, working_id)).value = document.getElementById(`group-${rightID(id)}`).children[2].innerText
         var hello = document.getElementById('getName').value = document.getElementById(`group-${rightID(id)}`).children[1].innerText
         document.getElementById('helloName').innerText = document.getElementById(`group-${rightID(id)}`).children[1].innerText
-
     }
     
     // NOMINATED SUPPLIER FETCHING
@@ -3093,7 +3850,14 @@
        var ttConsumption = (clCons / (1.00 - pctConvert)).toFixed(4)
        document.getElementById(`id_cl_tt_cons_${rightID(id)}`).value = ttConsumption;
        totalQuantity(id)
-       totals('gnd_tt_cons')
+       total('trim_tt_Cons')
+       total('trim_tt_ex')
+       total('trim_grd_tt_cons')
+       avg('avg_trim_cons')
+       avg('avg_trim_ex')
+       avg('avg_trim_grdtt_cons')
+       pipeline()
+
     }
 
     function totalAmount(id){
@@ -3102,26 +3866,153 @@
         var ttAmount = ( ttConsumptions * clRate ); 
         document.getElementById(`id_cl_amount_${rightID(id)}`).value = ttAmount;
         totalCareLabAmount(id)
+        total('trim_tt_rate')
+        total('trim_sub_amt')
+        avg('avg_trim_tt_rate')
+        avg('avg_trim_sub_amt')
+        pipeline()
+
     }
     
     function totalQuantity(id){
         document.getElementById(`id_cl_tt_qty_${rightID(id)}`).value = (parseFloat(document.getElementById(`id_cl_order_qty_${rightID(id)}`).value, 10) / parseFloat(document.getElementById(`id_cl_pcs_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_cl_tt_cons_${rightID(id)}`).value, 10)).toFixed(2)
         totalCareLabAmount(id)
+       total('trim_tt_qty')
+       avg('avg_trim_tt_qty')
+
     }
     
     function totalCareLabAmount(id){
         document.getElementById(`id_cl_tt_amount_${rightID(id)}`).value = parseFloat(document.getElementById(`id_cl_tt_qty_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_cl_rate_${rightID(id)}`).value, 10)
+        total('trim_grd_tt_amt')
+        avg('avg_trim_grdtt_amt')
+        
     }
-    
-    function totals(type){
-        var totals = 0
-        for(var i = 0; i<parseInt(color_count); i++){
-            totals += parseFloat(document.getElementById(`${total_Consump[type]}${i+1}`).value, 10)
-        }
-        document.getElementById(type).value = totals
-    }
+
     // CARE LABEL MODAL DATA CALCULATIONS 
-  
+    
+    // EMBLISHMENT DATA FETCH FROM MODALS
+
+    embNameFunc=(id)=>{
+        document.getElementById('id_embl_items-V-cost_name'.replaceAt(14, working_id)).value = document.getElementById(`emb_types-${rightID(id)}`).children[1].innerText
+        document.getElementById('id_embl_items-V-type_name'.replaceAt(14, working_id)).value = document.getElementById(`emb_types-${rightID(id)}`).children[2].innerText
+    }
+    embBodyPart=(id)=>{
+        document.getElementById('id_embl_items-V-body_part'.replaceAt(14, working_id)).value = document.getElementById(`emblbp-${rightID(id)}`).children[1].innerText
+    }
+    embCountryFunc=(id)=>{
+        document.getElementById('id_embl_items-V-country'.replaceAt(14, working_id)).value = document.getElementById(`emb_country-${rightID(id)}`).children[1].innerText
+    }
+
+    // EMBLISHMENT CALCULATION (Sayem)============================== >
+    embConsFunc=(id)=>{
+        var embCons = parseFloat(document.getElementById(`id_ec_cons_${rightID(id)}`).value, 10)
+        var embEx = parseFloat(document.getElementById(`id_ec_ex_pct_${rightID(id)}`).value, 10)
+        var pctConvert = ( embEx / 100 )
+        var ttEmbCons = (embCons / (1.00 - pctConvert)).toFixed(4)
+        document.getElementById(`id_ec_tt_cons_${rightID(id)}`).value = ttEmbCons;
+        embOrdQty(id);
+        total('emb_tt_cons')
+        total('emb_tt_ex')
+        total('emb_grd_tt_cons')
+        avg('avg_emb_tt_cons')
+        avg('avg_emb_tt_ex')
+        avg('avg_emb_grd_tt_cons')
+        pipeline()
+    }
+
+    embttAmt=(id)=>{
+        var ttEmbCons = parseFloat(document.getElementById(`id_ec_tt_cons_${rightID(id)}`).value,10).toFixed(4)
+        var embRate = parseFloat(document.getElementById(`id_ec_rate_${rightID(id)}`).value, 10)
+        document.getElementById(`id_ec_amount_${rightID(id)}`).value = ttEmbCons * embRate;
+        totalEmbAmount(id);
+        total('emb_tt_rate')
+        avg('avg_emb_tt_rate')
+        pipeline()
+    }
+
+    embOrdQty=(id)=>{
+        var embqt = parseFloat(document.getElementById(`id_ec_order_qty_${rightID(id)}`).value, 10);
+        var embpcs = parseFloat(document.getElementById(`id_ec_pcs_${rightID(id)}`).value, 10);
+        var qtPcs = (embqt / embpcs);
+        var embttcons = parseFloat(document.getElementById(`id_ec_tt_cons_${rightID(id)}`).value, 10);
+        var finalres = qtPcs * embttcons ;
+        document.getElementById(`id_ec_tt_qty_${rightID(id)}`).value = finalres;
+        totalEmbAmount(id);
+        total('emb_grd_tt_qty')
+        avg('avg_emb_grdtt_qty')
+        pipeline()
+    }
+
+    totalEmbAmount=(id)=>{
+        document.getElementById(`id_ec_tt_amount_${rightID(id)}`).value = parseFloat(document.getElementById(`id_ec_tt_qty_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_ec_rate_${rightID(id)}`).value, 10)
+        total('emb_tt_amt')
+        total('emb_grd_tt_amt')
+        avg('avg_emb_tt_amt')
+        avg('avg_emb_grdtt_amt')
+        pipeline()
+
+    }
+
+    // WASH COST CONSUMPTION CALCULATIONS
+    washConsFunc=(id)=>{
+        var washCons = parseFloat(document.getElementById(`id_wc_cons_${rightID(id)}`).value, 10)
+        var washEx = parseFloat(document.getElementById(`id_wc_ex_pct_${rightID(id)}`).value, 10)
+        var pctConvert = ( washEx / 100 )
+        var ttwashCons = (washCons / (1.00 - pctConvert)).toFixed(4)
+        document.getElementById(`id_wc_tt_cons_${rightID(id)}`).value = ttwashCons;
+        washOrdQty(id);
+        total('wash_tt_cons')
+        total('wash_tt_ex')
+        total('wash_grand_tt_cons')
+        avg('avg_wash_tt_cons')
+        avg('avg_wash_tt_ex')
+        avg('avg_wash_grd_tt_cons')
+        pipeline()
+
+    }
+    washttAmt=(id)=>{
+        var ttwashCons = parseFloat(document.getElementById(`id_wc_tt_cons_${rightID(id)}`).value,10).toFixed(4)
+        var washRate = parseFloat(document.getElementById(`id_wc_rate_${rightID(id)}`).value, 10)
+        document.getElementById(`id_wc_amount_${rightID(id)}`).value = ttwashCons * washRate;
+        totalwashAmount(id);
+        total('wash_tt_rate')
+        avg('avg_wash_tt_rate')
+        pipeline()
+    }
+
+    washOrdQty=(id)=>{
+        var washqt = parseFloat(document.getElementById(`id_wc_order_qty_${rightID(id)}`).value, 10);
+        var washpcs = parseFloat(document.getElementById(`id_wc_pcs_${rightID(id)}`).value, 10);
+        var qtPcs = (washqt / washpcs);
+        var washttcons = parseFloat(document.getElementById(`id_wc_tt_cons_${rightID(id)}`).value, 10);
+        var finalres = qtPcs * washttcons ;
+        document.getElementById(`id_wc_tt_qty_${rightID(id)}`).value = finalres;
+        totalwashAmount(id);
+        total('wash_grand_tt_qty')
+        avg('avg_wash_grdtt_qty')
+        pipeline()
+    }
+    totalwashAmount=(id)=>{
+        document.getElementById(`id_wc_tt_amount_${rightID(id)}`).value = parseFloat(document.getElementById(`id_wc_tt_qty_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_wc_rate_${rightID(id)}`).value, 10)
+        total('wash_tt_amount')
+        total('wash_grand_tt_amount')
+        avg('avg_wash_tt_amt')
+        avg('avg_wash_grdtt_amt')
+        pipeline()
+
+    }
+
+    //WASH COST NAME FETCH
+    function washNameFunc(id){ 
+        document.getElementById('id_wash_items-V-cost_name'.replaceAt(14, working_id)).value = document.getElementById(`wash_types-${rightID(id)}`).children[1].innerText
+        document.getElementById('id_wash_items-V-cost_type'.replaceAt(14, working_id)).value = document.getElementById(`wash_types-${rightID(id)}`).children[2].innerText
+    }
+    //WASH COST COUNTRY FETCH
+    function washCountryFunc(id){ 
+        document.getElementById('id_wash_items-V-country'.replaceAt(14, working_id)).value = document.getElementById(`wash_country-${rightID(id)}`).children[1].innerText
+    }
+
     // click on the div FOR SHOWING HIDE DIV FOR COSTING
     function fabric(e, id) {
         var el = document.getElementById(id);
@@ -3173,6 +4064,10 @@
         e.cancelBubble = true;
         return false;
     }
+</script>
+
+<!-- COLOR CONTRAST  -->
+<script>
     // COLOR CONTRAST ACTIVE MODAL 
     $(document).ready(function(){ 
         $('#colorSelect').change(function() { 
@@ -3380,7 +4275,6 @@
                 data: formData,
                 success: function (response) {
                     alert("Your Fabric Cost Successfully Added. Please add below form as well.");
-                    getYarn()
                 },
                 error: function (response) {
                     alert("Something Went Wrong...");
@@ -3503,7 +4397,7 @@
                 type: 'POST',
                 data: formData,
                 success: function (response) {
-                    alert("Your Yarn Cost Successfully Added. Please add below form as well.");
+                    alert("Your Trim Cost Successfully Added. Please add below form as well.");
                 },
                 error: function (response) {
                     alert("Something Went Wrong...");
@@ -3515,7 +4409,7 @@
         });
 </script> 
 
-<!-- CARE LEBEL COST NO RELOAD  -->
+<!-- TRIM COST CARE LEBEL COST NO RELOAD  -->
 <script type="text/javascript"> 
     // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
         $('#CLForm').submit(function(event){
@@ -3528,7 +4422,31 @@
                 type: 'POST',
                 data: formData,
                 success: function (response) {
-                    alert("Your care lebel information successfully added. Please add below form as well.");
+                    alert("Your consumption care lebel information successfully added. Please add below form as well.");
+                },
+                error: function (response) {
+                    alert("Something Went Wrong...");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+</script> 
+<!-- Embellishment COST NO RELOAD  -->
+<script type="text/javascript"> 
+    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
+        $('#emb_form').submit(function(event){
+            event.preventDefault();
+            var form = $(this)
+            url = form.attr('action')
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    alert("Your Embellishment Cost Successfully Added. Please add below form as well.");
                 },
                 error: function (response) {
                     alert("Something Went Wrong...");
@@ -3540,6 +4458,30 @@
         });
 </script> 
 
+<!-- Embellishment CONSUMPTION COSTING FORM NO RELOAD  -->
+<script type="text/javascript"> 
+    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
+        $('#embcost_Form').submit(function(event){
+            event.preventDefault();
+            var form = $(this)
+            url = form.attr('action')
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    alert("Your 1 Dzn Costing Info for embellishment cost Successfully Added. Please add below form as well.");
+                },
+                error: function (response) {
+                    alert("Something Went Wrong...");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+</script> 
 <!-- GROUPS MODAL LIBRARY -->
 <script>
     $(document).ready(function() {
@@ -3586,5 +4528,213 @@
         });
     });
 </script>
+<!-- EMBLISH NAME MODAL LIBRARY -->
+<script>
+    $(document).ready(function() {
+      // Setup - add a text input to each footer cell
+      $('#emb_name_Table #tfooter th').each( function () {
+          var title = $(this).text();
+          $(this).html( '<input type="text" class="form-control" placeholder="Search" />' );
+      });
+      //For Modal Adminlte Datatable scrolly and scrollx problem solved
+      $('#embNameModal').on('shown.bs.modal',function(){
+        tableModal = $("#emb_name_Table").DataTable({
+        "paging":false,
+        "scrollX":true,
+        "scrollY":170,
+        "info":false,
+        "destroy":true
+        });
+    });
+      var table = $('#emb_name_Table').DataTable({
+          initComplete: function () {
+              this.api().columns().every( function () {
+                  var that = this;
+                  $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                      if ( that.search() !== this.value ) {
+                          that
+                            .search( this.value )
+                            .draw();
+                      }
+                  } );
+              } );
+          }
+      });
+  });
+</script>
+<!-- EMBLISH COUNTRY MODAL LIBRARY -->
+<script>
+    $(document).ready(function() {
+      // Setup - add a text input to each footer cell
+      $('#emb_Country_Table #tfooter th').each( function () {
+          var title = $(this).text();
+          $(this).html( '<input type="text" class="form-control" placeholder="Search" />' );
+      });
+      //For Modal Adminlte Datatable scrolly and scrollx problem solved
+      $('#embCountryModal').on('shown.bs.modal',function(){
+        tableModal = $("#emb_Country_Table").DataTable({
+        "paging":false,
+        "scrollX":true,
+        "scrollY":170,
+        "info":false,
+        "destroy":true
+        });
+    });
+      var table = $('#emb_Country_Table').DataTable({
+          initComplete: function () {
+              this.api().columns().every( function () {
+                  var that = this;
+                  $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                      if ( that.search() !== this.value ) {
+                          that
+                            .search( this.value )
+                            .draw();
+                      }
+                  } );
+              } );
+          }
+      });
+  });
+</script>
 
+<!-- WASH COST NO RELOAD  -->
+<script type="text/javascript"> 
+    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
+        $('#wc_form').submit(function(event){
+            event.preventDefault();
+            var form = $(this)
+            url = form.attr('action')
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    alert("Your Wash Cost Successfully Added. Please add below form as well.");
+                },
+                error: function (response) {
+                    alert("Something Went Wrong...");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+</script> 
+
+<!-- Wash Cost CONSUMPTION COSTING FORM NO RELOAD  -->
+<script type="text/javascript"> 
+    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
+        $('#wcons_Form').submit(function(event){
+            event.preventDefault();
+            var form = $(this)
+            url = form.attr('action')
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    alert("Your 1 Dzn Costing Info for wash cost Successfully Added. Please add below form as well.");
+                },
+                error: function (response) {
+                    alert("Something Went Wrong...");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+</script> 
+
+<!-- WASH NAME MODAL LIBRARY -->
+<script>
+    $(document).ready(function() {
+      // Setup - add a text input to each footer cell
+      $('#wash_name_Table #tfooter th').each( function () {
+          var title = $(this).text();
+          $(this).html( '<input type="text" class="form-control" placeholder="Search" />' );
+      });
+      //For Modal Adminlte Datatable scrolly and scrollx problem solved
+      $('#washNameModal').on('shown.bs.modal',function(){
+        tableModal = $("#wash_name_Table").DataTable({
+        "paging":false,
+        "scrollX":true,
+        "scrollY":170,
+        "info":false,
+        "destroy":true
+        });
+    });
+      var table = $('#wash_name_Table').DataTable({
+          initComplete: function () {
+              this.api().columns().every( function () {
+                  var that = this;
+                  $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                      if ( that.search() !== this.value ) {
+                          that
+                            .search( this.value )
+                            .draw();
+                      }
+                  } );
+              } );
+          }
+      });
+  });
+</script>
+<!-- WASH COUNTRY MODAL LIBRARY -->
+<script>
+    $(document).ready(function() {
+      // Setup - add a text input to each footer cell
+      $('#wash_Country_Table #tfooter th').each( function () {
+          var title = $(this).text();
+          $(this).html( '<input type="text" class="form-control" placeholder="Search" />' );
+      });
+      //For Modal Adminlte Datatable scrolly and scrollx problem solved
+      $('#washCountryModal').on('shown.bs.modal',function(){
+        tableModal = $("#wash_Country_Table").DataTable({
+        "paging":false,
+        "scrollX":true,
+        "scrollY":170,
+        "info":false,
+        "destroy":true
+        });
+    });
+      var table = $('#wash_Country_Table').DataTable({
+          initComplete: function () {
+              this.api().columns().every( function () {
+                  var that = this;
+                  $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                      if ( that.search() !== this.value ) {
+                          that
+                            .search( this.value )
+                            .draw();
+                      }
+                  } );
+              } );
+          }
+      });
+  });
+</script>
+<!-- DZN CALCULATOR  -->
+<script>
+    dznCalculator=()=>{
+        let calPcs = document.getElementById("calcPcs").value
+        let dznPieces = document.getElementById("dzn_Pcs").value
+        let dzn = (dznPieces * calPcs).toFixed(5);
+        let perDzn = document.getElementById("dzn_perDzn").value = dzn ;
+        let inDzn = document.getElementById("dzn_inDzn").value
+        let totalResult = document.getElementById("dzn_Result").value = (perDzn / inDzn).toFixed(5) ;
+    }
+
+  //  function displayRadioValue() {
+  //      var ele = document.getElementsByName('calcRadio');
+          
+  //      for(i = 0; i < ele.length; i++) {
+  //          if(ele[i].checked)
+  //          document.getElementById("result").innerHTML
+  //                  = "calcRadio: "+ele[i].value;
+  //      }
+  //  }
+
+</script>
 {% endblock script %}

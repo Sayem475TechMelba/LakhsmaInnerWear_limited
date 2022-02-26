@@ -23,7 +23,35 @@ def coustom_inline(color, fabric, count):
         color_lis[counter].fabric_cost = fabric_lis[counter]
         color_lis[counter].save()
         counter += 1
+        
+def embl_inline(color, embl, count):
+    color_lis = []
+    embl_lis = []
+    counter = 0
+    for i in color:
+        color_lis.append(i)
+    for j in embl:
+        embl_lis.append(j)
 
+    for i in range(1, count+1):
+        color_lis[counter].embl_cost = embl_lis[counter]
+        color_lis[counter].save()
+        counter += 1
+
+def wash_inline(color, wash, count):
+    color_lis = []
+    wash_lis = []
+    counter = 0
+    for i in color:
+        color_lis.append(i)
+    for j in wash:
+        wash_lis.append(j)
+
+    for i in range(1, count+1):
+        color_lis[counter].wash_cost = wash_lis[counter]
+        color_lis[counter].save()
+        counter += 1
+        
 def job_no(model):
     if len(model) > 0:
         temp = []

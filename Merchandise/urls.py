@@ -49,7 +49,10 @@ urlpatterns=[
     path('lib_dyeing/', views.lib_dyeing, name= 'lib_dyeing'),
     path('lib_groups_item/', views.lib_groups_item, name= 'lib_groups_item'),
     path('lib_trim_source/', views.lib_trim_source, name= 'lib_trim_source'),
-
+    path('lib_emblcost_name/', views.lib_emblcost_name, name= 'lib_emblcost_name'),
+    path('lib_emblcost_type/', views.lib_emblcost_type, name= 'lib_emblcost_type'),
+    path('lib_washcost_name/', views.lib_washcost_name, name= 'lib_washcost_name'),
+    path('lib_washcost_type/', views.lib_washcost_type, name= 'lib_washcost_type'),
 
     # EDIT / DELETE
     path('edit_agent/<int:id>/', views.edit_agent, name= 'edit_agent'),
@@ -184,6 +187,18 @@ urlpatterns=[
 
     path('edit_trim_source/<int:id>/', views.edit_trim_source, name= 'edit_trim_source'),
     path('delete_trim_source/<int:id>/', views.delete_trim_source, name= 'delete_trim_source'),
+
+    path('edit_emblcost_name/<int:id>/', views.edit_emblcost_name, name= 'edit_emblcost_name'),
+    path('delete_emblcost_name/<int:id>/', views.delete_emblcost_name, name= 'delete_emblcost_name'),
+
+    path('edit_emblcost_type/<int:id>/', views.edit_emblcost_type, name= 'edit_emblcost_type'),
+    path('delete_emblcost_type/<int:id>/', views.delete_emblcost_type, name= 'delete_emblcost_type'),
+    
+    path('edit_washcost_name/<int:id>/', views.edit_washcost_name, name= 'edit_emblcost_name'),
+    path('delete_washcost_name/<int:id>/', views.delete_washcost_name, name= 'delete_washcost_name'),
+
+    path('edit_washcost_type/<int:id>/', views.edit_washcost_type, name= 'edit_washcost_type'),
+    path('delete_washcost_type/<int:id>/', views.delete_washcost_type, name= 'delete_washcost_type'),
     
     #Main Form Urls
     path('order_entry/', views.order_entry, name= 'order_entry'),

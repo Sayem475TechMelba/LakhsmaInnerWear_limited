@@ -891,6 +891,83 @@ def lib_trim_source(request):
     }
     return render(request, 'Merchandising/Library/Budget/lib_trim_source.html', context)
 
+############ Embellishment Cost Library Views ############
+def lib_emblcost_name(request):
+    names = LibraryEmbCostName.objects.all()
+
+    if request.method == 'POST':
+        form = LibEmbCostNameForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library embellishment cost name info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibEmbCostNameForm()
+    context ={
+        'form':form, 
+        'names':names,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_emblcost_name.html', context)
+
+def lib_emblcost_type(request):
+    types = LibraryEmbCostType.objects.all()
+
+    if request.method == 'POST':
+        form = LibyEmbCostTypeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library embellishment cost type info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibyEmbCostTypeForm()
+    context ={
+        'form':form, 
+        'types':types,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_emblcost_type.html', context)
+
+############ Wash Cost Library Views ############
+def lib_washcost_name(request):
+    w_names = LibraryWash_CostName.objects.all()
+
+    if request.method == 'POST':
+        form = LibWashCost_NameForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library wash cost name info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibWashCost_NameForm()
+    context ={
+        'form':form, 
+        'w_names':w_names,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_washcost_name.html', context)
+
+def lib_washcost_type(request):
+    w_types = LibraryWash_CostType.objects.all()
+
+    if request.method == 'POST':
+        form = LibywashCost_TypeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your library wash cost type info has been recorded!")
+            return HttpResponseRedirect(request.path_info)
+        else:
+            messages.error(request , "Something went wrong!")
+            print(form.errors)
+    form = LibywashCost_TypeForm()
+    context ={
+        'form':form, 
+        'w_types':w_types,
+    }
+    return render(request, 'Merchandising/Library/Budget/lib_washcost_type.html', context)
 ########### EDIT ALL LIBRARY FORMS ##########
 def edit_agent(request,id):
     agent = LibraryAgent.objects.get(id = id)
@@ -1788,7 +1865,87 @@ def delete_trim_source(request,id):
     sources.delete()
     return redirect('lib_trim_source')
 
+######### Embellishment cost edit views ##############
+def edit_emblcost_name(request, id):
+    names = LibraryEmbCostName.objects.get(id = id)
+    form = LibEmbCostNameForm(instance=names)
+    if request.method == 'POST':
+        form = LibEmbCostNameForm(request.POST,  instance = names)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Embellishment cost name info has been updated!")
+            return redirect('lib_emblcost_name')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_emblcost_name.html',context)
 
+def delete_emblcost_name(request,id):
+    names = LibraryEmbCostName.objects.get(id = id)
+    names.delete()
+    return redirect('lib_emblcost_name')
+
+def edit_emblcost_type(request, id):
+    types = LibraryEmbCostType.objects.get(id = id)
+    form = LibyEmbCostTypeForm(instance=types)
+    if request.method == 'POST':
+        form = LibyEmbCostTypeForm(request.POST,  instance = types)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Embellishment cost type info has been updated!")
+            return redirect('lib_emblcost_type')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_emblcost_type.html',context)
+
+def delete_emblcost_type(request,id):
+    types = LibraryEmbCostType.objects.get(id = id)
+    types.delete()
+    return redirect('lib_emblcost_type')    
+
+######### Embellishment cost edit views ##############
+def edit_washcost_name(request, id):
+    w_names = LibraryWash_CostName.objects.get(id = id)
+    form = LibWashCost_NameForm(instance=w_names)
+    if request.method == 'POST':
+        form = LibWashCost_NameForm(request.POST,  instance = w_names)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Wash cost name info has been updated!")
+            return redirect('lib_washcost_name')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_washcost_name.html',context)
+
+def delete_washcost_name(request,id):
+    w_names = LibraryWash_CostName.objects.get(id = id)
+    w_names.delete()
+    return redirect('lib_washcost_name')
+
+def edit_washcost_type(request, id):
+    w_types = LibraryWash_CostType.objects.get(id = id)
+    form = LibywashCost_TypeForm(instance=w_types)
+    if request.method == 'POST':
+        form = LibywashCost_TypeForm(request.POST,  instance = w_types)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Wash cost type info has been updated!")
+            return redirect('lib_washcost_type')
+        else:
+            messages.error("Something went wrong!")
+            print(form.errors)
+    context = {'form':form}
+    return render(request, 'Merchandising/Library/Budget/edit_washcost_type.html',context)
+
+def delete_washcost_type(request,id):
+    w_types = LibraryWash_CostType.objects.get(id = id)
+    w_types.delete()
+    return redirect('lib_washcost_type')
 ################## ALL Main Forms Views ###############
 
 def order_entry(request):
@@ -2085,6 +2242,8 @@ def pre_costing(request):
     groups = LibraryGroupsItem.objects.all()
     country = LibraryCountry.objects.all()
     nom_supp = LibraryNominatedSupp.objects.all()
+    types = LibraryEmbCostType.objects.all()
+    w_types = LibraryWash_CostType.objects.all()
 
     # FOR BUDGET - PIECE QUANTITY 
     field_name = 'pcs_amount'
@@ -2110,6 +2269,13 @@ def pre_costing(request):
     tc_factory = inlineformset_factory(TrimCost, TrimCostItems, form=TrimItemsForm, extra=1)
     trim_form_item = tc_factory()
 
+    embl_form = EmbellishmentCostForm()
+    ec_factory = inlineformset_factory(EmbellishmentCost, EmbellishmentCostItem, form=EmbellishmentItemsForm, extra=1)
+    embl_form_item = ec_factory()
+    
+    wash_form = WashCostForm()
+    wac_factory = inlineformset_factory(WashCost, WashCost_Items, form=WashCostItemsForm, extra=1)
+    wash_form_item = wac_factory()
 
     if request.method == 'POST':
         if request.POST.get('_task') == "cost_form": #For budget cost form
@@ -2307,7 +2473,7 @@ def pre_costing(request):
            
             elif request.method == "POST":
                 trim_form = TrimCostForm(request.POST, request.FILES)
-                tc_factory = inlineformset_factory(TrimCost, TrimCostItems, form=TrimItemsForm, extra=1)
+                tc_factory = inlineformset_factory(TrimCost, TrimCostItems, form=TrimItemsForm)
                 trim_form_item = tc_factory(request.POST, request.FILES)
                 if trim_form.is_valid() and trim_form_item.is_valid():
                     data = trim_form.save()
@@ -2322,6 +2488,131 @@ def pre_costing(request):
                     messages.error(request , "Something went wrong!")
                     print(trim_form_item.errors)
 
+        elif request.POST.get('_task') == "embl_form":          #For Embellishment cost
+            if request.method == "GET":
+                embl_form = EmbellishmentCostForm()
+                ec_factory = inlineformset_factory(EmbellishmentCost, EmbellishmentCostItem, form=EmbellishmentItemsForm, extra=1)
+                embl_form_item = ec_factory()
+           
+            elif request.method == "POST":
+                embl_form = EmbellishmentCostForm(request.POST, request.FILES)
+                ec_factory = inlineformset_factory(EmbellishmentCost, EmbellishmentCostItem, form=EmbellishmentItemsForm)
+                embl_form_item = ec_factory(request.POST, request.FILES)
+                if embl_form.is_valid() and embl_form_item.is_valid():
+                    data = embl_form.save()
+                    inserted_by = request.user
+                    embl_form.instance.b_job_no = BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=inserted_by)))
+                    embl_form.instance.inserted_by = inserted_by
+                    embl_form.save()
+                    embl_form_item.instance = data
+                    embl_form_item.save()
+                    # helper.embl_inline(
+                    #     EmbConsCosting.objects.filter(inserted_by=request.user).order_by('-id')[:int(request.POST.get("embl_count"))],
+                    #     EmbellishmentCostItem.objects.filter(embellishment_cost=helper.job_no(EmbellishmentCost.objects.filter(inserted_by=request.user))).order_by('-id')[:int(request.POST.get("embl_count"))],
+                    #     int(request.POST.get("embl_count"))
+                    # )
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    messages.error(request , "Something went wrong!")
+                    print(embl_form_item.errors)
+
+        elif request.POST.get("_task") == 'embcost_data':  # For embl costing 1 dzn form
+            embcons_costing_model = EmbConsCosting(b_job_no=BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=request.user))),
+            inserted_by=request.user,
+            tt_cons = request.POST.get("tt_cons"),
+            tt_rate = request.POST.get("tt_rate"),
+            tt_amount = request.POST.get("tt_amount"),
+            avg_tt_cons = request.POST.get("avg_tt_cons"),
+            avg_tt_rate = request.POST.get("avg_tt_rate"),
+            avg_tt_amount = request.POST.get("avg_tt_amount"),
+            )
+            embcons_costing_model.save()
+            for i in range(0, len(helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('__po_job')[5:]))))):
+                data = EmbConsCosting_Items(
+                    color_size=ColorSizeItems.objects.get(id=request.POST.get(f'id_{i+1}')),
+                    emb_cons_costing = embcons_costing_model,
+                    po_no = request.POST.get(f"po_no_{i+1}"),
+                    country = request.POST.get(f"country_{i+1}"),
+                    gmts_item = request.POST.get(f"gmts_item_{i+1}"),
+                    color = request.POST.get(f"color_{i+1}"),
+                    gmts_size = request.POST.get(f"gmts_size_{i+1}"),
+                    cons = request.POST.get(f"cons_{i+1}"),
+                    ex_pct = request.POST.get(f"ex_pct_{i+1}"),
+                    tt_cons = request.POST.get(f"tt_cons_{i+1}"),
+                    rate = request.POST.get(f"rate_{i+1}"),
+                    amount = request.POST.get(f"amount_{i+1}"),
+                    
+                )
+                data.save()
+        elif request.POST.get('_task') == "wash_form":          #For Wash cost
+            if request.method == "GET":
+                wash_form = WashCostForm()
+                wac_factory = inlineformset_factory(WashCost, WashCost_Items, form=WashCostItemsForm, extra=1)
+                wash_form_item = wac_factory()
+           
+            elif request.method == "POST":
+                wash_form = WashCostForm(request.POST, request.FILES)
+                wac_factory = inlineformset_factory(WashCost, WashCost_Items, form=WashCostItemsForm)
+                wash_form_item = wac_factory(request.POST, request.FILES)
+                if wash_form.is_valid() and wash_form_item.is_valid():
+                    data = wash_form.save()
+                    inserted_by = request.user
+                    wash_form.instance.b_job_no = BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=inserted_by)))
+                    wash_form.instance.inserted_by = inserted_by
+                    wash_form.save()
+                    wash_form_item.instance = data
+                    wash_form_item.save()
+                    # helper.wash_inline(
+                    #     WashConsCosting.objects.filter(inserted_by=request.user).order_by('-id')[:int(request.POST.get("wash_count"))],
+                    #     WashCost_Items.objects.filter(embellishment_cost=helper.job_no(WashCost.objects.filter(inserted_by=request.user))).order_by('-id')[:int(request.POST.get("wash_count"))],
+                    #     int(request.POST.get("wash_count"))
+                    # )
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    messages.error(request , "Something went wrong!")
+                    print(wash_form_item.errors)
+
+        elif request.POST.get("_task") == 'washcost_data':  # For wash costing 1 dzn form
+            washcons_costing_model = WashConsCosting(b_job_no=BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=request.user))),
+            inserted_by=request.user,
+            w_tt_cons = request.POST.get("w_tt_cons"),
+            w_tt_ex_pct = request.POST.get("w_tt_ex_pct"),
+            w_grand_tt_cons = request.POST.get("w_grand_tt_cons"),
+            w_tt_rate = request.POST.get("w_tt_rate"),
+            w_sub_tt_amount = request.POST.get("w_sub_tt_amount"),
+            w_grand_tt_qty = request.POST.get("w_grand_tt_qty"),
+            w_grand_tt_amount = request.POST.get("w_grand_tt_amount"),
+            w_avg_tt_cons = request.POST.get("w_avg_tt_cons"),
+            w_avg_ex_pct = request.POST.get("w_avg_ex_pct"),
+            w_avg_grand_tt_cons = request.POST.get("w_avg_grand_tt_cons"),
+            w_avg_tt_rate = request.POST.get("w_avg_tt_rate"),
+            w_avg_sub_tt_amount = request.POST.get("w_avg_sub_tt_amount"),
+            w_avg_grand_tt_qty = request.POST.get("w_avg_grand_tt_qty"),
+            w_avg_grand_tt_amount = request.POST.get("w_avg_grand_tt_amount"),
+            )
+            washcons_costing_model.save()
+            for i in range(0, len(helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('__po_job')[5:]))))):
+                data = WashConsCosting_Items(
+                    color_size=ColorSizeItems.objects.get(id=request.POST.get(f'id_{i+1}')),
+                    wash_cons_cost = washcons_costing_model,
+                    w_po_no = request.POST.get(f"w_po_no_{i+1}"),
+                    w_country = request.POST.get(f"w_country_{i+1}"),
+                    w_gmts_item = request.POST.get(f"w_gmts_item_{i+1}"),
+                    w_color = request.POST.get(f"w_color_{i+1}"),
+                    w_gmts_size = request.POST.get(f"w_gmts_size_{i+1}"),
+                    w_item_qty = request.POST.get(f"w_item_qty_{i+1}"),
+                    w_cons = request.POST.get(f"w_cons_{i+1}"),
+                    w_ex_pct = request.POST.get(f"w_ex_pct_{i+1}"),
+                    w_tt_cons = request.POST.get(f"w_tt_cons_{i+1}"),
+                    w_rate = request.POST.get(f"w_rate_{i+1}"),
+                    w_amount = request.POST.get(f"w_amount_{i+1}"),
+                    w_tt_qty = request.POST.get(f"w_tt_qty_{i+1}"),
+                    w_tt_amount = request.POST.get(f"w_tt_amount_{i+1}"),
+                    w_pcs = request.POST.get(f"w_pcs_{i+1}"),
+                    
+                )
+                data.save()
+
         else:
             context ={
                 'form':form,
@@ -2333,6 +2624,8 @@ def pre_costing(request):
                 'country': country,
                 'groups': groups,
                 'nom_supp': nom_supp,
+                'types':types,
+                'w_types':w_types,
                 'fab_form': fab_form,
                 'form_items_fc': form_items_fc,
                 'yarn_form': yarn_form,
@@ -2341,6 +2634,10 @@ def pre_costing(request):
                 'form_items_cc': form_items_cc,
                 'trim_form': trim_form,
                 'trim_form_item': trim_form_item,
+                'embl_form': embl_form,
+                'embl_form_item': embl_form_item,
+                'wash_form':wash_form,
+                'wash_form_item': wash_form_item,
                 'fetch': OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])),
                 'color': helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:]))),
                 'color_count': len(helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])))),
@@ -2372,6 +2669,8 @@ def pre_costing(request):
         'country': country,
         'groups': groups,
         'nom_supp': nom_supp,
+        'types':types,
+        'w_types':w_types,
         'fab_form': fab_form,
         'form_items_fc': form_items_fc,
         'yarn_form': yarn_form,
@@ -2380,6 +2679,10 @@ def pre_costing(request):
         'form_items_cc': form_items_cc,
         'trim_form': trim_form,
         'trim_form_item': trim_form_item,
+        'embl_form': embl_form,
+        'embl_form_item': embl_form_item,
+        'wash_form':wash_form,
+        'wash_form_item': wash_form_item,
     }
     return render(request, 'Merchandising/Order/pre_costing.html', context)
 

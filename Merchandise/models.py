@@ -432,7 +432,39 @@ class LibraryTrimSource(models.Model):
 
     def __str__(self):
         return self.source_name
+    
+############# Embellishment Cost Library ##########
 
+class LibraryEmbCostName(models.Model):
+    cost_name = models.CharField(max_length=200, blank=True, null=True)
+    insert_date = models.DateTimeField(default=now)
+    
+    def __str__(self):
+        return self.cost_name
+
+class LibraryEmbCostType(models.Model):
+    cost_name = models.ForeignKey(LibraryEmbCostName, related_name="emb_cost_name", on_delete=models.CASCADE, blank=True, null=True)
+    type_name = models.CharField(max_length=200, blank=True, null=True)
+    insert_date = models.DateTimeField(default=now)
+    
+    def __str__(self):
+        return self.type_name
+
+############# Wash Cost Library ##########
+class LibraryWash_CostName(models.Model):
+    w_cost_name = models.CharField(max_length=200, blank=True, null=True)
+    insert_date = models.DateTimeField(default=now)
+    
+    def __str__(self):
+        return self.w_cost_name
+
+class LibraryWash_CostType(models.Model):
+    w_cost_name = models.ForeignKey(LibraryWash_CostName, related_name="wash_cname", on_delete=models.CASCADE, blank=True, null=True)
+    w_type_name = models.CharField(max_length=200, blank=True, null=True)
+    insert_date = models.DateTimeField(default=now)
+    
+    def __str__(self):
+        return self.w_cost_name
 #########################################################
 ############### Library Table End #####################
 ##########################################################
@@ -929,4 +961,137 @@ class Care_level_Items(models.Model):
     def __str__(self):
         return str(self.care_level)
 
+# Embellishment Cost DB
+class EmbellishmentCost(models.Model):
+    b_job_no = models.ForeignKey(BudgetPreCost, related_name='embl_cost', on_delete=models.CASCADE, null=True, blank=True)
+    tt_rate = models.FloatField(default=0, blank=True, null=True)
+    tt_amount = models.FloatField(default=0, blank=True, null=True)
+    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, related_name="embl_insert_by", null=True, blank=True)
+    insert_date = models.DateTimeField(default=now, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.b_job_no)
     
+class EmbellishmentCostItem(models.Model):
+    STATUS = (
+        ('Active', 'Active'),
+        ('Inactive', 'Inactive'),
+    )
+    embellishment_cost = models.ForeignKey(EmbellishmentCost, related_name='embl_items', on_delete=models.CASCADE, null=True, blank=True)
+    cost_name = models.CharField(max_length=200, blank=True, null=True)
+    type_name = models.CharField(max_length=200, blank=True, null=True)
+    body_part = models.CharField(max_length=200, blank=True, null=True)
+    country = models.CharField(max_length=200, blank=True, null=True)
+    emb_supplier = models.CharField(max_length=200, blank=True, null=True)
+    cons_dzn = models.FloatField(default=0, blank=True, null=True)
+    rate = models.FloatField(default=0, blank=True, null=True)
+    amount = models.FloatField(default=0, blank=True, null=True)
+    status = models.CharField(max_length=50, choices=STATUS, default="Active", blank=True, null=True)
+
+    def __str__(self):
+        return str("%s-%s" %(self.embellishment_cost, self.id))
+
+class EmbConsCosting(models.Model): #Embellishment consumption entry form for 1 dzn
+    b_job_no = models.ForeignKey(BudgetPreCost, related_name="embcons_level", on_delete=models.CASCADE, blank=True, null=True)
+    embl_cost = models.ForeignKey(EmbellishmentCostItem, related_name="embcons_cost", on_delete=models.CASCADE, blank=True, null=True)
+    tt_cons = models.FloatField(default=0, blank=True, null=True)
+    tt_rate = models.FloatField(default=0, blank=True, null=True)
+    tt_amount = models.FloatField(default=0, blank=True, null=True)
+    avg_tt_cons = models.FloatField(default=0, blank=True, null=True)
+    avg_tt_rate = models.FloatField(default=0, blank=True, null=True)
+    avg_tt_amount = models.FloatField(default=0, blank=True, null=True)
+    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, related_name="embcons_insert_by", null=True, blank=True)
+    insert_date = models.DateTimeField(default=now, blank=True, null=True)
+    
+    def __str__(self):
+        return str(self.embl_cost)
+
+class EmbConsCosting_Items(models.Model): #Embellishment consumption entry form items for 1 dzn
+    emb_cons_costing = models.ForeignKey(EmbConsCosting, related_name="embcons_items", on_delete=models.CASCADE, blank=True, null=True)
+    color_size = models.ForeignKey(ColorSizeItems, related_name="emb_colorsize", on_delete=models.CASCADE, blank=True, null=True)
+    po_no = models.CharField(max_length=200, blank=True, null=True)
+    country = models.CharField(max_length=200, blank=True, null=True)
+    gmts_item = models.CharField(max_length=200, blank=True, null=True)
+    color = models.CharField(max_length=200, blank=True, null=True)
+    gmts_size = models.CharField(max_length=200, blank=True, null=True)
+    cons = models.FloatField(default=0, blank=True, null=True)
+    ex_pct = models.FloatField(default=0, blank=True, null=True)
+    tt_cons = models.FloatField(default=0, blank=True, null=True)
+    rate = models.FloatField(default=0, blank=True, null=True)
+    amount = models.FloatField(default=0, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.emb_cons_costing)
+
+# Wash Cost all DB start
+class WashCost(models.Model):
+    b_job_no = models.ForeignKey(BudgetPreCost, related_name='wash_cost', on_delete=models.CASCADE, null=True, blank=True)
+    tt_rate = models.FloatField(default=0, blank=True, null=True)
+    tt_amount = models.FloatField(default=0, blank=True, null=True)
+    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, related_name="wash_insert_by", null=True, blank=True)
+    insert_date = models.DateTimeField(default=now, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.b_job_no)
+
+class WashCost_Items(models.Model):
+    STATUS = (
+        ('Active', 'Active'),
+        ('Inactive', 'Inactive'),
+    )
+    wash_cost = models.ForeignKey(WashCost, related_name='wash_items', on_delete=models.CASCADE, null=True, blank=True)
+    cost_name = models.CharField(max_length=200, blank=True, null=True)
+    cost_type = models.CharField(max_length=200, blank=True, null=True)
+    country = models.CharField(max_length=200, blank=True, null=True)
+    cons_dzn = models.FloatField(default=0, blank=True, null=True)
+    rate = models.FloatField(default=0, blank=True, null=True)
+    amount = models.FloatField(default=0, blank=True, null=True)
+    status = models.CharField(max_length=50, choices=STATUS, default="Active", blank=True, null=True)
+
+    def __str__(self):
+        return str(self.wash_cost)
+
+class WashConsCosting(models.Model): # Wash cost consumption entry form
+    b_job_no = models.ForeignKey(BudgetPreCost, related_name="washcons_cost", on_delete=models.CASCADE, blank=True, null=True)
+    wash_cost = models.ForeignKey(WashCost_Items, related_name="washcons_cost", on_delete=models.CASCADE, blank=True, null=True)
+    w_tt_cons = models.FloatField(default=0, blank=True, null=True)
+    w_tt_ex_pct = models.FloatField(default=0, blank=True, null=True)
+    w_grand_tt_cons = models.FloatField(default=0, blank=True, null=True)
+    w_tt_rate = models.FloatField(default=0, blank=True, null=True)
+    w_sub_tt_amount = models.FloatField(default=0, blank=True, null=True)
+    w_grand_tt_qty = models.FloatField(default=0, blank=True, null=True)
+    w_grand_tt_amount = models.FloatField(default=0, blank=True, null=True)
+    w_avg_tt_cons = models.FloatField(default=0, blank=True, null=True)
+    w_avg_ex_pct = models.FloatField(default=0, blank=True, null=True)
+    w_avg_grand_tt_cons = models.FloatField(default=0, blank=True, null=True)
+    w_avg_tt_rate = models.FloatField(default=0, blank=True, null=True)
+    w_avg_sub_tt_amount = models.FloatField(default=0, blank=True, null=True)
+    w_avg_grand_tt_qty = models.FloatField(default=0, blank=True, null=True)
+    w_avg_grand_tt_amount = models.FloatField(default=0, blank=True, null=True)
+    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, related_name="wc_insert_by", null=True, blank=True)
+    insert_date = models.DateTimeField(default=now, blank=True, null=True)
+    
+    def __str__(self):
+        return str(self.b_job_no)
+
+class WashConsCosting_Items(models.Model): # Wash cost consumption item entry form
+    wash_cons_cost = models.ForeignKey(WashConsCosting, related_name="wcons_items", on_delete=models.CASCADE, blank=True, null=True)
+    color_size = models.ForeignKey(ColorSizeItems, related_name="wc_colorsize", on_delete=models.CASCADE, blank=True, null=True)
+    w_po_no = models.CharField(max_length=200, blank=True, null=True)
+    w_country = models.CharField(max_length=200, blank=True, null=True)
+    w_gmts_item = models.CharField(max_length=200, blank=True, null=True)
+    w_color = models.CharField(max_length=200, blank=True, null=True)
+    w_gmts_size = models.CharField(max_length=200, blank=True, null=True)
+    w_item_qty = models.IntegerField(default=0, blank=True, null=True)
+    w_cons = models.FloatField(default=0, blank=True, null=True)
+    w_ex_pct = models.FloatField(default=0, blank=True, null=True)
+    w_tt_cons = models.FloatField(default=0, blank=True, null=True)
+    w_rate = models.FloatField(default=0, blank=True, null=True)
+    w_amount = models.FloatField(default=0, blank=True, null=True)
+    w_tt_qty = models.FloatField(default=0, blank=True, null=True)
+    w_tt_amount = models.FloatField(default=0, blank=True, null=True)
+    w_pcs = models.FloatField(default=0, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.wash_cons_cost)
+# Wash Cost all DB end

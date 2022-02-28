@@ -1617,7 +1617,7 @@
                                     <table id="contrastColorTable" class="table table-bordered table-striped table-sm table-responsive-sm table-hover  display" >
                                         <tbody class="text-center">
                                             <tr>
-                                                <td><input type="checkbox" name="copy" id="copyCheck"> <strong>Copy:</td>
+                                                <td><input type="checkbox" name="copy" id="copyCheck_grey"> <strong>Copy:</td>
                                                 <td><input class="form-check-input" type="radio" name="exampleRadios" id="colorFilter_grey" value="option1" > Color </td>
                                                 <td> <input class="form-check-input" type="radio" name="exampleRadios" id="sizeFilter_grey" value="option2" > Size</td>
                                                 <td> <input class="form-check-input" type="radio" name="exampleRadios" id="sizeColorFilter_grey" value="option3" > Size & Color</td>
@@ -3476,7 +3476,8 @@
             0:"colorFilter_grey",
             1:"sizeFilter_grey",
             2:"sizeColorFilter_grey",
-            3:"poFilter_grey"
+            3:"poFilter_grey",
+            4:"copyCheck_grey"
         }
     }
 
@@ -3660,6 +3661,11 @@
                 if(document.getElementsByClassName(tableType)[i].childNodes[3].childNodes[0].value == document.getElementById(`id_po_${rightID(id)}`).value){
                     document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
                 }
+            }
+        }
+        if(document.getElementById(copyConv[filterType][4]).checked){
+            for(var i = 0; i<color_count; i++){
+                document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
             }
         }
     }

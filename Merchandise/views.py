@@ -2277,6 +2277,14 @@ def pre_costing(request):
     wac_factory = inlineformset_factory(WashCost, WashCost_Items, form=WashCostItemsForm, extra=1)
     wash_form_item = wac_factory()
 
+    commer_form = CommercialCostForm()
+    commerc_factory = inlineformset_factory(CommercialCost, CommercialCost_Items, form=CommercialCostItemsForm, extra=1)
+    commer_form_item = commerc_factory()
+
+    commission_form = CommissionCostForm()
+    commission_factory = inlineformset_factory(CommissionCost, CommissionCost_Items, form=CommissionCostItemsForm, extra=1)
+    commission_form_item = commission_factory()
+
     if request.method == 'POST':
         if request.POST.get('_task') == "cost_form": #For budget cost form
             form = BudgetPreCostForm(request.POST)
@@ -2483,6 +2491,11 @@ def pre_costing(request):
                     trim_form.save()
                     trim_form_item.instance = data
                     trim_form_item.save()
+                    helper.trim_inline(
+                        Care_Level.objects.filter(inserted_by=request.user).order_by('-id')[:int(request.POST.get("trim_count"))],
+                        TrimCostItems.objects.filter(trim_cost=helper.job_no(TrimCost.objects.filter(inserted_by=request.user))).order_by('-id')[:int(request.POST.get("trim_count"))],
+                        int(request.POST.get("trim_count"))
+                    )
                     return HttpResponseRedirect(request.path_info)
                 else:
                     messages.error(request , "Something went wrong!")
@@ -2506,11 +2519,11 @@ def pre_costing(request):
                     embl_form.save()
                     embl_form_item.instance = data
                     embl_form_item.save()
-                    # helper.embl_inline(
-                    #     EmbConsCosting.objects.filter(inserted_by=request.user).order_by('-id')[:int(request.POST.get("embl_count"))],
-                    #     EmbellishmentCostItem.objects.filter(embellishment_cost=helper.job_no(EmbellishmentCost.objects.filter(inserted_by=request.user))).order_by('-id')[:int(request.POST.get("embl_count"))],
-                    #     int(request.POST.get("embl_count"))
-                    # )
+                    helper.embl_inline(
+                        EmbConsCosting.objects.filter(inserted_by=request.user).order_by('-id')[:int(request.POST.get("embl_count"))],
+                        EmbellishmentCostItem.objects.filter(embellishment_cost=helper.job_no(EmbellishmentCost.objects.filter(inserted_by=request.user))).order_by('-id')[:int(request.POST.get("embl_count"))],
+                        int(request.POST.get("embl_count"))
+                    )
                     return HttpResponseRedirect(request.path_info)
                 else:
                     messages.error(request , "Something went wrong!")
@@ -2562,11 +2575,11 @@ def pre_costing(request):
                     wash_form.save()
                     wash_form_item.instance = data
                     wash_form_item.save()
-                    # helper.wash_inline(
-                    #     WashConsCosting.objects.filter(inserted_by=request.user).order_by('-id')[:int(request.POST.get("wash_count"))],
-                    #     WashCost_Items.objects.filter(embellishment_cost=helper.job_no(WashCost.objects.filter(inserted_by=request.user))).order_by('-id')[:int(request.POST.get("wash_count"))],
-                    #     int(request.POST.get("wash_count"))
-                    # )
+                    helper.wash_inline(
+                        WashConsCosting.objects.filter(inserted_by=request.user).order_by('-id')[:int(request.POST.get("wash_count"))],
+                        WashCost_Items.objects.filter(wash_cost=helper.job_no(WashCost.objects.filter(inserted_by=request.user))).order_by('-id')[:int(request.POST.get("wash_count"))],
+                        int(request.POST.get("wash_count"))
+                    )
                     return HttpResponseRedirect(request.path_info)
                 else:
                     messages.error(request , "Something went wrong!")
@@ -2613,6 +2626,52 @@ def pre_costing(request):
                 )
                 data.save()
 
+        elif request.POST.get('_task') == "commer_form":          #For Commercial cost
+            if request.method == "GET":
+                commer_form = CommercialCostForm()
+                commerc_factory = inlineformset_factory(CommercialCost, CommercialCost_Items, form=CommercialCostItemsForm, extra=1)
+                commer_form_item = commerc_factory()
+           
+            elif request.method == "POST":
+                commer_form = CommercialCostForm(request.POST, request.FILES)
+                commerc_factory = inlineformset_factory(CommercialCost, CommercialCost_Items, form=CommercialCostItemsForm)
+                commer_form_item = commerc_factory(request.POST, request.FILES)
+                if commer_form.is_valid() and commer_form_item.is_valid():
+                    data = commer_form.save()
+                    inserted_by = request.user
+                    commer_form.instance.b_job_no = BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=inserted_by)))
+                    commer_form.instance.inserted_by = inserted_by
+                    commer_form.save()
+                    commer_form_item.instance = data
+                    commer_form_item.save()
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    messages.error(request , "Something went wrong!")
+                    print(commer_form_item.errors)
+
+        elif request.POST.get('_task') == "commiss_form":          #For Commission cost
+            if request.method == "GET":
+                commission_form = CommissionCostForm()
+                commission_factory = inlineformset_factory(CommissionCost, CommissionCost_Items, form=CommissionCostItemsForm, extra=1)
+                commission_form_item = commission_factory()
+           
+            elif request.method == "POST":
+                commission_form = CommissionCostForm(request.POST, request.FILES)
+                commission_factory = inlineformset_factory(CommissionCost, CommissionCost_Items, form=CommissionCostItemsForm)
+                commission_form_item = commission_factory(request.POST, request.FILES)
+                if commission_form.is_valid() and commission_form_item.is_valid():
+                    data = commission_form.save()
+                    inserted_by = request.user
+                    commission_form.instance.b_job_no = BudgetPreCost.objects.get(id=helper.bc_job_no(BudgetPreCost.objects.filter(inserted_by=inserted_by)))
+                    commission_form.instance.inserted_by = inserted_by
+                    commission_form.save()
+                    commission_form_item.instance = data
+                    commission_form_item.save()
+                    return HttpResponseRedirect(request.path_info)
+                else:
+                    messages.error(request , "Something went wrong!")
+                    print(commission_form_item.errors)
+
         else:
             context ={
                 'form':form,
@@ -2638,6 +2697,10 @@ def pre_costing(request):
                 'embl_form_item': embl_form_item,
                 'wash_form':wash_form,
                 'wash_form_item': wash_form_item,
+                'commer_form': commer_form,
+                'commer_form_item': commer_form_item,
+                'commission_form': commission_form,
+                'commission_form_item': commission_form_item,
                 'fetch': OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])),
                 'color': helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:]))),
                 'color_count': len(helper.color_size(OrderEntryInfo.objects.get(id=int(request.POST.get('_task')[5:])))),
@@ -2683,6 +2746,10 @@ def pre_costing(request):
         'embl_form_item': embl_form_item,
         'wash_form':wash_form,
         'wash_form_item': wash_form_item,
+        'commer_form': commer_form,
+        'commer_form_item': commer_form_item,
+        'commission_form': commission_form,
+        'commission_form_item': commission_form_item,
     }
     return render(request, 'Merchandising/Order/pre_costing.html', context)
 

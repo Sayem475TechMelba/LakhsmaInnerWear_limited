@@ -39,7 +39,7 @@ def active_user_required(view_func):
     decorated_view_func = login_required(user_login_required(view_func))
     return decorated_view_func
 
-@active_user_required
+# @active_user_required
 def home(request):
     if request.method == 'GET':
         if len(request.GET) == 0:

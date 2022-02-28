@@ -20,7 +20,7 @@
         background-color: #fff;
         background-image: none;
       }
-    tfoot {display: table-header-group;}
+   /* tfoot {display: table-header-group;}*/
    .modal {
     position: fixed;
     top: 0;
@@ -51,6 +51,9 @@
     .yard{ display: none; }
     .gross{ display: none; }
     .gg{ display: none; }
+
+   
+    
 
 </style>
 {% endblock css %}
@@ -306,6 +309,8 @@
     
         </div>
     </div>
+
+
     <!-- TNA PROCESS MANUAL  -->
     <div class="row mt-3">
             <div class='col-md-3 col-lg-3'>
@@ -737,49 +742,36 @@
                                                 </tr>
                                                 {% endfor %}
                                             </tbody>
-                                            <input type="hidden" name="inline_count" id="__inline_index">
+                                        <input type="hidden" name="inline_count" id="__inline_index">
+
                                             <tfoot class="font-weight-bold">
                                                 <tr>
-                                                    <td colspan="3" class="text-right">
+                                                    <td colspan="14" class="text-right">
                                                     Total:
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
                                                     </td>
                                                     <td>  
-                                                        <input type="number" id="id_total_grey_cons" class="form-control">
+                                                        <input type="text" id="id_total_grey_cons" class="form-control">
                                                     </td>
                                                     <td>  
-                                                        <input type="number" id="id_total_rate" class="form-control">
+                                                        <input type="text" id="id_total_rate" class="form-control">
                                                     </td>
                                                     <td>  
-                                                        <input type="number" id="id_total_amt" class="form-control">
+                                                        <input type="text" id="id_total_amt" class="form-control">
                                                     </td>
                                                     <td>  
-                                                        <input type="number" id="id_total_total_qty" class="form-control">
+                                                        <input type="text" id="id_total_total_qty" class="form-control">
                                                     </td>
                                                     <td>  
-                                                        <input type="number" id="id_total_total_amt" class="form-control">
+                                                        <input type="text" id="id_total_total_amt" class="form-control">
                                                     </td>
                                                 </tr>
-                                              
                                         </tfoot>
-                                            
                                         </table>
                                     </div>
                                     <div>
-                                        <button type="submit" onclick="getYarn()" class="btn btn-success btn-sm">Save</button>
+                                        <button type="submit" class="btn btn-success btn-sm">Save</button>
                                     </div>
                                     </form>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -789,7 +781,7 @@
                                 <h5 class="mb-0">
                                 <button class="btn btn-link collapsed text-dark font-weight-bold" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                                     + Yarn Cost
-                                </button><span id="demo"></span><span class="text-danger font-weight-bold" style="margin-left: 50%;">Approved</span>
+                                </button> <small> Total Yarn Needed</small>: <span id="demo"></span><span class="text-danger font-weight-bold" style="margin-left: 50%;">Approved</span>
                                 </h5>
                             </div>
                             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
@@ -798,19 +790,19 @@
                                         {% csrf_token %}
                                         <input hidden name="_task" value="y_form">
                                         <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0" >
-                                            <table class="table table-bordered table-hover table-sm table-responsive-sm add_yarncost" >
+                                            <table class="table table-bordered table-hover table-sm table-responsive-sm " >
                                                     <thead class="bg-info">
                                                         <tr>
                                                             <th class="text-center label"> Count </th>
                                                             <th class="text-center label" >Comp1</th>
-                                                            <th class="text-center" > %</th>
+                                                            <th class="text-center" > % </th>
                                                             <th class="text-center" > Color</th>
                                                             <th class="text-center" > Type </th>
                                                             <th class="text-center" > Cons Qnty </th>
                                                             <th class="text-center" > Supplier </th>
                                                             <th class="text-center" > Rate </th>
                                                             <th class="text-center" > Amount</th>
-                                                            <th class="text-center"  width="80px;">Action </th>
+                                                            <th class="text-center"  width="80px;" hidden>Action </th>
                                                         </tr>
                                                     </thead>
                                                     {{ form_items_yc.management_form }}
@@ -844,7 +836,9 @@
                                                             <td >
                                                                 {{ yc.amount|attr:"class:form-control"}}
                                                             </td>
-                                                            <td class="removeyc text-center">
+                                                            <td class="add_yarncost text-center " hidden>
+                                                            </td>
+                                                            <td class="removeyc text-center " hidden>
                                                             </td>
                                                         </tr>
                                                         {% endfor %}
@@ -1082,7 +1076,7 @@
                                         </tr>
                                         {% endfor %}
                                     </tbody>
-                                    <input type="hidden" name="trim_count" id="__inline_index">
+                                    <input type="hidden" name="trim_count" id="__trim_inline">
                                     <tfoot class="font-weight-bold">
                                         <tr>
                                             <td colspan="8" class="text-right">
@@ -1191,7 +1185,7 @@
                                             </tr>
                                         {% endfor %}
                                         </tbody>
-                                        <input type="hidden" name="embl_count" id="__inline_index">
+                                        <input type="hidden" name="embl_count" id="__embl_inline">
                                         
                                         <tfoot class="font-weight-bold">
                                             <tr>
@@ -1285,7 +1279,7 @@
                                                 </tr>
                                             {% endfor %}
                                             </tbody>
-                                            <input type="hidden" name="wash_count" id="__inline_index">
+                                            <input type="hidden" name="wash_count" id="__wash_inline">
                                             <tfoot class="font-weight-bold">
                                                 <tr>
                                                     <td colspan="5" class="text-right">
@@ -1302,7 +1296,7 @@
                                         </table>
                                     </div>
                                     <div>
-                                        <button type="submit" class="btn btn-success btn-sm">Save</button>
+                                        <button type="submit"  class="btn btn-success btn-sm">Save</button>
                                     </div>
                                 </form>
                             </div>
@@ -1310,8 +1304,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- COMMERCIAL COST  -->
-                <div class="container-fluid" id="commercialHide">
+                 <!-- COMMERCIAL COST  -->
+                 <div class="container-fluid" id="commercialHide">
                     <div id="accordion">
                         <div class="card">
                         <div class="card-header" id="commCollapse">
@@ -1323,65 +1317,60 @@
                         </div>
                         <div id="collapseComm" class="collapse show" aria-labelledby="commCollapse" data-parent="#accordion">
                             <div class="card-body">
-                                <div class="table-responsive" >
-                                    <table class="table table-bordered table-hover table-sm table-responsive-sm" >
-                                        <thead class="bg-info">
-                                            <tr>
-                                                <th class="text-center"  width="180px"> Item </th>
-                                                <th class="text-center " >Rate In %</th>
-                                                <th class="text-center" > Amount</th>
-                                                <th class="text-center" > Status</th>
-                                                <th class="text-center" width="90px" > </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody >
-                                            <tr >
-                                                <td >
-                                                    <select name="" class="form-control" >
-                                                        <option value="" disabled selected>Select</option>
-                                                        <option>Printing</option>
-                                                        <option>Others</option>
-                                                    </select>
-                                                </td>
-                                                <td >
-                                                    <input type="number" class="form-control" value="0">
-                                                </td>
-                                                <td >
-                                                    <input type="number" class="form-control" value="0">
-                                                </td>
-                                                <td >
-                                                    <select name="" class="form-control" >
-                                                        <option value="" disabled selected>Select</option>
-                                                        <option>Active</option>
-                                                        <option>Inactive</option>
-                                                    </select>
-                                                </td>
-                                                <td><button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                    <a  type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot class="font-weight-bold">
-                                            <tr>
-                                                <td colspan="1" class="text-right">
-                                                SUM:
-                                                </td>
-                                                <td colspan=""  >  
-                                                    <input type="number" class="form-control" value="0">
-                                                </td>
-                                                <td colspan=""  >  
-                                                    <input type="number" class="form-control" value="0">
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                                <div>
-                                    <button type="submit" class="btn btn-success btn-sm">Save</button>
-                                    <button type="submit" class="btn btn-info btn-sm">Update</button>
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
-                                </div>
+                               <form method="post" action="{% url 'pre_costing' %}" enctype="multipart/form-data" id="commerc_form">
+                                    {% csrf_token %}
+                                    <input hidden name="_task" value="commer_form">
+                                    <div class="table-responsive" >
+                                        <table class="table table-bordered table-hover table-sm table-responsive-sm add_commer" >
+                                            <thead class="bg-info">
+                                                <tr>
+                                                    <th class="text-center"  width="180px"> Item </th>
+                                                    <th class="text-center " >Rate In %</th>
+                                                    <th class="text-center" > Amount</th>
+                                                    <th class="text-center" > Status</th>
+                                                    <th class="text-center" width="90px" > Action</th>
+                                                </tr>
+                                            </thead>
+                                            {{ commer_form_item.management_form }}
+                                            <tbody class="inline_commerc_form">
+                                              {% for crc in commer_form_item %}
+                                                <tr >
+                                                    <td >
+                                                        {{ crc.item|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Browse"|attr:"data-target:#commerItemModal"|attr:"data-toggle:modal"|attr:"onclick:passID(id)" }}
+                                                    </td>
+                                                    <td >
+                                                        {{ crc.rate_in_pct|attr:"class:form-control"|attr:"type:number" }}
+                                                    </td>
+                                                    <td >
+                                                        {{ crc.amount|attr:"class:form-control"|attr:"type:number" }}
+                                                    </td>
+                                                    <td >
+                                                        {{ crc.status|attr:"class:form-control" }}
+                                                    </td>
+                                                    <td class="removecrc text-center">
+                                                    </td>
+                                                </tr>
+                                              {% endfor %}
+                                            </tbody>
+                                            <tfoot class="font-weight-bold">
+                                                <tr>
+                                                    <td colspan="1" class="text-right">
+                                                    SUM:
+                                                    </td>
+                                                    <td colspan=""  > 
+                                                        {{ commer_form.tt_rate_pct|attr:"class:form-control"|attr:"type:number" }}
+                                                    </td>
+                                                    <td colspan=""  >  
+                                                        {{ commer_form.tt_amount|attr:"class:form-control"|attr:"type:number" }}
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="btn btn-success btn-sm">Save</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         </div>
@@ -1400,65 +1389,62 @@
                         </div>
                         <div id="collapseCmsn" class="collapse show" aria-labelledby="cmsnCollapse" data-parent="#accordion">
                             <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-hover table-sm table-responsive-sm" >
-                                        <thead class="bg-info">
-                                            <tr>
-                                                <th class="text-center"  width="180px"> Item </th>
-                                                <th class="text-center " >Rate In %</th>
-                                                <th class="text-center" > Amount</th>
-                                                <th class="text-center" > Status</th>
-                                                <th class="text-center" width="90px" > </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody >
-                                            <tr >
-                                                <td >
-                                                    <select name="" class="form-control" >
-                                                        <option value="" disabled selected>Select</option>
-                                                        <option>Printing</option>
-                                                        <option>Others</option>
-                                                    </select>
-                                                </td>
-                                                <td >
-                                                    <input type="number" class="form-control" value="0">
-                                                </td>
-                                                <td >
-                                                    <input type="number" class="form-control" value="0">
-                                                </td>
-                                                <td >
-                                                    <select name="" class="form-control" >
-                                                        <option value="" disabled selected>Select</option>
-                                                        <option>Active</option>
-                                                        <option>Inactive</option>
-                                                    </select>
-                                                </td>
-                                                <td><button type="button" class="btn btn-sm btn-success"><i class="fa fa-plus" aria-hidden="true"></i></button>
-                                                    <a  type="button" class="btn btn-sm btn-danger ml-1"><i class="fa fa-times" aria-hidden="true"></i></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                        <tfoot class="font-weight-bold">
-                                            <tr>
-                                                <td colspan="1" class="text-right">
-                                                SUM:
-                                                </td>
-                                                <td colspan=""  >  
-                                                    <input type="number" class="form-control" value="0">
-                                                </td>
-                                                <td colspan=""  >  
-                                                    <input type="number" class="form-control" value="0">
-                                                </td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                                <div>
-                                    <button type="submit" class="btn btn-success btn-sm">Save</button>
-                                    <button type="submit" class="btn btn-info btn-sm">Update</button>
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    <button type="submit" class="btn btn-warning btn-sm">Refresh</button>
-                                </div>
+                                <form method="post" action="{% url 'pre_costing' %}" enctype="multipart/form-data" id="commissc_form">
+                                    {% csrf_token %}
+                                    <input hidden name="_task" value="commiss_form">
+                                    <div class="mt-1">
+                                    <div class="table-responsive" style="overflow: hidden; outline: none;" tabindex="0">
+                                        <table class="table table-bordered table-hover table-sm  add_commiss table-responsive-sm" >
+                                            <thead class="bg-info">
+                                                <tr>
+                                                    <th class="text-center"  width="180px"> Item </th>
+                                                    <th class="text-center " >Rate In %</th>
+                                                    <th class="text-center" > Amount</th>
+                                                    <th class="text-center" > Status</th>
+                                                    <th class="text-center" width="90px" >Action </th>
+                                                </tr>
+                                            </thead>
+                                            {{ commission_form_item.management_form }}
+                                            <tbody class="inline_commission_form">
+                                              {% for commi in commission_form_item %}
+                                                <tr >
+                                                    <td >
+                                                        {{ commi.item|attr:"class:form-control"|attr:"type:text"|attr:"placeholder:Browse"|attr:"data-target:#commissItemModal"|attr:"data-toggle:modal"|attr:"onclick:passID(id)" }}
+                                                    </td>
+                                                    <td >
+                                                        {{ commi.rate_in_pct|attr:"class:form-control"|attr:"type:number" }}
+                                                    </td>
+                                                    <td >
+                                                        {{ commi.amount|attr:"class:form-control"|attr:"type:number" }}
+                                                    </td>
+                                                    <td >
+                                                        {{ commi.status|attr:"class:form-control" }}
+                                                    </td>
+                                                    <td class="removecommc text-center">
+                                                    </td>
+                                                </tr>
+                                              {% endfor %}
+                                            </tbody>
+                                            <tfoot class="font-weight-bold">
+                                                <tr>
+                                                    <td colspan="1" class="text-right">
+                                                    SUM:
+                                                    </td>
+                                                    <td colspan=""  >  
+                                                        {{ commission_form.tt_rate_pct|attr:"class:form-control"|attr:"type:number" }}
+                                                    </td>
+                                                    <td colspan=""  >  
+                                                        {{ commission_form.tt_amount|attr:"class:form-control"|attr:"type:number" }}
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-success btn-sm commi_btn">Save</button>
+                                    </div>
+                                  </div>
+                                </form>
                             </div>
                         </div>
                         </div>
@@ -1617,11 +1603,11 @@
                                     <table id="contrastColorTable" class="table table-bordered table-striped table-sm table-responsive-sm table-hover  display" >
                                         <tbody class="text-center">
                                             <tr>
-                                                <td><input type="checkbox" name="copy" id="copyCheck_grey"> <strong>Copy:</td>
-                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="colorFilter_grey" value="option1" > Color </td>
-                                                <td> <input class="form-check-input" type="radio" name="exampleRadios" id="sizeFilter_grey" value="option2" > Size</td>
-                                                <td> <input class="form-check-input" type="radio" name="exampleRadios" id="sizeColorFilter_grey" value="option3" > Size & Color</td>
-                                                <td> <input class="form-check-input" type="radio" name="exampleRadios" id="poFilter_grey" value="option4" > PO</td>
+                                                <td><input type="checkbox" name="copy" id="copyCheck"> <strong>Copy:</td>
+                                                <td><input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" > Color </td>
+                                                <td> <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" value="option2" > Size</td>
+                                                <td> <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option3" > Size & Color</td>
+                                                <td> <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option4" > PO</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -1654,23 +1640,20 @@
                                     </thead>
                                     <tbody id="base_body" class="text-center">
                                         {% for i in color %}
-                                        <tr class="greyConsTable">
-                                            <td>{{ forloop.counter }}</td>                         
+                                        <tr class="base_tr">
+                                            <td>{{ forloop.counter }}</td>
                                             <td><input type="text" class="form-control" id="id_po_{{ forloop.counter }}" value="{{ i.po }}" readonly></td>                         
                                             <td><input type="text" class="form-control" id="id_color_{{ forloop.counter }}" value="{{ i.color }}" readonly></td>                         
                                             <td><input type="text" class="form-control" id="id_size_{{ forloop.counter }}" value="{{ i.size  }}" readonly></td>
-                                            <td><input type="text" class="form-control" id="id_qty_{{ forloop.counter }}" value="{{ i.order_qty }}" oninput="totalQty(id)" readonly></td>             
+                                            <td><input type="text" class="form-control" id="id_qty_{{ forloop.counter }}" value="{{ i.order_qty }}" oninput="totalQty(id)" onchange="totalQty(id)" readonly></td>
                                             <td><input type="text" id="id_dia_{{ forloop.counter }}"  name="dia_{{ forloop.counter }}" class="form-control"></td>
                                             <td><input type="text" id="id_item_{{ forloop.counter }}" name="item_{{ forloop.counter }}" class="form-control"></td>
-
-                                            <td><input type="text" id="id_fin_cons_{{ forloop.counter }}" name="fin_cons_{{ forloop.counter }}" class="form-control"  value="0" oninput="GreyCons(id)"></td>
-
-                                            <td><input type="text" id="id_pro_{{ forloop.counter }}"  name="pro_{{ forloop.counter }}" class="form-control"  value="0" oninput="GreyCons(id)"></td>
-
+                                            <td><input type="text" id="id_fin_cons_{{ forloop.counter }}" name="fin_cons_{{ forloop.counter }}" class="form-control"  value="0" oninput="GreyCons(id)" onchange="GreyCons(id)"></td>
+                                            <td><input type="text" id="id_pro_{{ forloop.counter }}"  name="pro_{{ forloop.counter }}" class="form-control"  value="0" oninput="GreyCons(id)" onchange="GreyCons(id)"></td>
                                             <td><input type="text" id="id_unit_{{ forloop.counter }}" name="unit_{{ forloop.counter }}" class="form-control" value="0" readonly></td>
-                                            <td><input type="text" id="id_rate_{{ forloop.counter }}" name="rate_{{ forloop.counter }}" class="form-control"  value="0" oninput="totalAmt(id)" ></td>
+                                            <td><input type="text" id="id_rate_{{ forloop.counter }}" name="rate_{{ forloop.counter }}" class="form-control"  value="0" oninput="totalAmt(id)" onchange="totalAmt(id)" ></td>
                                             <td><input type="text" id="id_amt_{{ forloop.counter }}"  name="amt_{{ forloop.counter }}" class="form-control"  value="0" readonly></td>
-                                            <td><input type="text" id="id_pcs_{{ forloop.counter }}"  name="pcs_{{ forloop.counter }}" class="form-control" value="{{pcs}}" onchange="totalPcs(id)" readonly></td>
+                                            <td><input type="text" id="id_pcs_{{ forloop.counter }}"  name="pcs_{{ forloop.counter }}" class="form-control" value="{{pcs}}" oninput="totalPcs(id)" onchange="totalPcs(id)" readonly></td>
                                             <td><input type="text" id="id_tt_qty_{{ forloop.counter }}" name="tt_qty_{{ forloop.counter }}" class="form-control"  value="0" readonly></td>
                                             <td><input type="text" id="id_tt_amt_{{ forloop.counter }}" name="tt_amt_{{ forloop.counter }}" class="form-control"  value="0" readonly></td>
                                             <td><input type="text" id="id_remarks_{{ forloop.counter }}" name="remarks_{{ forloop.counter }}" class="form-control" value="No Remarks"></td>
@@ -1685,7 +1668,7 @@
                                                 Total:
                                                 </td>
                                                 <td>  
-                                                    <input type="number" class="form-control" id="qtys" value="{{ total_po }}" step="any" readonly>
+                                                    <input type="number" class="form-control" id="qtys" value={{ total_po }} step="any" readonly>
                                                 </td>
                                                 <td>  
                                                     <input type="number" class="form-control"  step="any" readonly>
@@ -3239,14 +3222,15 @@
                                                 </td>
                                               
                                             </tr>
-                                    </tfoot>
+                    
+                                        </tfoot>
                                 </table>
                                 <div class="modal-footer justify-content-center">
-                                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                                    <button type="submit" id="wcons_btn" class="btn btn-success btn-sm wcons_btn">Save</button>
                                 </div>
                             </form>
                         </div>
-                    </div>
+                     </div>
             </div>
         </div>
     </div>
@@ -3298,6 +3282,8 @@
         </div>
     </div>
     <!---------------------------------- Modal End -------------------------------------->
+
+   
 {% endblock body %}
 
 {% block script %}
@@ -3310,7 +3296,7 @@
             addText: '+ Add More',
             deleteText: 'X',
             addContainerClass:"add_fc",
-            addCssClass:"btn btn-sm btn-warning mt-4 mb-3",
+            addCssClass:"btn btn-sm btn-warning mt-4 mb-3 ",
             deleteCssClass:"btn btn-sm btn-danger",
             deleteContainerClass:"removefc",
         });
@@ -3323,7 +3309,7 @@
             prefix: '{{ form_items_yc.prefix }}',
             addText: '+ Add More',
             deleteText: 'X',
-            //addContainerClass:"add_yarncost",
+            addContainerClass:"add_yarncost",
             addCssClass:"btn btn-sm btn-warning mt-4 mb-3",
             deleteCssClass:"btn btn-sm btn-danger",
             deleteContainerClass:"removeyc",
@@ -3389,8 +3375,867 @@
         });
     });
 </script>
+
+<!-- FOR COMMERCIAL COST INLINE  -->
+<script type="text/javascript">
+    $(function() {
+        $('.inline_commerc_form').formset({
+            prefix: '{{ commer_form_item.prefix }}',
+            addText: '+ Add More',
+            deleteText: 'X',
+            addContainerClass:"add_commer",
+            addCssClass:"btn btn-sm btn-warning mt-4 mb-3",
+            deleteCssClass:"btn btn-sm btn-danger",
+            deleteContainerClass:"removecrc",
+        });
+    });
+</script>
+
+<!-- FOR COMMISSION COST INLINE  -->
+<script type="text/javascript">
+    $(function() {
+        $('.inline_commission_form').formset({
+            prefix: '{{ commission_form_item.prefix }}',
+            addText: '+ Add More',
+            deleteText: 'X',
+            addContainerClass:"add_commiss",
+            addCssClass:"btn btn-sm btn-warning mt-4 mb-3",
+            deleteCssClass:"btn btn-sm btn-danger",
+            deleteContainerClass:"removecommc",
+        });
+    });
+</script>
 <!-- ALL INLINE FOR FABRIC COST  -->
 <script>
+    var working_id = 0
+    var conWorkingId = 0
+    var count = 1
+    var trim_count = 1
+    var embl_count = 1
+    var wash_count = 1
+    var modalCount = 0
+    var hash = 0
+    var wModal = []
+
+    var trimModal = []
+    var emblModal = []
+    var washModal = []
+
+    var fCout_g = 0
+    var color_count = '{{ color_count }}'
+    var conColorCount = '{{ con_color }}'
+    var total_conv = {
+        
+        'ttFinish':'id_fin_cons_',
+        'ttProcess': 'id_pro_',
+        'totalGreyCons': 'id_unit_',
+        'ttRate': 'id_rate_',
+        'ttAmt': 'id_amt_',
+        'ttorderQT': 'id_pcs_',
+        'ttQty': 'id_tt_qty_',
+        'masTtAmt': 'id_tt_amt_',
+
+        // s
+        'trim_tt_Cons':'id_cl_cons_',
+        'trim_tt_ex':'id_cl_ex_pct_',
+        'trim_grd_tt_cons':'id_cl_tt_cons_',
+        'trim_tt_rate':'id_cl_rate_',
+        'trim_sub_amt':'id_cl_amount_',
+        'trim_tt_qty':'id_cl_tt_qty_',
+        'trim_grd_tt_amt':'id_cl_tt_amount_',
+
+        'emb_tt_cons':'id_ec_cons_',
+        'emb_tt_ex':'id_ec_ex_pct_',
+        'emb_grd_tt_cons':'id_ec_tt_cons_',
+        'emb_tt_rate':'id_ec_rate_',
+        'emb_tt_amt':'id_ec_amount_',
+        'emb_grd_tt_qty':'id_ec_tt_qty_',
+        'emb_grd_tt_amt':'id_ec_tt_amount_',
+
+        'wash_tt_cons':'id_wc_cons_',
+        'wash_tt_ex':'id_wc_ex_pct_',
+        'wash_grand_tt_cons':'id_wc_tt_cons_',
+        'wash_tt_rate':'id_wc_rate_',
+        'wash_tt_amount':'id_wc_amount_',
+        'wash_grand_tt_qty':'id_wc_tt_qty_',
+        'wash_grand_tt_amount':'id_wc_tt_amount_',
+    }
+    var avg_conv = {
+        'avgFinish':'id_fin_cons_',
+        'avgProcess': 'id_pro_',
+        'avgRate': 'id_rate_',
+        'avgAmt': 'id_amt_',
+        'avgorderQT': 'id_pcs_',
+        'avgQty': 'id_tt_qty_',
+        'avgmasTtAmt': 'id_tt_amt_',
+        
+        // s
+        'avg_trim_cons': 'id_cl_cons_',
+        'avg_trim_ex': 'id_cl_ex_pct_',
+        'avg_trim_grdtt_cons': 'id_cl_tt_cons_',
+        'avg_trim_tt_rate': 'id_cl_rate_',
+        'avg_trim_sub_amt': 'id_cl_amount_',
+        'avg_trim_tt_qty': 'id_cl_tt_qty_',
+        'avg_trim_grdtt_amt': 'id_cl_tt_amount_',
+
+        'avg_emb_tt_cons':'id_ec_cons_',
+        'avg_emb_tt_ex':'id_ec_ex_pct_',
+        'avg_emb_grd_tt_cons':'id_ec_tt_cons_',
+        'avg_emb_tt_rate':'id_ec_rate_',
+        'avg_emb_tt_amt':'id_ec_amount_',
+        'avg_emb_grdtt_qty':'id_ec_tt_qty_',
+        'avg_emb_grdtt_amt':'id_ec_tt_amount_',
+
+        'avg_wash_tt_cons':'id_wc_cons_',
+        'avg_wash_tt_ex':'id_wc_ex_pct_',
+        'avg_wash_grd_tt_cons':'id_wc_tt_cons_',
+        'avg_wash_tt_rate':'id_wc_rate_',
+        'avg_wash_tt_amt':'id_wc_amount_',
+        'avg_wash_grdtt_qty':'id_wc_tt_qty_',
+        'avg_wash_grdtt_amt':'id_wc_tt_amount_',
+    }
+    
+    var totalQtyCount = 0
+    for(var i = 0; i<color_count; i++){
+        totalQtyCount += parseFloat(document.getElementById(`id_cl_order_qty_${i+1}`).value, 10)
+    }
+    // s
+    var totalEmbQtyCount = 0
+    for(var i = 0; i<color_count; i++){
+        totalEmbQtyCount += parseFloat(document.getElementById(`id_ec_order_qty_${i+1}`).value, 10)
+    }
+
+    var totalwashQtyCount = 0
+    for(var i = 0; i<color_count; i++){
+        totalwashQtyCount += parseFloat(document.getElementById(`id_wc_order_qty_${i+1}`).value, 10)
+    }
+
+    var totalFinish = 0
+    var averageFinishCons  = 0
+    var yarnData = {}
+
+    function update(){
+        count++
+        trim_count++
+        embl_count++
+        wash_count++
+        document.getElementById('__inline_index').value = count
+        document.getElementById('__trim_inline').value = trim_count
+        document.getElementById('__embl_inline').value = embl_count
+        document.getElementById('__wash_inline').value = wash_count
+    }
+
+    function negUpdate(){
+        count--
+        trim_count--
+        embl_count--
+        wash_count--
+        document.getElementById('__inline_index').value = count
+        document.getElementById('__trim_inline').value = trim_count
+        document.getElementById('__embl_inline').value = embl_count
+        document.getElementById('__wash_inline').value = wash_count
+    }
+
+
+    function passColor(id){
+        passID(id)
+        document.getElementById('__inline_index').value = count
+        var a = document.getElementById('colorSizeInline')
+        if(rightID(id) != 0){
+            if(wModal.includes(rightID(id)) == false){
+                document.getElementById('copy_inline_div').append(a.cloneNode(true))
+                document.getElementById("greyForm").reset()
+                document.getElementById('copy_inline_div').lastChild.id = `colorSizeInline${modalCount}`
+                document.getElementById('id_fabric_inline-V-avg_grey_cons'.replaceAt(17, rightID(id)-1)).dataset.target = `#colorSizeInline${modalCount}`
+                document.getElementById("copy_inline_div").lastChild.childNodes[1].childNodes[1].childNodes[1].id = ''
+                wModal.push(rightID(id))
+                modalCount++
+            }
+        }
+    }
+   
+    
+    // MODAL COPY TRIM COST CONSUMPTION INLINE
+    function passTrim(id){
+        passID(id)
+        document.getElementById('__trim_inline').value = trim_count
+        var cl = document.getElementById('careLabelInline')
+        if(rightID(id) != 0){
+            if(trimModal.includes(rightID(id)) == false){
+                document.getElementById('copy_care_label').append(cl.cloneNode(true))
+                document.getElementById("CLForm").reset()
+                document.getElementById('copy_care_label').lastChild.id = `careLabelInline${modalCount}`
+                document.getElementById('id_trim_items-V-cons_unit_gmts'.replaceAt(14, rightID(id)-1)).dataset.target = `#careLabelInline${modalCount}`
+                document.getElementById("copy_care_label").lastChild.childNodes[1].childNodes[1].childNodes[1].id = ''
+                trimModal.push(rightID(id))
+                modalCount++
+            }
+        }
+    }
+
+     // MODAL COPY EMBLISHMENT COST CONSUMPTION INLINE
+     function passEmbelishment(id){
+        passID(id)
+        document.getElementById('__embl_inline').value = embl_count
+        var e = document.getElementById('embConsumpInline')
+        if(rightID(id) != 0){
+            if(emblModal.includes(rightID(id)) == false){
+                document.getElementById('copy_embConsumption_label').append(e.cloneNode(true))
+                document.getElementById("embcost_Form").reset()
+                document.getElementById('copy_embConsumption_label').lastChild.id = `embConsumpInline${modalCount}`
+                document.getElementById('id_embl_items-V-cons_dzn'.replaceAt(14, rightID(id)-1)).dataset.target = `#embConsumpInline${modalCount}`
+                document.getElementById("copy_embConsumption_label").lastChild.childNodes[1].childNodes[1].childNodes[1].id = ''
+                emblModal.push(rightID(id))
+                modalCount++
+            }
+        }
+    }
+
+    // MODAL COPY WASH COST CONSUMPTION INLINE
+    function passWash(id){
+        passID(id)
+        document.getElementById('__wash_inline').value = wash_count
+        var w = document.getElementById('washConsumpInline')
+        if(rightID(id) != 0){
+            if(washModal.includes(rightID(id)) == false){
+                document.getElementById('copy_washConsumption_label').append(w.cloneNode(true))
+                document.getElementById("wcons_Form").reset()
+                document.getElementById("wcons_btn").disabled = false;
+                document.getElementById('copy_washConsumption_label').lastChild.id = `washConsumpInline${modalCount}`
+                document.getElementById('id_wash_items-V-cons_dzn'.replaceAt(14, rightID(id)-1)).dataset.target = `#washConsumpInline${modalCount}`
+                document.getElementById("copy_washConsumption_label").lastChild.childNodes[1].childNodes[1].childNodes[1].id = ''
+                washModal.push(rightID(id))
+                modalCount++
+            }
+        }
+    }
+
+    function passColorCon(){
+        for(var i = 0; i<parseInt(conColorCount); i++){
+            if('id_contrast_color_V'.replaceAt(18, i+1).value != ''){
+                document.getElementById('id_fabric_inline-V-color'.replaceAt(17, conWorkingId)).value = document.getElementById('id_contrast_color_V'.replaceAt(18, i+1)).value
+                break
+            }
+        }
+    }
+
+    function colorContrast(id){
+        conWorkingId = rightID(id)
+        if(document.getElementById(id).value == 2){
+            document.getElementById("id_fabric_inline-V-color".replaceAt(17, rightID(id))).disabled = false
+            $('#contrastColorModal').modal("show")
+        }else if(document.getElementById(id).value == 1){
+            document.getElementById("id_fabric_inline-V-color".replaceAt(17, rightID(id))).disabled = true
+        }else{
+            document.getElementById("id_fabric_inline-V-color".replaceAt(17, rightID(id))).disabled = false
+        }
+    }
+
+    function rightID(id){
+        var numPre = []
+        var number = 0
+        for(var i=0; i<id.length; i++){
+            if(parseInt(id[i]) || id[i] == '0'){
+                numPre.push(parseInt(id[i]))
+            }
+        }
+        for(var i = 0; i<numPre.length; i++){
+            number += numPre[i] * (10 ** (numPre.length - (i+1)))
+        }
+        return number
+    }
+
+    function idName(id){
+        return id.substr(0, id.length - String(rightID(id)).length)
+    }
+    String.prototype.replaceAt = function(index, replacement) {
+        return this.substr(0, index) + replacement + this.substr(index + 1, 28);
+    }
+
+    function GreyCons(id){
+        document.getElementById(`id_unit_${rightID(id)}`).value = (parseFloat(document.getElementById(`id_fin_cons_${rightID(id)}`).value, 10) / (1.00 - (parseFloat(document.getElementById(`id_pro_${rightID(id)}`).value, 10)) / 100)).toFixed(4)
+        copy(id) 
+        totalQty(id)
+        total('ttFinish')
+        total('ttProcess')
+        total('totalGreyCons')
+        avg('avgFinish')
+        avg('avgProcess')
+        avg('avgGreyCons')
+        greyCons(id)
+        pipeline()
+    }
+
+    function copy(id){
+        if(document.getElementById("exampleRadios1").checked == true){
+            for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
+                if(document.getElementsByClassName("base_tr")[i].childNodes[5].childNodes[0].value == document.getElementById(`id_color_${rightID(id)}`).value){
+                    document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
+                }
+            }
+        }
+        if(document.getElementById('exampleRadios4').checked == true){
+            for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
+                if(document.getElementsByClassName("base_tr")[i].childNodes[7].childNodes[0].value == document.getElementById(`id_size_${rightID(id)}`).value){
+                    document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
+                }
+            } 
+        }
+        if(document.getElementById('exampleRadios2').checked == true){
+            for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
+                if(document.getElementsByClassName("base_tr")[i].childNodes[7].childNodes[0].value == document.getElementById(`id_size_${rightID(id)}`).value || document.getElementsByClassName("base_tr")[i].childNodes[5].childNodes[0].value == document.getElementById(`id_color_${rightID(id)}`).value){
+                    document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
+                }
+            }
+        }
+        if(document.getElementById('exampleRadios3').checked == true){
+            for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
+                if(document.getElementsByClassName("base_tr")[i].childNodes[3].childNodes[0].value == document.getElementById(`id_po_${rightID(id)}`).value){
+                    document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
+                }
+            }
+        }
+    }
+
+    function totalQty(id){
+        document.getElementById(`id_tt_qty_${rightID(id)}`).value = (parseFloat(document.getElementById(`id_qty_${rightID(id)}`).value, 10) / parseFloat(document.getElementById(`id_pcs_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_unit_${rightID(id)}`).value, 10)).toFixed(2)
+        copy(id)
+    }
+
+    function totalAmt(id){
+        document.getElementById(`id_tt_amt_${rightID(id)}`).value = (parseFloat(document.getElementById(`id_rate_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_tt_qty_${rightID(id)}`).value, 10)).toFixed(2)
+        greyCons(id)
+        total('ttRate')
+        avg('avgRate')
+        pipeline()
+        copy(id)
+    }
+
+    function greyCons(id){
+        document.getElementById(`id_amt_${rightID(id)}`).value = (parseFloat(document.getElementById(`id_unit_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_rate_${rightID(id)}`).value, 10)).toFixed(2)
+        total('ttAmt')
+        total('ttQty')
+        total('masTtAmt')
+        avg('avgAmt')
+        avg('avgQty')
+        avg('avgmasTtAmt')
+        avgGreyCons()
+        pipeline()
+        copy(id)
+    }
+
+    function total(type){
+        var total = 0
+        for(var i = 0; i<parseInt(color_count); i++){
+            total += parseFloat(document.getElementById(`${total_conv[type]}${i+1}`).value, 10)
+        }
+        document.getElementById(type).value = total
+    }
+
+    function totalAvgGreyCons(){
+        var subTotal = 0;
+        for(var i = 0; i<count; i++){
+            try{
+                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-avg_grey_cons`).value, 10)
+                console.log(sub)
+                subTotal += sub
+            }
+            catch(err){
+                continue
+            }
+        }
+        document.getElementById("id_total_grey_cons").value = subTotal
+        document.getElementById("demo").innerText = subTotal.toFixed(4);
+    }
+
+    function totalRate(){
+        var subTotal = 0;
+        for(var i = 0; i<count; i++){
+            try{
+                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-rate`).value, 10)
+                subTotal += sub
+            }
+            catch(err){
+                continue
+            }
+        }
+        document.getElementById("id_total_rate").value = subTotal
+    }
+
+    function TotalAmt(){
+        var subTotal = 0;
+        for(var i = 0; i<count; i++){
+            try{
+                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-amount`).value, 10)
+                subTotal += sub
+            }
+            catch(err){
+                continue
+            }
+        }
+        document.getElementById("id_total_amt").value = subTotal
+    }
+
+    function totalTotalOty(){
+        var subTotal = 0;
+        for(var i = 0; i<count; i++){
+            try{
+                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-total_quantity`).value, 10)
+                subTotal += sub
+            }
+            catch(err){
+                continue
+            }
+        }
+        document.getElementById("id_total_total_qty").value = subTotal
+    }
+
+    function totalTotalAmt(){
+        var subTotal = 0;
+        for(var i = 0; i<count; i++){
+            try{
+                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-total_amount`).value, 10)
+                subTotal += sub
+            }
+            catch(err){
+                continue
+            }
+        }
+        document.getElementById("id_total_total_amt").value = subTotal
+    }
+
+
+    function avg(type){
+        var total = 0
+        for(var i = 0; i<parseInt(color_count); i++){
+            total += parseFloat(document.getElementById(`${avg_conv[type]}${i+1}`).value, 10)
+        }
+        document.getElementById(type).value = total / color_count
+    }
+
+    function avgGreyCons(){
+        var total = 0
+        for(var i = 0; i<parseInt(color_count); i++){
+            total += parseFloat(document.getElementById(`masTtAmt`).value, 10)
+        }
+        document.getElementById("avgGreyCons").value = (total / totalQtyCount) * parseFloat(document.getElementById("id_pcs_1").value, 10)
+    }
+
+    function pipeline(){
+        document.getElementById(`id_fabric_inline-V-avg_grey_cons`.replaceAt(17, working_id)).value = document.getElementById(`avgGreyCons`).value
+        document.getElementById(`id_fabric_inline-V-rate`.replaceAt(17, working_id)).value = document.getElementById('avgRate').value
+        document.getElementById(`id_fabric_inline-V-amount`.replaceAt(17, working_id)).value = document.getElementById('avgAmt').value
+        document.getElementById(`id_fabric_inline-V-total_quantity`.replaceAt(17, working_id)).value = document.getElementById('avgQty').value
+        document.getElementById(`id_fabric_inline-V-total_amount`.replaceAt(17, working_id)).value = document.getElementById('avgmasTtAmt').value
+
+        // TRIM DATA PIPELINE
+        document.getElementById(`id_trim_items-V-cons_unit_gmts`.replaceAt(14, working_id)).value = document.getElementById('avg_trim_grdtt_cons').value
+        document.getElementById(`id_trim_items-V-rate`.replaceAt(14, working_id)).value = document.getElementById('avg_trim_tt_rate').value
+        document.getElementById(`id_trim_items-V-amount`.replaceAt(14, working_id)).value = document.getElementById('avg_trim_sub_amt').value
+        document.getElementById(`id_trim_items-V-tt_qty`.replaceAt(14, working_id)).value = document.getElementById('trim_tt_qty').value
+        document.getElementById(`id_trim_items-V-tt_amt`.replaceAt(14, working_id)).value = document.getElementById('trim_grd_tt_amt').value
+
+        // EMBLISHMENT DATA PIPELINE
+        document.getElementById(`id_embl_items-V-cons_dzn`.replaceAt(14, working_id)).value = document.getElementById('avg_emb_grd_tt_cons').value
+        document.getElementById(`id_embl_items-V-rate`.replaceAt(14, working_id)).value = document.getElementById('avg_emb_tt_rate').value
+        document.getElementById(`id_embl_items-V-amount`.replaceAt(14, working_id)).value = document.getElementById('avg_emb_tt_amt').value
+
+        // WASH DATA PIPELINE
+        document.getElementById(`id_wash_items-V-cons_dzn`.replaceAt(14, working_id)).value = document.getElementById('avg_wash_grd_tt_cons').value
+        document.getElementById(`id_wash_items-V-rate`.replaceAt(14, working_id)).value = document.getElementById('avg_wash_tt_rate').value
+        document.getElementById(`id_wash_items-V-amount`.replaceAt(14, working_id)).value = document.getElementById('avg_wash_tt_amt').value
+    
+       
+        totalAvgGreyCons()
+        totalRate()
+        TotalAmt()
+        totalTotalOty()
+        totalTotalAmt()
+    }
+
+    function passID(id){
+        working_id = rightID(id)
+    }
+
+    function conProcess(id){
+        conWorkingId = rightID(id)
+        if(document.getElementById(id).value == 3){
+            $('#knittingItem').modal("show")
+        }else if(document.getElementById(id).value == 2){
+            $('#dyeingForm').modal("show")
+        }
+  }
+
+    //GARMENTS ITEM
+    function gmtItem(id){
+        document.getElementById('id_fabric_inline-V-gmts_items'.replaceAt(17, working_id)).value = document.getElementById(`gmt-${rightID(id)}`).children[1].innerText
+    }
+    // FABRIC DESC
+    function fabricationDes(id){
+        var construction = document.getElementById(`td-${rightID(id)}`).children[2].innerText
+        var fabdescription = document.getElementById(`td-${rightID(id)}`).children[7].innerText
+        var fabComp= construction + ' ' + ' ' + fabdescription;
+        document.getElementById('id_fabric_inline-V-fabric_desc'.replaceAt(17, working_id)).value = fabComp
+        document.getElementById('id_fabric_inline-V-gms'.replaceAt(17, working_id)).value = document.getElementById(`td-${rightID(id)}`).children[3].innerText
+    }
+    //BODY PART
+    function bodyPart(id){
+        document.getElementById('id_fabric_inline-V-body_part'.replaceAt(17, working_id)).value = document.getElementById(`bodytd-${rightID(id)}`).children[1].innerText
+        document.getElementById('id_fabric_inline-V-body_part_type'.replaceAt(17, working_id)).value = document.getElementById(`bodytd-${rightID(id)}`).children[2].innerText
+    }
+    //CONVERSION COST KNITTING ITEM RATE 
+    function knitItem(id){
+        document.getElementById('id_conver_inline-V-charge_unit'.replaceAt(17, working_id)).value = document.getElementById(`knit-${rightID(id)}`).children[8].innerText
+    }
+
+    //CONVERSION COST DYEING ITEM RATE 
+    function dyeingItem(id){ 
+        document.getElementById(`id_charge_${rightID(id)}`).value = document.getElementById(`dyeing-${rightID(id)}`).children[8].innerText
+    }
+
+    function parsing(string, id){
+        var yarnDataTemp = {
+            'count': undefined,
+            'comp': undefined,
+            'rate': undefined,
+            'amt': undefined
+        }
+        var temp = ''
+        var state = false
+        for(var i = 0; i<string.length; i++){
+            if(string[i] == '('){
+                temp = string.substr(i, string.length)
+            }
+        }
+        for(var i = 0; i<temp.length; i++){
+            if(temp[i] == "+"){
+                yarnDataTemp1 = Object.assign({}, yarnDataTemp)
+                yarnDataTemp1['count'] = rightID(temp.substr(0, i))
+                yarnDataTemp1['rate'] = document.getElementById(`id_fabric_inline-${id}-rate`).value
+                yarnDataTemp1['amt'] = document.getElementById(`id_fabric_inline-${id}-amount`).value
+                yarnData[hash] = yarnDataTemp1
+                hash++
+                yarnDataTemp2 = Object.assign({}, yarnDataTemp)
+                yarnDataTemp2['rate'] = document.getElementById(`id_fabric_inline-${id}-rate`).value
+                yarnDataTemp2['amt'] = document.getElementById(`id_fabric_inline-${id}-amount`).value
+                yarnDataTemp2['count'] = rightID(temp.substr(i, temp.length))
+                yarnData[hash] = yarnDataTemp2
+                hash++
+                state = true
+                break
+            }
+        }
+        if(state == false){
+            yarnDataTemp1 = Object.assign({}, yarnDataTemp)
+            yarnDataTemp1['count'] = rightID(temp)
+            yarnDataTemp1['rate'] = document.getElementById(`id_fabric_inline-${id}-rate`).value
+            yarnDataTemp1['amt'] = document.getElementById(`id_fabric_inline-${id}-amount`).value
+            yarnData[hash] = yarnDataTemp1
+            hash++
+        }
+    }
+    // FABRIC COUNTER FOR YARN
+    function febCount(){
+        fCout = 0
+        for(var i = 0; i<count; i++){
+            if(document.getElementById(`id_fabric_inline-${i}-fabric_desc`).value.includes('+')){
+                fCout += 2
+                parsing(document.getElementById(`id_fabric_inline-${i}-fabric_desc`).value, i)
+            }else{
+                fCout++
+                parsing(document.getElementById(`id_fabric_inline-${i}-fabric_desc`).value, i)
+            }
+        }
+        fCout_g = fCout
+    }
+    // YARN COST
+    function getYarn(){
+        febCount()
+        for(var i = 0; i<fCout_g-1; i++){
+            document.getElementsByClassName('btn btn-sm btn-warning mt-4 mb-3')[1].click()
+            document.getElementById(`id_yarn_inline-${i+1}-pct`).value = 100
+        }
+        for(var i = 0; i<Object.keys(yarnData).length; i++){
+            document.getElementById(`id_yarn_inline-${i}-count`).value = yarnData[i].count
+            document.getElementById(`id_yarn_inline-${i}-rate`).value = yarnData[i].rate
+            document.getElementById(`id_yarn_inline-${i}-amount`).value = yarnData[i].amt
+        }
+    }
+
+    // TRIM COST STARTS =========================================================================================================================================================
+    function passtQt(id){
+        document.getElementById('id_trim_items-V-tt_qty'.replaceAt(14, working_id)).value = document.getElementById('ttQtys').value
+    }
+    
+    //CONVERSION COST KNITTING ITEM RATE 
+    function knitItem(id){
+        document.getElementById('id_conver_inline-V-charge_unit'.replaceAt(17, working_id)).value = document.getElementById(`knit-${rightID(id)}`).children[8].innerText
+    }
+
+    //CONVERSION COST DYEING ITEM RATE 
+    function dyeingItem(id){ 
+        document.getElementById(`id_charge_${rightID(id)}`).value = document.getElementById(`dyeing-${rightID(id)}`).children[8].innerText
+    }
+
+    // COUNTRY DATA FETCHING
+    function trimCountry(id){
+        document.getElementById('id_trim_items-V-country'.replaceAt(14, working_id)).value = document.getElementById(`country-${rightID(id)}`).children[1].innerText
+    }
+    
+    // GROUP DATA FETCHING
+    function trimGroup(id){
+        document.getElementById('id_trim_items-V-group'.replaceAt(14, working_id)).value = document.getElementById(`group-${rightID(id)}`).children[1].innerText
+        document.getElementById('id_trim_items-V-cons_uom'.replaceAt(14, working_id)).value = document.getElementById(`group-${rightID(id)}`).children[2].innerText
+        var hello = document.getElementById('getName').value = document.getElementById(`group-${rightID(id)}`).children[1].innerText
+        document.getElementById('helloName').innerText = document.getElementById(`group-${rightID(id)}`).children[1].innerText
+
+    }
+    
+    // NOMINATED SUPPLIER FETCHING
+    function trimNomiSupp(id){
+        document.getElementById('id_trim_items-V-nominated_supp'.replaceAt(14, working_id)).value = document.getElementById(`nomiSupp-${rightID(id)}`).children[1].innerText
+    }
+
+    // CARE LABEL MODAL DATA CALCULATIONS 
+    function totalCons(id){
+        var clCons =  parseFloat(document.getElementById(`id_cl_cons_${rightID(id)}`).value, 10).toFixed(2);
+        var clExPct = parseFloat(document.getElementById(`id_cl_ex_pct_${rightID(id)}`).value, 10).toFixed(2);
+        var pctConvert = ( clExPct / 100 )
+        var ttConsumption = (clCons / (1.00 - pctConvert)).toFixed(4)
+        document.getElementById(`id_cl_tt_cons_${rightID(id)}`).value = ttConsumption;
+        totalQuantity(id)
+        total('trim_tt_Cons')
+        total('trim_tt_ex')
+        total('trim_grd_tt_cons')
+        avg('avg_trim_cons')
+        avg('avg_trim_ex')
+        avg('avg_trim_grdtt_cons')
+        pipeline()
+ 
+     }
+ 
+
+     function totalAmount(id){
+        var clRate = parseFloat(document.getElementById(`id_cl_rate_${rightID(id)}`).value, 10).toFixed(2);
+        let ttConsumptions = parseFloat(document.getElementById(`id_cl_tt_cons_${rightID(id)}`).value, 10);
+        var ttAmount = ( ttConsumptions * clRate ); 
+        document.getElementById(`id_cl_amount_${rightID(id)}`).value = ttAmount;
+        totalCareLabAmount(id)
+        total('trim_tt_rate')
+        total('trim_sub_amt')
+        avg('avg_trim_tt_rate')
+        avg('avg_trim_sub_amt')
+        pipeline()
+
+    }
+    
+    function totalQuantity(id){
+        document.getElementById(`id_cl_tt_qty_${rightID(id)}`).value = (parseFloat(document.getElementById(`id_cl_order_qty_${rightID(id)}`).value, 10) / parseFloat(document.getElementById(`id_cl_pcs_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_cl_tt_cons_${rightID(id)}`).value, 10)).toFixed(2)
+        totalCareLabAmount(id)
+       total('trim_tt_qty')
+       avg('avg_trim_tt_qty')
+
+    }
+    
+    function totalCareLabAmount(id){
+        document.getElementById(`id_cl_tt_amount_${rightID(id)}`).value = parseFloat(document.getElementById(`id_cl_tt_qty_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_cl_rate_${rightID(id)}`).value, 10)
+        total('trim_grd_tt_amt')
+        avg('avg_trim_grdtt_amt')
+        
+    }
+
+    embNameFunc=(id)=>{
+        document.getElementById('id_embl_items-V-cost_name'.replaceAt(14, working_id)).value = document.getElementById(`emb_types-${rightID(id)}`).children[1].innerText
+        document.getElementById('id_embl_items-V-type_name'.replaceAt(14, working_id)).value = document.getElementById(`emb_types-${rightID(id)}`).children[2].innerText
+    }
+    embBodyPart=(id)=>{
+        document.getElementById('id_embl_items-V-body_part'.replaceAt(14, working_id)).value = document.getElementById(`emblbp-${rightID(id)}`).children[1].innerText
+    }
+    embCountryFunc=(id)=>{
+        document.getElementById('id_embl_items-V-country'.replaceAt(14, working_id)).value = document.getElementById(`emb_country-${rightID(id)}`).children[1].innerText
+    }
+
+    // EMBLISHMENT CALCULATION (Sayem)============================== >
+    embConsFunc=(id)=>{
+        var embCons = parseFloat(document.getElementById(`id_ec_cons_${rightID(id)}`).value, 10)
+        var embEx = parseFloat(document.getElementById(`id_ec_ex_pct_${rightID(id)}`).value, 10)
+        var pctConvert = ( embEx / 100 )
+        var ttEmbCons = (embCons / (1.00 - pctConvert)).toFixed(4)
+        document.getElementById(`id_ec_tt_cons_${rightID(id)}`).value = ttEmbCons;
+        embOrdQty(id);
+        total('emb_tt_cons')
+        total('emb_tt_ex')
+        total('emb_grd_tt_cons')
+        avg('avg_emb_tt_cons')
+        avg('avg_emb_tt_ex')
+        avg('avg_emb_grd_tt_cons')
+        pipeline()
+    }
+
+    embttAmt=(id)=>{
+        var ttEmbCons = parseFloat(document.getElementById(`id_ec_tt_cons_${rightID(id)}`).value,10).toFixed(4)
+        var embRate = parseFloat(document.getElementById(`id_ec_rate_${rightID(id)}`).value, 10)
+        document.getElementById(`id_ec_amount_${rightID(id)}`).value = ttEmbCons * embRate;
+        totalEmbAmount(id);
+        total('emb_tt_rate')
+        avg('avg_emb_tt_rate')
+        pipeline()
+    }
+
+    embOrdQty=(id)=>{
+        var embqt = parseFloat(document.getElementById(`id_ec_order_qty_${rightID(id)}`).value, 10);
+        var embpcs = parseFloat(document.getElementById(`id_ec_pcs_${rightID(id)}`).value, 10);
+        var qtPcs = (embqt / embpcs);
+        var embttcons = parseFloat(document.getElementById(`id_ec_tt_cons_${rightID(id)}`).value, 10);
+        var finalres = qtPcs * embttcons ;
+        document.getElementById(`id_ec_tt_qty_${rightID(id)}`).value = finalres;
+        totalEmbAmount(id);
+        total('emb_grd_tt_qty')
+        avg('avg_emb_grdtt_qty')
+        pipeline()
+    }
+
+    totalEmbAmount=(id)=>{
+        document.getElementById(`id_ec_tt_amount_${rightID(id)}`).value = parseFloat(document.getElementById(`id_ec_tt_qty_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_ec_rate_${rightID(id)}`).value, 10)
+        total('emb_tt_amt')
+        total('emb_grd_tt_amt')
+        avg('avg_emb_tt_amt')
+        avg('avg_emb_grdtt_amt')
+        pipeline()
+
+    }
+
+    // WASH COST CONSUMPTION CALCULATIONS
+    washConsFunc=(id)=>{
+        var washCons = parseFloat(document.getElementById(`id_wc_cons_${rightID(id)}`).value, 10)
+        var washEx = parseFloat(document.getElementById(`id_wc_ex_pct_${rightID(id)}`).value, 10)
+        var pctConvert = ( washEx / 100 )
+        var ttwashCons = (washCons / (1.00 - pctConvert)).toFixed(4)
+        document.getElementById(`id_wc_tt_cons_${rightID(id)}`).value = ttwashCons;
+        washOrdQty(id);
+        total('wash_tt_cons')
+        total('wash_tt_ex')
+        total('wash_grand_tt_cons')
+        avg('avg_wash_tt_cons')
+        avg('avg_wash_tt_ex')
+        avg('avg_wash_grd_tt_cons')
+        pipeline()
+
+    }
+    washttAmt=(id)=>{
+        var ttwashCons = parseFloat(document.getElementById(`id_wc_tt_cons_${rightID(id)}`).value,10).toFixed(4)
+        var washRate = parseFloat(document.getElementById(`id_wc_rate_${rightID(id)}`).value, 10)
+        document.getElementById(`id_wc_amount_${rightID(id)}`).value = ttwashCons * washRate;
+        totalwashAmount(id);
+        total('wash_tt_rate')
+        avg('avg_wash_tt_rate')
+        pipeline()
+    }
+
+    washOrdQty=(id)=>{
+        var washqt = parseFloat(document.getElementById(`id_wc_order_qty_${rightID(id)}`).value, 10);
+        var washpcs = parseFloat(document.getElementById(`id_wc_pcs_${rightID(id)}`).value, 10);
+        var qtPcs = (washqt / washpcs);
+        var washttcons = parseFloat(document.getElementById(`id_wc_tt_cons_${rightID(id)}`).value, 10);
+        var finalres = qtPcs * washttcons ;
+        document.getElementById(`id_wc_tt_qty_${rightID(id)}`).value = finalres;
+        totalwashAmount(id);
+        total('wash_grand_tt_qty')
+        avg('avg_wash_grdtt_qty')
+        pipeline()
+    }
+    totalwashAmount=(id)=>{
+        document.getElementById(`id_wc_tt_amount_${rightID(id)}`).value = parseFloat(document.getElementById(`id_wc_tt_qty_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_wc_rate_${rightID(id)}`).value, 10)
+        total('wash_tt_amount')
+        total('wash_grand_tt_amount')
+        avg('avg_wash_tt_amt')
+        avg('avg_wash_grdtt_amt')
+        pipeline()
+
+    }
+
+    //WASH COST NAME FETCH
+    function washNameFunc(id){ 
+        document.getElementById('id_wash_items-V-cost_name'.replaceAt(14, working_id)).value = document.getElementById(`wash_types-${rightID(id)}`).children[1].innerText
+        document.getElementById('id_wash_items-V-cost_type'.replaceAt(14, working_id)).value = document.getElementById(`wash_types-${rightID(id)}`).children[2].innerText
+    }
+    //WASH COST COUNTRY FETCH
+    function washCountryFunc(id){ 
+        document.getElementById('id_wash_items-V-country'.replaceAt(14, working_id)).value = document.getElementById(`wash_country-${rightID(id)}`).children[1].innerText
+    }
+
+    
+    function totals(type){
+        var totals = 0
+        for(var i = 0; i<parseInt(color_count); i++){
+            totals += parseFloat(document.getElementById(`${total_Consump[type]}${i+1}`).value, 10)
+        }
+        document.getElementById(type).value = totals
+    }
+    // CARE LABEL MODAL DATA CALCULATIONS 
+  
+    // click on the div FOR SHOWING HIDE DIV FOR COSTING
+    function fabric(e, id) {
+        var el = document.getElementById(id);
+        el.style.display = (el.style.display == 'none' || el.style.display == '') ? 'block' : 'none';
+        // for hiding
+        fabric.el = el;
+        // stop the event right here
+        if (e.stopPropagation) e.stopPropagation();
+        e.cancelBubble = true;
+        return false;
+    }
+    function trim(e, id) {
+        var el = document.getElementById(id);
+        el.style.display = (el.style.display == 'none' || el.style.display == '') ? 'block' : 'none';
+        fabric.el = el;
+        if (e.stopPropagation) e.stopPropagation();
+        e.cancelBubble = true;
+        return false;
+    }
+    function embllish(e, id) {
+        var el = document.getElementById(id);
+        el.style.display = (el.style.display == 'none' || el.style.display == '') ? 'block' : 'none';
+        fabric.el = el;
+        if (e.stopPropagation) e.stopPropagation();
+        e.cancelBubble = true;
+        return false;
+    }
+    function wash(e, id) {
+        var el = document.getElementById(id);
+        el.style.display = (el.style.display == 'none' || el.style.display == '') ? 'block' : 'none';
+        fabric.el = el;
+        if (e.stopPropagation) e.stopPropagation();
+        e.cancelBubble = true;
+        return false;
+    }
+    function commercial(e, id) {
+        var el = document.getElementById(id);
+        el.style.display = (el.style.display == 'none' || el.style.display == '') ? 'block' : 'none';
+        fabric.el = el;
+        if (e.stopPropagation) e.stopPropagation();
+        e.cancelBubble = true;
+        return false;
+    }
+    function commission(e, id) {
+        var el = document.getElementById(id);
+        el.style.display = (el.style.display == 'none' || el.style.display == '') ? 'block' : 'none';
+        fabric.el = el;
+        if (e.stopPropagation) e.stopPropagation();
+        e.cancelBubble = true;
+        return false;
+    }
+    // COLOR CONTRAST ACTIVE MODAL 
+    $(document).ready(function(){ 
+        $('#colorSelect').change(function() { 
+            var opval = $(this).val();
+            if(opval=="2"){
+                $('#contrastColor').modal("show");
+            }
+        });
+    });
+</script>
+<!-- <script>
     var working_id = 0
     var conWorkingId = 0
     var count = 1
@@ -3399,6 +4244,9 @@
     //  =====   NEW RRRR
     var hash = 0
     var wModal = []
+    var TrimModal = []
+    var EmblModal = []
+    var WashModal = []
     var fCout_g = 0
     var color_count = '{{ color_count }}'
     var conColorCount = '{{ con_color }}'
@@ -3471,15 +4319,6 @@
         'avg_wash_grdtt_qty':'id_wc_tt_qty_',
         'avg_wash_grdtt_amt':'id_wc_tt_amount_',
     }
-    var copyConv = {
-        'grey':{
-            0:"colorFilter_grey",
-            1:"sizeFilter_grey",
-            2:"sizeColorFilter_grey",
-            3:"poFilter_grey",
-            4:"copyCheck_grey"
-        }
-    }
 
    
     var totalQtyCount = 0
@@ -3513,6 +4352,7 @@
         document.getElementById('__inline_index').value = count
     }
 
+    // MODAL COPY FOR FABRIC COST AVERAGE GREY CONSUMPTION INLINE
     function passColor(id){
         passID(id)
         document.getElementById('__inline_index').value = count
@@ -3529,50 +4369,56 @@
             }
         }
     }
-    
+
+    // MODAL COPY TRIM COST CONSUMPTION INLINE
     function passTrim(id){
+        passID(id)
         document.getElementById('__inline_index').value = count
         var cl = document.getElementById('careLabelInline')
         if(rightID(id) != 0){
-            if(wModal.includes(rightID(id)) == false){
+            if(TrimModal.includes(rightID(id)) == false){
                 document.getElementById('copy_care_label').append(cl.cloneNode(true))
                 document.getElementById("CLForm").reset()
                 document.getElementById('copy_care_label').lastChild.id = `careLabelInline${modalCount}`
                 document.getElementById('id_trim_items-V-cons_unit_gmts'.replaceAt(14, rightID(id)-1)).dataset.target = `#careLabelInline${modalCount}`
                 document.getElementById("copy_care_label").lastChild.childNodes[1].childNodes[1].childNodes[1].id = ''
-                wModal.push(rightID(id))
+                TrimModal.push(rightID(id))
                 modalCount++
             }
         }
     }
 
+    // MODAL COPY EMBLISHMENT COST CONSUMPTION INLINE
     function passEmbelishment(id){
+        passID(id)
         document.getElementById('__inline_index').value = count
         var e = document.getElementById('embConsumpInline')
         if(rightID(id) != 0){
-            if(wModal.includes(rightID(id)) == false){
+            if(EmblModal.includes(rightID(id)) == false){
                 document.getElementById('copy_embConsumption_label').append(e.cloneNode(true))
                 document.getElementById("embcost_Form").reset()
                 document.getElementById('copy_embConsumption_label').lastChild.id = `embConsumpInline${modalCount}`
                 document.getElementById('id_embl_items-V-cons_dzn'.replaceAt(14, rightID(id)-1)).dataset.target = `#embConsumpInline${modalCount}`
                 document.getElementById("copy_embConsumption_label").lastChild.childNodes[1].childNodes[1].childNodes[1].id = ''
-                wModal.push(rightID(id))
+                EmblModal.push(rightID(id))
                 modalCount++
             }
         }
     }
-    
+
+    // MODAL COPY WASH COST CONSUMPTION INLINE
     function passWash(id){
+        passID(id)
         document.getElementById('__inline_index').value = count
         var w = document.getElementById('washConsumpInline')
         if(rightID(id) != 0){
-            if(wModal.includes(rightID(id)) == false){
+            if(WashModal.includes(rightID(id)) == false){
                 document.getElementById('copy_washConsumption_label').append(w.cloneNode(true))
                 document.getElementById("wcons_Form").reset()
                 document.getElementById('copy_washConsumption_label').lastChild.id = `washConsumpInline${modalCount}`
                 document.getElementById('id_wash_items-V-cons_dzn'.replaceAt(14, rightID(id)-1)).dataset.target = `#washConsumpInline${modalCount}`
                 document.getElementById("copy_washConsumption_label").lastChild.childNodes[1].childNodes[1].childNodes[1].id = ''
-                wModal.push(rightID(id))
+                WashModal.push(rightID(id))
                 modalCount++
             }
         }
@@ -3622,7 +4468,7 @@
 
     function GreyCons(id){
         document.getElementById(`id_unit_${rightID(id)}`).value = (parseFloat(document.getElementById(`id_fin_cons_${rightID(id)}`).value, 10) / (1.00 - (parseFloat(document.getElementById(`id_pro_${rightID(id)}`).value, 10)) / 100)).toFixed(4)
-        copy(id, "greyConsTable", 'grey') 
+        copy(id) 
         totalQty(id)
         total('ttFinish')
         total('ttProcess')
@@ -3631,41 +4477,35 @@
         avg('avgProcess')
         avg('avgGreyCons')
         pipeline()
-
     }
     // ======= NEW RRRRR
-    function copy(id, tableType, filterType){
-        if(document.getElementById(copyConv[filterType][0]).checked == true){
-            for(var i = 0; i<document.getElementsByClassName(tableType).length; i++){
-                if(document.getElementsByClassName(tableType)[i].childNodes[5].childNodes[0].value == document.getElementById(`id_color_${rightID(id)}`).value){
+    function copy(id){
+        if(document.getElementById("colorFilter").checked == true){
+            for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
+                if(document.getElementsByClassName("base_tr")[i].childNodes[5].childNodes[0].value == document.getElementById(`id_color_${rightID(id)}`).value){
                     document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
                 }
             }
         }
-        if(document.getElementById(copyConv[filterType][1]).checked == true){
-            for(var i = 0; i<document.getElementsByClassName(tableType).length; i++){
-                if(document.getElementsByClassName(tableType)[i].childNodes[7].childNodes[0].value == document.getElementById(`id_size_${rightID(id)}`).value){
+        if(document.getElementById('sizeFilter').checked == true){
+            for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
+                if(document.getElementsByClassName("base_tr")[i].childNodes[7].childNodes[0].value == document.getElementById(`id_size_${rightID(id)}`).value){
                     document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
                 }
             } 
         }
-        if(document.getElementById(copyConv[filterType][2]).checked == true){
-            for(var i = 0; i<document.getElementsByClassName(tableType).length; i++){
-                if(document.getElementsByClassName(tableType)[i].childNodes[7].childNodes[0].value == document.getElementById(`id_size_${rightID(id)}`).value || document.getElementsByClassName(tableType)[i].childNodes[5].childNodes[0].value == document.getElementById(`id_color_${rightID(id)}`).value){
+        if(document.getElementById('sizeColorFilter').checked == true){
+            for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
+                if(document.getElementsByClassName("base_tr")[i].childNodes[7].childNodes[0].value == document.getElementById(`id_size_${rightID(id)}`).value || document.getElementsByClassName("base_tr")[i].childNodes[5].childNodes[0].value == document.getElementById(`id_color_${rightID(id)}`).value){
                     document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
                 }
             }
         }
-        if(document.getElementById(copyConv[filterType][3]).checked == true){
-            for(var i = 0; i<document.getElementsByClassName(tableType).length; i++){
-                if(document.getElementsByClassName(tableType)[i].childNodes[3].childNodes[0].value == document.getElementById(`id_po_${rightID(id)}`).value){
+        if(document.getElementById('poFilter').checked == true){
+            for(var i = 0; i<document.getElementsByClassName("base_tr").length; i++){
+                if(document.getElementsByClassName("base_tr")[i].childNodes[3].childNodes[0].value == document.getElementById(`id_po_${rightID(id)}`).value){
                     document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
                 }
-            }
-        }
-        if(document.getElementById(copyConv[filterType][4]).checked){
-            for(var i = 0; i<color_count; i++){
-                document.getElementById(`${idName(id)}${i+1}`).value = document.getElementById(id).value
             }
         }
     }
@@ -3673,7 +4513,7 @@
 
     function totalQty(id){
         document.getElementById(`id_tt_qty_${rightID(id)}`).value = (parseFloat(document.getElementById(`id_qty_${rightID(id)}`).value, 10) / parseFloat(document.getElementById(`id_pcs_${rightID(id)}`).value, 10) * parseFloat(document.getElementById(`id_unit_${rightID(id)}`).value, 10)).toFixed(2)
-        copy(id, "greyConsTable", "grey") 
+        copy(id) 
     }
 
     function totalAmt(id){
@@ -3682,7 +4522,7 @@
         total('ttRate')
         avg('avgRate')
         pipeline()
-        copy(id, "greyConsTable", "grey") 
+        copy(id) 
     }
 
     function greyCons(id){
@@ -3694,7 +4534,7 @@
         avg('avgQty')
         avg('avgmasTtAmt')
         pipeline()
-        copy(id, "greyConsTable", "grey") 
+        copy(id) 
 
     }
 
@@ -3745,82 +4585,6 @@
         document.getElementById(`id_wash_items-V-cons_dzn`.replaceAt(14, working_id)).value = document.getElementById('avg_wash_grd_tt_cons').value
         document.getElementById(`id_wash_items-V-rate`.replaceAt(14, working_id)).value = document.getElementById('avg_wash_tt_rate').value
         document.getElementById(`id_wash_items-V-amount`.replaceAt(14, working_id)).value = document.getElementById('avg_wash_tt_amt').value
-        totalAvgGreyCons()
-        totalRate()
-        TotalAmt()
-        totalTotalOty()
-        totalTotalAmt()
-    }
-
-    function totalAvgGreyCons(){
-        var subTotal = 0;
-        for(var i = 0; i<count; i++){
-            try{
-                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-avg_grey_cons`).value, 10)
-                subTotal += sub
-            }
-            catch(err){
-                continue
-            }
-        }
-        document.getElementById("id_total_grey_cons").value = subTotal
-        document.getElementById("demo").innerText = subTotal
-    }
-
-    function totalRate(){
-        var subTotal = 0;
-        for(var i = 0; i<count; i++){
-            try{
-                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-rate`).value, 10)
-                subTotal += sub
-            }
-            catch(err){
-                continue
-            }
-        }
-        document.getElementById("id_total_rate").value = subTotal
-    }
-
-    function TotalAmt(){
-        var subTotal = 0;
-        for(var i = 0; i<count; i++){
-            try{
-                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-amount`).value, 10)
-                subTotal += sub
-            }
-            catch(err){
-                continue
-            }
-        }
-        document.getElementById("id_total_amt").value = subTotal
-    }
-
-    function totalTotalOty(){
-        var subTotal = 0;
-        for(var i = 0; i<count; i++){
-            try{
-                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-total_quantity`).value, 10)
-                subTotal += sub
-            }
-            catch(err){
-                continue
-            }
-        }
-        document.getElementById("id_total_total_qty").value = subTotal
-    }
-
-    function totalTotalAmt(){
-        var subTotal = 0;
-        for(var i = 0; i<count; i++){
-            try{
-                var sub = parseFloat(document.getElementById(`id_fabric_inline-${i}-total_amount`).value, 10)
-                subTotal += sub
-            }
-            catch(err){
-                continue
-            }
-        }
-        document.getElementById("id_total_total_amt").value = subTotal
     }
 
     function passID(id){
@@ -4189,7 +4953,7 @@
         e.cancelBubble = true;
         return false;
     }
-</script>
+</script> -->
 
 <!-- COLOR CONTRAST  -->
 <script>
@@ -4400,6 +5164,7 @@
                 data: formData,
                 success: function (response) {
                     alert("Your Fabric Cost Successfully Added. Please add below form as well.");
+                    getYarn()
                 },
                 error: function (response) {
                     alert("Something Went Wrong...");
@@ -4761,6 +5526,8 @@
                 data: formData,
                 success: function (response) {
                     alert("Your 1 Dzn Costing Info for wash cost Successfully Added. Please add below form as well.");
+                    $(".wcons_btn").attr("disabled", true);
+                    return true;
                 },
                 error: function (response) {
                     alert("Something Went Wrong...");
@@ -4840,6 +5607,57 @@
       });
   });
 </script>
+<!-- COMMERCIAL COST NO RELOAD  -->
+<script type="text/javascript"> 
+    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
+        $('#commerc_form').submit(function(event){
+            event.preventDefault();
+            var form = $(this)
+            url = form.attr('action')
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    alert("Your Commercial Cost Info Successfully Added. Please add below form as well.");
+                },
+                error: function (response) {
+                    alert("Something Went Wrong...");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+</script> 
+
+<!-- COMMISSIOM COST NO RELOAD  -->
+<script type="text/javascript"> 
+    // SUBMIT FORM WITHOUT PAGE RELOAD ; IMAGE AND FILE SEND VIA AJAX & DJANGO
+        $('#commissc_form').submit(function(event){
+            event.preventDefault();
+            var form = $(this)
+            url = form.attr('action')
+            var formData = new FormData(this);
+            $.ajax({
+                url: url,
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    alert("Your Commission Cost Info Successfully Added. Please add cost breakdown form as well.");
+                    $(".commi_btn").attr("disabled", true);
+                    return true;
+                },
+                error: function (response) {
+                    alert("Something Went Wrong...");
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        });
+</script> 
 <!-- DZN CALCULATOR  -->
 <script>
     dznCalculator=()=>{
@@ -4860,6 +5678,15 @@
   //                  = "calcRadio: "+ele[i].value;
   //      }
   //  }
+
+</script>
+<script>
+    // $(document).ready(function () {
+    //     $("#commissc_form").submit(function () {
+    //         $(".commi_btn").attr("disabled", true);
+    //         return true;
+    //     });
+    // });
 
 </script>
 {% endblock script %}

@@ -1,0 +1,44 @@
+
+
+
+Fabric Cost:
+	01. Color Contrast Modal All field value save and fetch
+	02. While add second row in avg grey cons modal, the Rate value isnt calculating
+	03. The rate value isnt fetching in Fabric Inline form
+	04. Fabric Inline calculation isnt working while adding more field
+	05. COPY: color-size copy isnt working, ALSO in PO it takes the first string or 
+		integer and if matched copy all the fields
+
+Yarn Cost:
+	01. Yarn Inline Calculation Problem
+
+Conversion Cost:
+	01. Conversion Cost Fab Description value fetching
+	02. Conversion cost fetch Req. Qty. based on the selected value in fab desc field
+	03. Total Inline Calculation in Conversion Cost
+
+Trim Cost:
+	01. Inline Calculation in trim cost
+	02. Calculator for every dzn, pcs etc calc()
+	03. Fetch calc value from calculator to Grey cons field in trim modal
+	
+Emblishment Cost:
+	01. Inline Calculation in Emb Cost
+
+Commercial Cost:
+	01. Fetch Item in item field based on PO
+	02. Calculation in Commercial cost. (( rate in * avg rate = amount ))
+
+Commission Cost:
+	01. Fetch Item in item field based on PO
+	02. Calculation in Commission cost. (( rate in * avg rate = amount ))
+
+Cost Breakdown:
+	01. Fetch Data from fabric, trim, emb, commercial, commission cost
+	02. Calculate those values based on percentage
+	03. Total Calculation in Cost Breakdown
+	
+
+
+
+

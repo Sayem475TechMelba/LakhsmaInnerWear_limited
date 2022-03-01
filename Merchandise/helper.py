@@ -38,6 +38,20 @@ def embl_inline(color, embl, count):
         color_lis[counter].save()
         counter += 1
 
+def trim_inline(color, trim, count):
+    color_lis = []
+    trim_lis = []
+    counter = 0
+    for i in color:
+        color_lis.append(i)
+    for j in trim:
+        trim_lis.append(j)
+
+    for i in range(1, count+1):
+        color_lis[counter].trim_cost = trim_lis[counter]
+        color_lis[counter].save()
+        counter += 1
+
 def wash_inline(color, wash, count):
     color_lis = []
     wash_lis = []

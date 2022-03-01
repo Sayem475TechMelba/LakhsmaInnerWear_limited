@@ -356,3 +356,23 @@ class WashCostItemsForm(forms.ModelForm):
     class Meta:
         model = WashCost_Items
         fields = '__all__' 
+        
+class CommercialCostForm(forms.ModelForm):
+    class Meta:
+        model = CommercialCost
+        exclude = ['inserted_by', 'b_job_no']
+
+class CommercialCostItemsForm(forms.ModelForm):
+    class Meta:
+        model = CommercialCost_Items
+        fields = '__all__' 
+
+class CommissionCostForm(forms.ModelForm):
+    class Meta:
+        model = CommissionCost
+        exclude = ['inserted_by', 'b_job_no']
+
+class CommissionCostItemsForm(forms.ModelForm):
+    class Meta:
+        model = CommissionCost_Items
+        fields = '__all__' 

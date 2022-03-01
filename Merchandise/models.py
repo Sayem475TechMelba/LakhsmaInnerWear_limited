@@ -1095,3 +1095,53 @@ class WashConsCosting_Items(models.Model): # Wash cost consumption item entry fo
     def __str__(self):
         return str(self.wash_cons_cost)
 # Wash Cost all DB end
+
+#Commercial Cost DB
+class CommercialCost(models.Model):
+    b_job_no = models.ForeignKey(BudgetPreCost, related_name='commer_cost', on_delete=models.CASCADE, null=True, blank=True)
+    tt_rate_pct = models.FloatField(default=0, blank=True, null=True)
+    tt_amount = models.FloatField(default=0, blank=True, null=True)
+    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, related_name="commer_insert_by", null=True, blank=True)
+    insert_date = models.DateTimeField(default=now, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.b_job_no)
+
+class CommercialCost_Items(models.Model):
+    STATUS = (
+        ('Active', 'Active'),
+        ('Inactive', 'Inactive'),
+    )
+    commercial_cost = models.ForeignKey(CommercialCost, related_name='commer_items', on_delete=models.CASCADE, null=True, blank=True)
+    item = models.CharField(max_length=200, blank=True, null=True)
+    rate_in_pct = models.FloatField(default=0, blank=True, null=True)
+    amount = models.FloatField(default=0, blank=True, null=True)
+    status = models.CharField(max_length=50, choices=STATUS, default="Active", blank=True, null=True)
+
+    def __str__(self):
+        return str(self.commercial_cost)
+
+#Commission Cost DB
+class CommissionCost(models.Model):
+    b_job_no = models.ForeignKey(BudgetPreCost, related_name='commi_cost', on_delete=models.CASCADE, null=True, blank=True)
+    tt_rate_pct = models.FloatField(default=0, blank=True, null=True)
+    tt_amount = models.FloatField(default=0, blank=True, null=True)
+    inserted_by = models.ForeignKey(Account, on_delete=models.SET_NULL, related_name="commi_insert_by", null=True, blank=True)
+    insert_date = models.DateTimeField(default=now, blank=True, null=True)
+
+    def __str__(self):
+        return str(self.b_job_no)
+
+class CommissionCost_Items(models.Model):
+    STATUS = (
+        ('Active', 'Active'),
+        ('Inactive', 'Inactive'),
+    )
+    commission_cost = models.ForeignKey(CommissionCost, related_name='commi_items', on_delete=models.CASCADE, null=True, blank=True)
+    item = models.CharField(max_length=200, blank=True, null=True)
+    rate_in_pct = models.FloatField(default=0, blank=True, null=True)
+    amount = models.FloatField(default=0, blank=True, null=True)
+    status = models.CharField(max_length=50, choices=STATUS, default="Active", blank=True, null=True)
+
+    def __str__(self):
+        return str(self.commission_cost)

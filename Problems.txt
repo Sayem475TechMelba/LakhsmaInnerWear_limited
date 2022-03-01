@@ -1,6 +1,3 @@
-
-
-
 Fabric Cost:
 	01. Color Contrast Modal All field value save and fetch
 	02. While add second row in avg grey cons modal, the Rate value isnt calculating
